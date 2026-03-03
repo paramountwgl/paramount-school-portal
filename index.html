@@ -6,6 +6,30 @@
     <title>Paramount English Medium School | Warangal</title>
     <link rel="icon" type="image/png" href="logo.png">
     <style>
+    #backToTopBtn {
+  display: none;          /* Hidden until the user scrolls down */
+  position: fixed;        /* Stays in the same spot on the screen */
+  bottom: 30px;           /* 30px from the bottom */
+  right: 30px;            /* 30px from the right */
+  z-index: 99;            /* Ensures it stays on top of images/text */
+  border: none;           /* Clean look with no border */
+  outline: none;
+  background-color: #004a99; /* Your school's primary blue color */
+  color: white;           /* Arrow color */
+  cursor: pointer;        /* Shows a hand icon when hovered */
+  padding: 15px;          /* Size of the button */
+  border-radius: 50%;     /* Makes it a perfect circle */
+  font-size: 18px;        /* Size of the arrow */
+  transition: 0.3s;       /* Smooth transition for hover effects */
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3); /* Adds depth to look "floating" */
+}
+        </style>
+
+#backToTopBtn:hover {
+  background-color: #333; /* Changes color when hovered */
+  transform: translateY(-5px); /* Makes the button "pop" up slightly */
+}
+    <style>
       
         /* General Styles */
         :root { --primary: #003366; --secondary: #006633; --gold: #ffd700; --light: #f4f4f4; }
@@ -263,9 +287,13 @@
 </style>
  <button onclick="topFunction()" id="backToTopBtn" title="Go to top">
   <i class="fas fa-arrow-up"></i>
-</button>   
+</button>  
+    <button onclick="topFunction()" id="backToTopBtn" title="Go to top">
+  <i class="fas fa-arrow-up"></i> ↑
+</button>
 </body>
 </html>
+
 
 
 
