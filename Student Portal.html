@@ -46,6 +46,19 @@
             background: #e8f5e9; color: #2e7d32; font-weight: bold; 
             transition: 0.3s;
         }
+
+        /* Styling for the new Alert Box */
+        #attendanceAlert {
+            display: none; 
+            background-color: #fff3f3; 
+            color: #c62828; 
+            padding: 15px; 
+            border-radius: 10px; 
+            border-left: 5px solid #c62828; 
+            margin: 20px 0; 
+            text-align: left; 
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +92,11 @@
         <img src="Shaik Tauseef Ali.png.jpeg" alt="Student Photo" class="student-photo">
         <h2 id="studentName" style="margin: 10px 0 5px;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Search to View Status</span>
+    </div>
+
+    <div id="attendanceAlert">
+        <i class="fas fa-exclamation-triangle"></i> 
+        <strong>Low Attendance Warning:</strong> Parent/Guardian intervention is required for this student.
     </div>
 
     <div class="info-grid">
@@ -125,7 +143,7 @@ const studentData = {
         name: "Ayaan Khan",
         class: "9th Grade - B",
         father: "Mr. Mohammad Khan",
-        attendance: "42%", // Example of a low attendance student
+        attendance: "42%", 
         roll: "2203A51611",
         phonenumber: "8341039583"
     }
@@ -134,8 +152,10 @@ const studentData = {
 function searchStudent() {
     const input = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[input];
+    const alertBox = document.getElementById('attendanceAlert');
 
     if (student) {
+        // Update basic info
         document.getElementById('studentName').innerText = student.name;
         document.getElementById('studentClass').innerText = student.class;
         document.getElementById('fatherName').innerText = student.father;
@@ -143,18 +163,22 @@ function searchStudent() {
         document.getElementById('RollNumber').innerText = student.roll;
         document.getElementById('PhoneNumber').innerText = student.phonenumber;
 
-        // AUTOMATION LOGIC: Evaluate attendance
+        // Automation Logic for Status and Alert
         const attendanceValue = parseInt(student.attendance);
         const statusBadge = document.getElementById('statusBadge');
 
         if (attendanceValue < 50) {
             statusBadge.innerText = "Inactive Student";
-            statusBadge.style.background = "#ffebee"; // Light Red
-            statusBadge.style.color = "#c62828";      // Dark Red
+            statusBadge.style.background = "#ffebee";
+            statusBadge.style.color = "#c62828";
+            // Show the Alert Box
+            alertBox.style.display = "block";
         } else {
             statusBadge.innerText = "Active Student";
-            statusBadge.style.background = "#e8f5e9"; // Light Green
-            statusBadge.style.color = "#2e7d32";      // Dark Green
+            statusBadge.style.background = "#e8f5e9";
+            statusBadge.style.color = "#2e7d32";
+            // Hide the Alert Box
+            alertBox.style.display = "none";
         }
     } else {
         alert("Roll Number not found. Please try again.");
