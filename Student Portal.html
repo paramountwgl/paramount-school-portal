@@ -44,6 +44,7 @@
         .status-badge { 
             padding: 5px 15px; border-radius: 20px; font-size: 12px; 
             background: #e8f5e9; color: #2e7d32; font-weight: bold; 
+            transition: 0.3s;
         }
     </style>
 </head>
@@ -118,17 +119,15 @@ const studentData = {
         father: "Mr. Shaik Ahmad",
         attendance: "95%",
         roll: "2203A51618",
-        phonenumber: "9550791538",
-        status: "Active Student"
+        phonenumber: "9550791538"
     },
     "2203A51611": {
         name: "Ayaan Khan",
         class: "9th Grade - B",
         father: "Mr. Mohammad Khan",
-        attendance: "9%",
+        attendance: "42%", // Example of a low attendance student
         roll: "2203A51611",
-        phonenumber: "8341039583",
-        status: "Active Student"
+        phonenumber: "8341039583"
     }
 };
 
@@ -143,7 +142,20 @@ function searchStudent() {
         document.getElementById('attendanceRate').innerText = student.attendance;
         document.getElementById('RollNumber').innerText = student.roll;
         document.getElementById('PhoneNumber').innerText = student.phonenumber;
-        document.getElementById('statusBadge').innerText = student.status;
+
+        // AUTOMATION LOGIC: Evaluate attendance
+        const attendanceValue = parseInt(student.attendance);
+        const statusBadge = document.getElementById('statusBadge');
+
+        if (attendanceValue < 50) {
+            statusBadge.innerText = "Inactive Student";
+            statusBadge.style.background = "#ffebee"; // Light Red
+            statusBadge.style.color = "#c62828";      // Dark Red
+        } else {
+            statusBadge.innerText = "Active Student";
+            statusBadge.style.background = "#e8f5e9"; // Light Green
+            statusBadge.style.color = "#2e7d32";      // Dark Green
+        }
     } else {
         alert("Roll Number not found. Please try again.");
     }
