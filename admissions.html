@@ -9,10 +9,44 @@
     <style>
         body { font-family: sans-serif; margin: 0; color: #333; line-height: 1.6; }
         .header-bg { background: #006633; color: white; padding: 60px 5%; text-align: center; font-family: 'Zilla Slab', serif; }
-        .container { max-width: 900px; margin: -40px auto 60px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h2 { color: #006633; border-bottom: 3px solid #ffd700; display: inline-block; margin-bottom: 20px; }
-        .step-box { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 5px solid #006633; }
-        .btn-apply { display: inline-block; background: #ffd700; color: #003366; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; margin-top: 20px; }
+        /* This centers your main white box on desktop and mobile */
+.container { 
+    max-width: 900px; 
+    margin: 20px auto; /* Centering with auto left/right */
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+    box-sizing: border-box;
+    width: 95%; /* Ensures it doesn't touch the edges on mobile */
+}
+
+/* This styles the individual steps to be centered containers with left-aligned text */
+.step-box { 
+    background: #f4f4f4; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-bottom: 15px; 
+    border-left: 5px solid #228B22; 
+    width: 100%; 
+    max-width: 700px; /* Keeps steps from getting too wide on desktop */
+    margin-left: auto; 
+    margin-right: auto; /* Centers the step box itself */
+    text-align: left; /* Keeps the text easy to read */
+}
+
+/* MOBILE FIX: Adjusts the header on small screens */
+@media screen and (max-width: 768px) {
+    .admission-header-green div {
+        flex-direction: column !important; /* Stacks logo and text vertically */
+        text-align: center !important;
+    }
+    .admission-header-green div div {
+        border-right: none !important;
+        border-left: none !important;
+        padding: 10px 0 !important;
+    }
+}
     </style>
 </head>
 <body>
