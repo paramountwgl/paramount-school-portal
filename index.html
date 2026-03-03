@@ -27,22 +27,24 @@
     position: fixed;
     bottom: 30px;
     left: 30px;
-    width: 280px;    /* Slightly smaller width */
-    height: 157px;   /* Perfect height for 280px width (16:9 ratio) */
+    width: 280px;    /* Width of the player */
+    height: 158px;   /* Exact 16:9 height for 280px width */
     z-index: 9999;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border: 3px solid #228B22; /* Forest Green border */
-    background: #000;
+    border: 3px solid #228B22; /* Your Forest Green */
+    background: #000; /* Black background hides any tiny gaps */
     transition: 0.4s ease;
 }
 
-#schoolIntroBox:hover {
-    transform: scale(1.05);
+#videoFrame {
+    width: 100%;
+    height: 100%;
+    display: block; /* Removes the tiny ghost gap at the bottom of the iframe */
+    border: none;
 }
 
-/* We hide the header text but keep the close button floating over the video */
 #closeVideo {
     position: absolute;
     top: 5px;
@@ -50,14 +52,9 @@
     z-index: 10001;
     color: white;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
-    text-shadow: 0 0 5px rgba(0,0,0,0.8); /* Makes 'X' visible over video */
-    transition: 0.3s;
-}
-
-#closeVideo:hover {
-    color: #ff4c4c;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.9); /* Ensures 'X' is visible over video */
 }
         </style>
     
@@ -342,10 +339,9 @@
     <span id="closeVideo" onclick="closeIntroVideo()">&times;</span>
     <iframe 
         id="videoFrame"
-        src="https://www.youtube.com/embed/rZo2y98KuAo?autoplay=1&mute=1&loop=1&playlist=rZo2y98KuAo&rel=0" 
+        src="https://www.youtube.com/embed/rZo2y98KuAo?autoplay=1&mute=1&loop=1&playlist=rZo2y98KuAo&rel=0&showinfo=0&controls=1" 
         title="School Introduction" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
     </iframe>
 </div>
@@ -359,6 +355,7 @@
     </script>
 </body>
 </html>
+
 
 
 
