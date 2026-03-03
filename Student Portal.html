@@ -47,7 +47,6 @@
             transition: 0.3s;
         }
 
-        /* Styling for the new Alert Box */
         #attendanceAlert {
             display: none; 
             background-color: #fff3f3; 
@@ -64,9 +63,12 @@
 <body>
 
 <div class="profile-header">
-    <div style="position: absolute; top: 20px; left: 20px; text-align: left;">
-        <h1 style="margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px;">Paramount</h1>
-        <p style="margin: 0; font-size: 10px; font-weight: bold; opacity: 0.9;">ENGLISH MEDIUM SCHOOL</p>
+    <div style="position: absolute; top: 15px; left: 20px; display: flex; align-items: center; gap: 12px;">
+        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter: brightness(0) invert(1);">
+        <div style="text-align: left;">
+            <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Paramount</h1>
+            <p style="margin: 0; font-size: 9px; font-weight: bold; opacity: 0.9;">ENGLISH MEDIUM SCHOOL</p>
+        </div>
     </div>
 
     <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
@@ -76,10 +78,6 @@
                 style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffcc00; color: #228B22; font-weight: bold; cursor: pointer;">
             <i class="fas fa-search"></i>
         </button>
-    </div>
-
-    <div style="position: absolute; top: 15px; right: 20px;">
-        <img src="logo.png" alt="Logo" style="height: 70px; width: auto; filter: brightness(0) invert(1);">
     </div>
 </div>
 
@@ -155,7 +153,6 @@ function searchStudent() {
     const alertBox = document.getElementById('attendanceAlert');
 
     if (student) {
-        // Update basic info
         document.getElementById('studentName').innerText = student.name;
         document.getElementById('studentClass').innerText = student.class;
         document.getElementById('fatherName').innerText = student.father;
@@ -163,7 +160,6 @@ function searchStudent() {
         document.getElementById('RollNumber').innerText = student.roll;
         document.getElementById('PhoneNumber').innerText = student.phonenumber;
 
-        // Automation Logic for Status and Alert
         const attendanceValue = parseInt(student.attendance);
         const statusBadge = document.getElementById('statusBadge');
 
@@ -171,13 +167,11 @@ function searchStudent() {
             statusBadge.innerText = "Inactive Student";
             statusBadge.style.background = "#ffebee";
             statusBadge.style.color = "#c62828";
-            // Show the Alert Box
             alertBox.style.display = "block";
         } else {
             statusBadge.innerText = "Active Student";
             statusBadge.style.background = "#e8f5e9";
             statusBadge.style.color = "#2e7d32";
-            // Hide the Alert Box
             alertBox.style.display = "none";
         }
     } else {
