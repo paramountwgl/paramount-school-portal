@@ -16,7 +16,12 @@
             padding: 10px 5%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
             position: sticky; top: 0; z-index: 1000; 
         }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
+       .logo-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    flex-shrink: 0; /* This prevents the logo from disappearing on small screens */
+}
         .logo-img { height: 70px; width: auto; }
         .school-name-box { display: flex; flex-direction: column; }
         .name-main { font-size: 1.4rem; font-weight: 900; color: 800; color: #006633; line-height: 1; }
@@ -205,6 +210,7 @@
 
 </body>
 </html>
+
 
 
 
