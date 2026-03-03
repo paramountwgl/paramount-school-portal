@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | Paramount School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f4f4; }
+        .profile-header { background: #228B22; color: white; padding: 40px 20px; text-align: center; }
+        .profile-card { 
+            max-width: 800px; margin: -50px auto 40px; background: white; 
+            padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+        }
+        .student-photo { 
+            width: 120px; height: 120px; border-radius: 50%; border: 5px solid white; 
+            margin-top: -90px; background: #eee; object-fit: cover;
+        }
+        .info-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 20px; margin-top: 30px; text-align: left; 
+        }
+        .info-item { padding: 10px; border-bottom: 1px solid #eee; }
+        .info-item label { font-size: 12px; color: #888; display: block; text-transform: uppercase; }
+        .info-item span { font-weight: bold; color: #333; }
+        .status-badge { 
+            padding: 5px 15px; border-radius: 20px; font-size: 12px; 
+            background: #e8f5e9; color: #2e7d32; font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-header">
+    <div style="margin-top: 20px; display: flex; justify-content: center; gap: 10px; padding: 0 15px;">
+    <input type="text" id="rollNumberInput" placeholder="Enter Roll Number (e.g. PMS-001)" 
+           style="padding: 12px 20px; border-radius: 30px; border: none; width: 100%; max-width: 400px; font-size: 16px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    
+    <button onclick="searchStudent()" 
+            style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffcc00; color: #228B22; font-weight: bold; cursor: pointer;">
+        <i class="fas fa-search"></i> Search
+    </button>
+</div>
+    <h1>Student Portal</h1>
+</div>
+
+<div class="profile-card">
+    <div style="text-align: center;">
+        <img src="Shaik Tauseef Ali.png.jpeg" alt="Student Photo" class="student-photo">
+        
+        <h2 id="studentName" style="margin: 10px 0 5px;">Student Name</h2>
+        <span class="status-badge">Active Student</span>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-item">
+            <label>Class / Section</label>
+            <span id="studentClass">---</span>
+        </div>
+        
+        <div class="info-item">
+            <label>Father's Name</label>
+            <span id="fatherName">---</span>
+        </div>
+        
+        <div class="info-item">
+            <label>Attendance</label>
+            <span id="attendanceRate">---</span>
+        </div>
+        
+        <div class="info-item">
+            <label>Roll Number</label>
+            <span>Search to view</span>
+        </div>
+    </div>
+</div>
+    <div class="info-grid">
+        <div class="info-item"><label>Roll Number</label><span>PMS-2026-001</span></div>
+        <div class="info-item"><label>Class / Section</label><span>10th Grade - A</span></div>
+        <div class="info-item"><label>Father's Name</label><span>Mr. Shaik Ahmad</span></div>
+        <div class="info-item"><label>Date of Birth</label><span>15 June 2010</span></div>
+        <div class="info-item"><label>Attendance</label><span style="color: #228B22;">95%</span></div>
+        <div class="info-item"><label>Blood Group</label><span>O+</span></div>
+    </div>
+
+    <div style="margin-top: 30px; text-align: center;">
+        <a href="index.html" style="text-decoration: none; color: #228B22; font-weight: bold;">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+</div>
+<script>
+// This is your "Database" of students
+const studentData = {
+    "PMS-001": {
+        name: "Shaik Tauseef Ali",
+        class: "10th Grade - A",
+        father: "Mr. Shaik Ali",
+        attendance: "95%",
+        status: "Active"
+    },
+    "PMS-002": {
+        name: "Ayaan Khan",
+        class: "9th Grade - B",
+        father: "Mr. Mohammad Khan",
+        attendance: "92%",
+        status: "Active"
+    }
+};
+    function searchStudent() {
+    const input = document.getElementById('rollNumberInput').value.toUpperCase();
+    const student = studentData[input];
+
+    if (student) {
+        // Update the page with the found student's info
+        document.getElementById('studentName').innerText = student.name;
+        document.getElementById('studentClass').innerText = student.class;
+        document.getElementById('fatherName').innerText = student.father;
+        document.getElementById('attendanceRate').innerText = student.attendance;
+        alert("Student Profile Loaded!");
+    } else {
+        alert("Roll Number not found. Please try again.");
+    }
+}
+</script>
+</body>
+</html>
