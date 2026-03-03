@@ -98,6 +98,10 @@
             <label>Roll Number</label>
             <span id="RollNumber">---</span>
         </div>
+        <div class="info-item">
+    <label>Parent Phone Number</label>
+    <span id="PhoneNumber">---</span>
+</div>
     </div>
     
     <div style="margin-top: 30px; text-align: center;">
@@ -114,14 +118,16 @@ const studentData = {
         class: "10th Grade - A",
         father: "Mr. Shaik Ali",
         attendance: "95%",
-        roll: "2203A51618"
+        roll: "2203A51618",
+        phonenumber:9550791538"
     },
     "2203A51611": {
         name: "Ayaan Khan",
         class: "9th Grade - B",
         father: "Mr. Mohammad Khan",
         attendance: "92%",
-        roll: "2203A51611"
+        roll: "2203A51611",
+        phonenumber:8341039583"
     }
 };
 
@@ -135,6 +141,7 @@ function searchStudent() {
         document.getElementById('fatherName').innerText = student.father;
         document.getElementById('attendanceRate').innerText = student.attendance;
         document.getElementById('RollNumber').innerText = student.roll;
+        document.getElementById('PhoneNumber').innerText = student.phonenumber;
     } else {
         alert("Roll Number not found. Please try again.");
     }
