@@ -6,7 +6,6 @@
     <title>Paramount English Medium School | Warangal</title>
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-      
         /* General Styles */
         :root { --primary: #003366; --secondary: #006633; --gold: #ffd700; --light: #f4f4f4; }
         html { scroll-behavior: smooth; }
@@ -18,51 +17,68 @@
             padding: 10px 5%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
             position: sticky; top: 0; z-index: 1000; 
         }
-       .logo-container { 
-    display: flex; 
-    align-items: center; 
-    gap: 15px; 
-    flex-shrink: 0; /* This prevents the logo from disappearing on small screens */
-}
+        .logo-container { display: flex; align-items: center; gap: 15px; flex-shrink: 0; }
         .logo-img { height: 70px; width: auto; }
         .school-name-box { display: flex; flex-direction: column; }
-        .name-main { font-size: 1.4rem; font-weight: 900; color: 800; color: #006633; line-height: 1; }
-        .name-sub { font-size: 0.8rem; font-weight: 700; color: 700; color: #006633;; letter-spacing: 1px; }
+        .name-main { font-size: 1.4rem; font-weight: 900; color: #006633; line-height: 1; }
+        .name-sub { font-size: 0.8rem; font-weight: 700; color: #006633; letter-spacing: 1px; }
 
         nav a { margin-left: 20px; text-decoration: none; color: var(--primary); font-weight: bold; font-size: 1rem; }
 
         /* Admissions Banner */
         .marquee-banner { background: var(--gold); color: var(--primary); padding: 8px 0; font-weight: bold; border-bottom: 2px solid var(--secondary); }
 
-        /* Sections */
-        .section-padding { padding: 60px 10%; }
-        .chairman-section { display: flex; align-items: center; gap: 50px; background: var(--light); }
-        .chairman-img { width: 350px; border-radius: 15px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .chairman-text { flex: 1; }
+        /* Correspondent Section Responsive Fix */
+        .correspondent-wrapper {
+            display: flex; 
+            align-items: flex-start; 
+            gap: 50px; 
+            padding: 60px 10%; 
+            background-color: #ffffff;
+        }
 
-        .admissions-section { background: white; text-align: center; border-top: 4px solid var(--secondary); }
+        /* Notice Board Centering */
+        #notices {
+            padding: 60px 10%; 
+            background: #ffffff; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers everything inside */
+        }
+        .notice-grid {
+            display: grid; 
+            gap: 20px; 
+            width: 100%;
+            max-width: 800px; /* Limits width for better look on desktop */
+            margin: 0 auto;
+        }
 
         /* Footer */
         footer { background: var(--primary); color: white; padding: 40px 5%; text-align: center; }
         .contact-links a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; display: inline-block; padding: 5px 0; }
-        .whatsapp { color: #25D366 !important; }
+        
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white;
+            padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold;
+            display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9999; transition: transform 0.3s ease; animation: pulse-animation 2s infinite;
+        }
 
-        /* MOBILE VIEW ADAPTATION (Screens smaller than 768px) */
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0); }
+        }
+
+        /* MOBILE VIEW ADAPTATION */
         @media (max-width: 768px) {
             header { flex-direction: column; padding: 15px; }
-            .logo-container { margin-bottom: 10px; text-align: center; }
-            .logo-img { height: 55px; }
-            .name-main { font-size: 1.1rem; }
-            .name-sub { font-size: 0.65rem; }
-            
-            nav { width: 100%; display: flex; justify-content: space-around; padding-top: 10px; border-top: 1px solid #eee; }
+            nav { width: 100%; display: flex; justify-content: space-around; padding-top: 10px; border-top: 1px solid #eee; margin-top: 10px; }
             nav a { margin: 0; font-size: 0.85rem; }
-
-            .section-padding { padding: 30px 5%; }
-            .chairman-section { flex-direction: column; text-align: center; }
-            .chairman-img { width: 90%; max-width: 280px; height: auto; }
-            
-            .map-frame { height: 300px !important; }
+            .correspondent-wrapper { flex-direction: column; align-items: center; text-align: center; padding: 30px 5%; }
+            .correspondent-img-box { flex: 0 0 auto !important; width: 100% !important; max-width: 300px; }
+            .whatsapp-btn { padding: 10px 15px; bottom: 20px; right: 20px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -90,349 +106,90 @@
     </marquee>
 </div>
 
-<div style="display: flex; align-items: flex-start; gap: 50px; padding: 60px 10%; background-color: #ffffff;">
-
-    <div style="flex: 0 0 350px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+<div class="correspondent-wrapper">
+    <div class="correspondent-img-box" style="flex: 0 0 350px; text-align: center;">
         <img src="chairman.png" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);">
         <div style="margin-top: 20px;">
-            <h3 style="color: #004080; margin: 0; font-size: 1.5rem; font-weight: bold;">Mr. Shaik Ahmad</h3>
+            <h3 style="color: #004080; margin: 0; font-size: 1.5rem;">Mr. Shaik Ahmad</h3>
             <p style="color: #666; font-size: 1.1rem; margin-top: 5px;">Correspondent</p>
         </div>
     </div>
 
-    <div style="flex: 1; padding-top: 5px;">
-        <h2 style="color: #004080; font-size: 2.2rem; margin-bottom: 25px; border-left: 5px solid #ffcc00; padding-left: 15px;">
-            Message from the Correspondent
-        </h2>
-        
+    <div style="flex: 1;">
+        <h2 style="color: #004080; font-size: 2.2rem; border-left: 5px solid #ffcc00; padding-left: 15px;">Message from the Correspondent</h2>
         <div style="line-height: 1.8; color: #333; font-size: 1.1rem; text-align: justify;">
             <p style="font-style: italic; color: #555; background: #f9f9f9; padding: 20px; border-radius: 8px;">
-                Welcome to <strong>Paramount English Medium School</strong>.<em>An institution where we do not just teach—we inspire, we mold, and we empower. As the Correspondent of this esteemed school, it is my distinct honor to share the philosophy that drives our daily pursuit of excellence. In an era where the global landscape is shifting at an unprecedented pace, education must transcend the traditional boundaries of textbooks and classrooms. At Paramount, we believe that true learning is a holistic journey that harmonizes intellectual growth with moral integrity, ensuring that our students are prepared not just for exams, but for the complexities of life itself.</em></p>
-            <p style="font-style: italic; color: #555; background: #f9f9f9; padding: 20px; border-radius: 8px;"><em>"To our dear parents, we view you as our most vital partners in this educational odyssey. The synergy between the home and the school is what allows a child to truly flourish. When you choose Paramount, you are choosing a community that values transparency, constant improvement, and a deep-seated respect for our cultural heritage blended with a modern, scientific outlook. We are dedicated to producing graduates who are not only professionally successful but are also compassionate, ethical, and socially responsible citizens"</em></p>
-            <p style="margin-top: 20px; font-weight: bold; color: #004080;"><em>"Your way to success."</em></p>
+                Welcome to <strong>Paramount English Medium School</strong>. An institution where we do not just teach—we inspire, we mold, and we empower...
+            </p>
+            <p style="margin-top: 20px; font-weight: bold; color: #004080;">"Your way to success."</p>
         </div>
-   <section id="notices" style="padding: 60px 10%; background: #ffffff; font-family: sans-serif;">
+    </div>
+</div>
+
+<section id="notices">
     <div style="text-align: center; margin-bottom: 40px;">
-        <h2 style="color: #003366; font-size: 2.2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;">
-            School Notice Board
-        </h2>
+        <h2 style="color: #003366; font-size: 2.2rem; text-transform: uppercase;">School Notice Board</h2>
         <div style="height: 4px; width: 80px; background: #006633; margin: 0 auto;"></div>
     </div>
 
-    <div style="display: grid; gap: 20px; max-width: 900px; margin: 0 auto;">
-        
-        <div style="background: #fff9c4; padding: 20px; border-left: 6px solid #fbc02d; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s;">
+    <div class="notice-grid">
+        <div style="background: #fff9c4; padding: 20px; border-left: 6px solid #fbc02d; border-radius: 8px;">
             <span style="background: #fbc02d; color: #333; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">HOLIDAY</span>
-            <h3 style="margin: 10px 0 5px 0; color: #333;">Summer Vacation 2026</h3>
-            <p style="margin: 0; color: #555;">Will update you soon <strong>Stay tunned</strong>.</p>
+            <h3 style="margin: 10px 0 5px 0;">Summer Vacation 2026</h3>
+            <p style="margin: 0;">Will update you soon <strong>Stay Tuned</strong>.</p>
         </div>
 
-        <div style="background: #e3f2fd; padding: 20px; border-left: 6px solid #2196f3; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <div style="background: #e3f2fd; padding: 20px; border-left: 6px solid #2196f3; border-radius: 8px;">
             <span style="background: #2196f3; color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">EXAMS</span>
-            <h3 style="margin: 10px 0 5px 0; color: #333;">Annual Result Declaration</h3>
-            <p style="margin: 0; color: #555;">Parents will be invited to collect the progress reports <strong>Announcing soon</strong> Stay Tunned.</p>
+            <h3 style="margin: 10px 0 5px 0;">Annual Result Declaration</h3>
+            <p style="margin: 0;">Parents will be invited to collect progress reports. <strong>Announcing soon</strong>. Stay Tuned.</p>
         </div>
 
-        <div style="background: #e8f5e9; padding: 20px; border-left: 6px solid #4caf50; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <div style="background: #e8f5e9; padding: 20px; border-left: 6px solid #4caf50; border-radius: 8px;">
             <span style="background: #4caf50; color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">NEW</span>
-            <h3 style="margin: 10px 0 5px 0; color: #333;">Uniform & Book Stall</h3>
-            <p style="margin: 0; color: #555;">Comming Soon.</p>
+            <h3 style="margin: 10px 0 5px 0;">Uniform & Book Stall</h3>
+            <p style="margin: 0;">Coming Soon.</p>
         </div>
+    </div>
 </section>
-   <section id="student-data" style="width: 100%; padding: 60px 10%; background: #f9f9f9; display: flex; flex-direction: column; align-items: center; text-align: center;">
-    <h2 style="color: #006633; font-size: 2.2rem; margin-bottom: 10px;">School Leaders (2026)</h2>
-    <div style="height: 4px; width: 70px; background: #ffd700; margin-bottom: 40px;"></div>
 
+<section id="student-data" style="padding: 60px 10%; background: #f9f9f9; text-align: center;">
+    <h2 style="color: #006633; font-size: 2.2rem;">School Leaders (2026)</h2>
+    <div style="height: 4px; width: 70px; background: #ffd700; margin: 0 auto 40px;"></div>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
-        
         <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); width: 280px; border-bottom: 5px solid #ffd700;">
             <a href="tauseef.html" style="text-decoration: none; color: inherit;">
-                <img src="Shaik Tauseef Ali.png.jpeg" alt="Shaik Tauseef Ali" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #006633; object-fit: cover;">
+                <img src="Shaik Tauseef Ali.png.jpeg" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #006633; object-fit: cover;">
                 <h3 style="color: #003366; margin-top: 15px;">SHAIK TAUSEEF ALI</h3>
-                <p style="color: #666; font-size: 0.9rem;">Roll No: 2203A51618</p>
-                <span style="display: inline-block; margin-top: 10px; color: #006633; font-weight: bold;">View My Data →</span>
+                <p style="color: #666;">Roll No: 2203A51618</p>
+                <span style="color: #006633; font-weight: bold;">View My Data →</span>
             </a>
         </div>
-
     </div>
-</section>
-    <section style="background: white; padding: 20px 5%; text-align: center;">
-    <h2 style="color: #006633; font-family: 'Zilla Slab', serif; font-size: 2rem; margin-bottom: 20px;">
-        LEADERS OF THE SCHOOL (2026)
-    </h2>
-    <div style="max-width: 900px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-        <img src="leaders-of-the-school.jpg" alt="School Leaders" style="width: 100%; height: auto; display: block;">
-    </div>
-</section>
-<section id="drive-events" style="padding: 50px 10%; background: #ffffff; text-align: center; font-family: 'Zilla Slab', serif;">
-    <h2 style="color: #006633; font-size: 2.2rem; margin-bottom: 10px;">SCHOOL EVENT GALLERIES</h2>
-    <div style="height: 4px; width: 60px; background: #ffd700; margin: 0 auto 30px;"></div>
-    
-    <p style="color: #555; margin-bottom: 30px; font-family: sans-serif;">Click on an event to view full photos on Google Drive</p>
-    
-    <div style="max-width: 700px; margin: 0 auto; display: grid; gap: 15px;">
-        
-        <a href=" https://drive.google.com/drive/folders/1oqyOQXnL_fxUtX51hnJl5M91PztOluNJ?usp=sharing
-" target="_blank" 
-           style="display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; padding: 18px 25px; border-radius: 8px; text-decoration: none; border-left: 6px solid #006633; transition: 0.3s;">
-            <span style="color: #003366; font-size: 1.1rem; font-weight: bold;">📸 “THUNDERSTRIKE – 5th Annual Sports Day & Cultural Fest 2026”</span>
-            <span style="color: #006633; font-weight: bold;">Open Folder →</span>
-        </a>
-
-        <a href="YOUR_LINK_HERE" target="_blank" 
-           style="display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; padding: 18px 25px; border-radius: 8px; text-decoration: none; border-left: 6px solid #006633; transition: 0.3s;">
-            <span style="color: #003366; font-size: 1.1rem; font-weight: bold;">🏆 Annual Sports Meet 2025</span>
-            <span style="color: #006633; font-weight: bold;">Open Folder →</span>
-        </a>
-
-    </div>
-</section>
-<section id="admissions" class="section-padding admissions-section">
-    <h2 style="color: var(--primary);">Admissions For 2026-27</h2>
-    <p>Join our academic excellence. </p>
-    <p>Follow The Below Steps</p>
-    <p>Step 1: Office Visit at our Campus</p>
-    <p>Step 2: Visit our Office thorugh Google Maps</p>
-    <p>Step 3: Document Submission</p>
-    <p>Step 4: Interaction with Mrs.Roqiya Begum(Principal) of the Paramount English Medium School</p>
-    <p>Step 5: Adimssion compelete successfully</p>
-   
-    
-</section>
-
-<section id="location" style="padding: 60px 10%; background: #f4f4f4; text-align: center; font-family: sans-serif;">
-    <h2 style="color: #003366; margin-bottom: 20px;">Visit Our Campus</h2>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.136458315152!2d79.58027477521033!3d17.926044383057112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a335a9269b09a15%3A0x585daa32a7bfd9cf!2sParamount%20English%20Medium%20School!5e0!3m2!1sen!2sin!4v1709568000000!5m2!1sen!2sin" width="100%" height="400" style="border:0;" class="map-frame" allowfullscreen="" loading="lazy"></iframe>
-
-<a href="https://maps.google.com/?q=Paramount+English+Medium+School+Warangal" 
-   target="_blank" 
-   style="display: inline-block; background: #006633; color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); font-family: sans-serif;">
-    📍 Open in Google Maps for Paramount School
-</a>
-    </a>
-
-    <div style="border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 1px solid #ddd; max-width: 1000px; margin: 0 auto;">
-        <iframe 
-            src="https://maps.google.com/?cid=15590804619565980111&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" 
-            width="100%" 
-            height="400" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy">
-        </iframe>
-    </div>
-    
-    <p style="margin-top: 20px; color: #555;">
-        Pensionpur, Warangal, Telangana 506005
-    </p>
 </section>
 
 <footer id="contact">
     <h3>Contact Us</h3>
     <p>Pensionpur, Warangal, Telangana 506005</p>
     <div class="contact-links">
-        <a href="tel:+91 9000641355">Call</a> | 
-        <a href="https://wa.me/919000641355?text=I%20am%20interested%20in%20Paramount%20School" target="_blank" style="color: #25D366;">WhatsApp Us</a> |
-        <a href="mailto:paramount0707@gmail.com">Email</a> | 
-        <a href="https://www.instagram.com/paramount.07?igsh=MTYwcjcxZnliMnhmdA%3D%3D&utm_source=qr" target="_blank"">Instagram</a>
+        <a href="tel:+919000641355">Call</a> | 
+        <a href="https://wa.me/919000641355" target="_blank" style="color: #25D366;">WhatsApp Us</a> |
+        <a href="mailto:paramount0707@gmail.com">Email</a>
     </div>
 </footer>
+
 <a href="https://wa.me/919000641355" target="_blank" class="whatsapp-btn">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width: 25px; height: 25px;">
     <span>Contact us</span>
 </a>
 
-<style>
-.whatsapp-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #25d366;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 9999;
-    transition: transform 0.3s ease;
-    animation: pulse-animation 2s infinite;
-}
-
-.whatsapp-btn:hover {
-    transform: scale(1.1);
-    background-color: #128c7e;
-    color: white;
-}
-
-@keyframes pulse-animation {
-    0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-    100% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0); }
-}
-</style>
-<button id="backToTop" title="Go to top" 
-    style="position: fixed; bottom: 100px; right: 30px; background-color: #003366; color: #ffd700; border: 2px solid #ffd700; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 9998; font-size: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    ↑
-</button>
+<button id="backToTop" style="position: fixed; bottom: 100px; right: 30px; background: #003366; color: #ffd700; border: 2px solid #ffd700; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 9998; font-size: 20px;">↑</button>
 
 <script>
-// Get the button
-var mybutton = document.getElementById("backToTop");
+    var mybutton = document.getElementById("backToTop");
+    window.onscroll = function() { if (document.documentElement.scrollTop > 300) { mybutton.style.display = "block"; } else { mybutton.style.display = "none"; } };
+    mybutton.onclick = function() { window.scrollTo({top: 0, behavior: 'smooth'}); };
+</script>
 
-// When the user scrolls down 300px from the top, show the button
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
-  }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-mybutton.onclick = function() {
-  window.scrollTo({top: 0, behavior: 'smooth'});
-};
-</script> 
- <div class="floating-video-box">
-    <iframe id="cornerYouTube" 
-            src="https://www.youtube.com/embed/rZo2y98KuAo?autoplay=1&mute=1&loop=1&playlist=rZo2y98KuAo" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen 
-            style="width: 100%; height: 150px; border-radius: 6px;">
-    </iframe>
-    <button onclick="this.parentElement.style.display='none'" class="close-vid-btn">×</button>
-</div>
-
-<style>
-.floating-video-box {
-    position: fixed;
-    bottom: 25px;
-    left: 25px;
-    width: 260px;
-    background: #006633;
-    padding: 4px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    z-index: 9996;
-}
-.close-vid-btn {
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    background: #ffd700;
-    color: #003366;
-    border: 2px solid #006633;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-weight: bold;
-}
-</style>
-    <style>
-    floating-video-box {
-    position: fixed;
-    bottom: 25px;
-    left: 25px; /* Positions frame at bottom-left */
-    width: 260px; /* Small attractive frame size */
-    background: #006633; /* Forest Green border */
-    padding: 4px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    z-index: 9996; /* Keeps it visible but behind WhatsApp button */
-}
-
-.floating-video-box video {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-    display: block;
-}
-
-.close-vid-btn {
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    background: #ffd700; /* Gold color */
-    color: #003366;
-    border: 2px solid #006633;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Mobile size adjustment */
-@media (max-width: 600px) {
-    .floating-video-box {
-        width: 160px;
-        bottom: 90px; /* Moves it up to avoid overlapping mobile nav */
-        left: 10px;
-    }
-}
-</style>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
