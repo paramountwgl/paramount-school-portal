@@ -5,7 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramount English Medium School | Warangal</title>
     <link rel="icon" type="image/png" href="logo.png">
+    
     <style>
+        #backToTop {
+  display: none; /* Hidden until the user scrolls */
+  position: fixed; 
+  bottom: 25px; 
+  right: 25px; 
+  z-index: 99; 
+  border: 2px solid #FFD700; /* Gold border from your logo stars */
+  background-color: #006400; /* Deep Green from your logo border */
+  color: white;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 50%; /* Circular shape */
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
+
+#backToTop:hover {
+  background-color: #FFD700; /* Turns Gold when touched/hovered */
+  color: #006400; /* Arrow turns Green */
+}
       
         /* General Styles */
         :root { --primary: #003366; --secondary: #006633; --gold: #ffd700; --light: #f4f4f4; }
@@ -261,9 +283,12 @@
     100% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0); }
 }
 </style>
-    
+ <button onclick="topFunction()" id="backToTop" title="Go to top">
+  <span style="font-size: 20px; display: block;">🟢</span> ↑
+</button>   
 </body>
 </html>
+
 
 
 
