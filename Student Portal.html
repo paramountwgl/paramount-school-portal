@@ -337,6 +337,7 @@ const studentData = {
         gender: "girl"
     } 
 }; 
+
 function toggleClearBtn() {
     const input = document.getElementById('rollNumberInput');
     const clearBtn = document.getElementById('clearBtn');
@@ -395,6 +396,13 @@ function searchStudent() {
         alert("Roll Number not found.");
     }
 }
+
+// NEW ADDITION: Listen for the Enter key on the input field
+document.getElementById('rollNumberInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        searchStudent();
+    }
+});
 </script>
 </body>
 </html>
