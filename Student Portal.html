@@ -46,7 +46,7 @@
 
         .input-wrapper {
             position: relative;
-            flex: 1;
+            flex: 1; tie
             display: flex;
             align-items: center;
         }
@@ -81,11 +81,12 @@
             white-space: nowrap;
         }
 
+        /* UPDATED: Added padding-top to create gap between title and photo */
         .profile-card { 
             max-width: 800px; 
             margin: 60px auto 40px; 
             background: white; 
-            padding: 30px; 
+            padding: 50px 30px 30px; /* 50px top padding for the gap */
             border-radius: 15px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
             position: relative;
@@ -95,7 +96,7 @@
         .photo-container {
             width: 130px;
             height: 130px;
-            margin: -95px auto 10px;
+            margin: -115px auto 10px; /* Adjusted margin for the new card padding */
             border-radius: 50%;
             border: 5px solid white;
             background: #eef2f3;
@@ -148,32 +149,32 @@
         }
 
         @media screen and (max-width: 768px) {
-            .profile-card { margin-top: 80px; padding: 20px; }
+            .profile-card { margin-top: 100px; padding: 50px 20px 20px; }
             .info-grid { grid-template-columns: 1fr; }
             .profile-header { padding: 20px 10px; }
             .header-logo-box img { height: 50px; }
             .header-logo-box h1 { font-size: 18px; }
         }
 
-        /* --- PDF DOWNLOAD / PRINT STYLES --- */
         @media print {
-            body { background: white; }
-            .profile-header, button, .search-container, #clearBtn, .search-btn, a, h1:not(.card-title) {
+            body { background: white !important; }
+            .profile-header, button, .search-container, #clearBtn, .search-btn, a, .portal-title {
                 display: none !important;
             }
             .profile-card {
-                margin: 0 auto;
-                box-shadow: none;
-                border: 1px solid #ccc;
-                width: 100%;
-                max-width: 100%;
-                padding: 40px;
+                margin: 20px auto !important;
+                box-shadow: none !important;
+                border: 1px solid #000 !important;
+                width: 95% !important;
+                padding: 20px !important;
+            }
+            .photo-container {
+                margin: 10px auto !important;
+                border: 2px solid #228B22 !important;
             }
             .student-photo {
-                margin-top: 20px;
+                object-fit: contain !important;
             }
-            /* Ensures student portal header text doesn't appear in PDF */
-            h1 { display: none; }
         }
     </style>
 </head>
@@ -201,7 +202,7 @@
     </div>
 </div>
 
-<h1 style="text-align: center; color: #228B22; margin-top: 30px; text-transform: uppercase; letter-spacing: 2px; font-size: 20px;">
+<h1 class="portal-title" style="text-align: center; color: #228B22; margin: 15px 0 0; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; font-weight: 800;">
     Student Portal
 </h1>
 
@@ -289,7 +290,6 @@ function downloadReport() {
         alert("Please search for a student first.");
         return;
     }
-    // Triggers the browser's save as PDF menu
     window.print();
 }
 
@@ -304,7 +304,6 @@ function searchStudent() {
         photoImg.src = imagePath;
 
         photoImg.onerror = function() {
-            console.error(`DEBUG: Failed to load student image: ${imagePath}`);
             this.src = 'logo.png'; 
         };
 
