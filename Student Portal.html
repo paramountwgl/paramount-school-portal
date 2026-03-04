@@ -31,6 +31,7 @@
             color: white; 
             cursor: pointer;
             padding: 10px;
+            z-index: 10;
         }
 
         .search-container {
@@ -263,16 +264,16 @@ function searchStudent() {
     const photoImg = document.getElementById('studentPhoto');
 
     if (student) {
-        // FIXED URL: Simplified parameters to ensure loading
+        // FIXED GENDER LOGIC
         let avatarUrl = "";
         const seed = encodeURIComponent(student.name);
         
         if (student.gender === "Girl") {
-            // Girls: Longer hair, professional shirt
-            avatarUrl = `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&top=longHair,curvy,shaggy,bob&clothing=shirtVNeck&clothingColor=ffffff`;
+            // Girls: Professional student look with longer hair options
+            avatarUrl = `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&top=longHair,curvy,shaggy,bob&clothing=shirtVNeck&clothingColor=ffffff&backgroundType=gradientLinear&backgroundColor=eef2f3`;
         } else {
-            // Boys: Short hair, collar and shirt (Uniform)
-            avatarUrl = `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&top=shortHair,sides,tapa&clothing=collarAndShirt&clothingColor=ffffff`;
+            // Boys: Professional school uniform look (collarAndShirt)
+            avatarUrl = `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&top=shortHair,sides,tapa&clothing=collarAndShirt&clothingColor=ffffff&backgroundType=gradientLinear&backgroundColor=eef2f3`;
         }
         
         photoImg.src = avatarUrl;
