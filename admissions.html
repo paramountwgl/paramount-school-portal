@@ -9,7 +9,6 @@
     <style>
         body { font-family: sans-serif; margin: 0; color: #333; line-height: 1.6; background-color: #f4f4f4; }
         
-        /* Centering main white box */
         .container { 
             max-width: 900px; 
             margin: 20px auto; 
@@ -21,7 +20,6 @@
             width: 95%; 
         }
 
-        /* Step boxes styling */
         .step-box { 
             background: #f4f4f4; 
             padding: 20px; 
@@ -47,10 +45,28 @@
             font-weight: bold;
         }
 
-        /* Responsive Fixes */
+        /* Fixed Header Content to ensure link is clickable */
+        .logo-link {
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+            width: fit-content; /* Only takes up as much space as the logo/text */
+            text-decoration: none; 
+            color: white; 
+            cursor: pointer;
+            position: relative;
+            z-index: 10; /* Ensures the link is on top of other elements */
+        }
+
         @media screen and (max-width: 768px) {
-            .header-content {
+            .logo-link {
                 flex-direction: column !important;
+                text-align: center !important;
+                margin: 0 auto 20px auto;
+            }
+            .logo-link div {
                 text-align: center !important;
             }
         }
@@ -60,7 +76,7 @@
 
 <div style="background-color: #228B22; padding: 40px 20px; color: white; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
     
-    <a href="index.html" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; text-decoration: none; color: white; cursor: pointer;">
+    <a href="index.html" class="logo-link">
         <img src="logo.png" alt="Paramount logo" style="height: 80px; width: auto; display: block;">
         <div style="text-align: left;">
             <h1 style="margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 1px;">PARAMOUNT</h1>
@@ -106,22 +122,10 @@
     <div style="display: flex; flex-direction: column; align-items: center;">
         <div class="step-box" style="border-left: 5px solid #ffcc00; background: #fffcf0;">
             <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.8;">
-                <li style="margin-bottom: 10px;">
-                    <span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> 
-                    Birth Certificate (Original & Photocopy)
-                </li>
-                <li style="margin-bottom: 10px;">
-                    <span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> 
-                    Previous School TC (If applicable)
-                </li>
-                <li style="margin-bottom: 10px;">
-                    <span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> 
-                    Student Aadhaar Card
-                </li>
-                <li style="margin-bottom: 5px;">
-                    <span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> 
-                    4 Passport-sized Photos
-                </li>
+                <li><span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> Birth Certificate (Original & Photocopy)</li>
+                <li><span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> Previous School TC (If applicable)</li>
+                <li><span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> Student Aadhaar Card</li>
+                <li><span style="color: #228B22; font-weight: bold; margin-right: 10px;">→</span> 4 Passport-sized Photos</li>
             </ul>
         </div>
     </div>
