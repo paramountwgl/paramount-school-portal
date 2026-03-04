@@ -109,7 +109,7 @@
         .student-photo { 
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Better for generated avatars */
+            object-fit: cover;
             background: #fff;
         }
 
@@ -187,7 +187,7 @@
 <div class="profile-card">
     <div style="text-align: center;">
         <div class="photo-container">
-            <img id="studentPhoto" src="https://robohash.org/paramount?set=set5" alt="Student Avatar" class="student-photo">
+            <img id="studentPhoto" src="logo.png" alt="Student Photo" class="student-photo">
         </div>
         <h2 id="studentName" style="margin: 10px 0 5px;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Search to View Status</span>
@@ -265,11 +265,26 @@ function searchStudent() {
     const photoImg = document.getElementById('studentPhoto');
 
     if (student) {
-        // ROBAHASH PROVIDER: Very stable and reliable
-        // set5 = Human portraits
-        const seed = encodeURIComponent(student.name);
-        photoImg.src = `https://robohash.org/${seed}?set=set5`;
-        
+        // --- UPDATED IMAGE FOLDER LOGIC ---
+        // Looks for images in the 'students' folder using Roll Number
+        const imagePath = `students/${student.roll}.jpg`;
+        photoImg.src = imagePath;
+
+        // --- BROWSER CONSOLE DEBUGGER ---
+        // If the image fails, this tells you EXACTLY why in the F12 console
+        photoImg.onerror = function() {
+            console.error(`DEBUG: Failed to load student image.`);
+            console.error(`Looking for path: ${imagePath}`);
+            console.warn(`CHECKLIST: 
+            1. Is there a folder named 'students'? 
+            2. Is the file named exactly '${student.roll}.jpg'? 
+            3. Is the extension .jpg (lowercase)?`);
+            
+            // Fallback to logo so the page doesn't look broken
+            this.src = 'logo.png'; 
+        };
+
+        // Update basic info
         document.getElementById('studentName').innerText = student.name;
         document.getElementById('studentClass').innerText = student.class;
         document.getElementById('fatherName').innerText = student.father;
