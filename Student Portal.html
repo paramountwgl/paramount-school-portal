@@ -43,7 +43,6 @@
             margin-top: 20px;
         }
 
-        /* Container to hold input and X button */
         .input-wrapper {
             position: relative;
             flex: 1;
@@ -52,7 +51,7 @@
         }
 
         #rollNumberInput {
-            padding: 12px 40px 12px 20px; /* Extra right padding for the X */
+            padding: 12px 40px 12px 20px;
             border-radius: 30px;
             border: none;
             width: 100%;
@@ -61,18 +60,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        /* The Clear Button Styling */
         #clearBtn {
             position: absolute;
             right: 15px;
             color: #888;
             cursor: pointer;
-            display: none; /* Hidden by default */
+            display: none;
             font-size: 18px;
-            transition: color 0.2s;
         }
-        
-        #clearBtn:hover { color: #333; }
 
         .search-btn {
             padding: 12px 25px;
@@ -97,8 +92,14 @@
         }
 
         .student-photo { 
-            width: 120px; height: 120px; border-radius: 50%; border: 5px solid white; 
-            margin-top: -90px; background: #eee; object-fit: cover;
+            width: 130px; 
+            height: 130px; 
+            border-radius: 50%; 
+            border: 5px solid white; 
+            margin-top: -95px; 
+            background: #fff; /* White background looks better with avatars */
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .info-grid { 
@@ -148,7 +149,7 @@
 
 <div class="profile-header">
     <a href="index.html" class="header-logo-box">
-        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter:">
+        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter: brightness(0) invert(1);">
         <div style="text-align: left;">
             <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Paramount</h1>
             <p style="margin: 0; font-size: 9px; font-weight: bold; opacity: 0.9;">ENGLISH MEDIUM SCHOOL</p>
@@ -174,7 +175,7 @@
 
 <div class="profile-card">
     <div style="text-align: center;">
-        <img src="Shaik Tauseef Ali.png.jpeg" alt="Student Photo" class="student-photo">
+        <img id="studentPhoto" src="https://api.dicebear.com/7.x/adventurer/svg?seed=Paramount" alt="Student Avatar" class="student-photo">
         <h2 id="studentName" style="margin: 10px 0 5px;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Search to View Status</span>
     </div>
@@ -191,12 +192,6 @@
         <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
         <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
     </div>
-    
-    <div style="margin-top: 30px; text-align: center;">
-        <a href="index.html" style="text-decoration: none; color: #228B22; font-weight: bold;">
-            <i class="fas fa-arrow-left"></i> Back to Home
-        </a>
-    </div>
 </div>
 
 <script>
@@ -210,20 +205,18 @@ const studentData = {
         phonenumber: "9550791538"
     },
     "2203A51611": {
-        name: "Ayaan Khan",
+        name: "Shaik Minhaj Ali",
         class: "9th Grade - B",
-        father: "Mr. Mohammad Khan",
+        father: "Mr. Shaik Ahmad",
         attendance: "42%", 
         roll: "2203A51611",
         phonenumber: "8341039583"
     }
 };
 
-// --- CLEAR BUTTON LOGIC ---
 function toggleClearBtn() {
     const input = document.getElementById('rollNumberInput');
     const clearBtn = document.getElementById('clearBtn');
-    // Show X if there is text, hide if empty
     clearBtn.style.display = input.value.length > 0 ? "block" : "none";
 }
 
@@ -231,15 +224,20 @@ function clearSearch() {
     const input = document.getElementById('rollNumberInput');
     input.value = "";
     toggleClearBtn();
-    input.focus(); // Keep focus on the box
+    input.focus();
 }
 
 function searchStudent() {
     const input = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[input];
     const alertBox = document.getElementById('attendanceAlert');
+    const photoImg = document.getElementById('studentPhoto');
 
     if (student) {
+        // GENERATE 3D AVATAR: Using the student's name to create a unique avatar
+        // Style used: 'adventurer' for a fun, 3D character look
+        photoImg.src = `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(student.name)}`;
+        
         document.getElementById('studentName').innerText = student.name;
         document.getElementById('studentClass').innerText = student.class;
         document.getElementById('fatherName').innerText = student.father;
