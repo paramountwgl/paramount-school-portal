@@ -10,6 +10,7 @@
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f4f4; overflow-x: hidden; width: 100%; }
         
+        /* HEADER SECTION */
         .profile-header { 
             background: #228B22; 
             color: white; 
@@ -34,16 +35,15 @@
             z-index: 10;
         }
 
-        /* FIXED LOGO SIZING */
         .header-logo-box img {
-            height: 85px; /* Increased size */
+            height: 85px; 
             width: auto;
             display: block;
         }
 
         .header-logo-box h1 {
             margin: 0;
-            font-size: 32px; /* Large professional font */
+            font-size: 32px; 
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 800;
@@ -107,6 +107,7 @@
             white-space: nowrap;
         }
 
+        /* CARD SECTION */
         .profile-card { 
             max-width: 800px; 
             margin: 100px auto 40px; 
@@ -156,7 +157,6 @@
             background: #f0f0f0; color: #666; font-weight: bold; 
         }
 
-        /* FIXED: Added display: none here to ensure it is hidden at start */
         #attendanceAlert {
             display: none; 
             background-color: #fff3f3; 
@@ -169,7 +169,8 @@
             font-size: 14px;
         }
 
-        .print-only-header { display: none; }
+        /* HIDDEN ELEMENTS FOR WEB VIEW */
+        .print-only-header, .print-footer { display: none; }
 
         @media screen and (min-width: 769px) {
             .header-logo-box { position: absolute; left: 20px; top: 15px; }
@@ -182,6 +183,7 @@
             .header-logo-box h1 { font-size: 26px; }
         }
 
+        /* --- FINAL PRINT LOGIC --- */
         @media print {
             body { background: white !important; }
             .profile-header, button, .search-container, #clearBtn, .search-btn, a, .portal-title {
@@ -191,13 +193,32 @@
                 display: flex !important;
                 flex-direction: column;
                 align-items: center;
+                width: 100%;
+            }
+            .print-only-header h1 {
+                display: block !important;
+                margin: 0; 
+                color: #228B22 !important; 
+                text-transform: uppercase; 
+                font-size: 24px !important;
+                white-space: nowrap;
+                width: 100%;
+                text-align: center;
+            }
+            .print-footer {
+                display: flex !important;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-top: 50px;
+                padding-top: 20px;
+                width: 100%;
             }
             .profile-card {
-                margin: 20px auto !important;
+                margin: 10px auto !important;
                 box-shadow: none !important;
                 border: 1px solid #eee !important;
                 width: 98% !important;
-                padding: 40px 20px !important;
+                padding: 30px 20px !important;
             }
             .photo-container {
                 margin: 20px auto !important;
@@ -237,8 +258,8 @@
 
 <div class="profile-card">
     <div class="print-only-header">
-        <img src="logo.png" alt="Logo" style="height: 100px; width: auto; margin-bottom: 10px;">
-        <h1 style="margin: 0; color: #228B22; text-transform: uppercase; font-size: 36px;">Paramount English Medium School</h1>
+        <img src="logo.png" alt="Logo" style="height: 80px; width: auto; margin-bottom: 10px;">
+        <h1>Paramount English Medium School</h1>
         <p style="margin: 5px 0; font-weight: bold; color: #666;">Official Student Record - 2026-27</p>
     </div>
 
@@ -264,6 +285,17 @@
         <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
     </div>
     
+    <div class="print-footer">
+        <div style="text-align: center;">
+            <div style="width: 150px; border-bottom: 1px solid black; margin-bottom: 5px;"></div>
+            <p style="font-size: 12px; font-weight: bold;">Authorized Stamp</p>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 150px; border-bottom: 1px solid black; margin-bottom: 5px;"></div>
+            <p style="font-size: 12px; font-weight: bold;">Principal Signature</p>
+        </div>
+    </div>
+
     <div style="margin-top: 40px; text-align: center; display: flex; flex-direction: column; gap: 15px; align-items: center;">
         <button onclick="downloadReport()" style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #228B22; color: white; font-weight: bold; cursor: pointer; width: 220px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
             <i class="fas fa-file-download"></i> Download Report (PDF)
@@ -340,7 +372,6 @@ function searchStudent() {
         const attendanceValue = parseInt(student.attendance);
         const statusBadge = document.getElementById('statusBadge');
 
-        // Logic to show/hide alert based on actual attendance
         if (attendanceValue < 50) {
             statusBadge.innerText = "Inactive Student";
             statusBadge.style.background = "#ffebee";
