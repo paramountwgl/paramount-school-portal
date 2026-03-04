@@ -2,47 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Student Profile | Paramount School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f4f4; }
+        /* Base reset to prevent horizontal scrolling */
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f4f4; overflow-x: hidden; width: 100%; }
         
+        /* Fixed Header: Uses flex-direction to stack items correctly on all screens */
         .profile-header { 
             background: #228B22; 
             color: white; 
-            padding: 60px 20px; 
+            padding: 20px; 
             text-align: center; 
-            position: relative; 
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
+            min-height: 180px;
+            position: relative;
         }
 
-        /* Desktop Header Style */
+        /* Branding: Absolute on desktop, centered on mobile */
         .header-logo-box {
-            position: absolute; 
-            top: 15px; 
-            left: 20px; 
             display: flex; 
             align-items: center; 
             gap: 12px; 
             text-decoration: none; 
             color: white; 
             cursor: pointer;
-            z-index: 10;
+            padding: 10px;
+        }
+
+        /* Search Container: Centered and responsive */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        #rollNumberInput {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            flex: 1; /* Takes up available space */
+            min-width: 0; /* Prevents overflow */
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .search-btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: none;
+            background-color: #ffcc00;
+            color: #228B22;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
         .profile-card { 
             max-width: 800px; 
-            margin: 80px auto 40px; 
+            margin: 60px auto 40px; 
             background: white; 
             padding: 30px; 
             border-radius: 15px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
             position: relative;
-            width: 90%; /* Mobile friendly width */
+            width: 92%;
         }
 
         .student-photo { 
@@ -52,20 +87,19 @@
 
         .info-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 15px; 
             margin-top: 30px; 
             text-align: left; 
         }
 
         .info-item { padding: 10px; border-bottom: 1px solid #eee; }
         .info-item label { font-size: 11px; color: #888; display: block; text-transform: uppercase; }
-        .info-item span { font-weight: bold; color: #333; word-break: break-all; }
+        .info-item span { font-weight: bold; color: #333; word-break: break-word; }
         
         .status-badge { 
             padding: 5px 15px; border-radius: 20px; font-size: 12px; 
             background: #e8f5e9; color: #2e7d32; font-weight: bold; 
-            transition: 0.3s;
         }
 
         #attendanceAlert {
@@ -80,37 +114,25 @@
             font-size: 14px;
         }
 
-        /* MOBILE VIEW FIXES (Screens smaller than 768px) */
-        @media screen and (max-width: 768px) {
-            .profile-header {
-                padding: 100px 15px 40px; /* More top padding for the floating logo */
-            }
+        /* DESKTOP SPECIFIC: Moves branding to corner only if screen is wide */
+        @media screen and (min-width: 769px) {
             .header-logo-box {
-                position: relative;
-                top: 0;
-                left: 0;
-                flex-direction: column;
-                margin-bottom: 20px;
-                text-align: center;
+                position: absolute;
+                left: 20px;
+                top: 20px;
             }
-            .header-logo-box div {
-                text-align: center !important;
+            .profile-header {
+                padding-top: 80px;
             }
-            .search-container {
-                width: 100%;
-                flex-direction: column;
-                gap: 15px !important;
-            }
-            #rollNumberInput {
-                max-width: 100% !important;
-            }
-            .profile-card {
-                margin-top: 100px;
-                padding: 20px;
-            }
-            .info-grid {
-                grid-template-columns: 1fr; /* Stack items vertically on phones */
-            }
+        }
+
+        /* MOBILE SPECIFIC */
+        @media screen and (max-width: 768px) {
+            .profile-card { margin-top: 80px; padding: 20px; }
+            .info-grid { grid-template-columns: 1fr; } /* Stack details on phones */
+            .profile-header { padding: 20px 10px; }
+            .header-logo-box img { height: 50px; }
+            .header-logo-box h1 { font-size: 18px; }
         }
     </style>
 </head>
@@ -118,24 +140,22 @@
 
 <div class="profile-header">
     <a href="index.html" class="header-logo-box">
-        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter: brightness(0) invert(1);">
+        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter:">
         <div style="text-align: left;">
             <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Paramount</h1>
             <p style="margin: 0; font-size: 9px; font-weight: bold; opacity: 0.9;">ENGLISH MEDIUM SCHOOL</p>
         </div>
     </a>
 
-    <div class="search-container" style="display: flex; justify-content: center; gap: 10px; margin-top: 10px; width: 100%;">
-        <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" 
-               style="padding: 12px 20px; border-radius: 30px; border: none; width: 100%; max-width: 350px; font-size: 16px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-        <button onclick="searchStudent()" 
-                style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffcc00; color: #228B22; font-weight: bold; cursor: pointer;">
+    <div class="search-container">
+        <input type="text" id="rollNumberInput" placeholder="Enter Roll Number">
+        <button onclick="searchStudent()" class="search-btn">
             <i class="fas fa-search"></i>
         </button>
     </div>
 </div>
 
-<h1 style="text-align: center; color: #228B22; margin-top: 30px; text-transform: uppercase; letter-spacing: 2px; font-size: 22px;">
+<h1 style="text-align: center; color: #228B22; margin-top: 30px; text-transform: uppercase; letter-spacing: 2px; font-size: 20px;">
     Student Portal
 </h1>
 
@@ -152,26 +172,11 @@
     </div>
 
     <div class="info-grid">
-        <div class="info-item">
-            <label>Class / Section</label>
-            <span id="studentClass">---</span>
-        </div>
-        <div class="info-item">
-            <label>Father's Name</label>
-            <span id="fatherName">---</span>
-        </div>
-        <div class="info-item">
-            <label>Attendance</label>
-            <span id="attendanceRate">---</span>
-        </div>
-        <div class="info-item">
-            <label>Roll Number</label>
-            <span id="RollNumber">---</span>
-        </div>
-        <div class="info-item">
-            <label>Parent Phone Number</label>
-            <span id="PhoneNumber">---</span>
-        </div>
+        <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
+        <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
+        <div class="info-item"><label>Attendance</label><span id="attendanceRate">---</span></div>
+        <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
+        <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
     </div>
     
     <div style="margin-top: 30px; text-align: center;">
