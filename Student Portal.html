@@ -154,13 +154,34 @@
             .header-logo-box img { height: 50px; }
             .header-logo-box h1 { font-size: 18px; }
         }
+
+        /* --- PDF DOWNLOAD / PRINT STYLES --- */
+        @media print {
+            body { background: white; }
+            .profile-header, button, .search-container, #clearBtn, .search-btn, a, h1:not(.card-title) {
+                display: none !important;
+            }
+            .profile-card {
+                margin: 0 auto;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                width: 100%;
+                max-width: 100%;
+                padding: 40px;
+            }
+            .student-photo {
+                margin-top: 20px;
+            }
+            /* Ensures student portal header text doesn't appear in PDF */
+            h1 { display: none; }
+        }
     </style>
 </head>
 <body>
 
 <div class="profile-header">
     <a href="index.html" class="header-logo-box">
-        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter: ">
+        <img src="logo.png" alt="Logo" style="height: 55px; width: auto; filter:">
         <div style="text-align: left;">
             <h1 style="margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px;">Paramount</h1>
             <p style="margin: 0; font-size: 9px; font-weight: bold; opacity: 0.9;">ENGLISH MEDIUM SCHOOL</p>
@@ -207,7 +228,11 @@
         <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
     </div>
     
-    <div style="margin-top: 30px; text-align: center;">
+    <div style="margin-top: 30px; text-align: center; display: flex; flex-direction: column; gap: 15px; align-items: center;">
+        <button onclick="downloadReport()" style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #228B22; color: white; font-weight: bold; cursor: pointer; width: 220px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <i class="fas fa-file-download"></i> Download Report (PDF)
+        </button>
+
         <a href="index.html" style="text-decoration: none; color: #228B22; font-weight: bold;">
             <i class="fas fa-arrow-left"></i> Back to Home
         </a>
@@ -258,6 +283,16 @@ function clearSearch() {
     input.focus();
 }
 
+function downloadReport() {
+    const name = document.getElementById('studentName').innerText;
+    if (name === "Student Name" || name === "---") {
+        alert("Please search for a student first.");
+        return;
+    }
+    // Triggers the browser's save as PDF menu
+    window.print();
+}
+
 function searchStudent() {
     const input = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[input];
@@ -265,26 +300,14 @@ function searchStudent() {
     const photoImg = document.getElementById('studentPhoto');
 
     if (student) {
-        // --- UPDATED IMAGE FOLDER LOGIC ---
-        // Looks for images in the 'students' folder using Roll Number
         const imagePath = `students/${student.roll}.jpg`;
         photoImg.src = imagePath;
 
-        // --- BROWSER CONSOLE DEBUGGER ---
-        // If the image fails, this tells you EXACTLY why in the F12 console
         photoImg.onerror = function() {
-            console.error(`DEBUG: Failed to load student image.`);
-            console.error(`Looking for path: ${imagePath}`);
-            console.warn(`CHECKLIST: 
-            1. Is there a folder named 'students'? 
-            2. Is the file named exactly '${student.roll}.jpg'? 
-            3. Is the extension .jpg (lowercase)?`);
-            
-            // Fallback to logo so the page doesn't look broken
+            console.error(`DEBUG: Failed to load student image: ${imagePath}`);
             this.src = 'logo.png'; 
         };
 
-        // Update basic info
         document.getElementById('studentName').innerText = student.name;
         document.getElementById('studentClass').innerText = student.class;
         document.getElementById('fatherName').innerText = student.father;
