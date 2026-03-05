@@ -108,9 +108,12 @@
 
     <div class="info-grid">
         <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
+        <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
+        <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
         <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
         <div class="info-item"><label>Live Attendance %</label><span id="attendanceRate" style="color: #006633; font-size: 18px;">---</span></div>
-        <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
+        <div class="info-item"><label>Date of Birth</label><span id="studentDob">---</span></div>
+        <div class="info-item"><label>Date of Join</label><span id="studentDoj">---</span></div>
         <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
         <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
     </div>
@@ -134,35 +137,20 @@
 </div>
 
 <script>
-// I removed the hardcoded "attendance" variable and added "classKey"
+// --- PASTE EXCEL DATA HERE LATER ---
 const studentData = {
     "2203A51618": {
         name: "Shaik Tauseef Ali",
         class: "10th Grade - A",
         classKey: "10th-A",
+        admissionNo: "PEMS-1001",
+        dob: "15-Aug-2010",
+        doj: "01-Jun-2025",
         father: "Mr. Shaik Ahmad",
         roll: "2203A51618",
         phonenumber: "9550791538",
         gender: "Boy"
-    },
-    "2203A51611": {
-        name: "Shaik Minhaj Ali",
-        class: "9th Grade - B",
-        classKey: "9th-B",
-        father: "Mr. Shaik Ahmad",
-        roll: "2203A51611",
-        phonenumber: "8341039583",
-        gender: "Boy"
-    },
-    "2203A51612": {
-        name: "Sana Shaik",
-        class: "9th Grade - B", // Updated to match the existing class
-        classKey: "9th-B",
-        father: "Mr. Shaik Rahman",
-        roll: "2203A51612",
-        phonenumber: "7013882420",
-        gender: "Girl"
-    } 
+    }
 }; 
 
 function toggleClearBtn() {
@@ -197,20 +185,21 @@ function searchStudent() {
     if (student) {
         photoImg.src = `students/${student.roll}.jpg`;
 
-        document.getElementById('studentName').innerText = student.name;
-        document.getElementById('studentClass').innerText = student.class;
-        document.getElementById('fatherName').innerText = student.father;
-        document.getElementById('RollNumber').innerText = student.roll;
-        document.getElementById('PhoneNumber').innerText = student.phonenumber;
-        document.getElementById('studentGender').innerText = student.gender;
+        document.getElementById('studentName').innerText = student.name || "---";
+        document.getElementById('studentClass').innerText = student.class || "---";
+        document.getElementById('fatherName').innerText = student.father || "---";
+        document.getElementById('RollNumber').innerText = student.roll || "---";
+        document.getElementById('PhoneNumber').innerText = student.phonenumber || "---";
+        document.getElementById('studentGender').innerText = student.gender || "---";
+        document.getElementById('admissionNo').innerText = student.admissionNo || "---";
+        document.getElementById('studentDob').innerText = student.dob || "---";
+        document.getElementById('studentDoj').innerText = student.doj || "---";
 
         // --- FETCH LIVE DATA FROM TEACHER PORTAL ---
         let livePercent = 0;
         let hasData = false;
-        
         const savedData = JSON.parse(localStorage.getItem('paramountAttendance'));
 
-        // Look for the exact student in the exact class
         if (savedData && savedData[student.classKey] && savedData[student.classKey].students[student.name]) {
             const stats = savedData[student.classKey].students[student.name];
             if (stats.totalDays > 0) {
@@ -222,22 +211,20 @@ function searchStudent() {
         // --- UPDATE UI BASED ON LIVE DATA ---
         if (hasData) {
             document.getElementById('attendanceRate').innerText = livePercent + "%";
-            
             if (livePercent < 50) {
                 statusBadge.innerText = "Low Attendance";
                 statusBadge.style.background = "#ffebee";
                 statusBadge.style.color = "#c62828";
                 alertBox.style.display = "block";
-                document.getElementById('attendanceRate').style.color = "#c62828"; // Turn text red
+                document.getElementById('attendanceRate').style.color = "#c62828"; 
             } else {
                 statusBadge.innerText = "Active Student";
                 statusBadge.style.background = "#e8f5e9";
                 statusBadge.style.color = "#2e7d32";
                 alertBox.style.display = "none";
-                document.getElementById('attendanceRate').style.color = "#006633"; // Turn text green
+                document.getElementById('attendanceRate').style.color = "#006633"; 
             }
         } else {
-            // If the teacher hasn't taken any attendance for this student yet
             document.getElementById('attendanceRate').innerText = "No Data Yet";
             document.getElementById('attendanceRate').style.color = "#666";
             statusBadge.innerText = "No Records";
@@ -251,7 +238,6 @@ function searchStudent() {
     }
 }
 
-// Listen for the Enter key on the input field
 document.getElementById('rollNumberInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         searchStudent();
