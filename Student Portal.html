@@ -88,14 +88,14 @@
 
 <div class="profile-card">
     <div class="print-only-header">
-        <img src="logo.png" alt="Logo" style="height: 80px; width: auto; margin-bottom: 10px;" >
+        <img src="logo.png" alt="Logo" style="height: 80px; width: auto; margin-bottom: 10px;" onerror="this.style.display='none'">
         <h1>Paramount English Medium School</h1>
         <p style="margin: 5px 0; font-weight: bold; color: #666;">Official Student Record - 2026-27</p>
     </div>
 
     <div style="text-align: center;">
         <div class="photo-container">
-            <img id="studentPhoto" src="logo.png" alt="Student Photo" class="student-photo">
+            <img id="studentPhoto" src="logo.png" alt="Student Photo" class="student-photo" onerror="this.src='logo.png'">
         </div>
         <h2 id="studentName" style="margin: 10px 0 5px;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Search to View Status</span>
@@ -356,7 +356,8 @@ function searchStudent() {
     const statusBadge = document.getElementById('statusBadge');
 
     if (student) {
-        photoImg.src = `students/${student.Roll}.jpg`;
+        // FIXED: Now looking for .png instead of .jpg
+        photoImg.src = `students/${student.Roll}.png`;
 
         document.getElementById('studentName').innerText = student.Name || "---";
         document.getElementById('studentClass').innerText = student.Class || "---";
