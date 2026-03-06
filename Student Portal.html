@@ -8,9 +8,9 @@
     <link rel="icon" type="image/png" href="logo.png">
     <style>
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f4f4; overflow-x: hidden; width: 100%; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f7f6; overflow-x: hidden; width: 100%; }
         
-        /* BANNER STYLING - UPDATED TO NEW LOCATION */
+        /* BANNER STYLING - FIXED TO BE A ROUNDED BOX */
         #liveAnnouncementBanner { 
             display: none; 
             background-color: #c62828; 
@@ -19,34 +19,55 @@
             padding: 12px 20px; 
             font-weight: bold; 
             font-size: 15px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            z-index: 1000; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
             animation: pulseBanner 2.5s infinite; 
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            margin: 25px auto 10px auto; /* Centers the banner neatly below header */
         }
         @keyframes pulseBanner { 0% { background-color: #c62828; } 50% { background-color: #e53935; } 100% { background-color: #c62828; } }
         
-        .profile-header { background: #228B22; color: white; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 200px; position: relative; }
+        /* HEADER STYLING */
+        .profile-header { background: #006633; color: white; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 200px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .header-logo-box { display: flex; align-items: center; gap: 15px; text-decoration: none; color: white; cursor: pointer; padding: 10px; z-index: 10; }
         .header-logo-box img { height: 85px; width: auto; display: block; }
         .header-logo-box h1 { margin: 0; font-size: 32px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; color: white; }
-        .header-logo-box p { margin: 0; font-size: 12px; font-weight: bold; opacity: 0.9; letter-spacing: 1px; color: white; }
+        .header-logo-box p { margin: 0; font-size: 12px; font-weight: bold; opacity: 0.9; letter-spacing: 1px; color: white; color: #ffd700; }
+        
+        /* SEARCH BAR */
         .search-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 500px; margin-top: 20px; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
         #rollNumberInput { padding: 12px 45px 12px 20px; border-radius: 30px; border: none; width: 100%; font-size: 16px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         #clearBtn { position: absolute; right: 15px; color: #888; cursor: pointer; display: none; font-size: 18px; z-index: 5; }
-        .search-btn { padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffcc00; color: #228B22; font-weight: bold; cursor: pointer; white-space: nowrap; }
-        .profile-card { max-width: 800px; margin: 40px auto 40px; background: white; padding: 60px 30px 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; width: 92%; }
-        .photo-container { width: 140px; height: 140px; margin: -130px auto 15px; border-radius: 50%; border: 5px solid white; background: #eef2f3; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .search-btn { padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffd700; color: #006633; font-weight: bold; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+        .search-btn:hover { background-color: #ffea00; }
+        
+        /* TITLE SPACING FIXED */
+        .portal-title { text-align: center; color: #006633; margin: 20px 0 70px 0; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; font-weight: 900; }
+        
+        /* STUDENT CARD - COMPACTED */
+        .profile-card { max-width: 750px; margin: 0 auto 40px auto; background: white; padding: 60px 30px 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); position: relative; width: 92%; }
+        .photo-container { width: 130px; height: 130px; margin: -120px auto 15px; border-radius: 50%; border: 5px solid white; background: #eef2f3; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; background: #fff; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 30px; text-align: left; }
-        .info-item { padding: 10px; border-bottom: 1px solid #eee; }
-        .info-item label { font-size: 11px; color: #888; display: block; text-transform: uppercase; }
-        .info-item span { font-weight: bold; color: #333; word-break: break-word; }
-        .status-badge { padding: 5px 15px; border-radius: 20px; font-size: 12px; background: #f0f0f0; color: #666; font-weight: bold; }
+        
+        /* INFO GRID - SMALLER TEXT, BOXED LOOK */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; text-align: left; border-top: 2px solid #f0f0f0; padding-top: 25px; }
+        .info-item { padding: 10px 15px; background: #fafafa; border-radius: 8px; border: 1px solid #eee; }
+        .info-item label { font-size: 11px; color: #777; display: block; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
+        .info-item span { font-weight: 800; color: #333; font-size: 14px; word-break: break-word; display: block; }
+        
+        .status-badge { padding: 6px 18px; border-radius: 20px; font-size: 12px; background: #f0f0f0; color: #666; font-weight: bold; display: inline-block; margin-top: 10px; }
         #attendanceAlert { display: none; background-color: #fff3f3; color: #c62828; padding: 15px; border-radius: 10px; border-left: 5px solid #c62828; margin: 20px 0; text-align: left; font-size: 14px; }
+        
         .print-only-header, .print-footer { display: none; }
+        
         @media screen and (min-width: 769px) { .header-logo-box { position: absolute; left: 20px; top: 15px; } .profile-header { padding-top: 100px; } }
-        @media screen and (max-width: 768px) { .profile-card { margin-top: 80px; padding: 60px 20px 20px; } .header-logo-box img { height: 70px; } .header-logo-box h1 { font-size: 26px; } }
-        @media print { body { background: white !important; } #liveAnnouncementBanner, .profile-header, button, .search-container, #clearBtn, .search-btn, a, .portal-title { display: none !important; } .print-only-header { display: flex !important; flex-direction: column; align-items: center; width: 100%; } .print-only-header h1 { display: block !important; margin: 0; color: #228B22 !important; text-transform: uppercase; font-size: 24px !important; white-space: nowrap; width: 100%; text-align: center; } .print-footer { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 20px; width: 100%; } .profile-card { margin: 10px auto !important; box-shadow: none !important; border: 1px solid #eee !important; width: 98% !important; padding: 30px 20px !important; } .photo-container { margin: 20px auto !important; border: 2px solid #228B22 !important; } .student-photo { object-fit: contain !important; } }
+        @media screen and (max-width: 768px) { .header-logo-box img { height: 70px; } .header-logo-box h1 { font-size: 26px; } .portal-title { font-size: 26px; margin-bottom: 60px; } }
+        
+        /* PRINT STYLES */
+        @media print { body { background: white !important; } #liveAnnouncementBanner, .profile-header, button, .search-container, #clearBtn, .search-btn, a, .portal-title { display: none !important; } .print-only-header { display: flex !important; flex-direction: column; align-items: center; width: 100%; } .print-only-header h1 { display: block !important; margin: 0; color: #228B22 !important; text-transform: uppercase; font-size: 24px !important; white-space: nowrap; width: 100%; text-align: center; } .print-footer { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 20px; width: 100%; } .profile-card { margin: 10px auto !important; box-shadow: none !important; border: 1px solid #eee !important; width: 98% !important; padding: 30px 20px !important; } .photo-container { margin: 20px auto !important; border: 2px solid #228B22 !important; margin-bottom: 10px; } .student-photo { object-fit: contain !important; } .info-item { background: transparent !important; border: none !important; padding: 5px !important; } }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -69,7 +90,7 @@
 
 <div id="liveAnnouncementBanner"><i class="fas fa-bell" style="color: #ffd700; margin-right: 8px; font-size: 18px;"></i> <span id="announcementMessageText"></span></div>
 
-<h1 class="portal-title" style="text-align: center; color: #228B22; margin: 40px 0 0; font-size: 38px; text-transform: uppercase; letter-spacing: 3px; font-weight: 800;">Student Portal</h1>
+<h1 class="portal-title">STUDENT PORTAL</h1>
 
 <div class="profile-card">
     <div class="print-only-header">
@@ -80,7 +101,7 @@
 
     <div style="text-align: center;">
         <div class="photo-container"><img id="studentPhoto" src="logo.png" alt="Student Photo" class="student-photo" onerror="this.src='logo.png'"></div>
-        <h2 id="studentName" style="margin: 10px 0 5px;">Student Name</h2>
+        <h2 id="studentName" style="margin: 10px 0 5px; font-size: 28px; color: #006633; text-transform: uppercase; font-weight: 900;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Search to View Status</span>
     </div>
 
@@ -91,7 +112,7 @@
         <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
         <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
         <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
-        <div class="info-item"><label>Live Attendance %</label><span id="attendanceRate" style="color: #006633; font-size: 18px;">---</span></div>
+        <div class="info-item" style="background: #e8f5e9; border-color: #c8e6c9;"><label>Live Attendance %</label><span id="attendanceRate" style="color: #006633; font-size: 18px;">---</span></div>
         <div class="info-item"><label>Date of Birth</label><span id="studentDob">---</span></div>
         <div class="info-item"><label>Date of Join</label><span id="studentDoj">---</span></div>
         <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
@@ -103,8 +124,8 @@
         <div style="text-align: center;"><div style="width: 150px; border-bottom: 1px solid black; margin-bottom: 5px;"></div><p style="font-size: 12px; font-weight: bold;">Principal Signature</p></div>
     </div>
 
-    <div style="margin-top: 40px; text-align: center; display: flex; flex-direction: column; gap: 15px; align-items: center;">
-        <button onclick="downloadReport()" style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #228B22; color: white; font-weight: bold; cursor: pointer; width: 220px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><i class="fas fa-file-download"></i> Download Report (PDF)</button>
+    <div style="margin-top: 30px; text-align: center;">
+        <button onclick="downloadReport()" style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #006633; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><i class="fas fa-print"></i> Print Official Record</button>
     </div>
 </div>
 
@@ -275,6 +296,7 @@ const studentData = {
     "1298410": { Name: "Garige Harshith", Class: "Grade-3 (Crystal)", AdmissionNo: "106", Dob: "2017-09-10", Doj: "2022-06-20", Father: "Chiranjeevi", Roll: "1298410", Phonenumber: "9959114639", Gender: "Male" },
     "1459844": { Name: "Katkuri Hanish", Class: "Grade-3 (Crystal)", AdmissionNo: "169", Dob: "2015-08-25", Doj: "2025-06-24", Father: "Katkuri Suryaprasad", Roll: "1459844", Phonenumber: "9000557009", Gender: "Male" },
     "1459798": { Name: "Katukuri Manideep", Class: "Grade-3 (Crystal)", AdmissionNo: "172", Dob: "2016-05-15", Doj: "2025-05-31", Father: "Chiranjeevi", Roll: "1459798", Phonenumber: "8247004380", Gender: "Male" },
+    // PERIOD REMOVED IN NAME FOR CLOUD MATCHING
     "1459805": { Name: "MD Abdul Quddus", Class: "Grade-3 (Crystal)", AdmissionNo: "160", Dob: "2017-10-13", Doj: "2025-06-02", Father: "Raja.S", Roll: "1459805", Phonenumber: "7300303319", Gender: "Male" },
     "1298395": { Name: "Muppa Sathwik Patel", Class: "Grade-3 (Crystal)", AdmissionNo: "81", Dob: "2016-10-11", Doj: "2023-05-30", Father: "Janardhan", Roll: "1298395", Phonenumber: "9553800447", Gender: "Male" },
     "1298386": { Name: "Nuthanakanti Sansita", Class: "Grade-3 (Crystal)", AdmissionNo: "75", Dob: "2017-04-21", Doj: "2022-06-27", Father: "Sridhar", Roll: "1298386", Phonenumber: "7989663380", Gender: "Female" },
@@ -299,6 +321,7 @@ const studentData = {
     "1298361": { Name: "Kowshik Patel Muppa", Class: "Grade-5 (Moonstone)", AdmissionNo: "77", Dob: "2014-09-03", Doj: "2023-05-30", Father: "Janardhan", Roll: "1298361", Phonenumber: "9553800447", Gender: "Male" },
     "1298355": { Name: "Siri Singaram", Class: "Grade-5 (Moonstone)", AdmissionNo: "83", Dob: "2014-08-16", Doj: "2023-06-06", Father: "Madhu", Roll: "1298355", Phonenumber: "9550726263", Gender: "Female" },
     "1298360": { Name: "Srikar Mandala", Class: "Grade-5 (Moonstone)", AdmissionNo: "76", Dob: "2013-11-28", Doj: "2023-05-26", Father: "Ramesh", Roll: "1298360", Phonenumber: "9550073190", Gender: "Male" },
+    // PERIOD REMOVED IN NAME FOR CLOUD MATCHING
     "1459801": { Name: "Abdus Salaam MD", Class: "Grade-5 (Moonstone)", AdmissionNo: "158", Dob: "2015-08-22", Doj: "2025-06-02", Father: "Raja.S", Roll: "1459801", Phonenumber: "7300303319", Gender: "Male" },
     "1392968": { Name: "Akshith Ram Kalvacharla", Class: "Grade-5 (Moonstone)", AdmissionNo: "126", Dob: "2015-08-21", Doj: "2024-06-12", Father: "Hareen Chary", Roll: "1392968", Phonenumber: "7672058517", Gender: "Male" },
     "1392965": { Name: "Jaffar Anas Shaik", Class: "Grade-5 (Moonstone)", AdmissionNo: "130", Dob: "2013-04-17", Doj: "2024-06-12", Father: "Khaja Pasha", Roll: "1392965", Phonenumber: "9391854024", Gender: "Male" },
@@ -377,8 +400,9 @@ function searchStudent() {
         if (totalDays === 0) {
             attendanceRateElement.innerText = "No Classes Yet";
             attendanceRateElement.style.color = "#666";
-            badge.innerText = "NO DATA";
-            badge.className = "status-badge badge-neutral";
+            badge.innerText = "NO DATA YET";
+            badge.style.background = "#f0f0f0";
+            badge.style.color = "#666";
             alertBox.style.display = "none";
         } else {
             const percent = Math.round((presentDays / totalDays) * 100);
@@ -387,12 +411,14 @@ function searchStudent() {
             if (percent >= 50) {
                 attendanceRateElement.style.color = "#006633";
                 badge.innerText = "GOOD STANDING";
-                badge.className = "status-badge badge-good";
+                badge.style.background = "#e8f5e9";
+                badge.style.color = "#2e7d32";
                 alertBox.style.display = "none";
             } else {
                 attendanceRateElement.style.color = "#c62828";
                 badge.innerText = "ACTION REQUIRED";
-                badge.className = "status-badge badge-bad";
+                badge.style.background = "#ffebee";
+                badge.style.color = "#c62828";
                 alertBox.style.display = "block";
             }
         }
