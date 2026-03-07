@@ -10,127 +10,104 @@
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f7f6; overflow-x: hidden; width: 100%; }
         
-        /* BANNER STYLING - FIXED TO BE A ROUNDED BOX */
-        #liveAnnouncementBanner { 
-            display: none; 
-            background-color: #c62828; 
-            color: white; 
-            text-align: center; 
-            padding: 12px 20px; 
-            font-weight: bold; 
-            font-size: 15px; 
-            z-index: 1000; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            animation: pulseBanner 2.5s infinite; 
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            margin: 25px auto 10px auto; /* Centers the banner neatly below header */
+        /* NAVIGATION BAR */
+        .portal-nav { 
+            background: #004d26; 
+            padding: 12px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 2000;
         }
+        .portal-nav a { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid #ffd700; }
+        .portal-nav a:hover { color: #ffd700; }
+
+        /* BANNER & HEADER STYLING */
+        #liveAnnouncementBanner { display: none; background-color: #c62828; color: white; text-align: center; padding: 12px 20px; font-weight: bold; font-size: 15px; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); animation: pulseBanner 2.5s infinite; border-radius: 12px; width: 90%; max-width: 600px; margin: 25px auto 10px auto; }
         @keyframes pulseBanner { 0% { background-color: #c62828; } 50% { background-color: #e53935; } 100% { background-color: #c62828; } }
-        
-        /* HEADER STYLING */
-        .profile-header { background: #006633; color: white; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 200px; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .profile-header { background: #006633; color: white; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 200px; position: relative; }
         .header-logo-box { display: flex; align-items: center; gap: 15px; text-decoration: none; color: white; cursor: pointer; padding: 10px; z-index: 10; }
-        .header-logo-box img { height: 85px; width: auto; display: block; }
-        .header-logo-box h1 { margin: 0; font-size: 32px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; color: white; }
-        .header-logo-box p { margin: 0; font-size: 12px; font-weight: bold; opacity: 0.9; letter-spacing: 1px; color: white; color: #ffd700; }
+        .header-logo-box img { height: 85px; width: auto; }
+        .header-logo-box h1 { margin: 0; font-size: 32px; text-transform: uppercase; font-weight: 800; }
+        .header-logo-box p { margin: 0; font-size: 12px; color: #ffd700; }
         
-        /* SEARCH BAR */
+        /* SEARCH & CARDS */
         .search-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 500px; margin-top: 20px; }
         .input-wrapper { position: relative; flex: 1; display: flex; align-items: center; }
         #rollNumberInput { padding: 12px 45px 12px 20px; border-radius: 30px; border: none; width: 100%; font-size: 16px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        #clearBtn { position: absolute; right: 15px; color: #888; cursor: pointer; display: none; font-size: 18px; z-index: 5; }
-        .search-btn { padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffd700; color: #006633; font-weight: bold; cursor: pointer; white-space: nowrap; transition: 0.2s; }
-        .search-btn:hover { background-color: #ffea00; }
-        
-        /* TITLE SPACING FIXED */
-        .portal-title { text-align: center; color: #006633; margin: 20px 0 70px 0; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; font-weight: 900; }
-        
-        /* STUDENT CARD - COMPACTED */
+        .search-btn { padding: 12px 25px; border-radius: 30px; border: none; background-color: #ffd700; color: #006633; font-weight: bold; cursor: pointer; }
+        .portal-title { text-align: center; color: #006633; margin: 20px 0 70px 0; font-size: 32px; font-weight: 900; }
         .profile-card { max-width: 750px; margin: 0 auto 40px auto; background: white; padding: 60px 30px 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); position: relative; width: 92%; }
-        .photo-container { width: 130px; height: 130px; margin: -120px auto 15px; border-radius: 50%; border: 5px solid white; background: #eef2f3; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .student-photo { width: 100%; height: 100%; object-fit: cover; background: #fff; }
-        
-        /* INFO GRID - SMALLER TEXT, BOXED LOOK */
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; text-align: left; border-top: 2px solid #f0f0f0; padding-top: 25px; }
+        .photo-container { width: 130px; height: 130px; margin: -120px auto 15px; border-radius: 50%; border: 5px solid white; background: #eef2f3; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .student-photo { width: 100%; height: 100%; object-fit: cover; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; border-top: 2px solid #f0f0f0; padding-top: 25px; }
         .info-item { padding: 10px 15px; background: #fafafa; border-radius: 8px; border: 1px solid #eee; }
-        .info-item label { font-size: 11px; color: #777; display: block; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
-        .info-item span { font-weight: 800; color: #333; font-size: 14px; word-break: break-word; display: block; }
-        
-        .status-badge { padding: 6px 18px; border-radius: 20px; font-size: 12px; background: #f0f0f0; color: #666; font-weight: bold; display: inline-block; margin-top: 10px; }
-        #attendanceAlert { display: none; background-color: #fff3f3; color: #c62828; padding: 15px; border-radius: 10px; border-left: 5px solid #c62828; margin: 20px 0; text-align: left; font-size: 14px; }
-        
-        .print-only-header, .print-footer { display: none; }
-        
-        @media screen and (min-width: 769px) { .header-logo-box { position: absolute; left: 20px; top: 15px; } .profile-header { padding-top: 100px; } }
-        @media screen and (max-width: 768px) { .header-logo-box img { height: 70px; } .header-logo-box h1 { font-size: 26px; } .portal-title { font-size: 26px; margin-bottom: 60px; } }
-        
-        /* PRINT STYLES */
-        @media print { body { background: white !important; } #liveAnnouncementBanner, .profile-header, button, .search-container, #clearBtn, .search-btn, a, .portal-title { display: none !important; } .print-only-header { display: flex !important; flex-direction: column; align-items: center; width: 100%; } .print-only-header h1 { display: block !important; margin: 0; color: #228B22 !important; text-transform: uppercase; font-size: 24px !important; white-space: nowrap; width: 100%; text-align: center; } .print-footer { display: flex !important; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-top: 20px; width: 100%; } .profile-card { margin: 10px auto !important; box-shadow: none !important; border: 1px solid #eee !important; width: 98% !important; padding: 30px 20px !important; } .photo-container { margin: 20px auto !important; border: 2px solid #228B22 !important; margin-bottom: 10px; } .student-photo { object-fit: contain !important; } .info-item { background: transparent !important; border: none !important; padding: 5px !important; } }
+        .info-item label { font-size: 11px; color: #777; display: block; text-transform: uppercase; font-weight: bold; }
+        .info-item span { font-weight: 800; color: #333; font-size: 14px; display: block; }
+        .status-badge { padding: 6px 18px; border-radius: 20px; font-size: 12px; background: #f0f0f0; font-weight: bold; display: inline-block; margin-top: 10px; }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
+<div class="portal-nav">
+    <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile Search</a>
+    <a href="homework.html"><i class="fas fa-book-open"></i> Daily Homework</a>
+</div>
+
 <div class="profile-header">
     <a href="index.html" class="header-logo-box">
-        <img src="logo.png" alt="School Logo" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Logo">
         <div style="text-align: left;"><h1>Paramount</h1><p>ENGLISH MEDIUM SCHOOL</p></div>
     </a>
     <div class="search-container">
         <div class="input-wrapper">
-            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" oninput="toggleClearBtn()" onkeypress="if(event.key === 'Enter') searchStudent()">
-            <span id="clearBtn" onclick="clearSearch()"><i class="fas fa-times-circle"></i></span>
+            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent()">
         </div>
         <button onclick="searchStudent()" class="search-btn"><i class="fas fa-search"></i></button>
     </div>
 </div>
 
-<div id="liveAnnouncementBanner"><i class="fas fa-bell" style="color: #ffd700; margin-right: 8px; font-size: 18px;"></i> <span id="announcementMessageText"></span></div>
+<div id="liveAnnouncementBanner"><i class="fas fa-bell" style="color: #ffd700; margin-right: 8px;"></i> <span id="announcementMessageText"></span></div>
 
 <h1 class="portal-title">STUDENT PORTAL</h1>
 
 <div class="profile-card">
-    <div class="print-only-header">
-        <img src="logo.png" alt="Logo" style="height: 80px; width: auto; margin-bottom: 10px;" onerror="this.style.display='none'">
-        <h1>Paramount English Medium School</h1>
-        <p style="margin: 5px 0; font-weight: bold; color: #666;">Official Student Record - 2026-27</p>
-    </div>
-
     <div style="text-align: center;">
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" alt="Student Photo" class="student-photo" onerror="this.src='logo.png'"></div>
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
         <h2 id="studentName" style="margin: 10px 0 5px; font-size: 28px; color: #006633; text-transform: uppercase; font-weight: 900;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Search to View Status</span>
     </div>
-
-    <div id="attendanceAlert"><i class="fas fa-exclamation-triangle"></i> <strong>Low Attendance Warning:</strong> Parent/Guardian intervention is required. Attendance has dropped below 50%.</div>
 
     <div class="info-grid">
         <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
         <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
         <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
         <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
-        <div class="info-item" style="background: #e8f5e9; border-color: #c8e6c9;"><label>Live Attendance %</label><span id="attendanceRate" style="color: #006633; font-size: 18px;">---</span></div>
+        <div class="info-item" style="background: #e8f5e9;"><label>Live Attendance %</label><span id="attendanceRate" style="color: #006633; font-size: 18px;">---</span></div>
         <div class="info-item"><label>Date of Birth</label><span id="studentDob">---</span></div>
-        <div class="info-item"><label>Date of Join</label><span id="studentDoj">---</span></div>
         <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
         <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
-    </div>
-    
-    <div class="print-footer">
-        <div style="text-align: center;"><div style="width: 150px; border-bottom: 1px solid black; margin-bottom: 5px;"></div><p style="font-size: 12px; font-weight: bold;">Authorized Stamp</p></div>
-        <div style="text-align: center;"><div style="width: 150px; border-bottom: 1px solid black; margin-bottom: 5px;"></div><p style="font-size: 12px; font-weight: bold;">Principal Signature</p></div>
-    </div>
-
-    <div style="margin-top: 30px; text-align: center;">
-        <button onclick="downloadReport()" style="padding: 12px 25px; border-radius: 30px; border: none; background-color: #006633; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"><i class="fas fa-print"></i> Print Official Record</button>
     </div>
 </div>
 
 <script>
-// --- FIREBASE INITIALIZATION ---
 const firebaseConfig = {
   apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8",
   authDomain: "paramount-school-d55bc.firebaseapp.com",
@@ -143,7 +120,235 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Listen for Announcements
+const studentData = {
+    "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)", AdmissionNo: "2052", Father: "M.Vinay", Roll: "1472070", Phonenumber: "9182861346", Gender: "Male", Dob: "---" },
+    "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)", AdmissionNo: "2061", Father: "Illandula Ravi", Roll: "1478225", Phonenumber: "9848742172", Gender: "Male", Dob: "2022-11-22" },
+    "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG (Diamond)", AdmissionNo: "2047", Father: "Srinu", Roll: "1469391", Phonenumber: "9533030806", Gender: "Female", Dob: "2022-01-26" },
+    "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG (Diamond)", AdmissionNo: "2024", Father: "Vijay", Roll: "1459555", Phonenumber: "8686191768", Gender: "Female", Dob: "2022-10-19" },
+    "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG (Diamond)", AdmissionNo: "2017", Father: "Raju", Roll: "1459560", Phonenumber: "9704592874", Gender: "Female", Dob: "2022-03-16" },
+    "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG (Diamond)", AdmissionNo: "2058", Father: "S.Abhinav", Roll: "1474500", Phonenumber: "8074771010", Gender: "Female", Dob: "2022-10-03" },
+    "1460680": { Name: "Afraha Begum", Class: "Pre-KG (Diamond)", AdmissionNo: "2043", Father: "Amjad Khan", Roll: "1460680", Phonenumber: "9440107489", Gender: "Female", Dob: "2021-10-07" },
+    "1472299": { Name: "Aliya Sultana", Class: "Pre-KG (Diamond)", AdmissionNo: "2054", Father: "MD.Allayar Khan", Roll: "1472299", Phonenumber: "6304312988", Gender: "Female", Dob: "2021-11-14" },
+    "1459683": { Name: "Anvika Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2020", Father: "Sridhar", Roll: "1459683", Phonenumber: "9398418487", Gender: "Female", Dob: "2022-05-28" },
+    "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG (Diamond)", AdmissionNo: "2016", Father: "Rajendraprasad", Roll: "1459620", Phonenumber: "6305756873", Gender: "Female", Dob: "2022-02-18" },
+    "1459605": { Name: "Devansh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2030", Father: "Rajukumar", Roll: "1459605", Phonenumber: "9121285781", Gender: "Male", Dob: "2022-02-04" },
+    "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG (Diamond)", AdmissionNo: "2050", Father: "M.Rajkumar", Roll: "1472069", Phonenumber: "7780262276", Gender: "Female", Dob: "2022-04-01" },
+    "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG (Diamond)", AdmissionNo: "2056", Father: "S.Prashanth", Roll: "1472723", Phonenumber: "9515837322", Gender: "Male", Dob: "2023-08-03" },
+    "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2033", Father: "Ramesh", Roll: "1459658", Phonenumber: "8790611868", Gender: "Female", Dob: "2022-02-18" },
+    "1478248": { Name: "Jashritha Boina", Class: "Pre-KG (Diamond)", AdmissionNo: "2060", Father: "B.Poorna Chander", Roll: "1478248", Phonenumber: "6302186195", Gender: "Female", Dob: "2023-05-11" },
+    "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG (Diamond)", AdmissionNo: "0", Father: "K.Akhil", Roll: "1481135", Phonenumber: "8179316869", Gender: "Female", Dob: "2022-03-11" },
+    "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG (Diamond)", AdmissionNo: "2014", Father: "Shivakumar", Roll: "1459568", Phonenumber: "7842370658", Gender: "Male", Dob: "2022-01-24" },
+    "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG (Diamond)", AdmissionNo: "2023", Father: "Sayeed", Roll: "1459652", Phonenumber: "9948172033", Gender: "Female", Dob: "2022-10-04" },
+    "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG (Diamond)", AdmissionNo: "2019", Father: "Shivaram", Roll: "1459636", Phonenumber: "9347825403", Gender: "Female", Dob: "2022-05-27" },
+    "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2045", Father: "Ramesh", Roll: "1463720", Phonenumber: "7386940719", Gender: "Male", Dob: "2022-08-26" },
+    "1459582": { Name: "Rishi Manupati", Class: "Pre-KG (Diamond)", AdmissionNo: "2039", Father: "Kittu", Roll: "1459582", Phonenumber: "9391993955", Gender: "Male", Dob: "2021-09-02" },
+    "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2041", Father: "Raju", Roll: "1459607", Phonenumber: "8686262543", Gender: "Male", Dob: "2022-07-13" },
+    "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2032", Father: "Ramulu", Roll: "1459604", Phonenumber: "7893718047", Gender: "Male", Dob: "2023-03-24" },
+    "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2038", Father: "Bixapathi", Roll: "1459625", Phonenumber: "7702551738", Gender: "Female", Dob: "2022-07-04" },
+    "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG (Diamond)", AdmissionNo: "2053", Father: "K.Venkateshwarlu", Roll: "1472074", Phonenumber: "8712525233", Gender: "Male", Dob: "2022-10-12" },
+    "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG (Diamond)", AdmissionNo: "2042", Father: "Yaka Swami", Roll: "1469395", Phonenumber: "9052020711", Gender: "Female", Dob: "2021-12-10" },
+    "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG (Diamond)", AdmissionNo: "2013", Father: "VASU", Roll: "1456748", Phonenumber: "9912101753", Gender: "Male", Dob: "---" },
+    "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG (Diamond)", AdmissionNo: "2040", Father: "Shivaramakrishna", Roll: "1459687", Phonenumber: "9398065483", Gender: "Female", Dob: "2022-02-16" },
+    "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG (Diamond)", AdmissionNo: "2012", Father: "Vijay", Roll: "1459572", Phonenumber: "8686191768", Gender: "Male", Dob: "2021-05-17" },
+    "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG (Diamond)", AdmissionNo: "2029", Father: "Arun", Roll: "1459643", Phonenumber: "9346300709", Gender: "Female", Dob: "2021-07-22" },
+    "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG (Diamond)", AdmissionNo: "2037", Father: "Srikanth", Roll: "1459603", Phonenumber: "8309708832", Gender: "Female", Dob: "2022-05-20" },
+    "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG (Diamond)", AdmissionNo: "2055", Father: "V.Kiran Kumar", Roll: "1472536", Phonenumber: "9642539015", Gender: "Male", Dob: "2022-12-23" },
+    "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG (Diamond)", AdmissionNo: "2025", Father: "RANGITH", Roll: "1456743", Phonenumber: "9949327643", Gender: "Male", Dob: "---" },
+    "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG (Diamond)", AdmissionNo: "2057", Father: "L.Rahul", Roll: "1473500", Phonenumber: "9010913855", Gender: "Female", Dob: "2022-07-29" },
+    "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG (Diamond)", AdmissionNo: "2046", Father: "Bharat Kumar", Roll: "1463724", Phonenumber: "8074833651", Gender: "Male", Dob: "2023-01-06" },
+    "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG (Diamond)", AdmissionNo: "2022", Father: "Kranthi", Roll: "1459694", Phonenumber: "9963987952", Gender: "Male", Dob: "2022-08-19" },
+    "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG (Diamond)", AdmissionNo: "2059", Father: "L.Shiva", Roll: "1474815", Phonenumber: "9182045866", Gender: "Female", Dob: "2022-10-14" },
+    "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG (Diamond)", AdmissionNo: "2044", Father: "Anil Kumar", Roll: "1460690", Phonenumber: "9703293930", Gender: "Male", Dob: "---" },
+    "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG (Diamond)", AdmissionNo: "2006", Father: "MM Suresh kumar", Roll: "1478250", Phonenumber: "8247448532", Gender: "Female", Dob: "2022-02-24" },
+    "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG (Diamond)", AdmissionNo: "2015", Father: "Shekar", Roll: "1413563", Phonenumber: "7671807331", Gender: "Male", Dob: "2022-01-31" },
+    "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG (Diamond)", AdmissionNo: "2018", Father: "Yousuf Shareef", Roll: "1459577", Phonenumber: "9392670257", Gender: "Female", Dob: "2022-05-05" },
+    "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1 (Ruby)", AdmissionNo: "2007", Father: "Rakesh", Roll: "1424084", Phonenumber: "9502626801", Gender: "Female", Dob: "2021-10-09" },
+    "1426519": { Name: "Aditya Manda", Class: "KG-1 (Ruby)", AdmissionNo: "2004", Father: "Mohan Lal", Roll: "1426519", Phonenumber: "8374173873", Gender: "Male", Dob: "2022-01-21" },
+    "1426518": { Name: "Aadhya Jella", Class: "KG-1 (Ruby)", AdmissionNo: "2003", Father: "Bhikshapathi", Roll: "1426518", Phonenumber: "9959633484", Gender: "Female", Dob: "2022-05-25" },
+    "1392920": { Name: "Advaita Gauri Bandi", Class: "KG-1 (Ruby)", AdmissionNo: "1993", Father: "B. Karnakar", Roll: "1392920", Phonenumber: "9550011612", Gender: "Female", Dob: "2021-07-31" },
+    "1392683": { Name: "Aizah Amna Shaik", Class: "KG-1 (Ruby)", AdmissionNo: "1986", Father: "Jahed Ali", Roll: "1392683", Phonenumber: "9014984808", Gender: "Female", Dob: "2020-12-18" },
+    "1472077": { Name: "Akshara Singaram", Class: "KG-1 (Ruby)", AdmissionNo: "2051", Father: "S.Prasanth", Roll: "1472077", Phonenumber: "7095527244", Gender: "Female", Dob: "2020-08-30" },
+    "1469394": { Name: "Bhahuveer Raj Somishetti", Class: "KG-1 (Ruby)", AdmissionNo: "2048", Father: "Harinivas", Roll: "1469394", Phonenumber: "9951394609", Gender: "Male", Dob: "2021-10-12" },
+    "1392676": { Name: "Gayathri Erroju", Class: "KG-1 (Ruby)", AdmissionNo: "1989", Father: "Rajesh", Roll: "1392676", Phonenumber: "9010050059", Gender: "Female", Dob: "2021-02-12" },
+    "1390570": { Name: "Hanvika Mulkalapelli", Class: "KG-1 (Ruby)", AdmissionNo: "1977", Father: "Raju", Roll: "1390570", Phonenumber: "9177159519", Gender: "Female", Dob: "2020-10-16" },
+    "1396188": { Name: "Manvith Kondoju", Class: "KG-1 (Ruby)", AdmissionNo: "1995", Father: "K.Sai Kumar", Roll: "1396188", Phonenumber: "7075175578", Gender: "Male", Dob: "2021-05-26" },
+    "1392703": { Name: "Sayyad Vajeed", Class: "KG-1 (Ruby)", AdmissionNo: "1991", Father: "Mariyam", Roll: "1392703", Phonenumber: "8885451958", Gender: "Female", Dob: "2020-09-21" },
+    "1412110": { Name: "Mekala Manu sri", Class: "KG-1 (Ruby)", AdmissionNo: "1998", Father: "Rangith", Roll: "1412110", Phonenumber: "7793959897", Gender: "Female", Dob: "2021-03-18" },
+    "1392687": { Name: "Oliva Grace Vallapu", Class: "KG-1 (Ruby)", AdmissionNo: "1990", Father: "Naveen", Roll: "1392687", Phonenumber: "9951886334", Gender: "Female", Dob: "2021-03-20" },
+    "1392696": { Name: "Rithwik Oggula", Class: "KG-1 (Ruby)", AdmissionNo: "1984", Father: "Sampath", Roll: "1392696", Phonenumber: "8464872522", Gender: "Male", Dob: "---" },
+    "1413326": { Name: "Rithwika Kandagatla", Class: "KG-1 (Ruby)", AdmissionNo: "2000", Father: "Ajay", Roll: "1413326", Phonenumber: "8106023490", Gender: "Female", Dob: "2021-07-13" },
+    "1392679": { Name: "Srimahi Chevvu", Class: "KG-1 (Ruby)", AdmissionNo: "1983", Father: "Gavaskaar", Roll: "1392679", Phonenumber: "9966573771", Gender: "Female", Dob: "2021-06-10" },
+    "1459706": { Name: "Thanvesh Thalla", Class: "KG-1 (Ruby)", AdmissionNo: "2011", Father: "Rajesh", Roll: "1459706", Phonenumber: "9550995231", Gender: "Male", Dob: "2021-01-04" },
+    "1317800": { Name: "Trishul Nanduri", Class: "KG-1 (Ruby)", AdmissionNo: "1969", Father: "Vijaykanth", Roll: "1317800", Phonenumber: "9949668558", Gender: "Male", Dob: "2020-08-24" },
+    "1424085": { Name: "Yoganshika Nanduri", Class: "KG-1 (Ruby)", AdmissionNo: "2005", Father: "Vijay Kanth", Roll: "1424085", Phonenumber: "9949668558", Gender: "Female", Dob: "2022-01-09" },
+    "1387264": { Name: "Yusra Mohammad", Class: "KG-1 (Ruby)", AdmissionNo: "1974", Father: "Yousuf Shareef", Roll: "1387264", Phonenumber: "9392661854", Gender: "Female", Dob: "2021-03-19" },
+    "1402461": { Name: "Zainul Abideen Syed", Class: "KG-1 (Ruby)", AdmissionNo: "1997", Father: "Akbar", Roll: "1402461", Phonenumber: "8106972447", Gender: "Male", Dob: "2020-12-21" },
+    "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2 (Amber)", AdmissionNo: "1946", Father: "Shivakumar", Roll: "1298438", Phonenumber: "7842370658", Gender: "Male", Dob: "2018-07-09" },
+    "1298439": { Name: "Hanshith Erroju", Class: "KG-2 (Amber)", AdmissionNo: "1960", Father: "Rajesh", Roll: "1298439", Phonenumber: "9010150059", Gender: "Male", Dob: "2019-08-17" },
+    "1298447": { Name: "Harika Bandi", Class: "KG-2 (Amber)", AdmissionNo: "1968", Father: "Raju", Roll: "1298447", Phonenumber: "9573818773", Gender: "Female", Dob: "2020-06-14" },
+    "1298432": { Name: "Himarsha Naini", Class: "KG-2 (Amber)", AdmissionNo: "1966", Father: "Raju", Roll: "1298432", Phonenumber: "7993636204", Gender: "Female", Dob: "2020-07-30" },
+    "1298440": { Name: "Karthik Vallepu", Class: "KG-2 (Amber)", AdmissionNo: "1945", Father: "Ramesh", Roll: "1298440", Phonenumber: "9704840650", Gender: "Male", Dob: "2020-01-27" },
+    "1298433": { Name: "Kruthika Bandi", Class: "KG-2 (Amber)", AdmissionNo: "1951", Father: "Ramesh", Roll: "1298433", Phonenumber: "8790611868", Gender: "Female", Dob: "2020-07-18" },
+    "1298441": { Name: "Rajavardhan Gampala", Class: "KG-2 (Amber)", AdmissionNo: "1950", Father: "Kanaka Raju", Roll: "1298441", Phonenumber: "8074393994", Gender: "Male", Dob: "2018-10-01" },
+    "1298443": { Name: "Roshan Kaitha", Class: "KG-2 (Amber)", AdmissionNo: "1955", Father: "Rajashekar", Roll: "1298443", Phonenumber: "6300582916", Gender: "Male", Dob: "2020-10-31" },
+    "1298448": { Name: "Sri Anshu Ayaan Lyadala", Class: "KG-2 (Amber)", AdmissionNo: "1965", Father: "Rajashekar", Roll: "1298448", Phonenumber: "8008113407", Gender: "Male", Dob: "2020-06-10" },
+    "1298444": { Name: "Srihansh Bandi", Class: "KG-2 (Amber)", AdmissionNo: "1947", Father: "Sridhar", Roll: "1298444", Phonenumber: "9398418487", Gender: "Male", Dob: "2020-08-17" },
+    "1298435": { Name: "Srikshitha Guduri", Class: "KG-2 (Amber)", AdmissionNo: "1959", Father: "Raju", Roll: "1298435", Phonenumber: "9398716665", Gender: "Female", Dob: "2020-09-16" },
+    "1298445": { Name: "Varshith Gonela", Class: "KG-2 (Amber)", AdmissionNo: "1956", Father: "Ramu", Roll: "1298445", Phonenumber: "9966960107", Gender: "Male", Dob: "2020-08-13" },
+    "1392815": { Name: "Adyasri Makala", Class: "KG-2 (Amber)", AdmissionNo: "1988", Father: "Laxmi Narayana", Roll: "1392815", Phonenumber: "9985420659", Gender: "Female", Dob: "2020-07-22" },
+    "1394463": { Name: "Anvik Boini", Class: "KG-2 (Amber)", AdmissionNo: "1995", Father: "B.Raju", Roll: "1394463", Phonenumber: "9705653666", Gender: "Male", Dob: "2020-10-20" },
+    "1459764": { Name: "Anvith Pokanati", Class: "KG-2 (Amber)", AdmissionNo: "2025", Father: "Keshavulu (Late)", Roll: "1459764", Phonenumber: "6300854330", Gender: "Male", Dob: "2019-05-08" },
+    "1459748": { Name: "Awais Ur Rehman Mohammad", Class: "KG-2 (Amber)", AdmissionNo: "2010", Father: "Imran Mahammad", Roll: "1459748", Phonenumber: "9705839237", Gender: "Male", Dob: "2020-10-06" },
+    "1459742": { Name: "Dakshu Pothuganti", Class: "KG-2 (Amber)", AdmissionNo: "2027", Father: "Rajashekhar", Roll: "1459742", Phonenumber: "8074781031", Gender: "Male", Dob: "2020-10-03" },
+    "1393477": { Name: "Hansith Reddy Katukuri", Class: "KG-2 (Amber)", AdmissionNo: "1972", Father: "Thirupathi Reddy", Roll: "1393477", Phonenumber: "7995553736", Gender: "Male", Dob: "2021-03-10" },
+    "1459762": { Name: "Harshith Pokanati", Class: "KG-2 (Amber)", AdmissionNo: "2026", Father: "Keshavulu (Late)", Roll: "1459762", Phonenumber: "6300854330", Gender: "Male", Dob: "2019-05-08" },
+    "1402310": { Name: "Jella Aditya", Class: "KG-2 (Amber)", AdmissionNo: "1997", Father: "J.Bhikshapathi", Roll: "1402310", Phonenumber: "6281221851", Gender: "Male", Dob: "2019-04-25" },
+    "1390563": { Name: "Krishank Nallabothula", Class: "KG-2 (Amber)", AdmissionNo: "1976", Father: "Lingaraju", Roll: "1390563", Phonenumber: "9014498296", Gender: "Male", Dob: "2020-02-20" },
+    "1459771": { Name: "Kundana Katkuri", Class: "KG-2 (Amber)", AdmissionNo: "2008", Father: "Chiranjeevi", Roll: "1459771", Phonenumber: "8247004380", Gender: "Female", Dob: "---" },
+    "1307790": { Name: "Munukuntla Revanth Rudhra", Class: "KG-2 (Amber)", AdmissionNo: "1967", Father: "Subhash", Roll: "1307790", Phonenumber: "8686799532", Gender: "Male", Dob: "2019-03-09" },
+    "1459758": { Name: "Niraja Nethri Siluveru", Class: "KG-2 (Amber)", AdmissionNo: "2033", Father: "Kapil", Roll: "1459758", Phonenumber: "7286805213", Gender: "Female", Dob: "2019-05-19" },
+    "1459752": { Name: "Pranav Mattepelli", Class: "KG-2 (Amber)", AdmissionNo: "2009", Father: "Vijay", Roll: "1459752", Phonenumber: "9704839982", Gender: "Male", Dob: "2019-02-22" },
+    "1390566": { Name: "Sreenith Yadav Naini", Class: "KG-2 (Amber)", AdmissionNo: "1975", Father: "Ramesh", Roll: "1390566", Phonenumber: "8121293251", Gender: "Male", Dob: "2020-03-31" },
+    "1459756": { Name: "Uvan Reddy Dasari", Class: "KG-2 (Amber)", AdmissionNo: "2030", Father: "Raghupathi Reddy", Roll: "1459756", Phonenumber: "9573557696", Gender: "Male", Dob: "2020-03-01" },
+    "1459775": { Name: "Zayan Mohammad", Class: "KG-2 (Amber)", AdmissionNo: "2034", Father: "Zaffar", Roll: "1459775", Phonenumber: "9182909190", Gender: "Male", Dob: "---" },
+    "1459714": { Name: "Zoya Mohammed", Class: "KG-2 (Amber)", AdmissionNo: "2035", Father: "Chand Pasha", Roll: "1459714", Phonenumber: "9848465650", Gender: "Female", Dob: "2020-05-20" },
+    "1298423": { Name: "Dheeraj Gattu", Class: "Grade-1 (Opal)", AdmissionNo: "151", Father: "Raju", Roll: "1298423", Phonenumber: "9346457748", Gender: "Male", Dob: "2018-07-12" },
+    "1298425": { Name: "Preetham Sannayala", Class: "Grade-1 (Opal)", AdmissionNo: "138", Father: "Shiva", Roll: "1298425", Phonenumber: "9000283858", Gender: "Male", Dob: "2019-06-04" },
+    "1298428": { Name: "Shiva nandu Gonela", Class: "Grade-1 (Opal)", AdmissionNo: "137", Father: "Ramu", Roll: "1298428", Phonenumber: "9966960107", Gender: "Male", Dob: "2018-12-20" },
+    "1298429": { Name: "Shrayan Nuthanakanti", Class: "Grade-1 (Opal)", AdmissionNo: "148", Father: "Sridhar", Roll: "1298429", Phonenumber: "7075567649", Gender: "Male", Dob: "2020-03-26" },
+    "1392864": { Name: "Sriyanksha Mandala", Class: "Grade-1 (Opal)", AdmissionNo: "143", Father: "Arun Kumar", Roll: "1392864", Phonenumber: "8885767607", Gender: "Female", Dob: "2019-04-30" },
+    "1298411": { Name: "Advitha Garige", Class: "Grade-1 (Opal)", AdmissionNo: "147", Father: "Chiranjeevi", Roll: "1298411", Phonenumber: "9959114639", Gender: "Female", Dob: "2020-04-30" },
+    "1298413": { Name: "Harika Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "145", Father: "Rajkumar", Roll: "1298413", Phonenumber: "8008707668", Gender: "Female", Dob: "2020-06-01" },
+    "1298414": { Name: "Himansi Kondoju", Class: "Grade-1 (Opal)", AdmissionNo: "141", Father: "Sai kumar", Roll: "1298414", Phonenumber: "7075175578", Gender: "Female", Dob: "2019-02-17" },
+    "1392895": { Name: "Izhaan Rahamath Syed", Class: "Grade-1 (Opal)", AdmissionNo: "154", Father: "Syed Fayaz", Roll: "1392895", Phonenumber: "8074667438", Gender: "Male", Dob: "2019-01-08" },
+    "1298424": { Name: "Jaisurya Myakala", Class: "Grade-1 (Opal)", AdmissionNo: "136", Father: "Sravan Kumar", Roll: "1298424", Phonenumber: "9010506760", Gender: "Male", Dob: "2018-08-20" },
+    "1298415": { Name: "Khadeeja Fathima", Class: "Grade-1 (Opal)", AdmissionNo: "146", Father: "Khaja Faheemuddin", Roll: "1298415", Phonenumber: "9959414786", Gender: "Female", Dob: "2019-08-06" },
+    "1298416": { Name: "Manaswini Dandugula", Class: "Grade-1 (Opal)", AdmissionNo: "150", Father: "Srinivas", Roll: "1298416", Phonenumber: "7075342014", Gender: "Female", Dob: "2017-10-18" },
+    "1298417": { Name: "Manusri Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "144", Father: "Ramesh", Roll: "1298417", Phonenumber: "9177313069", Gender: "Female", Dob: "2019-05-14" },
+    "1298426": { Name: "Rithwik krishna Amaravadi", Class: "Grade-1 (Opal)", AdmissionNo: "149", Father: "Rakesh", Roll: "1298426", Phonenumber: "9502626801", Gender: "Male", Dob: "2020-03-26" },
+    "1298427": { Name: "Rohan Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "140", Father: "Vijay kumar", Roll: "1298427", Phonenumber: "6309561181", Gender: "Male", Dob: "2018-07-02" },
+    "1392876": { Name: "Shiva Junnu", Class: "Grade-1 (Opal)", AdmissionNo: "152", Father: "Parusharamulu", Roll: "1392876", Phonenumber: "8096253875", Gender: "Male", Dob: "2018-10-13" },
+    "1392885": { Name: "Shivanandh Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "155", Father: "Rajesh", Roll: "1392885", Phonenumber: "9848509341", Gender: "Male", Dob: "---" },
+    "1459709": { Name: "Sridha Thalla", Class: "Grade-1 (Opal)", AdmissionNo: "164", Father: "Rajesh", Roll: "1459709", Phonenumber: "9550995231", Gender: "Female", Dob: "2019-10-27" },
+    "1298419": { Name: "Srinika Chengelly", Class: "Grade-1 (Opal)", AdmissionNo: "139", Father: "Vykunta Chary", Roll: "1298419", Phonenumber: "9703045606", Gender: "Female", Dob: "2019-03-02" },
+    "1298420": { Name: "Sriyanshi Oggula", Class: "Grade-1 (Opal)", AdmissionNo: "142", Father: "Sampath", Roll: "1298420", Phonenumber: "7730886474", Gender: "Female", Dob: "2019-08-06" },
+    "1298431": { Name: "Vishwak Chekka", Class: "Grade-1 (Opal)", AdmissionNo: "143", Father: "Naresh", Roll: "1298431", Phonenumber: "9912945240", Gender: "Male", Dob: "2019-10-18" },
+    "1298397": { Name: "Aliza Manha Shaik", Class: "Grade-2 (Emerald)", AdmissionNo: "117", Father: "Moin Pasha", Roll: "1298397", Phonenumber: "7989482920", Gender: "Female", Dob: "2018-10-21" },
+    "1298407": { Name: "Dhruvan Reddy Katukuri", Class: "Grade-2 (Emerald)", AdmissionNo: "111", Father: "Thirupathi Reddy", Roll: "1298407", Phonenumber: "7995553736", Gender: "Male", Dob: "2018-12-16" },
+    "1298398": { Name: "Druthika Enugala", Class: "Grade-2 (Emerald)", AdmissionNo: "116", Father: "Karthik Reddy", Roll: "1298398", Phonenumber: "8686077799", Gender: "Female", Dob: "2019-04-15" },
+    "1298399": { Name: "Manaswini Bandi", Class: "Grade-2 (Emerald)", AdmissionNo: "115", Father: "Bixapathi", Roll: "1298399", Phonenumber: "7702551738", Gender: "Female", Dob: "2017-09-07" },
+    "1298408": { Name: "Rakshith Macharla", Class: "Grade-2 (Emerald)", AdmissionNo: "112", Father: "Ganesh", Roll: "1298408", Phonenumber: "8074638822", Gender: "Male", Dob: "2018-06-23" },
+    "1298401": { Name: "Sathwika Katkuri", Class: "Grade-2 (Emerald)", AdmissionNo: "113", Father: "Shivaiah", Roll: "1298401", Phonenumber: "6300199764", Gender: "Female", Dob: "2018-05-03" },
+    "1298402": { Name: "Shalini Uppala", Class: "Grade-2 (Emerald)", AdmissionNo: "109", Father: "Anji", Roll: "1298402", Phonenumber: "9701160185", Gender: "Female", Dob: "2017-12-21" },
+    "1459786": { Name: "Chandu Devarakonda", Class: "Grade-2 (Emerald)", AdmissionNo: "161", Father: "Ramesh", Roll: "1459786", Phonenumber: "9392270984", Gender: "Male", Dob: "2017-11-11" },
+    "1459815": { Name: "Gnaneshwar Pokanati", Class: "Grade-2 (Emerald)", AdmissionNo: "162", Father: "Keshavulu (Late)", Roll: "1459815", Phonenumber: "6300854330", Gender: "Male", Dob: "2017-04-25" },
+    "1298409": { Name: "Hasnain Syed", Class: "Grade-2 (Emerald)", AdmissionNo: "118", Father: "Khader Syed", Roll: "1298409", Phonenumber: "833021076", Gender: "Male", Dob: "2018-10-09" },
+    "1459832": { Name: "Koushik Siluveru", Class: "Grade-2 (Emerald)", AdmissionNo: "167", Father: "Kapil", Roll: "1459832", Phonenumber: "7286805213", Gender: "Male", Dob: "2017-08-06" },
+    "1316732": { Name: "Senen Desabattula", Class: "Grade-2 (Emerald)", AdmissionNo: "119", Father: "Samuel Sparjan Babu", Roll: "1316732", Phonenumber: "9052820502", Gender: "Female", Dob: "2018-08-17" },
+    "1459817": { Name: "Shivarajan Pothuganti", Class: "Grade-2 (Emerald)", AdmissionNo: "163", Father: "Rajashekhar", Roll: "1459817", Phonenumber: "8074781031", Gender: "Male", Dob: "2019-02-07" },
+    "1298393": { Name: "Nagavelly Manikanta", Class: "Grade-3 (Crystal)", AdmissionNo: "73", Father: "Ravi kumar", Roll: "1298393", Phonenumber: "9492098006", Gender: "Male", Dob: "2016-11-16" },
+    "1459834": { Name: "Mirja Ismail", Class: "Grade-3 (Crystal)", AdmissionNo: "166", Father: "Yusuf Baig", Roll: "1459834", Phonenumber: "9989367263", Gender: "Male", Dob: "2015-10-02" },
+    "1298390": { Name: "Bandi Aryan", Class: "Grade-3 (Crystal)", AdmissionNo: "88", Father: "Anil", Roll: "1298390", Phonenumber: "9502098594", Gender: "Male", Dob: "2017-03-10" },
+    "1298392": { Name: "Dandugula Mahesh Babu", Class: "Grade-3 (Crystal)", AdmissionNo: "91", Father: "Srinivas", Roll: "1298392", Phonenumber: "7075342014", Gender: "Male", Dob: "2015-08-15" },
+    "1298387": { Name: "Bandi Tejasri", Class: "Grade-3 (Crystal)", AdmissionNo: "102", Father: "Raghu", Roll: "1298387", Phonenumber: "9618791981", Gender: "Female", Dob: "2017-05-25" },
+    "1298391": { Name: "Bandi Harshavardhan", Class: "Grade-3 (Crystal)", AdmissionNo: "99", Father: "Rajkumar", Roll: "1298391", Phonenumber: "8008707668", Gender: "Male", Dob: "2017-09-10" },
+    "1298389": { Name: "Gampala Vyshnavi", Class: "Grade-3 (Crystal)", AdmissionNo: "89", Father: "Kanakaraju", Roll: "1298389", Phonenumber: "8074393994", Gender: "Female", Dob: "2016-11-02" },
+    "1298384": { Name: "Gampala Laxmi", Class: "Grade-3 (Crystal)", AdmissionNo: "90", Father: "Kanakaraju", Roll: "1298384", Phonenumber: "8074393994", Gender: "Female", Dob: "2017-02-05" },
+    "1298410": { Name: "Garige Harshith", Class: "Grade-3 (Crystal)", AdmissionNo: "106", Father: "Chiranjeevi", Roll: "1298410", Phonenumber: "9959114639", Gender: "Male", Dob: "2017-09-10" },
+    "1459844": { Name: "Katkuri Hanish", Class: "Grade-3 (Crystal)", AdmissionNo: "169", Father: "Katkuri Suryaprasad", Roll: "1459844", Phonenumber: "9000557009", Gender: "Male", Dob: "2015-08-25" },
+    "1459798": { Name: "Katukuri Manideep", Class: "Grade-3 (Crystal)", AdmissionNo: "172", Father: "Chiranjeevi", Roll: "1459798", Phonenumber: "8247004380", Gender: "Male", Dob: "2016-05-15" },
+    "1459805": { Name: "MD Abdul Quddus", Class: "Grade-3 (Crystal)", AdmissionNo: "160", Father: "Raja.S", Roll: "1459805", Phonenumber: "7300303319", Gender: "Male", Dob: "2017-10-13" },
+    "1298395": { Name: "Muppa Sathwik Patel", Class: "Grade-3 (Crystal)", AdmissionNo: "81", Father: "Janardhan", Roll: "1298395", Phonenumber: "9553800447", Gender: "Male", Dob: "2016-10-11" },
+    "1298386": { Name: "Nuthanakanti Sansita", Class: "Grade-3 (Crystal)", AdmissionNo: "75", Father: "Sridhar", Roll: "1298386", Phonenumber: "7989663380", Gender: "Female", Dob: "2017-04-21" },
+    "1298396": { Name: "Pasarakonda Ritwin", Class: "Grade-3 (Crystal)", AdmissionNo: "104", Father: "Karnakar", Roll: "1298396", Phonenumber: "7702007402", Gender: "Male", Dob: "2016-01-21" },
+    "1459841": { Name: "Pinninti Rakshith Rao", Class: "Grade-3 (Crystal)", AdmissionNo: "170", Father: "Chander Rao (Late)", Roll: "1459841", Phonenumber: "9848523514", Gender: "Male", Dob: "2017-03-13" },
+    "1400203": { Name: "Rayi Sriman Adithya", Class: "Grade-3 (Crystal)", AdmissionNo: "135", Father: "Venkataramana", Roll: "1400203", Phonenumber: "6305872732", Gender: "Male", Dob: "2016-05-02" },
+    "1298376": { Name: "Abdul Saqib Mohammad", Class: "Grade-4 (Citrine)", AdmissionNo: "41", Father: "Abdul Rawoof", Roll: "1298376", Phonenumber: "8328695850", Gender: "Male", Dob: "2015-04-09" },
+    "1298366": { Name: "Anudeep Chintha", Class: "Grade-4 (Citrine)", AdmissionNo: "64", Father: "Anil", Roll: "1298366", Phonenumber: "9848448941", Gender: "Female", Dob: "2015-08-27" },
+    "1298368": { Name: "Bhavan Bandi", Class: "Grade-4 (Citrine)", AdmissionNo: "95", Father: "Devendar", Roll: "1298368", Phonenumber: "8897141289", Gender: "Male", Dob: "2014-11-26" },
+    "1298370": { Name: "Harshavardhan Gonela", Class: "Grade-4 (Citrine)", AdmissionNo: "80", Father: "Raju", Roll: "1298370", Phonenumber: "9391704022", Gender: "Male", Dob: "2016-02-02" },
+    "1298372": { Name: "Jayadev Chiluveru", Class: "Grade-4 (Citrine)", AdmissionNo: "84", Father: "Madhavarao", Roll: "1298372", Phonenumber: "9700409933", Gender: "Male", Dob: "2016-05-26" },
+    "1298373": { Name: "Mahaboob Syed", Class: "Grade-4 (Citrine)", AdmissionNo: "103", Father: "Khader", Roll: "1298373", Phonenumber: "8333021076", Gender: "Male", Dob: "2016-05-12" },
+    "1298374": { Name: "Nandith Reddy Enugala", Class: "Grade-4 (Citrine)", AdmissionNo: "49", Father: "Karthik Reddy", Roll: "1298374", Phonenumber: "8686077799", Gender: "Male", Dob: "2016-01-07" },
+    "1392930": { Name: "Sai Charan Goud Mandala", Class: "Grade-4 (Citrine)", AdmissionNo: "123", Father: "Arun Kumar", Roll: "1392930", Phonenumber: "8885767607", Gender: "Male", Dob: "2015-09-01" },
+    "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4 (Citrine)", AdmissionNo: "105", Father: "Venkateshwarlu", Roll: "1298380", Phonenumber: "9951567253", Gender: "Female", Dob: "2016-01-29" },
+    "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4 (Citrine)", AdmissionNo: "87", Father: "Hidayath Pasha", Roll: "1298363", Phonenumber: "9302145468", Gender: "Female", Dob: "2016-09-28" },
+    "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4 (Citrine)", AdmissionNo: "128", Father: "Kranthi Kumar", Roll: "1392939", Phonenumber: "8179352423", Gender: "Male", Dob: "2015-07-13" },
+    "1298364": { Name: "Jayasri Mykala", Class: "Grade-4 (Citrine)", AdmissionNo: "68", Father: "Sravan kumar", Roll: "1298364", Phonenumber: "9010506760", Gender: "Female", Dob: "2016-02-06" },
+    "1298381": { Name: "Rahul Kanjarla", Class: "Grade-4 (Citrine)", AdmissionNo: "79", Father: "Kumaraswamy", Roll: "1298381", Phonenumber: "8897047979", Gender: "Male", Dob: "2015-09-24" },
+    "1459784": { Name: "Saketh Devarakonda", Class: "Grade-4 (Citrine)", AdmissionNo: "159", Father: "Ramesh", Roll: "1459784", Phonenumber: "9392270984", Gender: "Male", Dob: "2015-12-21" },
+    "1298353": { Name: "Adya Reddy Vangala", Class: "Grade-5 (Moonstone)", AdmissionNo: "21", Father: "Mahipal Reddy", Roll: "1298353", Phonenumber: "9949109221", Gender: "Female", Dob: "2016-08-03" },
+    "1298361": { Name: "Kowshik Patel Muppa", Class: "Grade-5 (Moonstone)", AdmissionNo: "77", Father: "Janardhan", Roll: "1298361", Phonenumber: "9553800447", Gender: "Male", Dob: "2014-09-03" },
+    "1298355": { Name: "Siri Singaram", Class: "Grade-5 (Moonstone)", AdmissionNo: "83", Father: "Madhu", Roll: "1298355", Phonenumber: "9550726263", Gender: "Female", Dob: "2014-08-16" },
+    "1298360": { Name: "Srikar Mandala", Class: "Grade-5 (Moonstone)", AdmissionNo: "76", Father: "Ramesh", Roll: "1298360", Phonenumber: "9550073190", Gender: "Male", Dob: "2013-11-28" },
+    "1459801": { Name: "Abdus Salaam MD", Class: "Grade-5 (Moonstone)", AdmissionNo: "158", Father: "Raja.S", Roll: "1459801", Phonenumber: "7300303319", Gender: "Male", Dob: "2015-08-22" },
+    "1392968": { Name: "Akshith Ram Kalvacharla", Class: "Grade-5 (Moonstone)", AdmissionNo: "126", Father: "Hareen Chary", Roll: "1392968", Phonenumber: "7672058517", Gender: "Male", Dob: "2015-08-21" },
+    "1392965": { Name: "Jaffar Anas Shaik", Class: "Grade-5 (Moonstone)", AdmissionNo: "130", Father: "Khaja Pasha", Roll: "1392965", Phonenumber: "9391854024", Gender: "Male", Dob: "2013-04-17" },
+    "1298359": { Name: "Khaja Azeemuddin Mohammed", Class: "Grade-5 (Moonstone)", AdmissionNo: "30", Father: "Khaja Faheemuddin", Roll: "1298359", Phonenumber: "9959414786", Gender: "Male", Dob: "2015-05-02" },
+    "1459839": { Name: "Nihan Mohammed", Class: "Grade-5 (Moonstone)", AdmissionNo: "168", Father: "Chand Pasha", Roll: "1459839", Phonenumber: "9848465650", Gender: "Male", Dob: "2016-03-04" },
+    "1392963": { Name: "Saif Shaik", Class: "Grade-5 (Moonstone)", AdmissionNo: "120", Father: "Salmaan", Roll: "1392963", Phonenumber: "8179352120", Gender: "Male", Dob: "2015-04-10" },
+    "1459794": { Name: "Saketh Renukuntla", Class: "Grade-5 (Moonstone)", AdmissionNo: "157", Father: "Rajesh", Roll: "1459794", Phonenumber: "7569518371", Gender: "Male", Dob: "2014-04-20" },
+    "1392955": { Name: "Sreeja Dasari", Class: "Grade-5 (Moonstone)", AdmissionNo: "123", Father: "Kumar", Roll: "1392955", Phonenumber: "6301871704", Gender: "Female", Dob: "2014-12-12" },
+    "1459821": { Name: "Vidhaatri Sahani", Class: "Grade-5 (Moonstone)", AdmissionNo: "165", Father: "Abhishek Sahani", Roll: "1459821", Phonenumber: "9704394869", Gender: "Female", Dob: "2015-06-15" },
+    "1298347": { Name: "Abdul Razzak Mohammad", Class: "Grade-6 (Alluri)", AdmissionNo: "19", Father: "Abdul Rawoof", Roll: "1298347", Phonenumber: "9573226386", Gender: "Male", Dob: "2013-11-19" },
+    "1298341": { Name: "Anudeepthi Chintha", Class: "Grade-6 (Alluri)", AdmissionNo: "63", Father: "Anil", Roll: "1298341", Phonenumber: "9052927765", Gender: "Female", Dob: "2014-02-23" },
+    "1298350": { Name: "Saketh Ranaveni", Class: "Grade-6 (Alluri)", AdmissionNo: "61", Father: "Sampath", Roll: "1298350", Phonenumber: "8688129606", Gender: "Male", Dob: "2013-10-24" },
+    "1298346": { Name: "Shiva Sri Katukuri", Class: "Grade-6 (Alluri)", AdmissionNo: "48", Father: "Shivaiah", Roll: "1298346", Phonenumber: "6300199764", Gender: "Female", Dob: "2014-09-24" },
+    "1298348": { Name: "Aklees Shaik", Class: "Grade-6 (Alluri)", AdmissionNo: "85", Father: "Hidayath Pasha", Roll: "1298348", Phonenumber: "9302145468", Gender: "Male", Dob: "2014-08-25" },
+    "1392992": { Name: "Akshya Kalvacharla", Class: "Grade-6 (Alluri)", AdmissionNo: "125", Father: "Hareen Chary", Roll: "1392992", Phonenumber: "7672058517", Gender: "Female", Dob: "2013-11-16" },
+    "1472577": { Name: "Prince Katkuri", Class: "Grade-6 (Alluri)", AdmissionNo: "0", Father: "Katkuri Suryaprasad", Roll: "1472577", Phonenumber: "9000557009", Gender: "Female", Dob: "2013-08-06" },
+    "1298339": { Name: "Manikanta Sannayala", Class: "Grade-7 (Kalam)", AdmissionNo: "38", Father: "Shiva", Roll: "1298339", Phonenumber: "9000283858", Gender: "Male", Dob: "2013-05-31" },
+    "1298340": { Name: "Sreeyan Reddy Karra", Class: "Grade-7 (Kalam)", AdmissionNo: "33", Father: "Krishna Reddy", Roll: "1298340", Phonenumber: "9848774257", Gender: "Male", Dob: "2012-01-08" },
+    "1393008": { Name: "Jayadhithya Chiluveru", Class: "Grade-7 (Kalam)", AdmissionNo: "131", Father: "CH.Madhava Rao", Roll: "1393008", Phonenumber: "8886826838", Gender: "Male", Dob: "2013-02-08" },
+    "1459846": { Name: "Akshaya Gampala", Class: "Grade-8 (Bhagat)", AdmissionNo: "171", Father: "Balaiah", Roll: "1459846", Phonenumber: "9948184498", Gender: "Female", Dob: "2009-02-09" },
+    "1298335": { Name: "Ganesh Oggula", Class: "Grade-8 (Bhagat)", AdmissionNo: "56", Father: "Cheralu", Roll: "1298335", Phonenumber: "6304381153", Gender: "Male", Dob: "2011-06-11" },
+    "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8 (Bhagat)", AdmissionNo: "156", Father: "Rajesh", Roll: "1459792", Phonenumber: "7569518371", Gender: "Female", Dob: "2012-05-11" },
+    "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8 (Bhagat)", AdmissionNo: "28", Father: "Khaja Faheemuddin", Roll: "1298337", Phonenumber: "9959414786", Gender: "Male", Dob: "2012-08-11" },
+    "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8 (Bhagat)", AdmissionNo: "39", Father: "Ravi", Roll: "1298333", Phonenumber: "9492098006", Gender: "Female", Dob: "2012-03-07" },
+    "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)", AdmissionNo: "34", Father: "Ramesh", Roll: "1298334", Phonenumber: "8179254251", Gender: "Female", Dob: "2012-12-10" }
+};
+
+function searchStudent() {
+    const rollNo = document.getElementById('rollNumberInput').value.trim();
+    const student = studentData[rollNo];
+    if (student) {
+        document.getElementById('studentName').innerText = student.Name;
+        document.getElementById('studentClass').innerText = student.Class;
+        document.getElementById('RollNumber').innerText = student.Roll;
+        document.getElementById('admissionNo').innerText = student.AdmissionNo;
+        document.getElementById('fatherName').innerText = student.Father;
+        document.getElementById('studentDob').innerText = student.Dob;
+        document.getElementById('PhoneNumber').innerText = student.Phonenumber;
+        document.getElementById('studentGender').innerText = student.Gender;
+        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
+        
+        // Fetch Cloud Attendance
+        const shortClass = student.Class.split(" ")[0];
+        db.ref(`attendance/${shortClass}/students/${student.Name}`).once('value', (snap) => {
+            const stats = snap.val() || { presentDays: 0, totalDays: 0 };
+            const percent = stats.totalDays > 0 ? Math.round((stats.presentDays / stats.totalDays) * 100) : 0;
+            const rateEl = document.getElementById('attendanceRate');
+            const badge = document.getElementById('statusBadge');
+            
+            rateEl.innerText = `${percent}% (${stats.presentDays}/${stats.totalDays} Days)`;
+            
+            if (stats.totalDays > 0) {
+                if (percent >= 50) {
+                    rateEl.style.color = "#006633";
+                    badge.innerText = "GOOD STANDING";
+                    badge.style.background = "#e8f5e9";
+                    badge.style.color = "#2e7d32";
+                } else {
+                    rateEl.style.color = "#c62828";
+                    badge.innerText = "ACTION REQUIRED";
+                    badge.style.background = "#ffebee";
+                    badge.style.color = "#c62828";
+                }
+            }
+        });
+    } else { alert("Student record not found."); }
+}
+
 db.ref('announcement').on('value', (snap) => {
     const msg = snap.val();
     const banner = document.getElementById('liveAnnouncementBanner');
@@ -151,286 +356,7 @@ db.ref('announcement').on('value', (snap) => {
     else { banner.style.display = 'none'; }
 });
 
-// Fetch Live Attendance Automatically from Cloud
-let cloudAttendanceData = {};
-db.ref('attendance').on('value', (snap) => {
-    cloudAttendanceData = snap.val() || {};
-    const currentInput = document.getElementById('rollNumberInput').value.trim();
-    if(currentInput.length > 0) searchStudent(); // Instantly update screen if parent is watching
-});
-
-const studentData = {
-    "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)", AdmissionNo: "2052", Dob: "---", Doj: "2025-08-04", Father: "M.Vinay", Roll: "1472070", Phonenumber: "9182861346", Gender: "Male" },
-    "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)", AdmissionNo: "2061", Dob: "2022-11-22", Doj: "2025-10-16", Father: "Illandula Ravi.", Roll: "1478225", Phonenumber: "9848742172", Gender: "Male" },
-    "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG (Diamond)", AdmissionNo: "2047", Dob: "2022-01-26", Doj: "2025-07-25", Father: "Srinu", Roll: "1469391", Phonenumber: "9533030806", Gender: "Female" },
-    "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG (Diamond)", AdmissionNo: "2024", Dob: "2022-10-19", Doj: "2025-05-01", Father: "Vijjay", Roll: "1459555", Phonenumber: "8686191768", Gender: "Female" },
-    "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG (Diamond)", AdmissionNo: "2017", Dob: "2022-03-16", Doj: "2025-05-01", Father: "Raju", Roll: "1459560", Phonenumber: "9704592874", Gender: "Female" },
-    "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG (Diamond)", AdmissionNo: "2058", Dob: "2022-10-03", Doj: "2025-08-26", Father: "S.Abhinav", Roll: "1474500", Phonenumber: "8074771010", Gender: "Female" },
-    "1460680": { Name: "Afraha Begum", Class: "Pre-KG (Diamond)", AdmissionNo: "2043", Dob: "2021-10-07", Doj: "2025-07-08", Father: "Amjad Khan", Roll: "1460680", Phonenumber: "9440107489", Gender: "Female" },
-    "1472299": { Name: "Aliya Sultana", Class: "Pre-KG (Diamond)", AdmissionNo: "2054", Dob: "2021-11-14", Doj: "2025-08-07", Father: "MD.Allayar Khan", Roll: "1472299", Phonenumber: "6304312988", Gender: "Female" },
-    "1459683": { Name: "Anvika Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2020", Dob: "2022-05-28", Doj: "2025-06-09", Father: "Sridhar", Roll: "1459683", Phonenumber: "9398418487", Gender: "Female" },
-    "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG (Diamond)", AdmissionNo: "2016", Dob: "2022-02-18", Doj: "2025-05-05", Father: "Rajendraprasad", Roll: "1459620", Phonenumber: "6305756873", Gender: "Female" },
-    "1459605": { Name: "Devansh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2030", Dob: "2022-02-04", Doj: "2025-06-13", Father: "Rajukumar", Roll: "1459605", Phonenumber: "9121285781", Gender: "Male" },
-    "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG (Diamond)", AdmissionNo: "2050", Dob: "2022-04-01", Doj: "2025-08-01", Father: "M.Rajkumar", Roll: "1472069", Phonenumber: "7780262276", Gender: "Female" },
-    "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG (Diamond)", AdmissionNo: "2056", Dob: "2023-08-03", Doj: "2025-08-12", Father: "S.Prashanth", Roll: "1472723", Phonenumber: "9515837322", Gender: "Male" },
-    "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2033", Dob: "2022-02-18", Doj: "2025-06-17", Father: "Ramesh", Roll: "1459658", Phonenumber: "8790611868", Gender: "Female" },
-    "1478248": { Name: "Jashritha Boina", Class: "Pre-KG (Diamond)", AdmissionNo: "2060", Dob: "2023-05-11", Doj: "2025-10-09", Father: "B.Poorna Chander", Roll: "1478248", Phonenumber: "6302186195", Gender: "Female" },
-    "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG (Diamond)", AdmissionNo: "0", Dob: "2022-03-11", Doj: "2025-12-08", Father: "K.Akhil", Roll: "1481135", Phonenumber: "8179316869", Gender: "Female" },
-    "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG (Diamond)", AdmissionNo: "2014", Dob: "2022-01-24", Doj: "2025-05-28", Father: "Shivakumar", Roll: "1459568", Phonenumber: "7842370658", Gender: "Male" },
-    "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG (Diamond)", AdmissionNo: "2023", Dob: "2022-10-04", Doj: "2025-06-06", Father: "Sayeed", Roll: "1459652", Phonenumber: "9948172033", Gender: "Female" },
-    "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG (Diamond)", AdmissionNo: "2019", Dob: "2022-05-27", Doj: "2025-06-01", Father: "Shivaram", Roll: "1459636", Phonenumber: "9347825403", Gender: "Female" },
-    "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2045", Dob: "2022-08-26", Doj: "2025-07-11", Father: "Ramesh", Roll: "1463720", Phonenumber: "7386940719", Gender: "Male" },
-    "1459582": { Name: "Rishi Manupati", Class: "Pre-KG (Diamond)", AdmissionNo: "2039", Dob: "2021-09-02", Doj: "2025-06-24", Father: "Kittu", Roll: "1459582", Phonenumber: "9391993955", Gender: "Male" },
-    "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2041", Dob: "2022-07-13", Doj: "2025-07-01", Father: "Raju", Roll: "1459607", Phonenumber: "8686262543", Gender: "Male" },
-    "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2032", Dob: "2023-03-24", Doj: "2025-06-16", Father: "Ramulu", Roll: "1459604", Phonenumber: "7893718047", Gender: "Male" },
-    "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG (Diamond)", AdmissionNo: "2038", Dob: "2022-07-04", Doj: "2025-06-23", Father: "Bixapathi", Roll: "1459625", Phonenumber: "7702551738", Gender: "Female" },
-    "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG (Diamond)", AdmissionNo: "2053", Dob: "2022-10-12", Doj: "2025-08-04", Father: "K.Venkateshwarlu", Roll: "1472074", Phonenumber: "8712525233", Gender: "Male" },
-    "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG (Diamond)", AdmissionNo: "2042", Dob: "2021-12-10", Doj: "2025-07-02", Father: "Yaka Swami", Roll: "1469395", Phonenumber: "9052020711", Gender: "Female" },
-    "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG (Diamond)", AdmissionNo: "2013", Dob: "---", Doj: "2025-07-02", Father: "VASU", Roll: "1456748", Phonenumber: "9912101753", Gender: "Male" },
-    "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG (Diamond)", AdmissionNo: "2040", Dob: "2022-02-16", Doj: "2025-06-27", Father: "Shivaramakrishna", Roll: "1459687", Phonenumber: "9398065483", Gender: "Female" },
-    "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG (Diamond)", AdmissionNo: "2012", Dob: "2021-05-17", Doj: "2025-05-01", Father: "Vijay", Roll: "1459572", Phonenumber: "8686191768", Gender: "Male" },
-    "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG (Diamond)", AdmissionNo: "2029", Dob: "2021-07-22", Doj: "2025-06-13", Father: "Arun", Roll: "1459643", Phonenumber: "9346300709", Gender: "Female" },
-    "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG (Diamond)", AdmissionNo: "2037", Dob: "2022-05-20", Doj: "2025-06-23", Father: "Srikanth", Roll: "1459603", Phonenumber: "8309708832", Gender: "Female" },
-    "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG (Diamond)", AdmissionNo: "2055", Dob: "2022-12-23", Doj: "2025-08-08", Father: "V.Kiran Kumar", Roll: "1472536", Phonenumber: "9642539015", Gender: "Male" },
-    "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG (Diamond)", AdmissionNo: "2025", Dob: "---", Doj: "2025-07-02", Father: "RANGITH", Roll: "1456743", Phonenumber: "9949327643", Gender: "Male" },
-    "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG (Diamond)", AdmissionNo: "2057", Dob: "2022-07-29", Doj: "2025-08-22", Father: "L.Rahul", Roll: "1473500", Phonenumber: "9010913855", Gender: "Female" },
-    "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG (Diamond)", AdmissionNo: "2046", Dob: "2023-01-06", Doj: "2025-07-12", Father: "Bharat Kumar", Roll: "1463724", Phonenumber: "8074833651", Gender: "Male" },
-    "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG (Diamond)", AdmissionNo: "2022", Dob: "2022-08-19", Doj: "2025-05-31", Father: "Kranthi", Roll: "1459694", Phonenumber: "9963987952", Gender: "Male" },
-    "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG (Diamond)", AdmissionNo: "2059", Dob: "2022-10-14", Doj: "2025-09-15", Father: "L.Shiva", Roll: "1474815", Phonenumber: "9182045866", Gender: "Female" },
-    "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG (Diamond)", AdmissionNo: "2044", Dob: "---", Doj: "2025-07-08", Father: "Anil Kumar", Roll: "1460690", Phonenumber: "9703293930", Gender: "Male" },
-    "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG (Diamond)", AdmissionNo: "2006", Dob: "2022-02-24", Doj: "2025-06-12", Father: "MM Suresh kumar", Roll: "1478250", Phonenumber: "8247448532", Gender: "Female" },
-    "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG (Diamond)", AdmissionNo: "2015", Dob: "2022-01-31", Doj: "2024-11-12", Father: "Shekar", Roll: "1413563", Phonenumber: "7671807331", Gender: "Male" },
-    "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG (Diamond)", AdmissionNo: "2018", Dob: "2022-05-05", Doj: "2025-03-01", Father: "Yousuf Shareef", Roll: "1459577", Phonenumber: "9392670257", Gender: "Female" },
-    "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1 (Ruby)", AdmissionNo: "2007", Dob: "2021-10-09", Doj: "2025-02-07", Father: "Rakesh", Roll: "1424084", Phonenumber: "9502626801", Gender: "Female" },
-    "1426519": { Name: "Aditya Manda", Class: "KG-1 (Ruby)", AdmissionNo: "2004", Dob: "2022-01-21", Doj: "2025-01-20", Father: "Mohan Lal", Roll: "1426519", Phonenumber: "8374173873", Gender: "Male" },
-    "1426518": { Name: "Aadhya Jella", Class: "KG-1 (Ruby)", AdmissionNo: "2003", Dob: "2022-05-25", Doj: "2025-01-20", Father: "Bhikshapathi", Roll: "1426518", Phonenumber: "9959633484", Gender: "Female" },
-    "1392920": { Name: "Advaita Gauri Bandi", Class: "KG-1 (Ruby)", AdmissionNo: "1993", Dob: "2021-07-31", Doj: "2024-06-12", Father: "B. Karnakar", Roll: "1392920", Phonenumber: "9550011612", Gender: "Female" },
-    "1392683": { Name: "Aizah Amna Shaik", Class: "KG-1 (Ruby)", AdmissionNo: "1986", Dob: "2020-12-18", Doj: "2024-06-12", Father: "Jahed Ali", Roll: "1392683", Phonenumber: "9014984808", Gender: "Female" },
-    "1472077": { Name: "Akshara Singaram", Class: "KG-1 (Ruby)", AdmissionNo: "2051", Dob: "2020-08-30", Doj: "2025-08-01", Father: "S.Prasanth", Roll: "1472077", Phonenumber: "7095527244", Gender: "Female" },
-    "1469394": { Name: "Bhahuveer Raj Somishetti", Class: "KG-1 (Ruby)", AdmissionNo: "2048", Dob: "2021-10-12", Doj: "2025-07-25", Father: "Harinivas", Roll: "1469394", Phonenumber: "9951394609", Gender: "Male" },
-    "1392676": { Name: "Gayathri Erroju", Class: "KG-1 (Ruby)", AdmissionNo: "1989", Dob: "2021-02-12", Doj: "2024-06-12", Father: "Rajesh", Roll: "1392676", Phonenumber: "9010050059", Gender: "Female" },
-    "1390570": { Name: "Hanvika Mulkalapelli", Class: "KG-1 (Ruby)", AdmissionNo: "1977", Dob: "2020-10-16", Doj: "2024-06-12", Father: "Raju", Roll: "1390570", Phonenumber: "9177159519", Gender: "Female" },
-    "1396188": { Name: "Manvith Kondoju", Class: "KG-1 (Ruby)", AdmissionNo: "1995", Dob: "2021-05-26", Doj: "2024-07-23", Father: "K.Sai Kumar", Roll: "1396188", Phonenumber: "7075175578", Gender: "Male" },
-    "1392703": { Name: "Sayyad Vajeed", Class: "KG-1 (Ruby)", AdmissionNo: "1991", Dob: "2020-09-21", Doj: "2024-06-12", Father: "Mariyam", Roll: "1392703", Phonenumber: "8885451958", Gender: "Female" },
-    "1412110": { Name: "Mekala Manu sri", Class: "KG-1 (Ruby)", AdmissionNo: "1998", Dob: "2021-03-18", Doj: "2024-10-20", Father: "Rangith", Roll: "1412110", Phonenumber: "7793959897", Gender: "Female" },
-    "1392687": { Name: "Oliva Grace Vallapu", Class: "KG-1 (Ruby)", AdmissionNo: "1990", Dob: "2021-03-20", Doj: "2024-06-12", Father: "Naveen", Roll: "1392687", Phonenumber: "9951886334", Gender: "Female" },
-    "1392696": { Name: "Rithwik Oggula", Class: "KG-1 (Ruby)", AdmissionNo: "1984", Dob: "---", Doj: "2024-06-12", Father: "Sampath", Roll: "1392696", Phonenumber: "8464872522", Gender: "Male" },
-    "1413326": { Name: "Rithwika Kandagatla", Class: "KG-1 (Ruby)", AdmissionNo: "2000", Dob: "2021-07-13", Doj: "2024-10-17", Father: "Ajay", Roll: "1413326", Phonenumber: "8106023490", Gender: "Female" },
-    "1392679": { Name: "Srimahi Chevvu", Class: "KG-1 (Ruby)", AdmissionNo: "1983", Dob: "2021-06-10", Doj: "2024-06-12", Father: "Gavaskaar", Roll: "1392679", Phonenumber: "9966573771", Gender: "Female" },
-    "1459706": { Name: "Thanvesh Thalla", Class: "KG-1 (Ruby)", AdmissionNo: "2011", Dob: "2021-01-04", Doj: "2025-05-22", Father: "Rajesh", Roll: "1459706", Phonenumber: "9550995231", Gender: "Male" },
-    "1317800": { Name: "Trishul Nanduri", Class: "KG-1 (Ruby)", AdmissionNo: "1969", Dob: "2020-08-24", Doj: "2023-08-19", Father: "Vijaykanth", Roll: "1317800", Phonenumber: "9949668558", Gender: "Male" },
-    "1424085": { Name: "Yoganshika Nanduri", Class: "KG-1 (Ruby)", AdmissionNo: "2005", Dob: "2022-01-09", Doj: "2025-01-22", Father: "Vijay Kanth", Roll: "1424085", Phonenumber: "9949668558", Gender: "Female" },
-    "1387264": { Name: "Yusra Mohammad", Class: "KG-1 (Ruby)", AdmissionNo: "1974", Dob: "2021-03-19", Doj: "2024-06-12", Father: "Yousuf Shareef", Roll: "1387264", Phonenumber: "9392661854", Gender: "Female" },
-    "1402461": { Name: "Zainul Abideen Syed", Class: "KG-1 (Ruby)", AdmissionNo: "1997", Dob: "2020-12-21", Doj: "2024-08-05", Father: "Akbar", Roll: "1402461", Phonenumber: "8106972447", Gender: "Male" },
-    "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2 (Amber)", AdmissionNo: "1946", Dob: "2018-07-09", Doj: "2023-05-25", Father: "Shivakumar", Roll: "1298438", Phonenumber: "7842370658", Gender: "Male" },
-    "1298439": { Name: "Hanshith Erroju", Class: "KG-2 (Amber)", AdmissionNo: "1960", Dob: "2019-08-17", Doj: "2023-06-22", Father: "Rajesh", Roll: "1298439", Phonenumber: "9010150059", Gender: "Male" },
-    "1298447": { Name: "Harika Bandi", Class: "KG-2 (Amber)", AdmissionNo: "1968", Dob: "2020-06-14", Doj: "2023-07-18", Father: "Raju", Roll: "1298447", Phonenumber: "9573818773", Gender: "Female" },
-    "1298432": { Name: "Himarsha Naini", Class: "KG-2 (Amber)", AdmissionNo: "1966", Dob: "2020-07-30", Doj: "2023-08-07", Father: "Raju", Roll: "1298432", Phonenumber: "7993636204", Gender: "Female" },
-    "1298440": { Name: "Karthik Vallepu", Class: "KG-2 (Amber)", AdmissionNo: "1945", Dob: "2020-01-27", Doj: "2023-01-05", Father: "Ramesh", Roll: "1298440", Phonenumber: "9704840650", Gender: "Male" },
-    "1298433": { Name: "Kruthika Bandi", Class: "KG-2 (Amber)", AdmissionNo: "1951", Dob: "2020-07-18", Doj: "2023-11-06", Father: "Ramesh", Roll: "1298433", Phonenumber: "8790611868", Gender: "Female" },
-    "1298441": { Name: "Rajavardhan Gampala", Class: "KG-2 (Amber)", AdmissionNo: "1950", Dob: "2018-10-01", Doj: "2023-10-06", Father: "Kanaka Raju", Roll: "1298441", Phonenumber: "8074393994", Gender: "Male" },
-    "1298443": { Name: "Roshan Kaitha", Class: "KG-2 (Amber)", AdmissionNo: "1955", Dob: "2020-10-31", Doj: "2023-06-16", Father: "Rajashekar", Roll: "1298443", Phonenumber: "6300582916", Gender: "Male" },
-    "1298448": { Name: "Sri Anshu Ayaan Lyadala", Class: "KG-2 (Amber)", AdmissionNo: "1965", Dob: "2020-06-10", Doj: "2023-04-07", Father: "Rajashekar", Roll: "1298448", Phonenumber: "8008113407", Gender: "Male" },
-    "1298444": { Name: "Srihansh Bandi", Class: "KG-2 (Amber)", AdmissionNo: "1947", Dob: "2020-08-17", Doj: "2023-05-31", Father: "Sridhar", Roll: "1298444", Phonenumber: "9398418487", Gender: "Male" },
-    "1298435": { Name: "Srikshitha Guduri", Class: "KG-2 (Amber)", AdmissionNo: "1959", Dob: "2020-09-16", Doj: "2023-06-21", Father: "Raju", Roll: "1298435", Phonenumber: "9398716665", Gender: "Female" },
-    "1298445": { Name: "Varshith Gonela", Class: "KG-2 (Amber)", AdmissionNo: "1956", Dob: "2020-08-13", Doj: "2023-06-17", Father: "Ramu", Roll: "1298445", Phonenumber: "9966960107", Gender: "Male" },
-    "1392815": { Name: "Adyasri Makala", Class: "KG-2 (Amber)", AdmissionNo: "1988", Dob: "2020-07-22", Doj: "2024-06-12", Father: "Laxmi Narayana", Roll: "1392815", Phonenumber: "9985420659", Gender: "Female" },
-    "1394463": { Name: "Anvik Boini", Class: "KG-2 (Amber)", AdmissionNo: "1995", Dob: "2020-10-20", Doj: "2024-06-12", Father: "B.Raju", Roll: "1394463", Phonenumber: "9705653666", Gender: "Male" },
-    "1459764": { Name: "Anvith Pokanati", Class: "KG-2 (Amber)", AdmissionNo: "2025", Dob: "2019-05-08", Doj: "2025-07-13", Father: "Keshavulu (Late)", Roll: "1459764", Phonenumber: "6300854330", Gender: "Male" },
-    "1459748": { Name: "Awais Ur Rehman Mohammad", Class: "KG-2 (Amber)", AdmissionNo: "2010", Dob: "2020-10-06", Doj: "2025-05-25", Father: "Imran Mahammad", Roll: "1459748", Phonenumber: "9705839237", Gender: "Male" },
-    "1459742": { Name: "Dakshu Pothuganti", Class: "KG-2 (Amber)", AdmissionNo: "2027", Dob: "2020-10-03", Doj: "2025-06-13", Father: "Rajashekhar", Roll: "1459742", Phonenumber: "8074781031", Gender: "Male" },
-    "1393477": { Name: "Hansith Reddy Katukuri", Class: "KG-2 (Amber)", AdmissionNo: "1972", Dob: "2021-03-10", Doj: "2024-06-12", Father: "Thirupathi Reddy", Roll: "1393477", Phonenumber: "7995553736", Gender: "Male" },
-    "1459762": { Name: "Harshith Pokanati", Class: "KG-2 (Amber)", AdmissionNo: "2026", Dob: "2019-05-08", Doj: "2025-07-13", Father: "Keshavulu (Late)", Roll: "1459762", Phonenumber: "6300854330", Gender: "Male" },
-    "1402310": { Name: "Jella Aditya", Class: "KG-2 (Amber)", AdmissionNo: "1997", Dob: "2019-04-25", Doj: "2024-08-05", Father: "J.Bhikshapathi", Roll: "1402310", Phonenumber: "6281221851", Gender: "Male" },
-    "1390563": { Name: "Krishank Nallabothula", Class: "KG-2 (Amber)", AdmissionNo: "1976", Dob: "2020-02-20", Doj: "2024-06-12", Father: "Lingaraju", Roll: "1390563", Phonenumber: "9014498296", Gender: "Male" },
-    "1459771": { Name: "Kundana Katkuri", Class: "KG-2 (Amber)", AdmissionNo: "2008", Dob: "---", Doj: "2025-06-20", Father: "Chiranjeevi", Roll: "1459771", Phonenumber: "8247004380", Gender: "Female" },
-    "1307790": { Name: "Munukuntla Revanth Rudhra", Class: "KG-2 (Amber)", AdmissionNo: "1967", Dob: "2019-03-09", Doj: "2023-08-13", Father: "Subhash", Roll: "1307790", Phonenumber: "8686799532", Gender: "Male" },
-    "1459758": { Name: "Niraja Nethri Siluveru", Class: "KG-2 (Amber)", AdmissionNo: "2033", Dob: "2019-05-19", Doj: "2025-06-18", Father: "Kapil", Roll: "1459758", Phonenumber: "7286805213", Gender: "Female" },
-    "1459752": { Name: "Pranav Mattepelli", Class: "KG-2 (Amber)", AdmissionNo: "2009", Dob: "2019-02-22", Doj: "2025-05-22", Father: "Vijay", Roll: "1459752", Phonenumber: "9704839982", Gender: "Male" },
-    "1390566": { Name: "Sreenith Yadav Naini", Class: "KG-2 (Amber)", AdmissionNo: "1975", Dob: "2020-03-31", Doj: "2024-06-12", Father: "Ramesh", Roll: "1390566", Phonenumber: "8121293251", Gender: "Male" },
-    "1459756": { Name: "Uvan Reddy Dasari", Class: "KG-2 (Amber)", AdmissionNo: "2030", Dob: "2020-03-01", Doj: "2025-06-16", Father: "Raghupathi Reddy", Roll: "1459756", Phonenumber: "9573557696", Gender: "Male" },
-    "1459775": { Name: "Zayan Mohammad", Class: "KG-2 (Amber)", AdmissionNo: "2034", Dob: "---", Doj: "2025-06-20", Father: "Zaffar", Roll: "1459775", Phonenumber: "9182909190", Gender: "Male" },
-    "1459714": { Name: "Zoya Mohammed", Class: "KG-2 (Amber)", AdmissionNo: "2035", Dob: "2020-05-20", Doj: "2025-07-21", Father: "Chand Pasha", Roll: "1459714", Phonenumber: "9848465650", Gender: "Female" },
-    "1298423": { Name: "Dheeraj Gattu", Class: "Grade-1 (Opal)", AdmissionNo: "151", Dob: "2018-07-12", Doj: "2023-06-14", Father: "Raju", Roll: "1298423", Phonenumber: "9346457748", Gender: "Male" },
-    "1298425": { Name: "Preetham Sannayala", Class: "Grade-1 (Opal)", AdmissionNo: "138", Dob: "2019-06-04", Doj: "2022-06-13", Father: "Shiva", Roll: "1298425", Phonenumber: "9000283858", Gender: "Male" },
-    "1298428": { Name: "Shiva nandu Gonela", Class: "Grade-1 (Opal)", AdmissionNo: "137", Dob: "2018-12-20", Doj: "2022-06-24", Father: "Ramu", Roll: "1298428", Phonenumber: "9966960107", Gender: "Male" },
-    "1298429": { Name: "Shrayan Nuthanakanti", Class: "Grade-1 (Opal)", AdmissionNo: "148", Dob: "2020-03-26", Doj: "2023-02-22", Father: "Sridhar", Roll: "1298429", Phonenumber: "7075567649", Gender: "Male" },
-    "1392864": { Name: "Sriyanksha Mandala", Class: "Grade-1 (Opal)", AdmissionNo: "143", Dob: "2019-04-30", Doj: "2024-06-12", Father: "Arun Kumar", Roll: "1392864", Phonenumber: "8885767607", Gender: "Female" },
-    "1298411": { Name: "Advitha Garige", Class: "Grade-1 (Opal)", AdmissionNo: "147", Dob: "2020-04-30", Doj: "2023-07-02", Father: "Chiranjeevi", Roll: "1298411", Phonenumber: "9959114639", Gender: "Female" },
-    "1298413": { Name: "Harika Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "145", Dob: "2020-06-01", Doj: "2022-11-28", Father: "Rajkumar", Roll: "1298413", Phonenumber: "8008707668", Gender: "Female" },
-    "1298414": { Name: "Himansi Kondoju", Class: "Grade-1 (Opal)", AdmissionNo: "141", Dob: "2019-02-17", Doj: "2022-06-27", Father: "Sai kumar", Roll: "1298414", Phonenumber: "7075175578", Gender: "Female" },
-    "1392895": { Name: "Izhaan Rahamath Syed", Class: "Grade-1 (Opal)", AdmissionNo: "154", Dob: "2019-01-08", Doj: "2024-06-12", Father: "Syed Fayaz", Roll: "1392895", Phonenumber: "8074667438", Gender: "Male" },
-    "1298424": { Name: "Jaisurya Myakala", Class: "Grade-1 (Opal)", AdmissionNo: "136", Dob: "2018-08-20", Doj: "2022-06-16", Father: "Sravan Kumar", Roll: "1298424", Phonenumber: "9010506760", Gender: "Male" },
-    "1298415": { Name: "Khadeeja Fathima", Class: "Grade-1 (Opal)", AdmissionNo: "146", Dob: "2019-08-06", Doj: "2023-09-01", Father: "Khaja Faheemuddin", Roll: "1298415", Phonenumber: "9959414786", Gender: "Female" },
-    "1298416": { Name: "Manaswini Dandugula", Class: "Grade-1 (Opal)", AdmissionNo: "150", Dob: "2017-10-18", Doj: "2023-10-06", Father: "Srinivas", Roll: "1298416", Phonenumber: "7075342014", Gender: "Female" },
-    "1298417": { Name: "Manusri Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "144", Dob: "2019-05-14", Doj: "2022-11-22", Father: "Ramesh", Roll: "1298417", Phonenumber: "9177313069", Gender: "Female" },
-    "1298426": { Name: "Rithwik krishna Amaravadi", Class: "Grade-1 (Opal)", AdmissionNo: "149", Dob: "2020-03-26", Doj: "2023-02-22", Father: "Rakesh", Roll: "1298426", Phonenumber: "9502626801", Gender: "Male" },
-    "1298427": { Name: "Rohan Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "140", Dob: "2018-07-02", Doj: "2022-08-30", Father: "Vijay kumar", Roll: "1298427", Phonenumber: "6309561181", Gender: "Male" },
-    "1392876": { Name: "Shiva Junnu", Class: "Grade-1 (Opal)", AdmissionNo: "152", Dob: "2018-10-13", Doj: "2024-06-12", Father: "Parusharamulu", Roll: "1392876", Phonenumber: "8096253875", Gender: "Male" },
-    "1392885": { Name: "Shivanandh Bandi", Class: "Grade-1 (Opal)", AdmissionNo: "155", Dob: "---", Doj: "2024-06-12", Father: "Rajesh", Roll: "1392885", Phonenumber: "9848509341", Gender: "Male" },
-    "1459709": { Name: "Sridha Thalla", Class: "Grade-1 (Opal)", AdmissionNo: "164", Dob: "2019-10-27", Doj: "2025-05-22", Father: "Rajesh", Roll: "1459709", Phonenumber: "9550995231", Gender: "Female" },
-    "1298419": { Name: "Srinika Chengelly", Class: "Grade-1 (Opal)", AdmissionNo: "139", Dob: "2019-03-02", Doj: "2022-08-30", Father: "Vykunta Chary", Roll: "1298419", Phonenumber: "9703045606", Gender: "Female" },
-    "1298420": { Name: "Sriyanshi Oggula", Class: "Grade-1 (Opal)", AdmissionNo: "142", Dob: "2019-08-06", Doj: "2022-08-30", Father: "Sampath", Roll: "1298420", Phonenumber: "7730886474", Gender: "Female" },
-    "1298431": { Name: "Vishwak Chekka", Class: "Grade-1 (Opal)", AdmissionNo: "143", Dob: "2019-10-18", Doj: "2022-10-20", Father: "Naresh", Roll: "1298431", Phonenumber: "9912945240", Gender: "Male" },
-    "1298397": { Name: "Aliza Manha Shaik", Class: "Grade-2 (Emerald)", AdmissionNo: "117", Dob: "2018-10-21", Doj: "2023-06-19", Father: "Moin Pasha", Roll: "1298397", Phonenumber: "7989482920", Gender: "Female" },
-    "1298407": { Name: "Dhruvan Reddy Katukuri", Class: "Grade-2 (Emerald)", AdmissionNo: "111", Dob: "2018-12-16", Doj: "2022-06-25", Father: "Thirupathi Reddy", Roll: "1298407", Phonenumber: "7995553736", Gender: "Male" },
-    "1298398": { Name: "Druthika Enugala", Class: "Grade-2 (Emerald)", AdmissionNo: "116", Dob: "2019-04-15", Doj: "2023-12-06", Father: "Karthik Reddy", Roll: "1298398", Phonenumber: "8686077799", Gender: "Female" },
-    "1298399": { Name: "Manaswini Bandi", Class: "Grade-2 (Emerald)", AdmissionNo: "115", Dob: "2017-09-07", Doj: "2022-08-30", Father: "Bixapathi", Roll: "1298399", Phonenumber: "7702551738", Gender: "Female" },
-    "1298408": { Name: "Rakshith Macharla", Class: "Grade-2 (Emerald)", AdmissionNo: "112", Dob: "2018-06-23", Doj: "2022-06-29", Father: "Ganesh", Roll: "1298408", Phonenumber: "8074638822", Gender: "Male" },
-    "1298401": { Name: "Sathwika Katkuri", Class: "Grade-2 (Emerald)", AdmissionNo: "113", Dob: "2018-05-03", Doj: "2022-06-13", Father: "Shivaiah", Roll: "1298401", Phonenumber: "6300199764", Gender: "Female" },
-    "1298402": { Name: "Shalini Uppala", Class: "Grade-2 (Emerald)", AdmissionNo: "109", Dob: "2017-12-21", Doj: "2021-10-09", Father: "Anji", Roll: "1298402", Phonenumber: "9701160185", Gender: "Female" },
-    "1459786": { Name: "Chandu Devarakonda", Class: "Grade-2 (Emerald)", AdmissionNo: "161", Dob: "2017-11-11", Doj: "2025-05-20", Father: "Ramesh", Roll: "1459786", Phonenumber: "9392270984", Gender: "Male" },
-    "1459815": { Name: "Gnaneshwar Pokanati", Class: "Grade-2 (Emerald)", AdmissionNo: "162", Dob: "2017-04-25", Doj: "2025-06-13", Father: "Keshavulu (Late)", Roll: "1459815", Phonenumber: "6300854330", Gender: "Male" },
-    "1298409": { Name: "Hasnain Syed", Class: "Grade-2 (Emerald)", AdmissionNo: "118", Dob: "2018-10-09", Doj: "2023-02-07", Father: "Khader Syed", Roll: "1298409", Phonenumber: "833021076", Gender: "Male" },
-    "1459832": { Name: "Koushik Siluveru", Class: "Grade-2 (Emerald)", AdmissionNo: "167", Dob: "2017-08-06", Doj: "2025-06-18", Father: "Kapil", Roll: "1459832", Phonenumber: "7286805213", Gender: "Male" },
-    "1316732": { Name: "Senen Desabattula", Class: "Grade-2 (Emerald)", AdmissionNo: "119", Dob: "2018-08-17", Doj: "2023-09-02", Father: "Samuel Sparjan Babu", Roll: "1316732", Phonenumber: "9052820502", Gender: "Female" },
-    "1459817": { Name: "Shivarajan Pothuganti", Class: "Grade-2 (Emerald)", AdmissionNo: "163", Dob: "2019-02-07", Doj: "2025-06-13", Father: "Rajashekhar", Roll: "1459817", Phonenumber: "8074781031", Gender: "Male" },
-    "1298393": { Name: "Nagavelly Manikanta", Class: "Grade-3 (Crystal)", AdmissionNo: "73", Dob: "2016-11-16", Doj: "2019-11-30", Father: "Ravi kumar", Roll: "1298393", Phonenumber: "9492098006", Gender: "Male" },
-    "1459834": { Name: "Mirja Ismail", Class: "Grade-3 (Crystal)", AdmissionNo: "166", Dob: "2015-10-02", Doj: "2025-06-18", Father: "Yusuf Baig", Roll: "1459834", Phonenumber: "9989367263", Gender: "Male" },
-    "1298390": { Name: "Bandi Aryan", Class: "Grade-3 (Crystal)", AdmissionNo: "88", Dob: "2017-03-10", Doj: "2023-09-06", Father: "Anil", Roll: "1298390", Phonenumber: "9502098594", Gender: "Male" },
-    "1298392": { Name: "Dandugula Mahesh Babu", Class: "Grade-3 (Crystal)", AdmissionNo: "91", Dob: "2015-08-15", Doj: "2023-10-06", Father: "Srinivas", Roll: "1298392", Phonenumber: "7075342014", Gender: "Male" },
-    "1298387": { Name: "Bandi Tejasri", Class: "Grade-3 (Crystal)", AdmissionNo: "102", Dob: "2017-05-25", Doj: "2023-01-07", Father: "Raghu", Roll: "1298387", Phonenumber: "9618791981", Gender: "Female" },
-    "1298391": { Name: "Bandi Harshavardhan", Class: "Grade-3 (Crystal)", AdmissionNo: "99", Dob: "2017-09-10", Doj: "2023-06-23", Father: "Rajkumar", Roll: "1298391", Phonenumber: "8008707668", Gender: "Male" },
-    "1298389": { Name: "Gampala Vyshnavi", Class: "Grade-3 (Crystal)", AdmissionNo: "89", Dob: "2016-11-02", Doj: "2023-10-06", Father: "Kanakaraju", Roll: "1298389", Phonenumber: "8074393994", Gender: "Female" },
-    "1298384": { Name: "Gampala Laxmi", Class: "Grade-3 (Crystal)", AdmissionNo: "90", Dob: "2017-02-05", Doj: "2023-10-06", Father: "Kanakaraju", Roll: "1298384", Phonenumber: "8074393994", Gender: "Female" },
-    "1298410": { Name: "Garige Harshith", Class: "Grade-3 (Crystal)", AdmissionNo: "106", Dob: "2017-09-10", Doj: "2022-06-20", Father: "Chiranjeevi", Roll: "1298410", Phonenumber: "9959114639", Gender: "Male" },
-    "1459844": { Name: "Katkuri Hanish", Class: "Grade-3 (Crystal)", AdmissionNo: "169", Dob: "2015-08-25", Doj: "2025-06-24", Father: "Katkuri Suryaprasad", Roll: "1459844", Phonenumber: "9000557009", Gender: "Male" },
-    "1459798": { Name: "Katukuri Manideep", Class: "Grade-3 (Crystal)", AdmissionNo: "172", Dob: "2016-05-15", Doj: "2025-05-31", Father: "Chiranjeevi", Roll: "1459798", Phonenumber: "8247004380", Gender: "Male" },
-    // PERIOD REMOVED IN NAME FOR CLOUD MATCHING
-    "1459805": { Name: "MD Abdul Quddus", Class: "Grade-3 (Crystal)", AdmissionNo: "160", Dob: "2017-10-13", Doj: "2025-06-02", Father: "Raja.S", Roll: "1459805", Phonenumber: "7300303319", Gender: "Male" },
-    "1298395": { Name: "Muppa Sathwik Patel", Class: "Grade-3 (Crystal)", AdmissionNo: "81", Dob: "2016-10-11", Doj: "2023-05-30", Father: "Janardhan", Roll: "1298395", Phonenumber: "9553800447", Gender: "Male" },
-    "1298386": { Name: "Nuthanakanti Sansita", Class: "Grade-3 (Crystal)", AdmissionNo: "75", Dob: "2017-04-21", Doj: "2022-06-27", Father: "Sridhar", Roll: "1298386", Phonenumber: "7989663380", Gender: "Female" },
-    "1298396": { Name: "Pasarakonda Ritwin", Class: "Grade-3 (Crystal)", AdmissionNo: "104", Dob: "2016-01-21", Doj: "2023-05-07", Father: "Karnakar", Roll: "1298396", Phonenumber: "7702007402", Gender: "Male" },
-    "1459841": { Name: "Pinninti Rakshith Rao", Class: "Grade-3 (Crystal)", AdmissionNo: "170", Dob: "2017-03-13", Doj: "2025-06-24", Father: "Chander Rao (Late)", Roll: "1459841", Phonenumber: "9848523514", Gender: "Male" },
-    "1400203": { Name: "Rayi Sriman Adithya", Class: "Grade-3 (Crystal)", AdmissionNo: "135", Dob: "2016-05-02", Doj: "2024-07-20", Father: "Venkataramana", Roll: "1400203", Phonenumber: "6305872732", Gender: "Male" },
-    "1298376": { Name: "Abdul Saqib Mohammad", Class: "Grade-4 (Citrine)", AdmissionNo: "41", Dob: "2015-04-09", Doj: "2022-12-06", Father: "Abdul Rawoof", Roll: "1298376", Phonenumber: "8328695850", Gender: "Male" },
-    "1298366": { Name: "Anudeep Chintha", Class: "Grade-4 (Citrine)", AdmissionNo: "64", Dob: "2015-08-27", Doj: "2022-06-29", Father: "Anil", Roll: "1298366", Phonenumber: "9848448941", Gender: "Female" },
-    "1298368": { Name: "Bhavan Bandi", Class: "Grade-4 (Citrine)", AdmissionNo: "95", Dob: "2014-11-26", Doj: "2023-06-19", Father: "Devendar", Roll: "1298368", Phonenumber: "8897141289", Gender: "Male" },
-    "1298370": { Name: "Harshavardhan Gonela", Class: "Grade-4 (Citrine)", AdmissionNo: "80", Dob: "2016-02-02", Doj: "2023-05-29", Father: "Raju", Roll: "1298370", Phonenumber: "9391704022", Gender: "Male" },
-    "1298372": { Name: "Jayadev Chiluveru", Class: "Grade-4 (Citrine)", AdmissionNo: "84", Dob: "2016-05-26", Doj: "2023-07-06", Father: "Madhavarao", Roll: "1298372", Phonenumber: "9700409933", Gender: "Male" },
-    "1298373": { Name: "Mahaboob Syed", Class: "Grade-4 (Citrine)", AdmissionNo: "103", Dob: "2016-05-12", Doj: "2023-02-07", Father: "Khader", Roll: "1298373", Phonenumber: "8333021076", Gender: "Male" },
-    "1298374": { Name: "Nandith Reddy Enugala", Class: "Grade-4 (Citrine)", AdmissionNo: "49", Dob: "2016-01-07", Doj: "2022-06-13", Father: "Karthik Reddy", Roll: "1298374", Phonenumber: "8686077799", Gender: "Male" },
-    "1392930": { Name: "Sai Charan Goud Mandala", Class: "Grade-4 (Citrine)", AdmissionNo: "123", Dob: "2015-09-01", Doj: "2024-06-12", Father: "Arun Kumar", Roll: "1392930", Phonenumber: "8885767607", Gender: "Male" },
-    "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4 (Citrine)", AdmissionNo: "105", Dob: "2016-01-29", Doj: "2023-06-07", Father: "Venkateshwarlu", Roll: "1298380", Phonenumber: "9951567253", Gender: "Female" },
-    "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4 (Citrine)", AdmissionNo: "87", Dob: "2016-09-28", Doj: "2023-09-06", Father: "Hidayath Pasha", Roll: "1298363", Phonenumber: "9302145468", Gender: "Female" },
-    "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4 (Citrine)", AdmissionNo: "128", Dob: "2015-07-13", Doj: "2024-06-12", Father: "Kranthi Kumar", Roll: "1392939", Phonenumber: "8179352423", Gender: "Male" },
-    "1298364": { Name: "Jayasri Mykala", Class: "Grade-4 (Citrine)", AdmissionNo: "68", Dob: "2016-02-06", Doj: "2022-07-07", Father: "Sravan kumar", Roll: "1298364", Phonenumber: "9010506760", Gender: "Female" },
-    "1298381": { Name: "Rahul Kanjarla", Class: "Grade-4 (Citrine)", AdmissionNo: "79", Dob: "2015-09-24", Doj: "2023-05-27", Father: "Kumaraswamy", Roll: "1298381", Phonenumber: "8897047979", Gender: "Male" },
-    "1459784": { Name: "Saketh Devarakonda", Class: "Grade-4 (Citrine)", AdmissionNo: "159", Dob: "2015-12-21", Doj: "2025-05-20", Father: "Ramesh", Roll: "1459784", Phonenumber: "9392270984", Gender: "Male" },
-    "1298353": { Name: "Adya Reddy Vangala", Class: "Grade-5 (Moonstone)", AdmissionNo: "21", Dob: "2016-08-03", Doj: "2021-12-06", Father: "Mahipal Reddy", Roll: "1298353", Phonenumber: "9949109221", Gender: "Female" },
-    "1298361": { Name: "Kowshik Patel Muppa", Class: "Grade-5 (Moonstone)", AdmissionNo: "77", Dob: "2014-09-03", Doj: "2023-05-30", Father: "Janardhan", Roll: "1298361", Phonenumber: "9553800447", Gender: "Male" },
-    "1298355": { Name: "Siri Singaram", Class: "Grade-5 (Moonstone)", AdmissionNo: "83", Dob: "2014-08-16", Doj: "2023-06-06", Father: "Madhu", Roll: "1298355", Phonenumber: "9550726263", Gender: "Female" },
-    "1298360": { Name: "Srikar Mandala", Class: "Grade-5 (Moonstone)", AdmissionNo: "76", Dob: "2013-11-28", Doj: "2023-05-26", Father: "Ramesh", Roll: "1298360", Phonenumber: "9550073190", Gender: "Male" },
-    // PERIOD REMOVED IN NAME FOR CLOUD MATCHING
-    "1459801": { Name: "Abdus Salaam MD", Class: "Grade-5 (Moonstone)", AdmissionNo: "158", Dob: "2015-08-22", Doj: "2025-06-02", Father: "Raja.S", Roll: "1459801", Phonenumber: "7300303319", Gender: "Male" },
-    "1392968": { Name: "Akshith Ram Kalvacharla", Class: "Grade-5 (Moonstone)", AdmissionNo: "126", Dob: "2015-08-21", Doj: "2024-06-12", Father: "Hareen Chary", Roll: "1392968", Phonenumber: "7672058517", Gender: "Male" },
-    "1392965": { Name: "Jaffar Anas Shaik", Class: "Grade-5 (Moonstone)", AdmissionNo: "130", Dob: "2013-04-17", Doj: "2024-06-12", Father: "Khaja Pasha", Roll: "1392965", Phonenumber: "9391854024", Gender: "Male" },
-    "1298359": { Name: "Khaja Azeemuddin Mohammed", Class: "Grade-5 (Moonstone)", AdmissionNo: "30", Dob: "2015-05-02", Doj: "2021-01-09", Father: "Khaja Faheemuddin", Roll: "1298359", Phonenumber: "9959414786", Gender: "Male" },
-    "1459839": { Name: "Nihan Mohammed", Class: "Grade-5 (Moonstone)", AdmissionNo: "168", Dob: "2016-03-04", Doj: "2025-06-21", Father: "Chand Pasha", Roll: "1459839", Phonenumber: "9848465650", Gender: "Male" },
-    "1392963": { Name: "Saif Shaik", Class: "Grade-5 (Moonstone)", AdmissionNo: "120", Dob: "2015-04-10", Doj: "2024-06-12", Father: "Salmaan", Roll: "1392963", Phonenumber: "8179352120", Gender: "Male" },
-    "1459794": { Name: "Saketh Renukuntla", Class: "Grade-5 (Moonstone)", AdmissionNo: "157", Dob: "2014-04-20", Doj: "2025-05-30", Father: "Rajesh", Roll: "1459794", Phonenumber: "7569518371", Gender: "Male" },
-    "1392955": { Name: "Sreeja Dasari", Class: "Grade-5 (Moonstone)", AdmissionNo: "123", Dob: "2014-12-12", Doj: "2024-06-12", Father: "Kumar", Roll: "1392955", Phonenumber: "6301871704", Gender: "Female" },
-    "1459821": { Name: "Vidhaatri Sahani", Class: "Grade-5 (Moonstone)", AdmissionNo: "165", Dob: "2015-06-15", Doj: "2025-06-18", Father: "Abhishek Sahani", Roll: "1459821", Phonenumber: "9704394869", Gender: "Female" },
-    "1298347": { Name: "Abdul Razzak Mohammad", Class: "Grade-6 (Alluri)", AdmissionNo: "19", Dob: "2013-11-19", Doj: "2019-11-06", Father: "Abdul Rawoof", Roll: "1298347", Phonenumber: "9573226386", Gender: "Male" },
-    "1298341": { Name: "Anudeepthi Chintha", Class: "Grade-6 (Alluri)", AdmissionNo: "63", Dob: "2014-02-23", Doj: "2022-06-29", Father: "Anil", Roll: "1298341", Phonenumber: "9052927765", Gender: "Female" },
-    "1298350": { Name: "Saketh Ranaveni", Class: "Grade-6 (Alluri)", AdmissionNo: "61", Dob: "2013-10-24", Doj: "2022-06-27", Father: "Sampath", Roll: "1298350", Phonenumber: "8688129606", Gender: "Male" },
-    "1298346": { Name: "Shiva Sri Katukuri", Class: "Grade-6 (Alluri)", AdmissionNo: "48", Dob: "2014-09-24", Doj: "2022-06-13", Father: "Shivaiah", Roll: "1298346", Phonenumber: "6300199764", Gender: "Female" },
-    "1298348": { Name: "Aklees Shaik", Class: "Grade-6 (Alluri)", AdmissionNo: "85", Dob: "2014-08-25", Doj: "2019-09-06", Father: "Hidayath Pasha", Roll: "1298348", Phonenumber: "9302145468", Gender: "Male" },
-    "1392992": { Name: "Akshya Kalvacharla", Class: "Grade-6 (Alluri)", AdmissionNo: "125", Dob: "2013-11-16", Doj: "2024-06-12", Father: "Hareen Chary", Roll: "1392992", Phonenumber: "7672058517", Gender: "Female" },
-    "1472577": { Name: "Prince Katkuri", Class: "Grade-6 (Alluri)", AdmissionNo: "0", Dob: "2013-08-06", Doj: "2025-08-11", Father: "Katkuri Suryaprasad", Roll: "1472577", Phonenumber: "9000557009", Gender: "Female" },
-    "1298339": { Name: "Manikanta Sannayala", Class: "Grade-7 (Kalam)", AdmissionNo: "38", Dob: "2013-05-31", Doj: "2021-09-28", Father: "Shiva", Roll: "1298339", Phonenumber: "9000283858", Gender: "Male" },
-    "1298340": { Name: "Sreeyan Reddy Karra", Class: "Grade-7 (Kalam)", AdmissionNo: "33", Dob: "2012-01-08", Doj: "2021-07-09", Father: "Krishna Reddy", Roll: "1298340", Phonenumber: "9848774257", Gender: "Male" },
-    "1393008": { Name: "Jayadhithya Chiluveru", Class: "Grade-7 (Kalam)", AdmissionNo: "131", Dob: "2013-02-08", Doj: "2024-06-12", Father: "CH.Madhava Rao", Roll: "1393008", Phonenumber: "8886826838", Gender: "Male" },
-    "1459846": { Name: "Akshaya Gampala", Class: "Grade-8 (Bhagat)", AdmissionNo: "171", Dob: "2009-02-09", Doj: "2025-06-26", Father: "Balaiah", Roll: "1459846", Phonenumber: "9948184498", Gender: "Female" },
-    "1298335": { Name: "Ganesh Oggula", Class: "Grade-8 (Bhagat)", AdmissionNo: "56", Dob: "2011-06-11", Doj: "2022-06-27", Father: "Cheralu", Roll: "1298335", Phonenumber: "6304381153", Gender: "Male" },
-    "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8 (Bhagat)", AdmissionNo: "156", Dob: "2012-05-11", Doj: "2025-05-30", Father: "Rajesh", Roll: "1459792", Phonenumber: "7569518371", Gender: "Female" },
-    "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8 (Bhagat)", AdmissionNo: "28", Dob: "2012-08-11", Doj: "2021-01-09", Father: "Khaja Faheemuddin", Roll: "1298337", Phonenumber: "9959414786", Gender: "Male" },
-    "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8 (Bhagat)", AdmissionNo: "39", Dob: "2012-03-07", Doj: "2021-04-10", Father: "Ravi", Roll: "1298333", Phonenumber: "9492098006", Gender: "Female" },
-    "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)", AdmissionNo: "34", Dob: "2012-12-10", Doj: "2021-09-16", Father: "Ramesh", Roll: "1298334", Phonenumber: "8179254251", Gender: "Female" }
-};
-
-function toggleClearBtn() {
-    const input = document.getElementById('rollNumberInput');
-    const clearBtn = document.getElementById('clearBtn');
-    clearBtn.style.display = input.value.length > 0 ? 'block' : 'none';
-}
-
-function clearSearch() {
-    document.getElementById('rollNumberInput').value = '';
-    toggleClearBtn();
-    document.getElementById('rollNumberInput').focus();
-}
-
-function searchStudent() {
-    const rollNo = document.getElementById('rollNumberInput').value.trim();
-    if (!rollNo) return alert("Please enter a Roll Number first.");
-
-    const student = studentData[rollNo];
-    
-    if (student) {
-        // 1. Fill basic details
-        document.getElementById('studentName').innerText = student.Name;
-        document.getElementById('studentClass').innerText = student.Class;
-        document.getElementById('RollNumber').innerText = student.Roll;
-        document.getElementById('admissionNo').innerText = student.AdmissionNo;
-        document.getElementById('fatherName').innerText = student.Father;
-        document.getElementById('studentDob').innerText = student.Dob;
-        document.getElementById('studentDoj').innerText = student.Doj;
-        document.getElementById('PhoneNumber').innerText = student.Phonenumber;
-        document.getElementById('studentGender').innerText = student.Gender;
-        
-        // Use student ID for image, default to logo.png if not found
-        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
-
-        // 2. Fetch Live Attendance from Cloud Data
-        const shortClassName = student.Class.split(" ")[0]; // e.g., "Grade-1"
-        let presentDays = 0;
-        let totalDays = 0;
-        
-        if (cloudAttendanceData[shortClassName] && cloudAttendanceData[shortClassName].students && cloudAttendanceData[shortClassName].students[student.Name]) {
-            const stats = cloudAttendanceData[shortClassName].students[student.Name];
-            presentDays = stats.presentDays || 0;
-            totalDays = stats.totalDays || 0;
-        }
-
-        const attendanceRateElement = document.getElementById('attendanceRate');
-        const badge = document.getElementById('statusBadge');
-        const alertBox = document.getElementById('attendanceAlert');
-        
-        if (totalDays === 0) {
-            attendanceRateElement.innerText = "No Classes Yet";
-            attendanceRateElement.style.color = "#666";
-            badge.innerText = "NO DATA YET";
-            badge.style.background = "#f0f0f0";
-            badge.style.color = "#666";
-            alertBox.style.display = "none";
-        } else {
-            const percent = Math.round((presentDays / totalDays) * 100);
-            attendanceRateElement.innerText = percent + "% (" + presentDays + "/" + totalDays + " Days)";
-            
-            if (percent >= 50) {
-                attendanceRateElement.style.color = "#006633";
-                badge.innerText = "GOOD STANDING";
-                badge.style.background = "#e8f5e9";
-                badge.style.color = "#2e7d32";
-                alertBox.style.display = "none";
-            } else {
-                attendanceRateElement.style.color = "#c62828";
-                badge.innerText = "ACTION REQUIRED";
-                badge.style.background = "#ffebee";
-                badge.style.color = "#c62828";
-                alertBox.style.display = "block";
-            }
-        }
-        
-    } else {
-        alert("Student record not found. Please check the Roll Number.");
-    }
-}
-
-function downloadReport() {
-    window.print();
-}
+function downloadReport() { window.print(); }
 </script>
 </body>
 </html>
