@@ -6,6 +6,7 @@
     <title>Student Profile | Paramount School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; }
         * { box-sizing: border-box; }
@@ -44,6 +45,11 @@
         .nav-return-box { width: 100%; display: flex; justify-content: center; margin-top: 15px; }
         .return-link { background: rgba(255,255,255,0.1); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 13px; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .return-link:hover { background: var(--gold); color: var(--forest); border-color: var(--gold); }
+
+        /* PDF BUTTON STYLE */
+        .pdf-btn-container { text-align: center; margin-top: 30px; display: none; }
+        .pdf-btn { background: var(--forest); color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .pdf-btn:hover { background: #004d26; transform: translateY(-2px); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -90,6 +96,12 @@
         <div class="info-item"><label>Date of Birth</label><span id="studentDob">---</span></div>
         <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
         <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
+    </div>
+
+    <div class="pdf-btn-container" id="pdfBtnSection">
+        <button onclick="downloadPDF()" class="pdf-btn">
+            <i class="fas fa-file-pdf"></i> Download Report as PDF
+        </button>
     </div>
 </div>
 
@@ -310,7 +322,53 @@ function searchStudent() {
             const percent = stats.totalDays > 0 ? Math.round((stats.presentDays / stats.totalDays) * 100) : 0;
             document.getElementById('attendanceRate').innerText = `${percent}% (${stats.presentDays}/${stats.totalDays} Days)`;
         });
+
+        /* Added Section */
+        document.getElementById('pdfBtnSection').style.display = 'block';
+
     } else { alert("Student not found."); }
+}
+
+/* Added PDF Generation Logic */
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const name = document.getElementById('studentName').innerText;
+    
+    doc.setFontSize(18);
+    doc.setTextColor(0, 102, 51); // Forest green
+    doc.text("PARAMOUNT ENGLISH MEDIUM SCHOOL", 105, 20, { align: "center" });
+    
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Student Profile Report", 105, 30, { align: "center" });
+    doc.line(20, 35, 190, 35);
+
+    const data = [
+        ["Name", name],
+        ["Class", document.getElementById('studentClass').innerText],
+        ["Roll Number", document.getElementById('RollNumber').innerText],
+        ["Admission No", document.getElementById('admissionNo').innerText],
+        ["Father's Name", document.getElementById('fatherName').innerText],
+        ["Attendance %", document.getElementById('attendanceRate').innerText],
+        ["Date of Birth", document.getElementById('studentDob').innerText],
+        ["Phone Number", document.getElementById('PhoneNumber').innerText]
+    ];
+
+    let y = 50;
+    data.forEach(item => {
+        doc.setFont("helvetica", "bold");
+        doc.text(`${item[0]}:`, 30, y);
+        doc.setFont("helvetica", "normal");
+        doc.text(item[1], 80, y);
+        y += 10;
+    });
+
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 105, 280, { align: "center" });
+
+    doc.save(`${name}_Profile_Report.pdf`);
 }
 
 function getDiary() {
