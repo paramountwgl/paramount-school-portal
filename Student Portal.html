@@ -13,10 +13,13 @@
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f7f6; overflow-x: hidden; width: 100%; }
         
         /* NAVIGATION BAR */
-        .portal-nav { background: #004d26; padding: 12px; display: flex; justify-content: center; gap: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 2000; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; padding: 8px 15px; border-radius: 20px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .portal-nav { background: #004d26; padding: 12px; display: flex; justify-content: center; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 2000; flex-wrap: wrap; }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 13px; padding: 8px 12px; border-radius: 20px; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); }
         .portal-nav a:hover { color: var(--gold); }
+        
+        /* QUIZ NAV STYLE */
+        .nav-quiz { background: var(--gold) !important; color: var(--forest) !important; border: 1px solid white; }
 
         /* HEADER STYLING */
         .profile-header { background: var(--forest); color: white; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 200px; position: relative; }
@@ -41,12 +44,10 @@
         .subject-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-left: 5px solid var(--forest); }
         .status-badge { padding: 6px 18px; border-radius: 20px; font-size: 12px; background: #f0f0f0; font-weight: bold; display: inline-block; margin-top: 10px; }
 
-        /* ADDED RETURN BUTTON STYLE */
-        .nav-return-box { width: 100%; display: flex; justify-content: center; margin-top: 15px; }
+        .nav-return-box { width: 100%; display: flex; justify-content: center; margin-top: 15px; gap: 10px; }
         .return-link { background: rgba(255,255,255,0.1); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 13px; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .return-link:hover { background: var(--gold); color: var(--forest); border-color: var(--gold); }
 
-        /* PDF BUTTON STYLE */
         .pdf-btn-container { text-align: center; margin-top: 30px; display: none; }
         .pdf-btn { background: var(--forest); color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .pdf-btn:hover { background: #004d26; transform: translateY(-2px); }
@@ -58,8 +59,9 @@
 <body>
 
 <div class="portal-nav">
-    <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile Search</a>
-    <a href="homework.html"><i class="fas fa-book-open"></i> Daily Homework</a>
+    <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
+    <a href="quiz.html" class="nav-quiz"><i class="fas fa-brain"></i> Daily Quiz</a>
+    <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
 </div>
 
 <div class="profile-header">
@@ -69,7 +71,8 @@
     </a>
 
     <div class="nav-return-box">
-        <a href="index.html" class="return-link"><i class="fas fa-arrow-left"></i> Return to Home Page</a>
+        <a href="index.html" class="return-link"><i class="fas fa-arrow-left"></i> Home</a>
+        <a href="quiz.html" class="return-link" style="background:var(--gold); color:var(--forest);"><i class="fas fa-lightbulb"></i> Take Today's Quiz</a>
     </div>
 
     <div class="search-container">
@@ -268,7 +271,7 @@ const studentData = {
     "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4 (Citrine)", AdmissionNo: "105", Father: "Venkateshwarlu", Roll: "1298380", Phonenumber: "9951567253", Gender: "Female", Dob: "2016-01-29" },
     "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4 (Citrine)", AdmissionNo: "87", Father: "Hidayath Pasha", Roll: "1298363", Phonenumber: "9302145468", Gender: "Female", Dob: "2016-09-28" },
     "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4 (Citrine)", AdmissionNo: "128", Father: "Kranthi Kumar", Roll: "1392939", Phonenumber: "8179352423", Gender: "Male", Dob: "2015-07-13" },
-    "1298364": { Name: "Jayasri Mykala", Class: "Grade-4 (Citrine)", AdmissionNo: "68", Father: "Sravan kumar", Roll: "1298364", Phonenumber: "9010506760", Gender: "Female", Dob: "2016-02-06" },
+    "1298364": { Name: "Jayasri Myakala", Class: "Grade-4 (Citrine)", AdmissionNo: "68", Father: "Sravan kumar", Roll: "1298364", Phonenumber: "9010506760", Gender: "Female", Dob: "2016-02-06" },
     "1298381": { Name: "Rahul Kanjarla", Class: "Grade-4 (Citrine)", AdmissionNo: "79", Father: "Kumaraswamy", Roll: "1298381", Phonenumber: "8897047979", Gender: "Male", Dob: "2015-09-24" },
     "1459784": { Name: "Saketh Devarakonda", Class: "Grade-4 (Citrine)", AdmissionNo: "159", Father: "Ramesh", Roll: "1459784", Phonenumber: "9392270984", Gender: "Male", Dob: "2015-12-21" },
     "1298353": { Name: "Adya Reddy Vangala", Class: "Grade-5 (Moonstone)", AdmissionNo: "21", Father: "Mahipal Reddy", Roll: "1298353", Phonenumber: "9949109221", Gender: "Female", Dob: "2016-08-03" },
@@ -323,20 +326,18 @@ function searchStudent() {
             document.getElementById('attendanceRate').innerText = `${percent}% (${stats.presentDays}/${stats.totalDays} Days)`;
         });
 
-        /* Added Section */
         document.getElementById('pdfBtnSection').style.display = 'block';
 
     } else { alert("Student not found."); }
 }
 
-/* Added PDF Generation Logic */
 function downloadPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     const name = document.getElementById('studentName').innerText;
     
     doc.setFontSize(18);
-    doc.setTextColor(0, 102, 51); // Forest green
+    doc.setTextColor(0, 102, 51); 
     doc.text("PARAMOUNT ENGLISH MEDIUM SCHOOL", 105, 20, { align: "center" });
     
     doc.setFontSize(14);
