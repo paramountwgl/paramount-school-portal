@@ -12,14 +12,11 @@
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f4f7f6; overflow-x: hidden; width: 100%; }
         
-        /* NAVIGATION BAR */
+        /* NAVIGATION BAR - Quiz Removed */
         .portal-nav { background: #004d26; padding: 12px; display: flex; justify-content: center; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 2000; flex-wrap: wrap; }
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 13px; padding: 8px 12px; border-radius: 20px; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); }
         .portal-nav a:hover { color: var(--gold); }
-        
-        /* QUIZ NAV STYLE */
-        .nav-quiz { background: var(--gold) !important; color: var(--forest) !important; border: 1px solid white; }
 
         /* HEADER STYLING */
         .profile-header { background: var(--forest); color: white; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; min-height: 200px; position: relative; }
@@ -60,7 +57,6 @@
 
 <div class="portal-nav">
     <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
-    <a href="Quiz.html" class="nav-quiz"><i class="fas fa-brain"></i> Daily Quiz</a>
     <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
 </div>
 
@@ -72,7 +68,6 @@
 
     <div class="nav-return-box">
         <a href="index.html" class="return-link"><i class="fas fa-arrow-left"></i> Home</a>
-        <a href="Quiz.html" class="return-link" style="background:var(--gold); color:var(--forest);"><i class="fas fa-lightbulb"></i> Take Today's Quiz</a>
     </div>
 
     <div class="search-container">
@@ -305,113 +300,79 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)", AdmissionNo: "34", Father: "Ramesh", Roll: "1298334", Phonenumber: "8179254251", Gender: "Female", Dob: "2012-12-10" }
 };
 
-function searchStudent() {
-    const rollNo = document.getElementById('rollNumberInput').value.trim();
-    const student = studentData[rollNo];
-    if (student) {
-        document.getElementById('studentName').innerText = student.Name;
-        document.getElementById('studentClass').innerText = student.Class;
-        document.getElementById('RollNumber').innerText = student.Roll;
-        document.getElementById('admissionNo').innerText = student.AdmissionNo;
-        document.getElementById('fatherName').innerText = student.Father;
-        document.getElementById('studentDob').innerText = student.Dob;
-        document.getElementById('PhoneNumber').innerText = student.Phonenumber;
-        document.getElementById('studentGender').innerText = student.Gender;
-        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
-        
-        const shortClass = student.Class.split(" ")[0];
-        db.ref(`attendance/${shortClass}/students/${student.Name}`).once('value', (snap) => {
-            const stats = snap.val() || { presentDays: 0, totalDays: 0 };
-            const percent = stats.totalDays > 0 ? Math.round((stats.presentDays / stats.totalDays) * 100) : 0;
-            document.getElementById('attendanceRate').innerText = `${percent}% (${stats.presentDays}/${stats.totalDays} Days)`;
-        });
-
-        document.getElementById('pdfBtnSection').style.display = 'block';
-
-    } else { alert("Student not found."); }
+async function login() {
+    const snap = await db.ref('admin/password').once('value');
+    const correct = snap.val() || "Ahmad@07";
+    if(document.getElementById('adminPass').value === correct) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+    } else { Swal.fire('Error', 'Incorrect Password', 'error'); }
 }
 
-function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const name = document.getElementById('studentName').innerText;
-    
-    doc.setFontSize(18);
-    doc.setTextColor(0, 102, 51); 
-    doc.text("PARAMOUNT ENGLISH MEDIUM SCHOOL", 105, 20, { align: "center" });
-    
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text("Student Profile Report", 105, 30, { align: "center" });
-    doc.line(20, 35, 190, 35);
+function postAnn() { db.ref('announcement').set(document.getElementById('annMsg').value).then(() => Swal.fire('Published!', '', 'success')); }
+function clearAnn() { db.ref('announcement').remove().then(() => { document.getElementById('annMsg').value = ""; Swal.fire('Cleared!', '', 'info'); }); }
 
-    const data = [
-        ["Name", name],
-        ["Class", document.getElementById('studentClass').innerText],
-        ["Roll Number", document.getElementById('RollNumber').innerText],
-        ["Admission No", document.getElementById('admissionNo').innerText],
-        ["Father's Name", document.getElementById('fatherName').innerText],
-        ["Attendance %", document.getElementById('attendanceRate').innerText],
-        ["Date of Birth", document.getElementById('studentDob').innerText],
-        ["Phone Number", document.getElementById('PhoneNumber').innerText]
-    ];
-
-    let y = 50;
-    data.forEach(item => {
-        doc.setFont("helvetica", "bold");
-        doc.text(`${item[0]}:`, 30, y);
-        doc.setFont("helvetica", "normal");
-        doc.text(item[1], 80, y);
-        y += 10;
-    });
-
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text(`Generated on: ${new Date().toLocaleString()}`, 105, 280, { align: "center" });
-
-    doc.save(`${name}_Profile_Report.pdf`);
+async function viewAtt() {
+    const cls = document.getElementById('clsPick').value;
+    const type = document.getElementById('viewType').value;
+    const body = document.getElementById('attBody');
+    const head = document.getElementById('tableHead');
+    if(!cls) return Swal.fire('Error', 'Choose a class', 'info');
+    body.innerHTML = '<tr><td colspan="5" style="text-align:center;">Loading...</td></tr>';
+    if(type === 'daily') {
+        const selDate = document.getElementById('dateInput').value;
+        if(!selDate) return Swal.fire('Error', 'Select a date', 'info');
+        head.innerHTML = `<tr><th>Student</th><th colspan="4">Attendance Status</th></tr>`;
+        db.ref(`daily_attendance/${selDate}/${cls}`).once('value', (snap) => {
+            const data = snap.val(); body.innerHTML = "";
+            if(!data) { document.getElementById('dlBtn').style.display = 'none'; return body.innerHTML = '<tr><td colspan="5" style="text-align:center;">No records found</td></tr>'; }
+            document.getElementById('dlBtn').style.display = 'inline-flex';
+            for(let name in data) { const status = data[name] ? '<span class="status-p">PRESENT</span>' : '<span class="status-a">ABSENT</span>'; body.innerHTML += `<tr><td>${name}</td><td colspan="4">${status}</td></tr>`; }
+        });
+    } else {
+        head.innerHTML = `<tr><th>Student</th><th>P</th><th>A</th><th>Total</th><th>%</th></tr>`;
+        db.ref(`attendance/${cls}/students`).once('value', (snap) => {
+            const data = snap.val(); body.innerHTML = "";
+            if(!data) { document.getElementById('dlBtn').style.display = 'none'; return body.innerHTML = '<tr><td colspan="5" style="text-align:center;">No data found</td></tr>'; }
+            document.getElementById('dlBtn').style.display = 'inline-flex';
+            for(let name in data) {
+                let p = 0, t = 0;
+                if(type === 'monthly') {
+                    const selMonth = document.getElementById('monthInput').value;
+                    if(!selMonth) return;
+                    const mData = (data[name].months && data[name].months[selMonth]) ? data[name].months[selMonth] : null;
+                    p = mData ? (mData.present || 0) : 0; t = mData ? (mData.total || 0) : 0;
+                } else {
+                    if (data[name].months) Object.values(data[name].months).forEach(month => { p += (month.present || 0); t += (month.total || 0); });
+                }
+                const a = t - p; const pct = t > 0 ? Math.round((p/t)*100) : 0;
+                body.innerHTML += `<tr><td>${name}</td><td>${p}</td><td>${a}</td><td>${t}</td><td>${pct}%</td></tr>`;
+            }
+        });
+    }
 }
 
-function getDiary() {
-    const name = document.getElementById('stName').value;
-    const date = document.getElementById('stDate').value;
-    const list = document.getElementById('hwList');
-    
-    db.ref(`homework/${date}`).once('value', (snap) => {
-        const data = snap.val();
-        if(!data) { 
-            list.innerHTML = "<p style='color:red; text-align:center;'>No homework found.</p>"; 
-            return; 
-        }
-
-        let timeInfo = data.lastUpdated ? `<p style="text-align:right; font-size:12px; color:#666;">📝 Last updated: ${data.lastUpdated}</p>` : "";
-        let html = `<h3>Homework for ${date}</h3>` + timeInfo;
-        
-        for (let sub in data) {
-            if(sub === 'lastUpdated') continue;
-            html += `<div class="subject-row">
-                <div><strong style="color:var(--forest)">${sub}</strong><p>${data[sub]}</p></div>
-                <div style="text-align:center;"><label style="font-size:10px; display:block;">Parent Sign</label>
-                <input type="checkbox" onchange="signHW('${date}','${name}','${sub}',this.checked)" style="width:22px;height:22px;"></div>
-            </div>`;
-        }
-        list.innerHTML = html;
-    });
+async function downloadFilteredReport() {
+    const cls = document.getElementById('clsPick').value;
+    const month = document.getElementById('monthInput').value;
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Report');
+    sheet.columns = [{header:'STUDENT',key:'n',width:30},{header:'P',key:'p',width:10},{header:'A',key:'a',width:10},{header:'TOTAL',key:'t',width:10}];
+    document.querySelectorAll('#attBody tr').forEach(r => sheet.addRow({n:r.cells[0].innerText, p:r.cells[1].innerText, a:r.cells[2].innerText, t:r.cells[3].innerText}));
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Paramount_${cls}_${month}.xlsx`; link.click();
 }
 
-function signHW(date, name, sub, checked) {
-    db.ref(`homework_status/${date}/${name}/${sub}`).set({
-        verified: checked,
-        time: new Date().toLocaleString()
-    });
+async function resetAttendanceData() {
+    const confirm = await Swal.fire({ title: 'MASTER RESET', text: "Delete all attendance logs?", icon: 'warning', showCancelButton: true });
+    if(confirm.isConfirmed) {
+        const { value: pw } = await Swal.fire({ title: 'Admin Password', input: 'password' });
+        if(pw === "Ahmad@07") { db.ref('attendance').remove(); db.ref('daily_attendance').remove(); Swal.fire('Success', 'Cleared', 'success'); }
+    }
 }
 
-db.ref('announcement').on('value', (snap) => {
-    const msg = snap.val();
-    const banner = document.getElementById('liveAnnouncementBanner');
-    if (msg && banner) { document.getElementById('announcementMessageText').innerText = msg; banner.style.display = 'block'; } 
-    else if (banner) { banner.style.display = 'none'; }
-});
+document.getElementById('monthInput').value = new Date().toISOString().slice(0, 7);
 </script>
 </body>
 </html>
