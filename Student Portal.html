@@ -18,6 +18,11 @@
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); }
         .portal-nav a:hover { color: var(--gold); background: rgba(255,255,255,0.1); }
 
+        /* LIVE ANNOUNCEMENT BANNER - RESTORED */
+        .announcement-banner { background: var(--danger); color: white; text-align: center; padding: 10px 15px; font-weight: 800; font-size: 13px; display: none; position: sticky; top: 48px; z-index: 1999; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-transform: uppercase; }
+        .announcement-banner i { margin-right: 8px; animation: blink 1s infinite alternate; color: var(--gold); }
+        @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+
         /* HEADER STYLING */
         .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
         .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; }
@@ -32,7 +37,7 @@
         .search-btn { padding: 14px 28px; border-radius: 35px; border: none; background-color: var(--gold); color: var(--forest); font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
         .search-btn:hover { transform: scale(1.05); background-color: white; }
 
-        .portal-title { text-align: center; color: var(--forest); margin: 40px 0 80px 0; font-size: 32px; font-weight: 900; }
+        .portal-title { text-align: center; color: var(--forest); margin: 40px 0 30px 0; font-size: 32px; font-weight: 900; }
 
         /* PROFILE CARD */
         .profile-card { max-width: 750px; margin: 0 auto 50px auto; background: white; padding: 70px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: relative; width: 92%; border-bottom: 5px solid var(--forest); }
@@ -45,7 +50,7 @@
         .info-item label { font-size: 10px; color: #888; display: block; text-transform: uppercase; font-weight: 800; margin-bottom: 6px; }
         .info-item span { font-weight: 700; color: #222; font-size: 15px; display: block; }
         .attendance-highlight { background: #e8f5e9 !important; border: 1px solid #c8e6c9 !important; }
-        .status-badge { padding: 8px 22px; border-radius: 25px; font-size: 13px; background: #f0f0f0; font-weight: 800; display: inline-block; margin-top: 10px; text-transform: uppercase; }
+        .status-badge { padding: 8px 22px; border-radius: 25px; font-size: 13px; background: #f0f0f0; font-weight: 800; display: inline-block; margin-top: 10px; text-transform: uppercase; border: 1px solid transparent; }
 
         .pdf-btn-container { text-align: center; margin-top: 40px; display: none; }
         .pdf-btn { background: linear-gradient(135deg, var(--forest), #004d26); color: white; border: none; padding: 14px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(0,102,51,0.2); }
@@ -78,6 +83,10 @@
 <div class="portal-nav">
     <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
     <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
+</div>
+
+<div id="liveAnnouncementBanner" class="announcement-banner">
+    <i class="fas fa-bullhorn"></i> <span id="announcementMessageText"></span>
 </div>
 
 <div class="profile-header">
@@ -329,6 +338,7 @@ const studentData = {
 function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
+    
     if (student) {
         document.getElementById('studentName').innerText = student.Name;
         document.getElementById('studentClass').innerText = student.Class;
@@ -342,33 +352,42 @@ function searchStudent() {
         
         const status = document.getElementById('statusBadge');
         
-        // ATTENDANCE LOGIC
-        const shortClass = student.Class.split(" ")[0];
-        db.ref(`attendance/${shortClass}/students/${student.Name}`).once('value', (snap) => {
-            const stats = snap.val() || { presentDays: 0, totalDays: 0 };
-            
-            // Calculate overall percentage across all months
+        // FIXED ATTENDANCE MATH
+        const shortClass = student.Class.split(" ")[0]; // Get exactly "Grade-8", etc.
+        
+        db.ref('daily_attendance').once('value', (snap) => {
+            const allData = snap.val() || {};
             let totalP = 0, totalT = 0;
-            if(stats.months) {
-                Object.values(stats.months).forEach(m => { totalP += m.present; totalT += m.total; });
-            }
+            
+            Object.keys(allData).forEach(date => {
+                const classData = allData[date][shortClass];
+                if(classData && classData[student.Name] !== undefined) {
+                    totalT++; 
+                    if(classData[student.Name] === true) {
+                        totalP++;
+                    }
+                }
+            });
             
             const percent = totalT > 0 ? Math.round((totalP / totalT) * 100) : 0;
             document.getElementById('attendanceRate').innerText = `${percent}% (${totalP}/${totalT} Days)`;
 
-            // ACTIVE / INACTIVE BADGE LOGIC
+            // ACTIVE / INACTIVE BADGE STYLING
             if(totalT === 0) {
                 status.innerText = "NO DATA YET";
                 status.style.background = "#f0f0f0";
                 status.style.color = "#888";
+                status.style.border = "1px solid transparent";
             } else if (percent >= 75) {
                 status.innerText = "ACTIVE";
                 status.style.background = "#e8f5e9";
                 status.style.color = "var(--forest)";
+                status.style.border = "1px solid #c8e6c9";
             } else {
                 status.innerText = "INACTIVE";
                 status.style.background = "#ffebee";
                 status.style.color = "var(--danger)";
+                status.style.border = "1px solid #ffcdd2";
             }
         });
 
@@ -386,6 +405,7 @@ function downloadPDF() {
     doc.save(`${name}_Report.pdf`);
 }
 
+// THIS MAKES THE ANNOUNCEMENT POP UP FOR PARENTS
 db.ref('announcement').on('value', (snap) => {
     const msg = snap.val();
     const banner = document.getElementById('liveAnnouncementBanner');
