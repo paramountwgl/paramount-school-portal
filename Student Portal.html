@@ -21,22 +21,23 @@
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); }
         .portal-nav a:hover { color: var(--gold); background: rgba(255,255,255,0.1); }
 
-        /* LIVE ANNOUNCEMENT BANNER */
+        /* LIVE ANNOUNCEMENT BANNER - BREATHING EFFECT */
         .announcement-banner { 
             color: white; text-align: center; padding: 12px 20px; font-weight: 800; font-size: 14px; 
             display: none; border-radius: 10px; margin: 25px auto 0 auto; max-width: 750px; width: 92%; 
             text-transform: uppercase; animation: breatheBg 1.8s infinite alternate ease-in-out;
         }
         .announcement-banner i { margin-right: 8px; animation: blink 1s infinite alternate; color: var(--gold); }
+        
         @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
         @keyframes breatheBg { 0% { background-color: #ff4c4c; box-shadow: 0 0 15px rgba(255, 76, 76, 0.8); } 100% { background-color: #9b0000; box-shadow: 0 0 5px rgba(155, 0, 0, 0.2); } }
 
         /* HEADER STYLING */
-        .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; transition: 0.3s; }
+        .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; transition: background-color 0.3s; }
         .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; transition: 0.3s; }
         .header-logo-box img { height: clamp(65px, 10vw, 90px); width: auto; }
-        .header-logo-box h1 { margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.4rem); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; transition: 0.3s; }
-        .header-logo-box p { margin: 0; font-size: 13px; color: var(--gold); font-weight: 700; text-align: left; transition: 0.3s; }
+        .header-logo-box h1 { margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.4rem); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; transition: color 0.3s; }
+        .header-logo-box p { margin: 0; font-size: 13px; color: var(--gold); font-weight: 700; text-align: left; transition: color 0.3s; }
         
         /* SEARCH BOX */
         .search-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 550px; }
@@ -47,10 +48,12 @@
 
         .portal-title { text-align: center; color: var(--forest); margin: 30px 0 20px 0; font-size: 32px; font-weight: 900; }
 
-        /* HTML2CANVAS FIX: REMOVED POSITION ABSOLUTE FROM PHOTO */
-        .profile-card { max-width: 750px; margin: 80px auto 50px auto; background: white; padding: 80px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: relative; width: 92%; border-bottom: 5px solid var(--forest); text-align: center; }
-        .photo-container { width: 140px; height: 140px; margin: -150px auto 20px auto; border-radius: 50%; border: 6px solid white; background: #f8f9fa; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; z-index: 10; }
-        .student-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        /* PROFILE CARD & HTML2CANVAS SAFE IMAGE POSITIONING */
+        .profile-card { max-width: 750px; margin: 80px auto 50px auto; background: white; padding: 0 35px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); width: 92%; border-bottom: 5px solid var(--forest); text-align: center; }
+        
+        /* Fixed Photo Container: No 'position: absolute' so PDF rendering doesn't cut it in half */
+        .photo-container { width: 140px; height: 140px; margin: -70px auto 20px auto; border-radius: 50%; border: 6px solid white; background: #f8f9fa; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .student-photo { width: 100%; height: 100%; object-fit: cover; }
         
         /* INFO GRID */
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px; border-top: 2px solid #f8f8f8; padding-top: 30px; text-align: left; }
@@ -93,15 +96,15 @@
         </div>
 
         <div class="search-container" id="searchBoxForPdf">
-            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent()">
-            <button onclick="searchStudent()" class="search-btn"><i class="fas fa-search"></i> Search</button>
+            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter' || event.keyCode === 13) { event.preventDefault(); searchStudent(); }">
+            <button onclick="event.preventDefault(); searchStudent();" class="search-btn"><i class="fas fa-search"></i> Search</button>
         </div>
     </div>
 
     <h1 class="portal-title">STUDENT PORTAL</h1>
 
     <div class="profile-card">
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" alt="Student Photo"></div>
         <h2 id="studentName" style="margin: 0 0 5px; font-size: 28px; color: var(--forest); text-transform: uppercase; font-weight: 900;">Student Name</h2>
         <span class="status-badge" id="statusBadge">Enter Roll Number to Access</span>
 
@@ -121,13 +124,15 @@
         </div>
     </div>
 
-</div> 
-
-<div class="bottom-nav" id="bottomNav">
+</div> <div class="bottom-nav" id="bottomNav">
     <a href="index.html" class="btn-return">
         <i class="fas fa-user-tie"></i> Return to Portal
     </a>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
 const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
@@ -329,67 +334,88 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", AdmissionNo: "34", Father: "Ramesh", Roll: "1298334", Phonenumber: "8179254251", Gender: "Female", Dob: "2012-12-10" }
 };
 
+// ROBUST SEARCH FUNCTION
 function searchStudent() {
-    const rollNo = document.getElementById('rollNumberInput').value.trim();
-    const student = studentData[rollNo];
-    
-    if (student) {
-        document.getElementById('studentName').innerText = student.Name;
-        document.getElementById('studentClass').innerText = student.Class;
-        document.getElementById('RollNumber').innerText = student.Roll;
-        document.getElementById('admissionNo').innerText = student.AdmissionNo;
-        document.getElementById('fatherName').innerText = student.Father;
-        document.getElementById('studentDob').innerText = student.Dob;
-        document.getElementById('PhoneNumber').innerText = student.Phonenumber;
-        document.getElementById('studentGender').innerText = student.Gender;
-        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
+    try {
+        const rollNo = document.getElementById('rollNumberInput').value.trim();
+        const student = studentData[rollNo];
         
-        const status = document.getElementById('statusBadge');
-        
-        const shortClass = student.Class.split(" ")[0]; 
-        
-        db.ref('daily_attendance').once('value', (snap) => {
-            const allData = snap.val() || {};
-            let totalP = 0, totalT = 0;
+        if (student) {
+            // Instantly display data regardless of Firebase status
+            document.getElementById('studentName').innerText = student.Name;
+            document.getElementById('studentClass').innerText = student.Class;
+            document.getElementById('RollNumber').innerText = student.Roll;
+            document.getElementById('admissionNo').innerText = student.AdmissionNo;
+            document.getElementById('fatherName').innerText = student.Father;
+            document.getElementById('studentDob').innerText = student.Dob;
+            document.getElementById('PhoneNumber').innerText = student.Phonenumber;
+            document.getElementById('studentGender').innerText = student.Gender;
+            document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
             
-            Object.keys(allData).forEach(date => {
-                const classData = allData[date][shortClass];
-                if(classData && classData[student.Name] !== undefined) {
-                    totalT++; 
-                    if(classData[student.Name] === true) {
-                        totalP++;
+            const status = document.getElementById('statusBadge');
+            status.innerText = "CALCULATING...";
+            status.style.background = "#fff3cd";
+            status.style.color = "#856404";
+            status.style.border = "1px solid #ffeeba";
+            
+            const shortClass = student.Class.split(" ")[0]; 
+            
+            // Protected Firebase Call
+            db.ref('daily_attendance').once('value').then((snap) => {
+                const allData = snap.val() || {};
+                let totalP = 0, totalT = 0;
+                
+                Object.keys(allData).forEach(date => {
+                    const classData = allData[date][shortClass];
+                    if(classData && classData[student.Name] !== undefined) {
+                        totalT++; 
+                        if(classData[student.Name] === true) {
+                            totalP++;
+                        }
                     }
-                }
-            });
-            
-            const percent = totalT > 0 ? Math.round((totalP / totalT) * 100) : 0;
-            document.getElementById('attendanceRate').innerText = `${percent}% (${totalP}/${totalT} Days)`;
+                });
+                
+                const percent = totalT > 0 ? Math.round((totalP / totalT) * 100) : 0;
+                document.getElementById('attendanceRate').innerText = `${percent}% (${totalP}/${totalT} Days)`;
 
-            if(totalT === 0) {
-                status.innerText = "NO DATA YET";
+                if(totalT === 0) {
+                    status.innerText = "NO DATA YET";
+                    status.style.background = "#f0f0f0";
+                    status.style.color = "#888";
+                    status.style.border = "1px solid transparent";
+                } else if (percent >= 75) {
+                    status.innerText = "ACTIVE";
+                    status.style.background = "#e8f5e9";
+                    status.style.color = "var(--forest)";
+                    status.style.border = "1px solid #c8e6c9";
+                } else {
+                    status.innerText = "INACTIVE";
+                    status.style.background = "#ffebee";
+                    status.style.color = "var(--danger)";
+                    status.style.border = "1px solid #ffcdd2";
+                }
+            }).catch(err => {
+                console.error("Firebase read blocked or failed:", err);
+                document.getElementById('attendanceRate').innerText = "System Offline";
+                status.innerText = "NO LIVE DATA";
                 status.style.background = "#f0f0f0";
                 status.style.color = "#888";
-                status.style.border = "1px solid transparent";
-            } else if (percent >= 75) {
-                status.innerText = "ACTIVE";
-                status.style.background = "#e8f5e9";
-                status.style.color = "var(--forest)";
-                status.style.border = "1px solid #c8e6c9";
-            } else {
-                status.innerText = "INACTIVE";
-                status.style.background = "#ffebee";
-                status.style.color = "var(--danger)";
-                status.style.border = "1px solid #ffcdd2";
-            }
-        });
+            });
 
-        document.getElementById('pdfBtnSection').style.display = 'block';
-    } else { 
-        Swal.fire('Error', 'Student not found.', 'error'); 
+            document.getElementById('pdfBtnSection').style.display = 'block';
+        } else { 
+            if (typeof Swal !== 'undefined') {
+                Swal.fire('Error', 'Student not found. Check Roll Number.', 'error'); 
+            } else {
+                alert('Student not found.');
+            }
+        }
+    } catch(e) {
+        console.error("Search Error:", e);
     }
 }
 
-// UPGRADED PDF ENGINE
+// UPGRADED PDF ENGINE WITH NO ABSOLUTE POSITIONING BUG
 async function downloadPDF() {
     Swal.fire({ title: 'Generating Report...', text: 'Please wait while we format your PDF.', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
 
@@ -422,10 +448,9 @@ async function downloadPDF() {
     const origPColor = p.style.color;
 
     header.style.background = 'white';
-    h1.style.color = '#006633'; // Forest Green
-    p.style.color = '#000000'; // Black
+    h1.style.color = '#006633'; 
+    p.style.color = '#000000'; 
 
-    // Wait a brief moment for styles to apply before snapshot
     await new Promise(resolve => setTimeout(resolve, 100));
 
     const printElement = document.getElementById('printableArea');
