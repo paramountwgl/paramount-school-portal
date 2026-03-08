@@ -23,33 +23,20 @@
 
         /* LIVE ANNOUNCEMENT BANNER */
         .announcement-banner { 
-            color: white; 
-            text-align: center; 
-            padding: 12px 20px; 
-            font-weight: 800; 
-            font-size: 14px; 
-            display: none; 
-            border-radius: 10px; 
-            margin: 25px auto 0 auto; 
-            max-width: 750px; 
-            width: 92%; 
-            text-transform: uppercase;
-            animation: breatheBg 1.8s infinite alternate ease-in-out;
+            color: white; text-align: center; padding: 12px 20px; font-weight: 800; font-size: 14px; 
+            display: none; border-radius: 10px; margin: 25px auto 0 auto; max-width: 750px; width: 92%; 
+            text-transform: uppercase; animation: breatheBg 1.8s infinite alternate ease-in-out;
         }
         .announcement-banner i { margin-right: 8px; animation: blink 1s infinite alternate; color: var(--gold); }
-        
         @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
-        @keyframes breatheBg { 
-            0% { background-color: #ff4c4c; box-shadow: 0 0 15px rgba(255, 76, 76, 0.8); } 
-            100% { background-color: #9b0000; box-shadow: 0 0 5px rgba(155, 0, 0, 0.2); } 
-        }
+        @keyframes breatheBg { 0% { background-color: #ff4c4c; box-shadow: 0 0 15px rgba(255, 76, 76, 0.8); } 100% { background-color: #9b0000; box-shadow: 0 0 5px rgba(155, 0, 0, 0.2); } }
 
         /* HEADER STYLING */
-        .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
-        .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; }
+        .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; transition: 0.3s; }
+        .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; transition: 0.3s; }
         .header-logo-box img { height: clamp(65px, 10vw, 90px); width: auto; }
-        .header-logo-box h1 { margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.4rem); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; }
-        .header-logo-box p { margin: 0; font-size: 13px; color: var(--gold); font-weight: 700; text-align: left; }
+        .header-logo-box h1 { margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.4rem); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; transition: 0.3s; }
+        .header-logo-box p { margin: 0; font-size: 13px; color: var(--gold); font-weight: 700; text-align: left; transition: 0.3s; }
         
         /* SEARCH BOX */
         .search-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 550px; }
@@ -60,10 +47,10 @@
 
         .portal-title { text-align: center; color: var(--forest); margin: 30px 0 20px 0; font-size: 32px; font-weight: 900; }
 
-        /* PROFILE CARD */
+        /* HTML2CANVAS FIX: REMOVED POSITION ABSOLUTE FROM PHOTO */
         .profile-card { max-width: 750px; margin: 80px auto 50px auto; background: white; padding: 80px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: relative; width: 92%; border-bottom: 5px solid var(--forest); text-align: center; }
-        .photo-container { width: 140px; height: 140px; position: absolute; top: -70px; left: 50%; transform: translateX(-50%); border-radius: 50%; border: 6px solid white; background: #f8f9fa; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: 0; }
-        .student-photo { width: 100%; height: 100%; object-fit: cover; }
+        .photo-container { width: 140px; height: 140px; margin: -150px auto 20px auto; border-radius: 50%; border: 6px solid white; background: #f8f9fa; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; z-index: 10; }
+        .student-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
         
         /* INFO GRID */
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px; border-top: 2px solid #f8f8f8; padding-top: 30px; text-align: left; }
@@ -82,9 +69,6 @@
         .btn-return { background: linear-gradient(135deg, var(--forest), #004d26); color: white; padding: 15px 45px; border-radius: 50px; font-weight: 800; text-decoration: none; font-size: 15px; border: 2px solid var(--gold); transition: 0.3s; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 8px 20px rgba(0, 102, 51, 0.3); }
         .btn-return:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0, 102, 51, 0.5); }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
@@ -99,12 +83,12 @@
 
 <div id="printableArea" style="background-color: var(--light); padding-bottom: 20px; width: 100%;">
     
-    <div class="profile-header">
+    <div class="profile-header" id="pdfHeader">
         <div class="header-logo-box">
             <img src="logo.png" alt="Logo">
             <div style="text-align: left;">
-                <h1>Paramount</h1>
-                <p>ENGLISH MEDIUM SCHOOL</p>
+                <h1 id="pdfH1">Paramount</h1>
+                <p id="pdfP">ENGLISH MEDIUM SCHOOL</p>
             </div>
         </div>
 
@@ -137,7 +121,9 @@
         </div>
     </div>
 
-</div> <div class="bottom-nav" id="bottomNav">
+</div> 
+
+<div class="bottom-nav" id="bottomNav">
     <a href="index.html" class="btn-return">
         <i class="fas fa-user-tie"></i> Return to Portal
     </a>
@@ -403,28 +389,44 @@ function searchStudent() {
     }
 }
 
-// NEW HTML2CANVAS PDF ENGINE
+// UPGRADED PDF ENGINE
 async function downloadPDF() {
-    Swal.fire({
-        title: 'Generating Report...', 
-        text: 'Please wait while we format your PDF.', 
-        allowOutsideClick: false, 
-        didOpen: () => { Swal.showLoading() }
-    });
+    Swal.fire({ title: 'Generating Report...', text: 'Please wait while we format your PDF.', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
 
-    // Hide interface elements from the PDF
+    // 1. Hide UI Elements
     const searchBox = document.getElementById('searchBoxForPdf');
     const pdfBtn = document.getElementById('pdfBtnSection');
     const topNav = document.getElementById('mainNav');
     const botNav = document.getElementById('bottomNav');
     const banner = document.getElementById('liveAnnouncementBanner');
     
+    const origSearchDisplay = searchBox.style.display;
+    const origPdfBtnDisplay = pdfBtn.style.display;
+    const origTopNavDisplay = topNav.style.display;
+    const origBotNavDisplay = botNav.style.display;
+    const origBannerDisplay = banner.style.display;
+
     searchBox.style.display = 'none';
     pdfBtn.style.display = 'none';
     topNav.style.display = 'none';
     botNav.style.display = 'none';
-    const originalBannerDisplay = banner.style.display;
     banner.style.display = 'none';
+
+    // 2. Remove Green Header Background Temporarily for Clean PDF
+    const header = document.getElementById('pdfHeader');
+    const h1 = document.getElementById('pdfH1');
+    const p = document.getElementById('pdfP');
+
+    const origHeaderBg = header.style.background;
+    const origH1Color = h1.style.color;
+    const origPColor = p.style.color;
+
+    header.style.background = 'white';
+    h1.style.color = '#006633'; // Forest Green
+    p.style.color = '#000000'; // Black
+
+    // Wait a brief moment for styles to apply before snapshot
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     const printElement = document.getElementById('printableArea');
     
@@ -432,9 +434,9 @@ async function downloadPDF() {
         const canvas = await html2canvas(printElement, { 
             scale: 2, 
             useCORS: true,
-            backgroundColor: '#f4f7f6' 
+            backgroundColor: '#ffffff' 
         });
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const imgData = canvas.toDataURL('image/png');
         
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -442,7 +444,7 @@ async function downloadPDF() {
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         
         const studentName = document.getElementById('studentName').innerText || 'Student';
         pdf.save(`Paramount_Profile_${studentName}.pdf`);
@@ -453,12 +455,16 @@ async function downloadPDF() {
         console.error(error);
     }
 
-    // Restore interface elements
-    searchBox.style.display = 'flex';
-    pdfBtn.style.display = 'block';
-    topNav.style.display = 'flex';
-    botNav.style.display = 'flex';
-    banner.style.display = originalBannerDisplay;
+    // 3. Restore Everything Instantly
+    searchBox.style.display = origSearchDisplay;
+    pdfBtn.style.display = origPdfBtnDisplay;
+    topNav.style.display = origTopNavDisplay;
+    botNav.style.display = origBotNavDisplay;
+    banner.style.display = origBannerDisplay;
+
+    header.style.background = origHeaderBg;
+    h1.style.color = origH1Color;
+    p.style.color = origPColor;
 }
 
 db.ref('announcement').on('value', (snap) => {
