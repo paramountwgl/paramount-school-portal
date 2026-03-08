@@ -18,11 +18,6 @@
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); }
         .portal-nav a:hover { color: var(--gold); background: rgba(255,255,255,0.1); }
 
-        /* LIVE ANNOUNCEMENT BANNER - RESTORED */
-        .announcement-banner { background: var(--danger); color: white; text-align: center; padding: 10px 15px; font-weight: 800; font-size: 13px; display: none; position: sticky; top: 48px; z-index: 1999; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-transform: uppercase; }
-        .announcement-banner i { margin-right: 8px; animation: blink 1s infinite alternate; color: var(--gold); }
-        @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
-
         /* HEADER STYLING */
         .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
         .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; }
@@ -37,15 +32,41 @@
         .search-btn { padding: 14px 28px; border-radius: 35px; border: none; background-color: var(--gold); color: var(--forest); font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
         .search-btn:hover { transform: scale(1.05); background-color: white; }
 
-        .portal-title { text-align: center; color: var(--forest); margin: 40px 0 30px 0; font-size: 32px; font-weight: 900; }
+        /* LIVE ANNOUNCEMENT BANNER - BREATHING EFFECT ADDED */
+        .announcement-banner { 
+            color: white; 
+            text-align: center; 
+            padding: 12px 20px; 
+            font-weight: 800; 
+            font-size: 14px; 
+            display: none; 
+            border-radius: 10px; 
+            margin: 25px auto 0 auto; 
+            max-width: 750px; 
+            width: 92%; 
+            text-transform: uppercase;
+            animation: breatheBg 1.8s infinite alternate ease-in-out;
+        }
+        .announcement-banner i { margin-right: 8px; animation: blink 1s infinite alternate; color: var(--gold); }
+        
+        @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
+        
+        /* BREATHING ANIMATION (Bright to Dim) */
+        @keyframes breatheBg { 
+            0% { background-color: #ff4c4c; box-shadow: 0 0 15px rgba(255, 76, 76, 0.8); } 
+            100% { background-color: #9b0000; box-shadow: 0 0 5px rgba(155, 0, 0, 0.2); } 
+        }
 
-        /* PROFILE CARD */
-        .profile-card { max-width: 750px; margin: 0 auto 50px auto; background: white; padding: 70px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: relative; width: 92%; border-bottom: 5px solid var(--forest); }
-        .photo-container { width: 140px; height: 140px; margin: -140px auto 20px; border-radius: 50%; border: 6px solid white; background: #f8f9fa; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        /* TITLE FIX */
+        .portal-title { text-align: center; color: var(--forest); margin: 30px 0 20px 0; font-size: 32px; font-weight: 900; }
+
+        /* PROFILE CARD & OVERLAP FIX */
+        .profile-card { max-width: 750px; margin: 80px auto 50px auto; background: white; padding: 80px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: relative; width: 92%; border-bottom: 5px solid var(--forest); text-align: center; }
+        .photo-container { width: 140px; height: 140px; position: absolute; top: -70px; left: 50%; transform: translateX(-50%); border-radius: 50%; border: 6px solid white; background: #f8f9fa; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: 0; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
         
         /* INFO GRID */
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px; border-top: 2px solid #f8f8f8; padding-top: 30px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 25px; border-top: 2px solid #f8f8f8; padding-top: 30px; text-align: left; }
         .info-item { padding: 15px; background: #fcfcfc; border-radius: 12px; border: 1px solid #f0f0f0; }
         .info-item label { font-size: 10px; color: #888; display: block; text-transform: uppercase; font-weight: 800; margin-bottom: 6px; }
         .info-item span { font-weight: 700; color: #222; font-size: 15px; display: block; }
@@ -57,21 +78,7 @@
 
         /* PREMIUM BOTTOM NAV & BUTTON */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px; background: white; display: flex; justify-content: center; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
-        .btn-return { 
-            background: linear-gradient(135deg, var(--forest), #004d26); 
-            color: white; 
-            padding: 15px 45px; 
-            border-radius: 50px; 
-            font-weight: 800; 
-            text-decoration: none; 
-            font-size: 15px; 
-            border: 2px solid var(--gold); 
-            transition: 0.3s; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 12px;
-            box-shadow: 0 8px 20px rgba(0, 102, 51, 0.3);
-        }
+        .btn-return { background: linear-gradient(135deg, var(--forest), #004d26); color: white; padding: 15px 45px; border-radius: 50px; font-weight: 800; text-decoration: none; font-size: 15px; border: 2px solid var(--gold); transition: 0.3s; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 8px 20px rgba(0, 102, 51, 0.3); }
         .btn-return:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0, 102, 51, 0.5); }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -83,10 +90,6 @@
 <div class="portal-nav">
     <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
     <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
-</div>
-
-<div id="liveAnnouncementBanner" class="announcement-banner">
-    <i class="fas fa-bullhorn"></i> <span id="announcementMessageText"></span>
 </div>
 
 <div class="profile-header">
@@ -104,14 +107,16 @@
     </div>
 </div>
 
+<div id="liveAnnouncementBanner" class="announcement-banner">
+    <i class="fas fa-bullhorn"></i> <span id="announcementMessageText"></span>
+</div>
+
 <h1 class="portal-title">STUDENT PORTAL</h1>
 
 <div class="profile-card">
-    <div style="text-align: center;">
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
-        <h2 id="studentName" style="margin: 10px 0 5px; font-size: 28px; color: var(--forest); text-transform: uppercase; font-weight: 900;">Student Name</h2>
-        <span class="status-badge" id="statusBadge">Enter Roll Number to Access</span>
-    </div>
+    <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
+    <h2 id="studentName" style="margin: 0 0 5px; font-size: 28px; color: var(--forest); text-transform: uppercase; font-weight: 900;">Student Name</h2>
+    <span class="status-badge" id="statusBadge">Enter Roll Number to Access</span>
 
     <div class="info-grid">
         <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
@@ -352,8 +357,7 @@ function searchStudent() {
         
         const status = document.getElementById('statusBadge');
         
-        // FIXED ATTENDANCE MATH
-        const shortClass = student.Class.split(" ")[0]; // Get exactly "Grade-8", etc.
+        const shortClass = student.Class.split(" ")[0]; 
         
         db.ref('daily_attendance').once('value', (snap) => {
             const allData = snap.val() || {};
@@ -372,7 +376,6 @@ function searchStudent() {
             const percent = totalT > 0 ? Math.round((totalP / totalT) * 100) : 0;
             document.getElementById('attendanceRate').innerText = `${percent}% (${totalP}/${totalT} Days)`;
 
-            // ACTIVE / INACTIVE BADGE STYLING
             if(totalT === 0) {
                 status.innerText = "NO DATA YET";
                 status.style.background = "#f0f0f0";
@@ -405,7 +408,6 @@ function downloadPDF() {
     doc.save(`${name}_Report.pdf`);
 }
 
-// THIS MAKES THE ANNOUNCEMENT POP UP FOR PARENTS
 db.ref('announcement').on('value', (snap) => {
     const msg = snap.val();
     const banner = document.getElementById('liveAnnouncementBanner');
