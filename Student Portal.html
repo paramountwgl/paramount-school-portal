@@ -6,7 +6,10 @@
     <title>Student Profile | Paramount School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
         :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; }
         * { box-sizing: border-box; }
@@ -18,21 +21,7 @@
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); }
         .portal-nav a:hover { color: var(--gold); background: rgba(255,255,255,0.1); }
 
-        /* HEADER STYLING */
-        .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
-        .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; }
-        .header-logo-box img { height: clamp(65px, 10vw, 90px); width: auto; }
-        .header-logo-box h1 { margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.4rem); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; }
-        .header-logo-box p { margin: 0; font-size: 13px; color: var(--gold); font-weight: 700; text-align: left; }
-        
-        /* SEARCH BOX */
-        .search-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 550px; }
-        #rollNumberInput { padding: 15px 25px; border-radius: 35px; border: 2px solid transparent; width: 100%; font-size: 16px; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.3s; }
-        #rollNumberInput:focus { border-color: var(--gold); }
-        .search-btn { padding: 14px 28px; border-radius: 35px; border: none; background-color: var(--gold); color: var(--forest); font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-        .search-btn:hover { transform: scale(1.05); background-color: white; }
-
-        /* LIVE ANNOUNCEMENT BANNER - BREATHING EFFECT ADDED */
+        /* LIVE ANNOUNCEMENT BANNER */
         .announcement-banner { 
             color: white; 
             text-align: center; 
@@ -50,17 +39,28 @@
         .announcement-banner i { margin-right: 8px; animation: blink 1s infinite alternate; color: var(--gold); }
         
         @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0.4; } }
-        
-        /* BREATHING ANIMATION (Bright to Dim) */
         @keyframes breatheBg { 
             0% { background-color: #ff4c4c; box-shadow: 0 0 15px rgba(255, 76, 76, 0.8); } 
             100% { background-color: #9b0000; box-shadow: 0 0 5px rgba(155, 0, 0, 0.2); } 
         }
 
-        /* TITLE FIX */
+        /* HEADER STYLING */
+        .profile-header { background: var(--forest); color: white; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%; position: relative; }
+        .header-logo-box { display: flex; align-items: center; gap: 18px; text-decoration: none; color: white; margin-bottom: 25px; }
+        .header-logo-box img { height: clamp(65px, 10vw, 90px); width: auto; }
+        .header-logo-box h1 { margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.4rem); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; }
+        .header-logo-box p { margin: 0; font-size: 13px; color: var(--gold); font-weight: 700; text-align: left; }
+        
+        /* SEARCH BOX */
+        .search-container { display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 550px; }
+        #rollNumberInput { padding: 15px 25px; border-radius: 35px; border: 2px solid transparent; width: 100%; font-size: 16px; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.3s; }
+        #rollNumberInput:focus { border-color: var(--gold); }
+        .search-btn { padding: 14px 28px; border-radius: 35px; border: none; background-color: var(--gold); color: var(--forest); font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+        .search-btn:hover { transform: scale(1.05); background-color: white; }
+
         .portal-title { text-align: center; color: var(--forest); margin: 30px 0 20px 0; font-size: 32px; font-weight: 900; }
 
-        /* PROFILE CARD & OVERLAP FIX */
+        /* PROFILE CARD */
         .profile-card { max-width: 750px; margin: 80px auto 50px auto; background: white; padding: 80px 35px 35px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); position: relative; width: 92%; border-bottom: 5px solid var(--forest); text-align: center; }
         .photo-container { width: 140px; height: 140px; position: absolute; top: -70px; left: 50%; transform: translateX(-50%); border-radius: 50%; border: 6px solid white; background: #f8f9fa; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: 0; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
@@ -74,7 +74,8 @@
         .status-badge { padding: 8px 22px; border-radius: 25px; font-size: 13px; background: #f0f0f0; font-weight: 800; display: inline-block; margin-top: 10px; text-transform: uppercase; border: 1px solid transparent; }
 
         .pdf-btn-container { text-align: center; margin-top: 40px; display: none; }
-        .pdf-btn { background: linear-gradient(135deg, var(--forest), #004d26); color: white; border: none; padding: 14px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(0,102,51,0.2); }
+        .pdf-btn { background: linear-gradient(135deg, var(--forest), #004d26); color: white; border: none; padding: 14px 35px; border-radius: 50px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(0,102,51,0.2); transition: 0.3s; }
+        .pdf-btn:hover { transform: scale(1.02); }
 
         /* PREMIUM BOTTOM NAV & BUTTON */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px; background: white; display: flex; justify-content: center; z-index: 1000; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
@@ -87,54 +88,56 @@
 </head>
 <body>
 
-<div class="portal-nav">
+<div class="portal-nav" id="mainNav">
     <a href="Student Portal.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
     <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
-</div>
-
-<div class="profile-header">
-    <a href="index.html" class="header-logo-box">
-        <img src="logo.png" alt="Logo">
-        <div style="text-align: left;">
-            <h1>Paramount</h1>
-            <p>ENGLISH MEDIUM SCHOOL</p>
-        </div>
-    </a>
-
-    <div class="search-container">
-        <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent()">
-        <button onclick="searchStudent()" class="search-btn"><i class="fas fa-search"></i> Search</button>
-    </div>
 </div>
 
 <div id="liveAnnouncementBanner" class="announcement-banner">
     <i class="fas fa-bullhorn"></i> <span id="announcementMessageText"></span>
 </div>
 
-<h1 class="portal-title">STUDENT PORTAL</h1>
+<div id="printableArea" style="background-color: var(--light); padding-bottom: 20px; width: 100%;">
+    
+    <div class="profile-header">
+        <div class="header-logo-box">
+            <img src="logo.png" alt="Logo">
+            <div style="text-align: left;">
+                <h1>Paramount</h1>
+                <p>ENGLISH MEDIUM SCHOOL</p>
+            </div>
+        </div>
 
-<div class="profile-card">
-    <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
-    <h2 id="studentName" style="margin: 0 0 5px; font-size: 28px; color: var(--forest); text-transform: uppercase; font-weight: 900;">Student Name</h2>
-    <span class="status-badge" id="statusBadge">Enter Roll Number to Access</span>
-
-    <div class="info-grid">
-        <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
-        <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
-        <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
-        <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
-        <div class="info-item attendance-highlight"><label>Live Attendance %</label><span id="attendanceRate">---</span></div>
-        <div class="info-item"><label>Date of Birth</label><span id="studentDob">---</span></div>
-        <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
-        <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
+        <div class="search-container" id="searchBoxForPdf">
+            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent()">
+            <button onclick="searchStudent()" class="search-btn"><i class="fas fa-search"></i> Search</button>
+        </div>
     </div>
 
-    <div class="pdf-btn-container" id="pdfBtnSection">
-        <button onclick="downloadPDF()" class="pdf-btn"><i class="fas fa-file-pdf"></i> Download Profile Report (PDF)</button>
-    </div>
-</div>
+    <h1 class="portal-title">STUDENT PORTAL</h1>
 
-<div class="bottom-nav">
+    <div class="profile-card">
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
+        <h2 id="studentName" style="margin: 0 0 5px; font-size: 28px; color: var(--forest); text-transform: uppercase; font-weight: 900;">Student Name</h2>
+        <span class="status-badge" id="statusBadge">Enter Roll Number to Access</span>
+
+        <div class="info-grid">
+            <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
+            <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
+            <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
+            <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
+            <div class="info-item attendance-highlight"><label>Live Attendance %</label><span id="attendanceRate">---</span></div>
+            <div class="info-item"><label>Date of Birth</label><span id="studentDob">---</span></div>
+            <div class="info-item"><label>Parent Phone</label><span id="PhoneNumber">---</span></div>
+            <div class="info-item"><label>Gender</label><span id="studentGender">---</span></div>
+        </div>
+
+        <div class="pdf-btn-container" id="pdfBtnSection">
+            <button onclick="downloadPDF()" class="pdf-btn"><i class="fas fa-file-pdf"></i> Download Profile Report</button>
+        </div>
+    </div>
+
+</div> <div class="bottom-nav" id="bottomNav">
     <a href="index.html" class="btn-return">
         <i class="fas fa-user-tie"></i> Return to Portal
     </a>
@@ -400,12 +403,62 @@ function searchStudent() {
     }
 }
 
-function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const name = document.getElementById('studentName').innerText;
-    doc.setFontSize(20); doc.setTextColor(0, 102, 51); doc.text("PARAMOUNT SCHOOL", 105, 20, { align: "center" });
-    doc.save(`${name}_Report.pdf`);
+// NEW HTML2CANVAS PDF ENGINE
+async function downloadPDF() {
+    Swal.fire({
+        title: 'Generating Report...', 
+        text: 'Please wait while we format your PDF.', 
+        allowOutsideClick: false, 
+        didOpen: () => { Swal.showLoading() }
+    });
+
+    // Hide interface elements from the PDF
+    const searchBox = document.getElementById('searchBoxForPdf');
+    const pdfBtn = document.getElementById('pdfBtnSection');
+    const topNav = document.getElementById('mainNav');
+    const botNav = document.getElementById('bottomNav');
+    const banner = document.getElementById('liveAnnouncementBanner');
+    
+    searchBox.style.display = 'none';
+    pdfBtn.style.display = 'none';
+    topNav.style.display = 'none';
+    botNav.style.display = 'none';
+    const originalBannerDisplay = banner.style.display;
+    banner.style.display = 'none';
+
+    const printElement = document.getElementById('printableArea');
+    
+    try {
+        const canvas = await html2canvas(printElement, { 
+            scale: 2, 
+            useCORS: true,
+            backgroundColor: '#f4f7f6' 
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        
+        const studentName = document.getElementById('studentName').innerText || 'Student';
+        pdf.save(`Paramount_Profile_${studentName}.pdf`);
+        
+        Swal.fire('Success!', 'PDF Downloaded Successfully.', 'success');
+    } catch (error) {
+        Swal.fire('Error', 'Could not generate PDF. Please try again.', 'error');
+        console.error(error);
+    }
+
+    // Restore interface elements
+    searchBox.style.display = 'flex';
+    pdfBtn.style.display = 'block';
+    topNav.style.display = 'flex';
+    botNav.style.display = 'flex';
+    banner.style.display = originalBannerDisplay;
 }
 
 db.ref('announcement').on('value', (snap) => {
