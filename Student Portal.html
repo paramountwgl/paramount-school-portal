@@ -341,15 +341,35 @@ function searchStudent() {
         document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
         
         const status = document.getElementById('statusBadge');
-        status.innerText = "Record Found";
-        status.style.background = "#e8f5e9";
-        status.style.color = "var(--forest)";
-
+        
+        // ATTENDANCE LOGIC
         const shortClass = student.Class.split(" ")[0];
         db.ref(`attendance/${shortClass}/students/${student.Name}`).once('value', (snap) => {
             const stats = snap.val() || { presentDays: 0, totalDays: 0 };
-            const percent = stats.totalDays > 0 ? Math.round((stats.presentDays / stats.totalDays) * 100) : 0;
-            document.getElementById('attendanceRate').innerText = `${percent}% (${stats.presentDays}/${stats.totalDays} Days)`;
+            
+            // Calculate overall percentage across all months
+            let totalP = 0, totalT = 0;
+            if(stats.months) {
+                Object.values(stats.months).forEach(m => { totalP += m.present; totalT += m.total; });
+            }
+            
+            const percent = totalT > 0 ? Math.round((totalP / totalT) * 100) : 0;
+            document.getElementById('attendanceRate').innerText = `${percent}% (${totalP}/${totalT} Days)`;
+
+            // ACTIVE / INACTIVE BADGE LOGIC
+            if(totalT === 0) {
+                status.innerText = "NO DATA YET";
+                status.style.background = "#f0f0f0";
+                status.style.color = "#888";
+            } else if (percent >= 75) {
+                status.innerText = "ACTIVE";
+                status.style.background = "#e8f5e9";
+                status.style.color = "var(--forest)";
+            } else {
+                status.innerText = "INACTIVE";
+                status.style.background = "#ffebee";
+                status.style.color = "var(--danger)";
+            }
         });
 
         document.getElementById('pdfBtnSection').style.display = 'block';
