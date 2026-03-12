@@ -21,64 +21,93 @@
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 12px; padding: 8px 15px; border-radius: 25px; display: flex; align-items: center; gap: 6px; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
-        header { background: var(--forest); color: white; padding: 25px 3%; }
+        header { background: var(--forest); color: white; padding: 25px 3%; border-bottom: 4px solid var(--gold); }
         .header-content { display: flex; align-items: center; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .header-logo { height: 70px; width: auto; }
+        .header-logo { height: 75px; width: auto; }
         .divider-v { width: 2px; height: 50px; background: rgba(255,255,255,0.3); }
         .school-text { display: flex; flex-direction: column; line-height: 1.1; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 800; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--gold); font-weight: 700; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 800; letter-spacing: 1px; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
         .container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
-        .card { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.05); border-top: 8px solid var(--gold); position: relative; }
+        .card { background: white; padding: 35px; border-radius: 35px; box-shadow: 0 20px 60px rgba(0,0,0,0.06); position: relative; }
         
         .search-area { position: relative; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-        input { width: 100%; padding: 18px 25px; border-radius: 50px; border: 2px solid #ddd; outline: none; font-size: 16px; }
-        .btn-search { position: absolute; right: 8px; background: var(--forest); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; }
+        input { width: 100%; padding: 20px 25px; border-radius: 50px; border: 2px solid #eee; outline: none; font-size: 16px; transition: 0.3s; }
+        input:focus { border-color: var(--forest); box-shadow: 0 0 15px rgba(0,102,51,0.1); }
+        .btn-search { position: absolute; right: 10px; background: var(--forest); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .btn-search:hover { transform: rotate(90deg); background: #004d26; }
         
-        .toggle-container { display: flex; gap: 12px; margin-bottom: 25px; }
-        select { flex: 1.5; padding: 14px; border-radius: 15px; border: 2px solid #eee; background: #fff; font-weight: 700; outline: none; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23006633' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 15px; }
+        .toggle-container { display: flex; gap: 15px; margin-bottom: 25px; }
+        select { 
+            flex: 1.5; padding: 14px; border-radius: 18px; border: 2px solid #eee; background: #fff; font-weight: 700; outline: none; 
+            -webkit-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23006633' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 15px center; background-size: 16px;
+        }
 
-        .btn-premium { flex: 1.2; position: relative; background: var(--premium-gradient); color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; transition: 0.3s; box-shadow: 0 8px 20px rgba(0, 102, 51, 0.15); }
-        .btn-premium.back-mode { background: white; color: var(--forest); border: 2px solid var(--forest); }
+        /* PREMIUM BUTTON STYLING */
+        .btn-premium {
+            flex: 1.2;
+            position: relative;
+            background: var(--premium-gradient);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0, 102, 51, 0.2);
+        }
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 102, 51, 0.3); }
+        .btn-premium.back-mode { background: #fff; color: var(--forest); border: 2.5px solid var(--forest); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
 
-        .report-header { display: none; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #f9f9f9; padding: 20px; border-radius: 20px; border-left: 5px solid var(--forest); }
-        .student-meta h2 { color: var(--forest); margin: 0; font-size: 24px; font-weight: 900; }
-        .photo-container { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .report-header { display: none; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #fcfdfc; padding: 25px; border-radius: 25px; border: 1px solid #edf2ef; }
+        .student-meta h2 { color: var(--forest); margin: 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+        .photo-container { width: 115px; height: 115px; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
 
         .results-container { display: none; }
-        .subjects-section { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; border: 1px solid #eee; border-radius: 20px; padding: 15px; background: white; margin-top: 20px; }
-        .subj-item { display: flex; justify-content: space-between; padding: 12px 10px; border-bottom: 1px solid #f9f9f9; font-weight: 700; font-size: 14px; }
-        .center-divider { width: 1px; background: #eee; height: 100%; }
+        .subjects-section { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; border: 1px solid #eee; border-radius: 25px; padding: 20px; background: white; margin-top: 20px; }
+        .subj-item { display: flex; justify-content: space-between; padding: 14px 12px; border-bottom: 1px solid #f9f9f9; font-weight: 700; font-size: 15px; color: #444; }
+        .center-divider { width: 1px; background: #f0f0f0; height: 100%; }
 
-        .cumulative-view { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 15px; overflow: hidden; display: none; font-size: 13px; }
-        .cumulative-view th { background: var(--forest); color: white; padding: 15px; border: 1px solid #004d26; }
-        .cumulative-view td { padding: 12px; text-align: center; border: 1px solid #eee; font-weight: 700; background: #fff; }
+        .cumulative-view { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 20px; overflow: hidden; display: none; font-size: 13px; border: 1px solid #eee; }
+        .cumulative-view th { background: var(--forest); color: white; padding: 18px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .cumulative-view td { padding: 15px; text-align: center; border: 1px solid #eee; font-weight: 700; background: #fff; }
         .fail-mark { background: #fff5f5 !important; color: var(--danger) !important; font-weight: 900; }
 
-        .graph-section { margin-top: 30px; border: 1px solid #eee; border-radius: 20px; padding: 20px; background: white; min-height: 250px; }
+        .graph-section { margin-top: 30px; border: 1px solid #eee; border-radius: 25px; padding: 25px; background: white; min-height: 280px; }
 
-        .summary-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 25px; }
-        .stat-ring-card { background: white; padding: 20px; border-radius: 20px; text-align: center; border: 1px solid #f0f0f0; }
-        .stat-label { display: block; font-size: 10px; font-weight: 900; color: #999; margin-bottom: 5px; }
-        .stat-value { font-size: 22px; font-weight: 900; color: var(--forest); }
+        .summary-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 30px; }
+        .stat-ring-card { background: white; padding: 25px; border-radius: 25px; text-align: center; border: 1px solid #f0f0f0; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+        .stat-label { display: block; font-size: 10px; font-weight: 900; color: #aaa; margin-bottom: 8px; text-transform: uppercase; }
+        .stat-value { font-size: 24px; font-weight: 900; color: var(--forest); }
 
-        .grade-highlight-box { grid-column: span 2; background: var(--premium-gradient); color: white; padding: 30px; border-radius: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,102,51,0.2); }
-        .big-grade { font-size: 55px; font-weight: 900; display: block; color: var(--gold); }
+        .grade-highlight-box { grid-column: span 2; background: var(--premium-gradient); color: white; padding: 35px; border-radius: 30px; text-align: center; box-shadow: 0 15px 35px rgba(0,102,51,0.25); }
+        .big-grade { font-size: 60px; font-weight: 900; display: block; color: var(--gold); line-height: 1; margin-top: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        /* SIGNATURE SECTION UPDATED */
+        /* SIGNATURES WITH CORRESPONDENT NAME */
         .signatures-row { margin-top: 130px; display: none; justify-content: space-between; padding: 0 20px; }
-        .sig-block { text-align: center; width: 220px; border-top: 3px solid #333; padding-top: 10px; font-size: 12px; font-weight: 800; color: #333; line-height: 1.5; }
-        .correspondent-name { font-size: 14px; color: var(--forest); display: block; margin-top: 2px; }
+        .sig-block { text-align: center; width: 230px; border-top: 3px solid #333; padding-top: 12px; font-size: 13px; font-weight: 800; color: #333; }
+        .correspondent-sub { display: block; margin-top: 4px; color: var(--forest); font-size: 14px; font-weight: 900; }
 
-        .btn-download { background: var(--forest); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; cursor: pointer; margin-top: 30px; width: 100%; display: none; justify-content: center; align-items: center; gap: 10px; }
+        .btn-download { background: var(--forest); color: white; border: none; padding: 20px; border-radius: 50px; font-weight: 800; cursor: pointer; margin-top: 30px; width: 100%; display: none; justify-content: center; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s; }
+        .btn-download:hover { background: #004d26; transform: translateY(-2px); }
 
         @media (max-width: 650px) {
             .header-content { flex-direction: column; text-align: center; }
             .divider-v { display: none; }
             .subjects-section { grid-template-columns: 1fr; }
-            .cumulative-view { font-size: 8px; }
+            .toggle-container { flex-direction: column; }
         }
     </style>
 </head>
@@ -99,7 +128,7 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
             <div class="divider-v"></div>
-            <div class="page-brand">ACADEMIC PROGRESS</div>
+            <div class="page-brand" style="font-family:Montserrat; font-weight:800; font-size:1.8rem;">ACADEMIC PROGRESS</div>
         </div>
     </header>
 
@@ -112,12 +141,14 @@
                 </div>
                 <div class="toggle-container">
                     <select id="examType" onchange="fetchResults()">
-                        <option value="FA-1">FA-1</option><option value="FA-2">FA-2</option>
-                        <option value="FA-3">FA-3</option><option value="SA-1">SA-1(Pre-Annual)</option>
-                        <option value="SA-2">SA-2(Annual)</option>
+                        <option value="FA-1">Formative Assessment-1</option>
+                        <option value="FA-2">Formative Assessment-2</option>
+                        <option value="FA-3">Formative Assessment-3</option>
+                        <option value="SA-1">Summative Assessment-1(Pre-Annual)</option>
+                        <option value="SA-2">Summative Assessment-2(Annual)</option>
                     </select>
                     <button id="toggleBtn" class="btn-premium" onclick="toggleCumulative()">
-                        <i class="fas fa-layer-group"></i> All Exams View
+                        <i class="fas fa-th-list"></i> All Exams View
                     </button>
                 </div>
             </div>
@@ -125,8 +156,8 @@
             <div id="reportProfile" class="report-header">
                 <div class="student-meta">
                     <h2 id="dispName">-</h2>
-                    <p id="dispClass">-</p>
-                    <p id="dispRoll" style="color:var(--forest); font-weight:800; font-size:12px;">-</p>
+                    <p id="dispClass" style="font-weight:700; color:#777; margin: 5px 0;">-</p>
+                    <p id="dispRoll" style="color:var(--forest); font-weight:800; font-size:13px;">-</p>
                 </div>
                 <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'"></div>
             </div>
@@ -147,10 +178,11 @@
 
             <div id="summaryArea" class="results-container">
                 <div class="summary-dashboard">
-                    <div class="stat-ring-card"><span class="stat-label">TOTAL SCORE</span><span id="resTotal" class="stat-value">-</span></div>
-                    <div class="stat-ring-card"><span class="stat-label">PERCENTAGE</span><span id="resPerc" class="stat-value">-</span></div>
-                    <div class="grade-highlight-box" id="promotionBox">
-                        <label id="gradeLabel" style="color:rgba(255,255,255,0.7); font-size:11px; font-weight:900;">PERFORMANCE GRADE</label>
+                    <div class="stat-ring-card"><span class="stat-label">Total Marks</span><span id="resTotal" class="stat-value">-</span></div>
+                    <div class="stat-ring-card"><span class="stat-label">Percentage</span><span id="resPerc" class="stat-value">-</span></div>
+                    
+                    <div class="grade-highlight-box" id="promotionBox" style="display:none;">
+                        <label id="gradeLabel" style="color:rgba(255,255,255,0.7); font-size:11px; font-weight:900; letter-spacing:1px;">ACADEMIC PERFORMANCE GRADE</label>
                         <span id="resGrade" class="big-grade">-</span>
                     </div>
                 </div>
@@ -158,13 +190,13 @@
                     <div class="sig-block">Class Teacher Signature</div>
                     <div class="sig-block">
                         Correspondent Signature<br>
-                        <span class="correspondent-name">Mr. Shaik Ahmad (Correspondent)</span>
+                        <span class="correspondent-sub">Mr. Shaik Ahmad (Correspondent)</span>
                     </div>
                 </div>
             </div>
             
             <button class="btn-download" id="pdfBtn" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> Download Official Report</button>
-            <div id="noData" style="text-align:center; padding: 40px; color: #999; display: none;">No Student Found.</div>
+            <div id="noData" style="text-align:center; padding: 40px; color: #999; display: none;">No Student Data Found. Please check Roll Number.</div>
         </div>
     </div>
 </div>
@@ -198,7 +230,7 @@
         isCumulative = false;
         const toggleBtn = document.getElementById('toggleBtn');
         if(toggleBtn) {
-            toggleBtn.innerHTML = '<i class="fas fa-layer-group"></i> All Exams View';
+            toggleBtn.innerHTML = '<i class="fas fa-th-list"></i> All Exams View';
             toggleBtn.classList.remove('back-mode');
         }
 
@@ -249,7 +281,6 @@
                 document.getElementById('noData').style.display = 'none';
             } else { 
                 document.getElementById('singleResults').style.display = 'none';
-                document.getElementById('summaryArea').style.display = 'none';
                 document.getElementById('noData').style.display = 'block'; 
             }
         });
@@ -262,7 +293,7 @@
 
         isCumulative = true;
         const toggleBtn = document.getElementById('toggleBtn');
-        toggleBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Single Exam';
+        toggleBtn.innerHTML = '<i class="fas fa-undo"></i> Back to Single Exam';
         toggleBtn.classList.add('back-mode');
         document.getElementById('singleResults').style.display = 'none';
 
