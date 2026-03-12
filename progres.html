@@ -17,54 +17,49 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 120px; }
         
-        /* NAVIGATION */
         .portal-nav { background: #004d26; padding: 12px; display: flex; justify-content: center; gap: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 2000; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 12px; padding: 8px 15px; border-radius: 25px; transition: 0.3s; display: flex; align-items: center; gap: 6px; border: 1px solid transparent; }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 12px; padding: 8px 15px; border-radius: 25px; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
-        /* HEADER - SCREENSHOT 309 STYLE */
         header { background: var(--forest); color: white; padding: 25px 3%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
         .header-content { display: flex; align-items: center; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
-        .header-logo { height: clamp(55px, 8vw, 80px); width: auto; flex-shrink: 0; }
+        .header-logo { height: clamp(55px, 8vw, 80px); width: auto; }
         .divider-v { width: 2px; height: 50px; background: rgba(255,255,255,0.3); }
-        .school-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 4vw, 2.2rem); font-weight: 800; letter-spacing: 1px; }
+        .school-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 4vw, 2.2rem); font-weight: 800; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: clamp(0.6rem, 2vw, 0.9rem); color: var(--gold); font-weight: 700; text-transform: uppercase; }
-        .page-brand { font-family: 'Montserrat', sans-serif; font-size: clamp(1.1rem, 3.5vw, 2rem); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: white; }
+        .page-brand { font-family: 'Montserrat', sans-serif; font-size: clamp(1.1rem, 3.5vw, 2rem); font-weight: 800; text-transform: uppercase; color: white; }
 
         .container { max-width: 800px; margin: 30px auto; padding: 0 15px; }
-        .card { background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 8px solid var(--gold); }
+        .card { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-top: 8px solid var(--gold); }
         
         .search-area { position: relative; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-        input { width: 100%; padding: 18px 25px; border-radius: 50px; border: 2px solid #eee; outline: none; font-size: 16px; transition: 0.3s; }
+        input { width: 100%; padding: 18px 25px; border-radius: 50px; border: 2px solid #eee; outline: none; font-size: 16px; }
         .btn-search { position: absolute; right: 8px; background: var(--forest); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         select { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #eee; background: #fafafa; font-weight: 700; color: #444; margin-bottom: 20px; outline: none; }
 
-        /* STUDENT PROFILE */
-        .student-profile { text-align: center; margin-bottom: 25px; display: none; }
-        .photo-container { width: 130px; height: 130px; border-radius: 50%; border: 6px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin: 0 auto 15px; overflow: hidden; background: #f8f9fa; }
+        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; display: none; }
+        .student-meta { text-align: left; }
+        .student-meta h2 { color: var(--forest); margin: 0; font-size: 24px; font-weight: 900; text-transform: uppercase; }
+        .student-meta p { color: #666; margin: 5px 0; font-weight: 700; font-size: 15px; }
+        .photo-container { width: 110px; height: 110px; border-radius: 15px; border: 3px solid #eee; overflow: hidden; background: #f8f9fa; flex-shrink: 0; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
-        .student-profile h2 { margin: 0; color: var(--forest); text-transform: uppercase; font-size: 24px; font-weight: 900; }
-        .student-profile p { color: #666; font-weight: 700; margin: 5px 0; font-size: 15px; }
 
-        /* TWO-COLUMN RESULTS */
         .results-container { display: none; }
         .subjects-section { 
             display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; 
-            border: 1px solid #f0f0f0; border-radius: 20px; padding: 15px; background: #fdfdfd; margin-top: 15px;
+            border: 1px solid #f0f0f0; border-radius: 20px; padding: 15px; background: #fdfdfd; 
         }
         .subj-column { display: flex; flex-direction: column; }
         .subj-item { display: flex; justify-content: space-between; padding: 12px 10px; border-bottom: 1px solid #eee; font-weight: 700; }
         .subj-item:last-child { border-bottom: none; }
         .subj-name { color: #555; font-size: 13px; text-transform: uppercase; }
         .subj-mark { color: var(--forest); font-size: 16px; }
-        .center-divider { width: 1px; background: #eee; height: 100%; }
+        .center-divider { width: 1px; background: #eee; }
 
-        /* GRAPH */
         .graph-section { margin-top: 30px; border: 1px solid #f0f0f0; border-radius: 20px; padding: 20px; background: white; }
         .graph-title { text-align: center; font-weight: 800; color: var(--forest); font-size: 13px; text-transform: uppercase; margin-bottom: 15px; }
 
-        /* SUMMARY & LARGE GRADE PILL */
         .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 25px; }
         .stat-box { background: #f1f8f4; padding: 18px; border-radius: 15px; text-align: center; border: 1px solid #e2eee6; }
         .stat-box label { display: block; font-size: 10px; color: #777; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
@@ -73,17 +68,22 @@
         .grade-box { grid-column: span 2; background: #fff8e1; border: 1px solid #ffe082; padding: 30px; border-radius: 20px; text-align: center; margin-top: 10px; }
         .grade-pill { background: var(--forest); color: white; padding: 12px 60px; border-radius: 50px; font-size: 28px; font-weight: 900; display: inline-block; box-shadow: 0 8px 20px rgba(0,102,51,0.3); }
 
-        /* BUTTONS */
-        .print-btn-container { text-align: center; margin-top: 35px; }
-        .btn-download { background: linear-gradient(135deg, var(--forest), #004d26); color: white; border: none; padding: 16px 40px; border-radius: 50px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(0,102,51,0.2); font-size: 15px; }
+        /* SIGNATURES */
+        .signatures-row { margin-top: 50px; display: flex; justify-content: space-between; padding: 0 10px; }
+        .sig-block { text-align: center; width: 150px; }
+        .sig-line { border-top: 2px solid #333; margin-bottom: 8px; }
+        .sig-label { font-size: 11px; font-weight: 800; color: #555; text-transform: uppercase; }
+        .sig-name { font-size: 10px; color: #888; font-weight: 700; }
 
-        .audit-trail { margin-top: 30px; padding: 15px; border-top: 1px dashed #ccc; color: #999; font-size: 11px; text-align: center; }
+        .btn-download { background: linear-gradient(135deg, var(--forest), #004d26); color: white; border: none; padding: 16px 40px; border-radius: 50px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; }
 
         @media (max-width: 650px) {
             .divider-v { display: none; }
             .header-content { flex-direction: column; gap: 8px; text-align: center; }
             .subjects-section { grid-template-columns: 1fr; }
             .center-divider { display: none; }
+            .report-header { flex-direction: column-reverse; gap: 15px; }
+            .student-meta { text-align: center; }
         }
     </style>
 </head>
@@ -121,10 +121,15 @@
                 </select>
             </div>
 
-            <div id="studentProfile" class="student-profile">
-                <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
-                <h2 id="dispName">-</h2>
-                <p id="dispClass">-</p>
+            <div id="reportProfile" class="report-header">
+                <div class="student-meta">
+                    <h2 id="dispName">-</h2>
+                    <p id="dispClass">-</p>
+                    <p style="margin-top: 5px; color: var(--forest);" id="dispRoll">Roll: -</p>
+                </div>
+                <div class="photo-container">
+                    <img id="studentPhoto" src="logo.png" class="student-photo">
+                </div>
             </div>
 
             <div id="resultsContainer" class="results-container">
@@ -135,7 +140,7 @@
                 </div>
 
                 <div class="graph-section">
-                    <div class="graph-title">Performance Analytics (Max 100)</div>
+                    <div class="graph-title">Subject-wise Analytics (Vertical Max 100)</div>
                     <canvas id="marksGraph"></canvas>
                 </div>
 
@@ -148,17 +153,25 @@
                     </div>
                 </div>
 
-                <div class="audit-trail">
-                    Record Verification: Verified by <span id="logTeacher">-</span> | <span id="logTime">-</span>
+                <div class="signatures-row">
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <div class="sig-label">Class Teacher</div>
+                    </div>
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <div class="sig-label">Correspondent</div>
+                        <div class="sig-name">Mr. Shaik Ahmad</div>
+                    </div>
                 </div>
-                
-                <div class="print-btn-container" id="pdfBtnSection">
-                    <button class="btn-download" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> Download Report Card</button>
+
+                <div style="text-align: center;">
+                    <button class="btn-download" id="pdfBtn" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> Save Report Card</button>
                 </div>
             </div>
             
             <div id="noData" style="text-align:center; padding: 40px; color: #999; display: none;">
-                <p>No records found for this input.</p>
+                <p>No records found.</p>
             </div>
         </div>
     </div>
@@ -171,7 +184,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // ALL 185 STUDENTS INCLUDED
     const students = {
         "1472070": { Name: "Hanish Macharla", Class: "Pre-KG" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG" }, "1459582": { Name: "Rishi Manupati", Class: "Pre-KG" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG" }, "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG" },
         "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1" }, "1426519": { Name: "Aditya Manda", Class: "KG-1" }, "1426518": { Name: "Aadhya Jella", Class: "KG-1" }, "1392920": { Name: "Advaita Gauri Bandi", Class: "KG-1" }, "1392683": { Name: "Aizah Amna Shaik", Class: "KG-1" }, "1472077": { Name: "Akshara Singaram", Class: "KG-1" }, "1469394": { Name: "Bhahuveer Raj Somishetti", Class: "KG-1" }, "1392676": { Name: "Gayathri Erroju", Class: "KG-1" }, "1390570": { Name: "Hanvika Mulkalapelli", Class: "KG-1" }, "1396188": { Name: "Manvith Kondoju", Class: "KG-1" }, "1392703": { Name: "Sayyad Vajeed", Class: "KG-1" }, "1412110": { Name: "Mekala Manu sri", Class: "KG-1" }, "1392687": { Name: "Oliva Grace Vallapu", Class: "KG-1" }, "1392696": { Name: "Rithwik Oggula", Class: "KG-1" }, "1413326": { Name: "Rithwika Kandagatla", Class: "KG-1" }, "1392679": { Name: "Srimahi Chevvu", Class: "KG-1" }, "1459706": { Name: "Thanvesh Thalla", Class: "KG-1" }, "1317800": { Name: "Trishul Nanduri", Class: "KG-1" }, "1424085": { Name: "Yoganshika Nanduri", Class: "KG-1" }, "1387264": { Name: "Yusra Mohammad", Class: "KG-1" }, "1402461": { Name: "Zainul Abideen Syed", Class: "KG-1" },
@@ -195,16 +207,17 @@
 
         document.getElementById('noData').style.display = 'none';
         document.getElementById('resultsContainer').style.display = 'none';
-        document.getElementById('studentProfile').style.display = 'none';
+        document.getElementById('reportProfile').style.display = 'none';
         if(chartObj) chartObj.destroy();
 
         if(!student) { document.getElementById('noData').style.display = 'block'; return; }
 
         db.ref(`progress_cards/${student.Class}/${exam}/${student.Name}`).once('value', (snap) => {
             const data = snap.val();
-            document.getElementById('studentProfile').style.display = 'block';
+            document.getElementById('reportProfile').style.display = 'flex';
             document.getElementById('dispName').innerText = student.Name;
             document.getElementById('dispClass').innerText = student.Class;
+            document.getElementById('dispRoll').innerText = `Roll Number: ${roll}`;
             document.getElementById('studentPhoto').src = `students/${roll}.png`;
 
             if(data) {
@@ -222,15 +235,12 @@
                     else document.getElementById('col2').innerHTML += row;
                 });
 
-                // VERTICAL GRAPH (Max 100)
+                // VERTICAL CHART
                 const ctx = document.getElementById('marksGraph').getContext('2d');
                 chartObj = new Chart(ctx, {
                     type: 'bar',
-                    data: { labels: present, datasets: [{ label: 'Marks', data: present.map(s => m[s]), backgroundColor: '#006633', borderRadius: 6 }] },
-                    options: { 
-                        plugins: { legend: { display: false } }, 
-                        scales: { y: { beginAtZero: true, max: 100, ticks: { font: { weight: 'bold' } } }, x: { ticks: { font: { weight: 'bold' } } } }
-                    }
+                    data: { labels: present, datasets: [{ label: 'Marks', data: present.map(s => m[s]), backgroundColor: '#006633', borderRadius: 5 }] },
+                    options: { scales: { y: { beginAtZero: true, max: 100 } } }
                 });
 
                 document.getElementById('resTotal').innerText = data.total;
@@ -243,13 +253,13 @@
     }
 
     async function downloadReport() {
-        const btn = document.getElementById('pdfBtnSection');
-        const search = document.getElementById('searchControls');
+        const btn = document.getElementById('pdfBtn');
         const nav = document.getElementById('noPrintNav');
+        const sc = document.getElementById('searchControls');
         
         btn.style.display = 'none';
-        search.style.display = 'none';
         nav.style.display = 'none';
+        sc.style.display = 'none';
 
         const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
         const img = canvas.toDataURL('image/png');
@@ -258,11 +268,11 @@
         const pdfW = pdf.internal.pageSize.getWidth();
         const pdfH = (canvas.height * pdfW) / canvas.width;
         pdf.addImage(img, 'PNG', 0, 0, pdfW, pdfH);
-        pdf.save(`${document.getElementById('dispName').innerText}_Report.pdf`);
+        pdf.save(`${document.getElementById('dispName').innerText}_Progress.pdf`);
 
-        btn.style.display = 'block';
-        search.style.display = 'block';
+        btn.style.display = 'inline-flex';
         nav.style.display = 'flex';
+        sc.style.display = 'block';
     }
 </script>
 </body>
