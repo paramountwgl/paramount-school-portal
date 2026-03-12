@@ -27,9 +27,16 @@
         label { display: block; font-size: 11px; font-weight: bold; color: #666; margin-bottom: 5px; text-transform: uppercase; }
         input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #eee; font-size: 15px; outline: none; }
         .btn-view { background: linear-gradient(135deg, var(--forest), #004d26); color: white; border: none; padding: 15px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; transition: 0.3s; }
-        .subject-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #fafafa; border-radius: 10px; margin-top: 10px; border-left: 5px solid var(--forest); }
-        .subject-row p { margin: 5px 0 0; color: #444; font-size: 14px; }
-        .sign-area { text-align: center; min-width: 80px; }
+        
+        /* Updated Subject Row to accommodate Teacher Info */
+        .subject-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 15px; background: #fafafa; border-radius: 10px; margin-top: 10px; border-left: 5px solid var(--forest); }
+        .subject-row p { margin: 5px 0 0; color: #444; font-size: 15px; line-height: 1.4; }
+        
+        /* Teacher attribution styling */
+        .teacher-tag { display: block; font-size: 11px; color: #006633; font-weight: 700; margin-top: 8px; opacity: 0.8; }
+        .teacher-tag i { color: var(--gold); margin-right: 4px; }
+
+        .sign-area { text-align: center; min-width: 80px; margin-top: 5px; }
         .parent-checkbox { width: 25px; height: 25px; cursor: pointer; accent-color: var(--forest); }
         @media (max-width: 480px) { .header-content { gap: 8px; } .portal-label { padding-left: 10px; margin-left: 10px; } }
     </style>
@@ -72,7 +79,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // MAPPING STUDENT DATA (Includes Roll, Name, and Class to prevent [object Object] error)
+    // MAPPING STUDENT DATA (All data preserved)
     const studentInfo = {
         "1472070": { name: "Hanish Macharla", class: "Pre-KG" },
         "1478225": { name: "Arjun Vihaar Illandula", class: "Pre-KG" },
@@ -227,7 +234,7 @@
         "1298380": { name: "Sai Prasanna Keerthi", class: "Grade-4" },
         "1298363": { name: "Ajmeri Shaik", class: "Grade-4" },
         "1392939": { name: "Akshith Chiluveru", class: "Grade-4" },
-        "1298364": { name: "Jayasri Mykala", class: "Grade-4" },
+        "1298364": { name: "Jayasri Myakala", class: "Grade-4" },
         "1298381": { name: "Rahul Kanjarla", class: "Grade-4" },
         "1459784": { name: "Saketh Devarakonda", class: "Grade-4" },
         "1298353": { name: "Adya Reddy Vangala", class: "Grade-5" },
@@ -271,7 +278,6 @@
 
         list.innerHTML = "<p style='text-align:center;'>Loading Diary...</p>";
 
-        // FIXED: Now fetches homework using the student's actual class folder
         db.ref(`homework/${date}/${student.class}`).once('value', (snap) => {
             const data = snap.val();
             if(!data) {
@@ -286,11 +292,29 @@
                 for(let sub in data) {
                     if(sub === 'lastUpdated') continue;
                     
+                    const item = data[sub];
+                    let taskText = "";
+                    let teacherInfo = "";
+
+                    // New Object Format Handler
+                    if(typeof item === 'object' && item !== null) {
+                        taskText = item.task;
+                        teacherInfo = `<span class="teacher-tag"><i class="fas fa-user-check"></i> Posted by ${item.updatedBy} at ${item.updatedAt}</span>`;
+                    } else {
+                        // Old String Format Handler
+                        taskText = item;
+                        teacherInfo = "";
+                    }
+
                     const isChecked = (savedStatus[sub] && savedStatus[sub].verified) ? "checked" : "";
 
                     html += `
                     <div class="subject-row">
-                        <div><strong style="color:var(--forest)">${sub}</strong><p>${data[sub]}</p></div>
+                        <div>
+                            <strong style="color:var(--forest); text-transform:uppercase;">${sub}</strong>
+                            <p>${taskText}</p>
+                            ${teacherInfo}
+                        </div>
                         <div class="sign-area">
                             <label style="font-size:10px; display:block;">Parent Sign</label>
                             <input type="checkbox" class="parent-checkbox" ${isChecked} 
