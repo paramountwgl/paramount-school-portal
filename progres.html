@@ -29,38 +29,84 @@
         .school-text { display: flex; flex-direction: column; line-height: 1.2; align-items: center; }
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+        .page-brand { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: white; margin-top: 5px; }
 
         .container { width: 100%; max-width: 900px; margin: 15px auto; padding: 0 8px; }
         .card { background: white; padding: 15px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); width: 100%; position: relative; }
         
-        /* NEW BADGE STYLE */
-        #vBadges { margin-top: 8px; display: flex; justify-content: center; gap: 5px; }
-        .badge-ui { background: var(--gold); color: black; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #d4af37; }
-
-        /* ... Other styles remain same ... */
+        /* SEARCH CONTROLS */
         .search-area { position: relative; display: flex; align-items: center; margin-bottom: 15px; }
         input { width: 100%; padding: 16px 20px; border-radius: 50px; border: 2px solid #eee; outline: none; font-size: 16px; }
         .btn-search { position: absolute; right: 8px; background: var(--forest); color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
         .toggle-container { display: flex; gap: 8px; margin-bottom: 20px; flex-direction: column; }
-        select { width: 100%; padding: 14px; border-radius: 15px; border: 2px solid #eee; background: #fff; font-weight: 700; }
-        .btn-premium { background: var(--premium-gradient); color: white; border: none; border-radius: 15px; font-weight: 800; padding: 14px; cursor: pointer; }
+        select { width: 100%; padding: 14px; border-radius: 15px; border: 2px solid #eee; background: #fff; font-weight: 700; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23006633' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; }
+
+        .btn-premium { background: var(--premium-gradient); color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 11px; text-transform: uppercase; padding: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 20px rgba(0, 102, 51, 0.2); }
+
+        /* BADGE ANIMATION CSS */
+        #vBadges { margin-top: 10px; display: flex; justify-content: flex-start; }
+        .badge-ui { 
+            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            color: #000; padding: 6px 16px; border-radius: 50px; font-size: 10px; font-weight: 900; 
+            text-transform: uppercase; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); 
+            border: 1px solid #fff; display: inline-flex; align-items: center; gap: 6px;
+            animation: badgePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+            position: relative; overflow: hidden;
+        }
+        .badge-ui::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(30deg); animation: badgeShine 3s infinite;
+        }
+        @keyframes badgePop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes badgeShine { 0% { left: -100%; } 20% { left: 100%; } 100% { left: 100%; } }
+
+        /* STUDENT PROFILE */
         .report-header { display: none; flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #fcfdfc; padding: 15px; border-radius: 20px; border: 1px solid #edf2ef; }
         .student-meta h2 { color: var(--forest); margin: 0; font-size: 1.1rem; font-weight: 900; }
-        .photo-container { width: 75px; height: 75px; border-radius: 50%; border: 3px solid white; overflow: hidden; }
+        .photo-container { width: 75px; height: 75px; border-radius: 50%; border: 3px solid white; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
-        .results-container { display: none; width: 100%; }
-        #subjectGrid { display: flex; flex-direction: column; gap: 5px; border: 1px solid #eee; border-radius: 20px; padding: 10px; }
-        .subj-item { display: flex; justify-content: space-between; padding: 12px 10px; font-weight: 700; }
-        .graph-section { margin-top: 20px; height: 260px; }
-        .stat-ring-card { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #f0f0f0; }
-        .stat-value { font-size: 20px; font-weight: 900; color: var(--forest); }
-        .grade-highlight-box { background: var(--premium-gradient); color: white; padding: 25px; border-radius: 20px; text-align: center; }
-        .big-grade { font-size: 40px; font-weight: 900; color: var(--gold); }
-        .btn-download { background: var(--forest); color: white; padding: 18px; border-radius: 50px; font-weight: 800; width: 100%; margin-top: 20px; border: none; }
 
-        @media (min-width: 768px) {
-            .report-header { display: flex; }
+        /* SUBJECTS SECTION */
+        .results-container { display: none; width: 100%; }
+        #subjectGrid { display: flex; flex-direction: column; gap: 5px; border: 1px solid #eee; border-radius: 20px; padding: 10px; background: white; }
+        .subj-item { display: flex; justify-content: space-between; padding: 12px 10px; border-bottom: 1px solid #f9f9f9; font-weight: 700; font-size: 14px; }
+        
+        .all-exams-container { width: 100%; margin-top: 15px; overflow: hidden; }
+        .cumulative-view { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .cumulative-view th { background: var(--forest); color: white; padding: 8px 1px; font-size: 9px; text-align: center; border: 1px solid #004d26; }
+        .cumulative-view td { padding: 8px 1px; text-align: center; border: 1px solid #eee; font-weight: 700; font-size: 10px; background: #fff; }
+        .subj-cell { text-align: left !important; padding-left: 4px !important; width: 22%; font-size: 8.5px !important; }
+
+        .graph-section { margin-top: 20px; border: 1px solid #eee; border-radius: 20px; padding: 10px; background: white; height: 260px; width: 100%; }
+        .summary-dashboard { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .stat-ring-card { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #f0f0f0; }
+        .stat-value { font-size: 20px; font-weight: 900; color: var(--forest); margin-top: 10px; display: inline-block; }
+
+        .grade-highlight-box { background: var(--premium-gradient); color: white; padding: 25px; border-radius: 20px; text-align: center; }
+        .big-grade { font-size: 40px; font-weight: 900; display: block; color: var(--gold); }
+
+        .signatures-row { margin-top: 80px; display: none; justify-content: space-between; padding: 0 10px; }
+        .sig-block { text-align: center; width: 48%; border-top: 2px solid #333; padding-top: 8px; font-size: 9px; font-weight: 800; }
+        .btn-download { background: var(--forest); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; margin-top: 25px; width: 100%; display: none; justify-content: center; align-items: center; gap: 10px; font-size: 14px; }
+
+        @media (min-width: 768px), print {
+            header { padding: 25px 3%; text-align: left; }
+            .header-content { flex-direction: row; justify-content: center; gap: 20px; }
+            .school-text { align-items: flex-start; }
+            .report-header { display: flex; text-align: left; padding: 25px; }
+            .photo-container { width: 110px; height: 110px; }
+            .student-meta h2 { font-size: 1.6rem; }
             #subjectGrid { display: grid; grid-template-columns: 1fr 1px 1fr; }
+            .center-divider { width: 1px; background: #eee; height: 100%; display: block !important; }
+            .toggle-container { flex-direction: row; }
+            .summary-dashboard { grid-template-columns: 1fr 1fr; }
+            .grade-highlight-box { grid-column: span 2; }
+            .cumulative-view th { font-size: 12px; padding: 15px; }
+            .cumulative-view td { font-size: 13px; padding: 12px; }
+            .subj-cell { font-size: 13px !important; width: 25%; }
+            .sig-block { width: 40%; font-size: 11px; }
         }
     </style>
 </head>
@@ -80,6 +126,7 @@
                 <span class="school-name-main">PARAMOUNT</span>
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
+            <div class="page-brand">ACADEMIC PROGRESS</div>
         </div>
     </header>
 
@@ -96,14 +143,18 @@
                         <option value="FA-3">FA-3</option><option value="SA-1">SA-1</option>
                         <option value="SA-2">SA-2</option>
                     </select>
+                    <button id="toggleBtn" class="btn-premium" onclick="toggleCumulative()">
+                        <i class="fas fa-layer-group"></i> All Exams View
+                    </button>
                 </div>
             </div>
 
             <div id="reportProfile" class="report-header">
-                <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
+                <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'"></div>
                 <div class="student-meta">
                     <h2 id="dispName">-</h2>
                     <p id="dispClass">-</p>
+                    <p id="dispRoll" style="color:var(--forest); font-weight:800; font-size:12px;">-</p>
                     <div id="vBadges"></div>
                 </div>
             </div>
@@ -111,21 +162,43 @@
             <div id="singleResults" class="results-container">
                 <div id="subjectGrid">
                     <div id="col1"></div>
+                    <div id="midDivider" class="center-divider" style="display:none;"></div>
                     <div id="col2"></div>
                 </div>
                 <div class="graph-section" id="graphWrap"><canvas id="marksGraph"></canvas></div>
             </div>
 
+            <div class="all-exams-container">
+                <table class="cumulative-view" id="allExamsTable" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th class="subj-cell">Subject</th>
+                            <th>FA-1</th><th>FA-2</th><th>FA-3</th><th>SA-1</th><th>SA-2</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allExamsBody"></tbody>
+                </table>
+            </div>
+
             <div id="summaryArea" class="results-container">
-                <div class="summary-dashboard">
-                    <div class="stat-ring-card">TOTAL MARKS<br><span id="resTotal" class="stat-value">-</span></div>
-                    <div class="stat-ring-card">PERCENTAGE<br><span id="resPerc" class="stat-value">-</span></div>
-                    <div class="grade-highlight-box"><span id="resGrade" class="big-grade">-</span></div>
+                <div class="summary-dashboard" id="sumDash">
+                    <div id="totalBox" class="stat-ring-card"><span class="stat-label">TOTAL MARKS</span><span id="resTotal" class="stat-value">-</span></div>
+                    <div class="stat-ring-card"><span class="stat-label">AVG PERCENTAGE</span><span id="resPerc" class="stat-value">-</span></div>
+                    <div class="grade-highlight-box" id="promotionBox" style="display:none;">
+                        <label style="color:rgba(255,255,255,0.7); font-size:10px; font-weight:900;">GRADE</label>
+                        <span id="resGrade" class="big-grade">-</span>
+                    </div>
+                </div>
+                <div class="signatures-row" id="sigRow">
+                    <div class="sig-block">Class Teacher Sign</div>
+                    <div class="sig-block">Correspondent Sign<br><span style="color:var(--forest); font-size:11px; font-weight:900;">Mr. Shaik Ahmad</span></div>
                 </div>
             </div>
             
-            <button class="btn-download" id="pdfBtn" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> DOWNLOAD PDF</button>
-            <div id="noData" style="display:none; text-align:center; padding:20px;">Roll Number not found.</div>
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <button class="btn-download" id="pdfBtn" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> Download Official Report</button>
+            </div>
+            <div id="noData" style="text-align:center; padding: 40px; color: #999; display: none;">No Student Found.</div>
         </div>
     </div>
 </div>
@@ -134,14 +207,18 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
-    // Firebase Init (Configs remain same as yours)
     const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    const students = { /* ... your 185 student data list ... */ };
+    const students = {
+        "1472070": { Name: "Hanish Macharla", Class: "Pre-KG" },
+        "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8" }
+        // ... include your full list here
+    };
 
     let chartObj;
+    let isCumulative = false;
 
     function getGradeSubjects(className) {
         if (["Grade-6", "Grade-7", "Grade-8"].includes(className)) return ["TEL", "HIN", "ENG", "MAT", "PHY", "CHE", "BIO", "SOC", "IIT"];
@@ -149,27 +226,38 @@
         return ["TEL", "HIN", "ENG", "MAT", "SCI", "SOC"];
     }
 
+    function toggleCumulative() {
+        if(!isCumulative) fetchAllExams();
+        else fetchResults();
+    }
+
     async function fetchResults() {
+        isCumulative = false;
+        document.getElementById('toggleBtn').innerHTML = '<i class="fas fa-layer-group"></i> All Exams View';
         const roll = document.getElementById('rollNo').value.trim();
         const exam = document.getElementById('examType').value;
         const student = students[roll];
 
-        if(!student) { document.getElementById('noData').style.display = 'block'; return; }
+        if(!student) { if(roll) document.getElementById('noData').style.display = 'block'; return; }
         document.getElementById('noData').style.display = 'none';
 
-        // 1. Fetch Academic Progress Data
+        // 1. FETCH MARKS
         db.ref(`progress_cards/${student.Class}/${exam}/${student.Name}`).once('value', (snap) => {
             const data = snap.val();
             document.getElementById('reportProfile').style.display = 'flex';
             document.getElementById('dispName').innerText = student.Name;
             document.getElementById('dispClass').innerText = student.Class;
+            document.getElementById('dispRoll').innerText = `Roll Number: ${roll}`;
             document.getElementById('studentPhoto').src = `students/${roll}.png`;
 
             if(data) {
                 document.getElementById('singleResults').style.display = 'block';
                 document.getElementById('summaryArea').style.display = 'block';
+                document.getElementById('allExamsTable').style.display = 'none';
                 document.getElementById('pdfBtn').style.display = 'flex';
-                
+                document.getElementById('promotionBox').style.display = 'block';
+                document.getElementById('totalBox').style.display = 'block';
+
                 const subjects = getGradeSubjects(student.Class);
                 const m = data.marks || {};
                 document.getElementById('col1').innerHTML = ""; document.getElementById('col2').innerHTML = "";
@@ -196,21 +284,56 @@
             }
         });
 
-        // 2. FETCH BADGE LOGIC (CRITICAL FIX)
-        // We look in exam_results node for any badge stored for this student
-        const shortClass = student.Class.split(" ")[0]; // Handles both "Grade-8" and "Grade-8 (Sec)"
+        // 2. FETCH & ANIMATE BADGE (FIX)
         db.ref(`exam_results/${student.Class}/${student.Name}`).once('value', (snap) => {
             const res = snap.val();
             const badgeBox = document.getElementById('vBadges');
-            badgeBox.innerHTML = ""; // Clear old badges
-
+            badgeBox.innerHTML = "";
             if(res && res.badge) {
-                badgeBox.innerHTML = `<span class="badge-ui"><i class="fas fa-medal"></i> ${res.badge}</span>`;
+                badgeBox.innerHTML = `<div class="badge-ui"><i class="fas fa-crown"></i> ${res.badge}</div>`;
             }
         });
     }
 
-    // PDF Download function remains same...
+    async function fetchAllExams() {
+        const roll = document.getElementById('rollNo').value.trim();
+        const student = students[roll];
+        if(!student) return;
+        isCumulative = true;
+        document.getElementById('toggleBtn').innerHTML = '<i class="fas fa-undo"></i> Single View';
+        document.getElementById('singleResults').style.display = 'none';
+
+        db.ref(`progress_cards/${student.Class}`).once('value', (snap) => {
+            const classData = snap.val();
+            const subjects = getGradeSubjects(student.Class);
+            const exams = ["FA-1", "FA-2", "FA-3", "SA-1", "SA-2"];
+            let tableHtml = "";
+            subjects.forEach(sub => {
+                let row = `<tr><td class="subj-cell">${sub}</td>`;
+                exams.forEach(ex => {
+                    let mark = (classData && classData[ex] && classData[ex][student.Name]) ? classData[ex][student.Name].marks[sub] : '-';
+                    row += `<td>${mark}</td>`;
+                });
+                tableHtml += row + `</tr>`;
+            });
+            document.getElementById('allExamsBody').innerHTML = tableHtml;
+            document.getElementById('allExamsTable').style.display = 'table';
+        });
+    }
+
+    async function downloadReport() {
+        document.getElementById('noPrintNav').style.display = 'none';
+        document.getElementById('searchControls').style.display = 'none';
+        document.getElementById('sigRow').style.display = 'flex';
+        const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
+        const img = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        pdf.addImage(img, 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
+        pdf.save(`${document.getElementById('dispName').innerText}_Progress.pdf`);
+        document.getElementById('noPrintNav').style.display = 'flex';
+        document.getElementById('searchControls').style.display = 'block';
+        document.getElementById('sigRow').style.display = 'none';
+    }
 </script>
 </body>
 </html>
