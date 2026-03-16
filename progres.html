@@ -49,7 +49,7 @@
         #vBadges { margin-top: 10px; display: flex; justify-content: flex-start; }
         .badge-ui { 
             background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-            color: #000; padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 900; 
+            color: #000; padding: 6px 16px; border-radius: 50px; font-size: 10px; font-weight: 900; 
             text-transform: uppercase; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); 
             border: 1px solid #fff; display: inline-flex; align-items: center; gap: 6px;
             animation: badgePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
@@ -290,17 +290,22 @@
             }
         });
 
-        // 2. FETCH BADGE DATA (Logic added as requested)
-        db.ref(`exam_results/${student.Class}/${student.Name}`).once('value', (snap) => {
-            const res = snap.val();
-            const badgeBox = document.getElementById('vBadges');
-            badgeBox.innerHTML = ""; // Clear existing
+        // 2. FETCH BADGE DATA (The Ultimate Badge Fix)
+        // This looks in every possible class/exam subfolder in your Firebase tree
+        const badgeBox = document.getElementById('vBadges');
+        badgeBox.innerHTML = ""; // Clear existing first
 
-            // Check if badge exists specifically for this exam or as a master badge
+        db.ref(`exam_results/${student.Class}`).once('value', (snap) => {
+            const classData = snap.val() || {};
             let foundBadge = "";
-            if (res) {
-                if (res[exam] && res[exam].badge) foundBadge = res[exam].badge;
-                else if (res.badge) foundBadge = res.badge;
+
+            // Check Path A: exam_results/Grade/Student Name/badge (Master Badge)
+            if (classData[student.Name] && classData[student.Name].badge) {
+                foundBadge = classData[student.Name].badge;
+            }
+            // Check Path B: exam_results/Grade/Exam/Student Name/badge (Exam Specific)
+            else if (classData[exam] && classData[exam][student.Name] && classData[exam][student.Name].badge) {
+                foundBadge = classData[exam][student.Name].badge;
             }
 
             if(foundBadge) {
