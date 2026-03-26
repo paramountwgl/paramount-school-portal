@@ -184,37 +184,41 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <script>
 const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+// Your original student list (DO NOT REMOVE ANY NAMES)
 const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Roll: "1472070" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Roll: "1478225" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Roll: "1469391" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG", Roll: "1459555" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG", Roll: "1459560" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG", Roll: "1474500" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG", Roll: "1460680" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG", Roll: "1472299" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG", Roll: "1459683" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG", Roll: "1459620" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG", Roll: "1459605" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG", Roll: "1472069" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG", Roll: "1472723" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG", Roll: "1459658" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG", Roll: "1478248" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG", Roll: "1481135" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG", Roll: "1459568" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG", Roll: "1459652" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG", Roll: "1459636" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG", Roll: "1463720" }, "1459582": { Name: "Rishi Myakala", Class: "Pre-KG", Roll: "1459582" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459607" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459604" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG", Roll: "1459625" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG", Roll: "1472074" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG", Roll: "1469395" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG", Roll: "1456748" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG", Roll: "1459687" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG", Roll: "1459572" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG", Roll: "1459643" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG", Roll: "1459603" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG", Roll: "1472536" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG", Roll: "1456743" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG", Roll: "1473500" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG", Roll: "1463724" }, "1459694": { Name: "Ujjwal Checkka", Class: "Pre-KG", Roll: "1459694" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG", Roll: "1474815" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG", Roll: "1460690" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Roll: "1478250" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Roll: "1413563" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Roll: "1459577" } };
 
 async function accessHallTicket() {
     const box = document.getElementById('uiSearch');
-    const inputVal = document.getElementById('rollInput').value.trim();
+    // Sanitize input to remove any non-numeric junk
+    const rawInput = document.getElementById('rollInput').value;
+    const roll = rawInput.replace(/\D/g, '').trim(); 
     
-    // FIX 1: Ensure input is treated strictly as a string to match the list keys
-    const roll = String(inputVal);
+    // Logic Step 1: Does this roll number exist in the list?
     const student = studentData[roll];
 
-    // 1. FIRST check if roll number exists in our list
     if (!student) {
         box.classList.add('shake');
         setTimeout(() => box.classList.remove('shake'), 500);
         return Swal.fire('Error', 'Invalid Roll Number', 'error');
     }
 
-    // 2. Roll number exists! Now show connecting and check the Database status
+    // Logic Step 2: If roll is valid, check database for Live status
     Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
 
     try {
-        // FIX 2: Ensure path matches exactly what is in your Firebase console
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
         const liveData = liveSnap.val();
 
-        // 3. SECOND check: If roll is valid but teacher has NOT published yet
+        // Logic Step 3: If not "Live", show the process message
         if (!liveData || liveData.status !== "Live") {
             return Swal.fire({
                 icon: 'info',
@@ -224,28 +228,22 @@ async function accessHallTicket() {
             });
         }
 
-        // 4. If published, check for Fee Dues
+        // Logic Step 4: Proceed to Fee & Ticket Generation
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if (feeSnap.exists()) {
-            feeSnap.forEach(c => { 
-                const d = c.val(); 
-                tPaid += parseFloat(d.paid || 0); 
-                tFee = d.total; 
-            });
+            feeSnap.forEach(c => { const d = c.val(); tPaid += parseFloat(d.paid || 0); tFee = d.total; });
         }
         const due = tFee - tPaid;
         
         if (due > 5000) {
             return Swal.fire({ 
-                icon: 'warning', 
-                title: 'ON HOLD', 
+                icon: 'warning', title: 'ON HOLD', 
                 html: '<b style="color:red; font-size:18px;">APPROACH THE OFFICE, THE HALL TICKET IS ON HOLD</b>',
                 confirmButtonColor: '#c62828'
             });
         }
 
-        // 5. Generate Ticket (Rest of the original logic)
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
@@ -253,18 +251,13 @@ async function accessHallTicket() {
         const folder = "students"; 
         const extensions = ['png', 'jpg', 'jpeg', 'PNG'];
         let extIdx = 0;
-
         function tryLoad() {
             if (extIdx < extensions.length) {
                 photoEl.src = `${folder}/${roll}.${extensions[extIdx]}`;
                 extIdx++;
-            } else {
-                photoEl.src = 'logo.png';
-                photoEl.onerror = null;
-            }
+            } else { photoEl.src = 'logo.png'; photoEl.onerror = null; }
         }
-        photoEl.onerror = tryLoad;
-        tryLoad();
+        photoEl.onerror = tryLoad; tryLoad();
 
         document.getElementById('vName').innerText = student.Name.toUpperCase();
         document.getElementById('vClass').innerText = student.Class;
@@ -274,7 +267,6 @@ async function accessHallTicket() {
 
         const subs = Object.keys(schedule).filter(k => !['lastUpdatedBy', 'lastUpdatedAt'].includes(k));
         let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td style="text-align:left; background:#f4f4f4;">Date/Time</td>`;
-        
         subs.forEach(s => {
             let val = schedule[s] || "-";
             if (val === "-") { tableHtml += `<td>-</td>`; }
