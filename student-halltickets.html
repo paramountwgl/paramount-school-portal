@@ -164,7 +164,7 @@
     </div>
     
     <div id="downloadArea" style="text-align:center; margin-top:25px;">
-        <button onclick="window.print()" class="btn-premium-unlock" style="background:var(--dark-green); max-width:400px;">Download / Print PDF <i class="fas fa-file-pdf"></i></button>
+        <button onclick="window.print()" class="btn-premium-unlock" style="background:var(--dark-green); max-width:400px;">Download / Print Hallticket <i class="fas fa-file-pdf"></i></button>
     </div>
 </div>
 
@@ -187,7 +187,7 @@ async function accessHallTicket() {
 
     if(!student) return Swal.fire('Error', 'Invalid Roll Number', 'error');
 
-    Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
+    Swal.fire({ title: 'Generating your Hallticket...', didOpen: () => Swal.showLoading() });
 
     try {
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
