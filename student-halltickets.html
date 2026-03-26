@@ -129,7 +129,7 @@ async function accessHallTicket() {
     if (!student) {
         box.classList.add('shake');
         setTimeout(() => box.classList.remove('shake'), 500);
-        return Swal.fire('Error', 'Invalid Roll Number', 'error');
+        return Swal.fire('Hallticket not published', 'Your hallticket is in process', 'Hallticket not published');
     }
 
     // 2. Roll found! Now check Firebase Status
