@@ -194,22 +194,26 @@ const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Rol
 async function accessHallTicket() {
     const box = document.getElementById('uiSearch');
     const roll = document.getElementById('rollInput').value.trim();
+    
+    // 1. FIRST check if roll number exists in our list
     const student = studentData[roll];
 
-    if(!student) {
+    if (!student) {
+        // If roll number is NOT found, show invalid error and shake
         box.classList.add('shake');
         setTimeout(() => box.classList.remove('shake'), 500);
         return Swal.fire('Error', 'Invalid Roll Number', 'error');
     }
 
+    // 2. Roll number exists! Now show loading and check the Database status
     Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
 
     try {
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
         const liveData = liveSnap.val();
 
-        // Specific Alert Requirement: "Your hallticket is in process"
-        if(!liveData || liveData.status !== "Live") {
+        // 3. SECOND check: If roll is valid but teacher has NOT published yet
+        if (!liveData || liveData.status !== "Live") {
             return Swal.fire({
                 icon: 'info',
                 title: 'Access Denied',
@@ -218,14 +222,19 @@ async function accessHallTicket() {
             });
         }
 
+        // 4. If published, check for Fee Dues
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
-        if(feeSnap.exists()){
-            feeSnap.forEach(c => { const d = c.val(); tPaid += parseFloat(d.paid || 0); tFee = d.total; });
+        if (feeSnap.exists()) {
+            feeSnap.forEach(c => { 
+                const d = c.val(); 
+                tPaid += parseFloat(d.paid || 0); 
+                tFee = d.total; 
+            });
         }
         const due = tFee - tPaid;
         
-        if(due > 5000) {
+        if (due > 5000) {
             return Swal.fire({ 
                 icon: 'warning', 
                 title: 'ON HOLD', 
@@ -234,10 +243,10 @@ async function accessHallTicket() {
             });
         }
 
+        // 5. Generate Ticket (No changes to original logic here)
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
-        // Image Path Fix: Folder 'students' (lowercase as seen in GitHub)
         const photoEl = document.getElementById('vPhoto');
         const folder = "students"; 
         const extensions = ['png', 'jpg', 'jpeg', 'PNG'];
@@ -266,7 +275,7 @@ async function accessHallTicket() {
         
         subs.forEach(s => {
             let val = schedule[s] || "-";
-            if(val === "-") { tableHtml += `<td>-</td>`; }
+            if (val === "-") { tableHtml += `<td>-</td>`; }
             else {
                 let parts = val.split(" @ ");
                 let d = parts[0].split('-').reverse().join('/');
@@ -283,7 +292,7 @@ async function accessHallTicket() {
         window.scrollTo(0,0);
 
     } catch (e) {
-        Swal.fire('Error', 'Server Error.', 'error');
+        Swal.fire('Error', 'Server Connection Error.', 'error');
     }
 }
 </script>
