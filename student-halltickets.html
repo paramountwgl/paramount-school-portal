@@ -2,66 +2,234 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Hall Ticket | Paramount School</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hall Ticket Portal | Paramount School</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
-        :root { --forest: #006633; --gold: #ffd700; --light: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .download-card { background: white; padding: 40px 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; border-top: 8px solid var(--forest); }
-        .logo { height: 80px; margin-bottom: 20px; }
-        h2 { color: var(--forest); font-family: 'Montserrat'; font-weight: 800; margin-bottom: 5px; }
-        p { color: #666; font-size: 14px; margin-bottom: 25px; }
-        input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; font-size: 16px; font-weight: 700; outline: none; margin-bottom: 20px; text-align: center; }
-        .btn-download { background: var(--forest); color: white; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn-download:hover { transform: scale(1.03); background: #004d26; }
+        :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; --dark-green: #004d26; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; min-height: 100vh; }
+
+        /* --- NAVIGATION --- */
+        .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
+
+        /* --- SEARCH SECTION --- */
+        .search-section {
+            max-width: 450px;
+            margin: 80px auto;
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border-top: 8px solid var(--forest);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .search-section input {
+            width: 100%; padding: 18px; border-radius: 15px; border: 2px solid #eee;
+            text-align: center; font-size: 18px; font-weight: 800; outline: none; background: #fafafa;
+        }
+
+        /* --- PREMIUM TICKET DESIGN --- */
+        .ticket-wrapper { width: 210mm; margin: 20px auto; background: #fff; padding: 10mm; display: none; }
+        .ticket { width: 100%; border: 3px solid #000; padding: 20px; box-sizing: border-box; position: relative; border-radius: 15px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+        .school-info { display: flex; align-items: center; gap: 15px; }
+        .school-logo { height: 65px; }
+        .school-name-block h1 { margin: 0; font-size: 22px; font-family: 'Montserrat', sans-serif; font-weight: 800; }
+        
+        .exam-badge { background: #000; color: #fff; padding: 5px 20px; font-weight: 800; text-transform: uppercase; font-size: 12px; display: inline-block; margin-top: 8px; border-radius: 4px; }
+        
+        .student-photo-box { width: 95px; height: 115px; border: 2px solid #000; overflow: hidden; border-radius: 5px; }
+        .student-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .details-row { display: flex; justify-content: space-between; margin: 15px 0; font-size: 13px; font-weight: 700; }
+        .due-alert { color: #e53935; font-weight: 900; font-size: 14px; }
+
+        .timetable { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .timetable th, .timetable td { border: 2px solid #000; padding: 10px; text-align: center; font-size: 11px; font-weight: bold; }
+        .timetable th { background: #f4f4f4; text-transform: uppercase; }
+
+        .sig-section { display: flex; justify-content: space-between; margin-top: 60px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .sig-box { border-top: 2px solid #000; width: 220px; text-align: center; padding-top: 6px; }
+
+        .instructions-container { border-top: 1px dashed #666; padding-top: 10px; margin-top: 20px; text-align: left; }
+        .instructions { font-size: 10px; color: #333; line-height: 1.5; }
+
+        .btn-premium-unlock { background: var(--forest); color: white; padding: 16px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
+        .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 12px; }
+
+        @media print {
+            body { background: none; padding: 0; }
+            .portal-nav, .search-section, .btn-return, #downloadArea { display: none !important; }
+            .ticket-wrapper { width: 100%; padding: 0; margin: 0; display: block !important; }
+            .ticket { border-radius: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .ticket-wrapper { width: 95%; padding: 5mm; }
+            .school-name-block h1 { font-size: 14px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="download-card">
-    <img src="logo.png" class="logo">
-    <h2>HALL TICKET</h2>
-    <p>Enter your Roll Number to download</p>
-    <input type="text" id="studentRoll" placeholder="e.g. 1472070">
-    <button class="btn-download" onclick="checkAndDownload()">Download PDF <i class="fas fa-file-pdf"></i></button>
+<div class="portal-nav" id="mainNav">
+    <a href="student-portal.html"><i class="fas fa-home"></i> Profile</a>
+    <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
+    <a href="progres.html"><i class="fas fa-chart-line"></i> Progress</a>
+    <a href="#" class="active"><i class="fas fa-id-card"></i> Hall Tickets</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<div class="search-section" id="uiSearch">
+    <img src="logo.png" alt="Logo">
+    <h2 style="font-family:'Montserrat'; font-weight:800; color:var(--forest); margin:0;">HALL TICKET DOWNLOAD</h2>
+    <p style="font-size:13px; color:#666; margin:0;">Enter Roll Number to access your Exam Ticket</p>
+    <input type="text" id="rollInput" placeholder="Enter Roll No.">
+    <button onclick="accessHallTicket()" class="btn-premium-unlock">Generate Ticket <i class="fas fa-ticket-alt"></i></button>
+</div>
+
+<div id="ticketContainer" class="ticket-wrapper">
+    <div id="studentTicket" class="ticket">
+        <div class="header">
+            <div class="school-info">
+                <img src="logo.png" class="school-logo">
+                <div class="school-name-block">
+                    <h1>PARAMOUNT ENGLISH MEDIUM SCHOOL</h1>
+                    <div id="vExamType" class="exam-badge">EXAM TYPE</div>
+                </div>
+            </div>
+            <div class="student-photo-box">
+                <img id="vPhoto" src="" onerror="this.src='logo.png'">
+            </div>
+        </div>
+
+        <div class="details-row">
+            <div class="details-left">
+                <b>NAME:</b> <span id="vName">---</span><br>
+                <b>CLASS:</b> <span id="vClass">---</span>
+            </div>
+            <div class="details-right" style="text-align:right;">
+                <b>REG NO:</b> <span id="vReg">---</span><br>
+                <b class="due-alert">FEE DUE: ₹ <span id="vDue">---</span></b>
+            </div>
+        </div>
+
+        <table class="timetable" id="vTable"></table>
+
+        <div class="sig-section">
+            <div class="sig-box">Class Teacher Signature</div>
+            <div class="sig-box">Correspondent Signature</div>
+        </div>
+
+        <div class="instructions-container">
+            <div class="instructions">
+                <b>Instructions:</b><br>
+                1. Bring this Hall Ticket to the examination hall daily.<br>
+                2. Students must be in the exam hall 15 minutes before time.<br>
+                3. Entry restricted if due fee exceeds ₹ 5000.
+            </div>
+        </div>
+    </div>
+    
+    <div id="downloadArea" style="text-align:center; margin-top:25px;">
+        <button onclick="window.print()" class="btn-premium-unlock" style="background:var(--dark-green); max-width:400px;">Download / Print Hall Ticket <i class="fas fa-print"></i></button>
+    </div>
+</div>
+
+<a href="index.html" class="btn-return">Return to Dashboard</a>
 
 <script>
-    const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-    // Map your student data here (same as other pages)
-    const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG" } /* ... add other students ... */ };
+// Use the same database mapping as your student portal
+const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Roll: "1472070" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Roll: "1478225" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Roll: "1469391" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG", Roll: "1459555" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG", Roll: "1459560" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG", Roll: "1474500" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG", Roll: "1460680" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG", Roll: "1472299" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG", Roll: "1459683" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG", Roll: "1459620" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG", Roll: "1459605" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG", Roll: "1472069" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG", Roll: "1472723" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG", Roll: "1459658" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG", Roll: "1478248" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG", Roll: "1481135" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG", Roll: "1459568" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG", Roll: "1459652" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG", Roll: "1459636" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG", Roll: "1463720" }, "1459582": { Name: "Rishi Myakala", Class: "Pre-KG", Roll: "1459582" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459607" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459604" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG", Roll: "1459625" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG", Roll: "1472074" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG", Roll: "1469395" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG", Roll: "1456748" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG", Roll: "1459687" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG", Roll: "1459572" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG", Roll: "1459643" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG", Roll: "1459603" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG", Roll: "1472536" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG", Roll: "1456743" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG", Roll: "1473500" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG", Roll: "1463724" }, "1459694": { Name: "Ujjwal Checkka", Class: "Pre-KG", Roll: "1459694" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG", Roll: "1474815" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG", Roll: "1460690" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Roll: "1478250" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Roll: "1413563" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Roll: "1459577" } };
 
-    async function checkAndDownload() {
-        const roll = document.getElementById('studentRoll').value.trim();
-        const student = studentData[roll];
+async function accessHallTicket() {
+    const roll = document.getElementById('rollInput').value.trim();
+    const student = studentData[roll];
 
-        if(!student) return Swal.fire('Error', 'Invalid Roll Number', 'error');
+    if(!student) return Swal.fire('Error', 'Invalid Roll Number', 'error');
 
-        Swal.fire({ title: 'Checking Server...', didOpen: () => Swal.showLoading() });
+    Swal.fire({ title: 'Searching Records...', didOpen: () => Swal.showLoading() });
 
-        // Check if tickets for this class are published
-        const snap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
-        const settings = snap.val();
+    try {
+        // 1. Check if Teacher Published Hall Tickets for this Class
+        const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
+        const liveData = liveSnap.val();
 
-        if(!settings || settings.status !== "Live") {
-            return Swal.fire('Not Ready', 'Hall tickets for your class have not been released yet.', 'info');
+        if(!liveData || liveData.status !== "Live") {
+            return Swal.fire('Notice', 'Hall tickets are not released yet. Please approach the school office.', 'info');
         }
 
-        // If ready, fetch specific data and trigger print function
-        // (Insert your printTickets logic here to generate the PDF for just THIS student)
-        Swal.fire('Ready!', 'Generating your Hall Ticket...', 'success');
+        // 2. Check Fee Due Logic
+        const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
+        let tPaid = 0, tFee = 0;
+        if(feeSnap.exists()){
+            feeSnap.forEach(c => { const d = c.val(); tPaid += parseFloat(d.paid || 0); tFee = d.total; });
+        }
+        const due = tFee - tPaid;
         
-        // Code to show/print the ticket for this specific student roll...
+        if(due > 5000) {
+            return Swal.fire({ 
+                icon: 'warning', 
+                title: 'ON HOLD', 
+                html: '<b style="color:red; font-size:18px;">APPROACH THE OFFICE, THE HALL TICKET IS ON HOLD</b>',
+                confirmButtonColor: '#c62828'
+            });
+        }
+
+        // 3. Fetch Exam Schedule based on the LIVE Exam Name
+        const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
+        const schedule = schedSnap.val() || {};
+
+        // 4. Populate UI
+        document.getElementById('vName').innerText = student.Name.toUpperCase();
+        document.getElementById('vClass').innerText = student.Class;
+        document.getElementById('vReg').innerText = "100" + roll.slice(-2);
+        document.getElementById('vDue').innerText = due;
+        document.getElementById('vExamType').innerText = liveData.exam;
+        document.getElementById('vPhoto').src = `Student images/${roll}.png`;
+
+        // 5. Build Timetable Grid
+        const subs = Object.keys(schedule).filter(k => !['lastUpdatedBy', 'lastUpdatedAt'].includes(k));
+        let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td style="text-align:left; background:#f4f4f4;">Date/Time</td>`;
+        
+        subs.forEach(s => {
+            let val = schedule[s] || "-";
+            if(val === "-") { tableHtml += `<td>-</td>`; }
+            else {
+                let parts = val.split(" @ ");
+                let d = parts[0].split('-').reverse().join('/');
+                tableHtml += `<td>${d}<br>${parts[1]}</td>`;
+            }
+        });
+        tableHtml += `</tr><tr style="height:45px;"><td style="text-align:left; background:#f4f4f4;">Sign</td>${subs.map(()=>`<td></td>`).join('')}</tr></tbody>`;
+        
+        document.getElementById('vTable').innerHTML = tableHtml;
+        
+        // Switch Views
+        document.getElementById('uiSearch').style.display = 'none';
+        document.getElementById('ticketContainer').style.display = 'block';
+        
+        Swal.close();
+        window.scrollTo(0,0);
+
+    } catch (error) {
+        console.error(error);
+        Swal.fire('Error', 'Unable to reach server. Try again.', 'error');
     }
+}
 </script>
 </body>
 </html>
