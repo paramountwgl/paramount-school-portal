@@ -34,14 +34,14 @@
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
-        /* COUNTDOWN TIMER CSS */
+        /* COUNTDOWN TIMER CSS - CHANGED TO DISPLAY: FLEX */
         .countdown-container {
             background: white;
             border-radius: 20px;
             padding: 20px;
             margin: 15px auto;
             max-width: 500px;
-            display: none; /* Initially hidden until search */
+            display: flex; 
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
@@ -230,9 +230,6 @@ async function searchStudent() {
         document.getElementById('fatherName').innerText = student.Father;
         document.getElementById('phoneNumber').innerText = student.Phone;
 
-        // SHOW THE COUNTDOWN SECTION
-        document.getElementById('countdownSection').style.display = 'flex';
-
         // FIXED IMAGE LOGIC
         const photoBox = document.getElementById('studentPhoto');
         photoBox.src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
@@ -331,7 +328,10 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'none';
     document.getElementById('mainNav').style.display = 'none';
     document.getElementById('bottomNav').style.display = 'none';
-    document.getElementById('countdownSection').style.display = 'none'; // Hide timer in PDF
+    
+    // Hide timer in PDF to save space
+    const countdown = document.getElementById('countdownSection');
+    countdown.style.display = 'none';
 
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
     const imgData = canvas.toDataURL('image/png');
@@ -343,7 +343,7 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'flex';
     document.getElementById('mainNav').style.display = 'flex';
     document.getElementById('bottomNav').style.display = 'flex';
-    document.getElementById('countdownSection').style.display = 'flex';
+    countdown.style.display = 'flex';
     Swal.close();
 }
 </script>
