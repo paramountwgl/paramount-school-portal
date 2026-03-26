@@ -380,7 +380,7 @@ async function accessHallTicket() {
         document.getElementById('vReg').innerText = "100" + roll.slice(-2);
         document.getElementById('vDue').innerText = due;
         document.getElementById('vExamType').innerText = liveData.exam;
-        document.getElementById('vPhoto').src = `students/${roll}.jpg`;
+        document.getElementById('vPhoto').src = `students/${roll}.png`;
         document.getElementById('vPhoto').onerror = function() { this.src = 'logo.png'; };
 
         const subs = Object.keys(schedule).filter(k => !['lastUpdatedBy', 'lastUpdatedAt'].includes(k));
