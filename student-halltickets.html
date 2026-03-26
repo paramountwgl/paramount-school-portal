@@ -193,22 +193,24 @@ const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Rol
 
 async function accessHallTicket() {
     const box = document.getElementById('uiSearch');
-    const roll = document.getElementById('rollInput').value.trim();
+    const inputVal = document.getElementById('rollInput').value.trim();
     
-    // 1. FIRST check if roll number exists in our list
+    // FIX 1: Ensure input is treated strictly as a string to match the list keys
+    const roll = String(inputVal);
     const student = studentData[roll];
 
+    // 1. FIRST check if roll number exists in our list
     if (!student) {
-        // If roll number is NOT found, show invalid error and shake
         box.classList.add('shake');
         setTimeout(() => box.classList.remove('shake'), 500);
         return Swal.fire('Error', 'Invalid Roll Number', 'error');
     }
 
-    // 2. Roll number exists! Now show loading and check the Database status
+    // 2. Roll number exists! Now show connecting and check the Database status
     Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
 
     try {
+        // FIX 2: Ensure path matches exactly what is in your Firebase console
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
         const liveData = liveSnap.val();
 
@@ -243,7 +245,7 @@ async function accessHallTicket() {
             });
         }
 
-        // 5. Generate Ticket (No changes to original logic here)
+        // 5. Generate Ticket (Rest of the original logic)
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
