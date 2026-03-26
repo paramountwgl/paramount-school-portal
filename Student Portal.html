@@ -34,6 +34,27 @@
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
+        /* COUNTDOWN TIMER CSS */
+        .countdown-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 500px;
+            display: none; /* Initially hidden until search */
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--gold);
+            width: 92%;
+        }
+        .event-info h3 { margin: 0; font-family: 'Montserrat'; font-size: 14px; color: var(--forest); text-transform: uppercase; }
+        .event-info p { margin: 2px 0 0; font-size: 10px; color: #666; font-weight: bold; }
+        .timer-display { display: flex; gap: 8px; }
+        .time-block { background: var(--forest); color: white; padding: 8px; border-radius: 10px; min-width: 45px; text-align: center; }
+        .time-block span { display: block; font-size: 16px; font-weight: 800; }
+        .time-block label { font-size: 8px; text-transform: uppercase; font-weight: 700; color: var(--gold); }
+
         /* FLASHING LOW ATTENDANCE ALERT */
         #lowAttAlert { 
             display: none; 
@@ -118,6 +139,31 @@
         </div>
     </div>
 
+    <div class="countdown-container" id="countdownSection">
+        <div class="event-info">
+            <h3 id="eventTitle">Loading Event...</h3>
+            <p id="eventSubtitle">Stay focused and prepared!</p>
+        </div>
+        <div class="timer-display">
+            <div class="time-block">
+                <span id="days">00</span>
+                <label>Days</label>
+            </div>
+            <div class="time-block">
+                <span id="hours">00</span>
+                <label>Hrs</label>
+            </div>
+            <div class="time-block">
+                <span id="minutes">00</span>
+                <label>Min</label>
+            </div>
+            <div class="time-block">
+                <span id="seconds">00</span>
+                <label>Sec</label>
+            </div>
+        </div>
+    </div>
+
     <div id="lowAttAlert"><i class="fas fa-exclamation-triangle"></i> ATTENTION: ATTENDANCE IS BELOW 40%</div>
 
     <div class="profile-card">
@@ -184,9 +230,11 @@ async function searchStudent() {
         document.getElementById('fatherName').innerText = student.Father;
         document.getElementById('phoneNumber').innerText = student.Phone;
 
-        // --- FIXED IMAGE LOGIC ---
+        // SHOW THE COUNTDOWN SECTION
+        document.getElementById('countdownSection').style.display = 'flex';
+
+        // FIXED IMAGE LOGIC
         const photoBox = document.getElementById('studentPhoto');
-        // Added timestamp (?t=) to bypass browser cache
         photoBox.src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
         
         document.getElementById('pdfBtnSection').style.display = 'flex';
@@ -210,7 +258,7 @@ async function searchStudent() {
         const attRate = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
         document.getElementById('attendanceRate').innerText = attRate + "%";
 
-        // --- FLASHING LOW ATTENDANCE ALERT LOGIC ---
+        // ALERT LOGIC
         const alertBox = document.getElementById('lowAttAlert');
         const attBoxDisplay = document.getElementById('attBox');
         if (attRate < 40 && totalT > 0) {
@@ -247,6 +295,34 @@ async function searchStudent() {
     }
 }
 
+// PREMIUM COUNTDOWN LOGIC
+const schoolEvents = [
+    { name: "FA-4 Exams", date: "2026-04-10T09:00:00" },
+    { name: "S.A - 2 Exams", date: "2026-04-20T09:00:00" },
+    { name: "Summer Holidays", date: "2026-05-01T00:00:00" }
+];
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const nextEvent = schoolEvents.find(event => new Date(event.date).getTime() > now);
+
+    if (nextEvent) {
+        const diff = new Date(nextEvent.date).getTime() - now;
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('eventTitle').innerText = nextEvent.name;
+        document.getElementById('days').innerText = d.toString().padStart(2, '0');
+        document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+        document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+        document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+    }
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
 async function downloadPDF() {
     Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
     const roll = document.getElementById('RollNumber').innerText;
@@ -255,6 +331,7 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'none';
     document.getElementById('mainNav').style.display = 'none';
     document.getElementById('bottomNav').style.display = 'none';
+    document.getElementById('countdownSection').style.display = 'none'; // Hide timer in PDF
 
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
     const imgData = canvas.toDataURL('image/png');
@@ -266,6 +343,7 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'flex';
     document.getElementById('mainNav').style.display = 'flex';
     document.getElementById('bottomNav').style.display = 'flex';
+    document.getElementById('countdownSection').style.display = 'flex';
     Swal.close();
 }
 </script>
