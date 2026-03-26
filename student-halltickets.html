@@ -18,28 +18,9 @@
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
         /* --- SEARCH SECTION --- */
-        .search-section {
-            max-width: 480px;
-            margin: 80px auto;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            border-top: 8px solid var(--forest);
-            padding: 40px 30px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
+        .search-section { max-width: 480px; margin: 80px auto; background: white; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border-top: 8px solid var(--forest); padding: 40px 30px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
 
         .auth-brand-flex { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
         .ui-logo { height: 65px; width: auto; }
@@ -49,55 +30,24 @@
 
         .search-section h2 { font-family: 'Montserrat'; font-weight: 800; color: #333; margin: 0; font-size: 1.2rem; text-transform: uppercase; }
         .search-section p { font-size: 13px; color: #777; margin-bottom: 10px; }
-
-        .search-section input {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid #eee;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 800;
-            outline: none;
-            background: #fafafa;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
+        .search-section input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; text-align: center; font-size: 18px; font-weight: 800; outline: none; background: #fafafa; margin-bottom: 20px; transition: 0.3s; }
         .search-section input:focus { border-color: var(--forest); background: #fff; }
 
         /* --- TICKET STYLES --- */
         .ticket-wrapper { width: 210mm; margin: 20px auto; background: #fff; padding: 10mm; display: none; }
         .ticket { width: 100%; border: 3px solid #000; padding: 15px; box-sizing: border-box; position: relative; background: #fff; border-radius: 15px; }
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
-        .school-info { display: flex; align-items: center; gap: 15px; }
-        .school-logo-small { height: 50px; width: auto; }
-        .school-name-block h1 { margin: 0; font-size: 18px; font-family: 'Montserrat', sans-serif; font-weight: 800; }
-        .exam-badge { background: #000; color: #fff; padding: 4px 15px; font-weight: 800; text-transform: uppercase; font-size: 10px; display: inline-block; margin-top: 5px; border-radius: 3px; }
-        
-        .student-photo-box { width: 85px; height: 105px; border: 2px solid #000; overflow: hidden; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
+        .student-photo-box { width: 85px; height: 105px; border: 2px solid #000; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #f9f9f9; }
         .student-photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .details-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 12px; font-weight: 700; }
-        .due-alert { color: #e53935; font-weight: 900; }
-
         .timetable { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .timetable th, .timetable td { border: 1px solid #000; padding: 8px; text-align: center; font-size: 11px; font-weight: bold; }
-        .timetable th { background: #f4f4f4; }
-
-        .sig-section { display: flex; justify-content: space-between; margin-top: 50px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
-        .sig-box { border-top: 2px solid #000; width: 200px; text-align: center; padding-top: 5px; }
-
-        .instructions-container { border-top: 1px dashed #666; padding-top: 8px; margin-top: 15px; }
-        .instructions { font-size: 9px; color: #333; line-height: 1.4; text-align: left; }
+        .timetable th, .timetable td { border: 1px solid #000; padding: 8px; text-align: center; font-size: 11px; }
 
         .btn-premium-unlock { background: var(--forest); color: white; padding: 16px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
         .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 12px; }
 
-        @media print {
-            body { background: none; padding: 0; }
-            .portal-nav, .search-section, .btn-return-fixed, #downloadArea { display: none !important; }
-            .ticket-wrapper { width: 100%; padding: 0; margin: 0; display: block !important; }
-        }
+        @media print { body { background: none; padding: 0; } .portal-nav, .search-section, .btn-return-fixed, #downloadArea { display: none !important; } .ticket-wrapper { display: block !important; width: 100%; margin: 0; padding: 0; } }
     </style>
 </head>
 <body autocomplete="off">
@@ -126,11 +76,11 @@
 <div id="ticketContainer" class="ticket-wrapper">
     <div id="studentTicket" class="ticket">
         <div class="header">
-            <div class="school-info">
-                <img src="logo.png" class="school-logo-small">
-                <div class="school-name-block">
-                    <h1>PARAMOUNT ENGLISH MEDIUM SCHOOL</h1>
-                    <div id="vExamType" class="exam-badge">EXAM TYPE</div>
+            <div class="school-info" style="display:flex; align-items:center; gap:15px;">
+                <img src="logo.png" style="height:50px;">
+                <div>
+                    <h1 style="margin:0; font-size:18px; font-family:'Montserrat'; font-weight:800;">PARAMOUNT ENGLISH MEDIUM SCHOOL</h1>
+                    <div id="vExamType" class="exam-badge" style="background:#000; color:#fff; padding:4px 15px; font-weight:800; text-transform:uppercase; font-size:10px; display:inline-block; margin-top:5px; border-radius:3px;">EXAM TYPE</div>
                 </div>
             </div>
             <div class="student-photo-box">
@@ -139,30 +89,15 @@
         </div>
 
         <div class="details-row">
-            <div class="details-left">
-                <b>NAME:</b> <span id="vName">---</span><br>
-                <b>CLASS:</b> <span id="vClass">---</span>
-            </div>
-            <div class="details-right" style="text-align:right;">
-                <b>REG NO:</b> <span id="vReg">---</span><br>
-                <b class="due-alert">FEE DUE: ₹ <span id="vDue">---</span></b>
-            </div>
+            <div><b>NAME:</b> <span id="vName">---</span><br><b>CLASS:</b> <span id="vClass">---</span></div>
+            <div style="text-align:right;"><b>REG NO:</b> <span id="vReg">---</span><br><b style="color:#c62828;">FEE DUE: ₹ <span id="vDue">---</span></b></div>
         </div>
 
         <table class="timetable" id="vTable"></table>
 
-        <div class="sig-section">
-            <div class="sig-box">Class Teacher Signature</div>
-            <div class="sig-box">Correspondent Signature</div>
-        </div>
-
-        <div class="instructions-container">
-            <div class="instructions">
-                <b>Instructions:</b><br>
-                1. Bring this Hall Ticket to the examination hall daily.<br>
-                2. Students must be in the exam hall 15 minutes before time.<br>
-                3. Entry restricted if due fee exceeds ₹ 5000.
-            </div>
+        <div style="display:flex; justify-content:space-between; margin-top:50px; font-size:10px; font-weight:800; text-transform:uppercase;">
+            <div style="border-top:2px solid #000; width:200px; text-align:center; padding-top:5px;">Class Teacher Signature</div>
+            <div style="border-top:2px solid #000; width:200px; text-align:center; padding-top:5px;">Correspondent Signature</div>
         </div>
     </div>
     
@@ -187,26 +122,24 @@ const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Rol
 async function accessHallTicket() {
     const box = document.getElementById('uiSearch');
     const inputVal = document.getElementById('rollInput').value.trim();
-    
-    // TOOL 1: Input Sanitizer (Ensures clean string matching)
     const roll = String(inputVal).replace(/\D/g, ''); 
     const student = studentData[roll];
 
-    // TOOL 2: Local Validator (Checks list before hitting server)
+    // 1. Validate Roll Number locally first to prevent "Invalid" message for valid students
     if (!student) {
         box.classList.add('shake');
         setTimeout(() => box.classList.remove('shake'), 500);
         return Swal.fire('Error', 'Invalid Roll Number', 'error');
     }
 
-    // TOOL 3: Connectivity Loader
-    Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
+    // 2. Roll found! Now check Firebase Status
+    Swal.fire({ title: 'Connecting...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
     try {
-        // TOOL 4: Live Status Logic (Fixes the "In Process" alert issue)
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
         const liveData = liveSnap.val();
 
+        // 3. Status Check: Must be "Live"
         if (!liveData || liveData.status !== "Live") {
             return Swal.fire({
                 icon: 'info',
@@ -216,45 +149,38 @@ async function accessHallTicket() {
             });
         }
 
-        // TOOL 5: Fee Record Controller
+        // 4. Fee Monitoring
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if (feeSnap.exists()) {
             feeSnap.forEach(c => { 
-                const d = c.val(); 
-                tPaid += parseFloat(d.paid || 0); 
-                tFee = d.total; 
+                const d = c.val(); tPaid += parseFloat(d.paid || 0); tFee = d.total; 
             });
         }
         const due = tFee - tPaid;
-        
         if (due > 5000) {
             return Swal.fire({ 
-                icon: 'warning', 
-                title: 'ON HOLD', 
+                icon: 'warning', title: 'ON HOLD', 
                 html: '<b style="color:red; font-size:18px;">APPROACH THE OFFICE, THE HALL TICKET IS ON HOLD</b>',
                 confirmButtonColor: '#c62828'
             });
         }
 
-        // TOOL 6: Dynamic Timetable Generator
+        // 5. Generate and Show Ticket
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
-        // TOOL 7: Multi-Extension Image Loader
         const photoEl = document.getElementById('vPhoto');
-        const folder = "students"; 
         const extensions = ['png', 'jpg', 'jpeg', 'PNG'];
         let extIdx = 0;
         function tryLoad() {
             if (extIdx < extensions.length) {
-                photoEl.src = `${folder}/${roll}.${extensions[extIdx]}`;
+                photoEl.src = `students/${roll}.${extensions[extIdx]}`;
                 extIdx++;
             } else { photoEl.src = 'logo.png'; photoEl.onerror = null; }
         }
         photoEl.onerror = tryLoad; tryLoad();
 
-        // Data Rendering
         document.getElementById('vName').innerText = student.Name.toUpperCase();
         document.getElementById('vClass').innerText = student.Class;
         document.getElementById('vReg').innerText = "100" + roll.slice(-2);
@@ -262,22 +188,17 @@ async function accessHallTicket() {
         document.getElementById('vExamType').innerText = liveData.exam;
 
         const subs = Object.keys(schedule).filter(k => !['lastUpdatedBy', 'lastUpdatedAt'].includes(k));
-        let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td style="text-align:left; background:#f4f4f4;">Date/Time</td>`;
+        let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td>Date/Time</td>`;
         subs.forEach(s => {
             let val = schedule[s] || "-";
-            if (val === "-") { tableHtml += `<td>-</td>`; }
-            else {
-                let parts = val.split(" @ ");
-                let d = parts[0].split('-').reverse().join('/');
-                tableHtml += `<td>${d}<br>${parts[1]}</td>`;
-            }
+            let content = val !== "-" ? val.split(" @ ")[0].split('-').reverse().join('/') + "<br>" + (val.split(" @ ")[1] || "") : "-";
+            tableHtml += `<td>${content}</td>`;
         });
-        tableHtml += `</tr><tr style="height:45px;"><td style="text-align:left; background:#f4f4f4;">Sign</td>${subs.map(()=>`<td></td>`).join('')}</tr></tbody>`;
+        tableHtml += `</tr><tr style="height:45px;"><td>Sign</td>${subs.map(()=>`<td></td>`).join('')}</tr></tbody>`;
         
         document.getElementById('vTable').innerHTML = tableHtml;
         document.getElementById('uiSearch').style.display = 'none';
         document.getElementById('ticketContainer').style.display = 'block';
-        
         Swal.close();
         window.scrollTo(0,0);
 
