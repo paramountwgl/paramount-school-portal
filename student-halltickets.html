@@ -17,7 +17,7 @@
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
-        /* --- SEARCH SECTION --- */
+        /* --- SEARCH SECTION (ADMIN STYLE) --- */
         .search-section {
             max-width: 480px;
             margin: 80px auto;
@@ -27,6 +27,10 @@
             border-top: 8px solid var(--forest);
             padding: 40px 30px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
 
         .auth-brand-flex {
@@ -34,15 +38,15 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .ui-logo { height: 65px; width: auto; }
         .school-text-box { text-align: left; line-height: 1.1; }
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--forest); letter-spacing: 0.5px; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        .search-section h2 { font-family: 'Montserrat'; font-weight: 800; color: #333; margin: 0 0 10px 0; font-size: 1.2rem; text-transform: uppercase; }
-        .search-section p { font-size: 13px; color: #777; margin-bottom: 25px; }
+        .search-section h2 { font-family: 'Montserrat'; font-weight: 800; color: #333; margin: 0; font-size: 1.2rem; text-transform: uppercase; }
+        .search-section p { font-size: 13px; color: #777; margin-bottom: 10px; }
 
         .search-section input {
             width: 100%;
@@ -54,7 +58,6 @@
             font-weight: 800;
             outline: none;
             background: #fafafa;
-            margin-bottom: 20px;
             transition: 0.3s;
         }
         .search-section input:focus { border-color: var(--forest); background: #fff; }
@@ -73,11 +76,14 @@
 
         .details-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 12px; font-weight: 700; }
         .due-alert { color: #e53935; font-weight: 900; }
+
         .timetable { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .timetable th, .timetable td { border: 1px solid #000; padding: 8px; text-align: center; font-size: 11px; font-weight: bold; }
         .timetable th { background: #f4f4f4; }
+
         .sig-section { display: flex; justify-content: space-between; margin-top: 50px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
         .sig-box { border-top: 2px solid #000; width: 200px; text-align: center; padding-top: 5px; }
+
         .instructions-container { border-top: 1px dashed #666; padding-top: 8px; margin-top: 15px; }
         .instructions { font-size: 9px; color: #333; line-height: 1.4; text-align: left; }
 
@@ -91,7 +97,7 @@
         }
     </style>
 </head>
-<body autocomplete="off">
+<body>
 
 <div class="portal-nav" id="mainNav">
     <a href="student-portal.html"><i class="fas fa-home"></i> Profile</a>
@@ -124,7 +130,7 @@
                     <div id="vExamType" class="exam-badge">EXAM TYPE</div>
                 </div>
             </div>
-            <div class="students">
+            <div class="student-photo-box">
                 <img id="vPhoto" src="logo.png" alt="Student Photo" crossorigin="anonymous">
             </div>
         </div>
@@ -181,7 +187,7 @@ async function accessHallTicket() {
 
     if(!student) return Swal.fire('Error', 'Invalid Roll Number', 'error');
 
-    Swal.fire({ title: 'Loading...', didOpen: () => Swal.showLoading() });
+    Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
 
     try {
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
@@ -210,23 +216,23 @@ async function accessHallTicket() {
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
-        // --- NEW IMPROVED IMAGE FETCHING LOGIC ---
+        // --- DYNAMIC IMAGE LOADER ---
         const photoEl = document.getElementById('vPhoto');
-        const folder = "Student%20images"; 
-        const extensions = ['png', 'jpg', 'jpeg', 'PNG', 'JPG'];
-        let currentIndex = 0;
+        const folder = "students"; // Folder name from GitHub Screenshot 483
+        const extensions = ['png', 'jpg', 'jpeg', 'PNG'];
+        let extIdx = 0;
 
-        function tryNextExtension() {
-            if (currentIndex < extensions.length) {
-                photoEl.src = `${folder}/${roll}.${extensions[currentIndex]}`;
-                currentIndex++;
+        function tryLoad() {
+            if (extIdx < extensions.length) {
+                photoEl.src = `${folder}/${roll}.${extensions[extIdx]}`;
+                extIdx++;
             } else {
                 photoEl.src = 'logo.png';
                 photoEl.onerror = null;
             }
         }
-        photoEl.onerror = tryNextExtension;
-        tryNextExtension();
+        photoEl.onerror = tryLoad;
+        tryLoad();
 
         document.getElementById('vName').innerText = student.Name.toUpperCase();
         document.getElementById('vClass').innerText = student.Class;
@@ -243,7 +249,7 @@ async function accessHallTicket() {
             else {
                 let parts = val.split(" @ ");
                 let d = parts[0].split('-').reverse().join('/');
-                tableHtml += `<td>${d}<br>${parts[1]}</td>`;
+                return tableHtml += `<td>${d}<br>${parts[1]}</td>`;
             }
         });
         tableHtml += `</tr><tr style="height:45px;"><td style="text-align:left; background:#f4f4f4;">Sign</td>${subs.map(()=>`<td></td>`).join('')}</tr></tbody>`;
@@ -256,7 +262,7 @@ async function accessHallTicket() {
         window.scrollTo(0,0);
 
     } catch (e) {
-        Swal.fire('Error', 'Unable to reach server.', 'error');
+        Swal.fire('Error', 'Server Error.', 'error');
     }
 }
 </script>
