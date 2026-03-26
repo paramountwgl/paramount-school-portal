@@ -3,73 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>View Syllabus | Paramount School</title>
+    <title>Student Syllabus Portal | Paramount</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
     <style>
         :root { --forest: #004d26; --gold: #ffd700; --light: #f4f7f6; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f1; margin: 0; min-height: 100vh; }
 
-        /* --- HEADER --- */
-        header { background: var(--forest); color: white; padding: 12px 3%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); width: 100%; }
+        header { background: var(--forest); color: white; padding: 12px 3%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
         .header-content { display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 1400px; margin: 0 auto; }
-        .header-logo { height: clamp(45px, 8vw, 60px); width: auto; }
-        .school-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: clamp(1rem, 4.5vw, 1.8rem); font-weight: 800; letter-spacing: 1px; margin: 0; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: clamp(0.5rem, 2vw, 0.8rem); color: var(--gold); font-weight: 700; text-transform: uppercase; margin: 0; }
+        .header-logo { height: 50px; width: auto; }
+        .school-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat'; font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; }
+        .school-name-sub { font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        .container { max-width: 550px; margin: 25px auto; padding: 0 15px; }
 
-        /* --- SELECTION CARD --- */
-        .search-card { 
-            background: white; padding: 25px; border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 6px solid var(--forest);
-            margin-bottom: 20px; text-align: center;
+        .login-card { 
+            background: white; padding: 30px; border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;
+            border-bottom: 6px solid var(--forest);
         }
-        .search-card h2 { font-family: 'Montserrat'; color: var(--forest); margin-top: 0; font-size: 1.2rem; }
-        
-        .flex-row { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        @media (min-width: 600px) { .flex-row { flex-direction: row; } }
-
-        .input-group { flex: 1; text-align: left; }
-        .input-group label { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #666; margin-bottom: 5px; margin-left: 5px; }
-        select { 
+        .input-group { margin-top: 15px; text-align: left; }
+        label { font-size: 10px; font-weight: 800; text-transform: uppercase; color: #888; margin-left: 5px; }
+        input, select { 
             width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #eee; 
-            font-size: 15px; font-weight: 600; outline: none; background: #fafafa;
-            transition: 0.3s; cursor: pointer;
+            font-size: 16px; font-weight: 600; outline: none; margin-top: 5px; background: #fafafa;
         }
-        select:focus { border-color: var(--forest); background: white; }
+        .btn-view { 
+            width: 100%; background: var(--forest); color: white; padding: 16px; 
+            border-radius: 50px; border: none; font-family: 'Montserrat'; font-weight: 800; 
+            margin-top: 20px; cursor: pointer; text-transform: uppercase; transition: 0.3s;
+        }
 
-        /* --- SYLLABUS DISPLAY --- */
-        #syllabusDisplay { display: none; }
+        #studentProfile { 
+            display: none; background: linear-gradient(135deg, var(--forest), #002b15); 
+            color: white; padding: 15px 20px; border-radius: 20px; margin-bottom: 20px;
+            align-items: center; gap: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .student-photo { 
+            width: 65px; height: 65px; border-radius: 50%; border: 3px solid var(--gold);
+            background: white; object-fit: cover;
+        }
+        .student-info h2 { margin: 0; font-size: 16px; font-family: 'Montserrat'; }
+        .student-info p { margin: 2px 0 0; font-size: 11px; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+
         .subject-card { 
-            background: white; border-radius: 15px; margin-bottom: 15px; 
-            overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--forest);
+            background: white; border-radius: 15px; margin-bottom: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-left: 5px solid var(--forest);
+            overflow: hidden;
         }
-        .subject-header { 
-            background: #f9f9f9; padding: 12px 20px; font-family: 'Montserrat'; 
-            font-weight: 800; font-size: 14px; color: var(--forest);
-            display: flex; justify-content: space-between; border-bottom: 1px solid #eee;
-        }
-        .subject-body { padding: 15px 20px; font-size: 15px; line-height: 1.6; color: #333; white-space: pre-wrap; }
+        .subject-header { background: #fcfcfc; padding: 12px 20px; font-weight: 800; color: var(--forest); font-size: 12px; border-bottom: 1px solid #f0f0f0; text-transform: uppercase; }
+        .subject-body { padding: 15px 20px; font-size: 14px; line-height: 1.6; color: #333; white-space: pre-wrap; }
 
-        .no-data { text-align: center; padding: 40px; color: #888; font-weight: 600; }
-        .update-tag { font-size: 10px; color: #999; text-align: center; margin-bottom: 20px; display: block; }
-        
-        .btn-print {
-            width: 100%; background: #333; color: white; padding: 15px; border-radius: 50px;
-            border: none; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase;
-            margin-top: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        @media print {
-            .search-card, .btn-print, header { display: none !important; }
-            body { background: white; }
-            .subject-card { border: 1px solid #ccc; break-inside: avoid; }
-        }
+        .update-tag { font-size: 9px; color: #999; text-align: center; display: block; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-back { background: none; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 12px; border-radius: 10px; font-size: 10px; cursor: pointer; margin-left: auto; }
     </style>
 </head>
 <body>
@@ -79,116 +69,109 @@
         <img src="logo.png" class="header-logo">
         <div class="school-text">
             <span class="school-name-main">PARAMOUNT</span>
-            <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
+            <span class="school-name-sub">English Medium School</span>
         </div>
     </div>
 </header>
 
 <div class="container">
-    <div class="search-card">
-        <h2><i class="fas fa-search"></i> Check Exam Syllabus</h2>
-        <div class="flex-row">
-            <div class="input-group">
-                <label>Select Class</label>
-                <select id="viewClass" onchange="fetchSyllabus()">
-                    <option value="">-- Choose --</option>
-                    <option value="Pre-KG">Pre-KG</option><option value="KG-1">KG-1</option>
-                    <option value="KG-2">KG-2</option><option value="Grade-1">Grade-1</option>
-                    <option value="Grade-2">Grade-2</option><option value="Grade-3">Grade-3</option>
-                    <option value="Grade-4">Grade-4</option><option value="Grade-5">Grade-5</option>
-                    <option value="Grade-6">Grade-6</option><option value="Grade-7">Grade-7</option>
-                    <option value="Grade-8">Grade-8</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Select Exam</label>
-                <select id="viewExam" onchange="fetchSyllabus()">
-                    <option value="">-- Choose --</option>
-                    <option value="Unit Test-1">Unit Test-1</option>
-                    <option value="Unit Test-2">Unit Test-2</option>
-                    <option value="Quarterly">Quarterly</option>
-                    <option value="Half-Yearly">Half-Yearly</option>
-                    <option value="Annual">Annual</option>
-                </select>
-            </div>
+    <div class="login-card" id="loginBox">
+        <h3 style="margin:0; color:var(--forest); font-family: 'Montserrat';">Student Syllabus Portal</h3>
+        <div class="input-group">
+            <label>Roll Number</label>
+            <input type="number" id="rollInput" placeholder="Enter ID (e.g. 1472070)">
         </div>
+        <div class="input-group">
+            <label>Select Examination</label>
+            <select id="examInput">
+                <option value="Unit Test-1">Unit Test-1</option>
+                <option value="Unit Test-2">Unit Test-2</option>
+                <option value="Quarterly">Quarterly Examination</option>
+                <option value="Half-Yearly">Half-Yearly Examination</option>
+                <option value="Annual">Annual Examination</option>
+            </select>
+        </div>
+        <button class="btn-view" onclick="accessSyllabus()">View My Syllabus</button>
     </div>
 
-    <span id="lastUpdated" class="update-tag"></span>
-
-    <div id="syllabusDisplay">
-        <div id="cardsContainer"></div>
-        <button class="btn-print" onclick="window.print()">
-            <i class="fas fa-print"></i> Download / Print Syllabus
-        </button>
+    <div id="studentProfile">
+        <img id="pfp" src="default-avatar.png" class="student-photo">
+        <div class="student-info">
+            <h2 id="nameDisplay">---</h2>
+            <p id="classDisplay">---</p>
+        </div>
+        <button class="btn-back" onclick="location.reload()">Change</button>
     </div>
 
-    <div id="emptyState" class="no-data">
-        <i class="fas fa-book-reader fa-3x" style="margin-bottom:15px; opacity:0.3;"></i><br>
-        Select your Class and Exam to view content.
+    <div id="contentArea" style="display:none;">
+        <span id="stamp" class="update-tag"></span>
+        <div id="syllabusContainer"></div>
     </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
-    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+    firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    async function fetchSyllabus() {
-        const cls = document.getElementById('viewClass').value;
-        const exam = document.getElementById('viewExam').value;
-        const container = document.getElementById('cardsContainer');
-        const display = document.getElementById('syllabusDisplay');
-        const empty = document.getElementById('emptyState');
-        const updateTag = document.getElementById('lastUpdated');
+    const studentRegistry = {
+        "1472070": { n: "Hanish Macharla", c: "Pre-KG" }, "1478225": { n: "Arjun Vihaar Illandula", c: "Pre-KG" }, "1469391": { n: "Thanu sree Allakunta", c: "Pre-KG" }, "1459555": { n: "Aadhya Gangaraboina", c: "Pre-KG" }, "1459560": { n: "Aadhya Sri Oggula", c: "Pre-KG" }, "1474500": { n: "Aadhyasri Shivagoni", c: "Pre-KG" }, "1460680": { n: "Afraha Begum", c: "Pre-KG" }, "1472299": { n: "Aliya Sultana", c: "Pre-KG" }, "1459683": { n: "Anvika Bandi", c: "Pre-KG" }, "1459620": { n: "Aradana Devara konda", c: "Pre-KG" }, "1459605": { n: "Devansh Bandi", c: "Pre-KG" }, "1472069": { n: "Hanvitha Mulkalapelli", c: "Pre-KG" }, "1472723": { n: "Harsha Vardhan Seenapelli", c: "Pre-KG" }, "1459658": { n: "Hiranya Bandi", c: "Pre-KG" }, "1478248": { n: "Jashritha Boina", c: "Pre-KG" }, "1481135": { n: "Konreddy Shreyanvi", c: "Pre-KG" }, "1459568": { n: "Kriyansh Sammeta", c: "Pre-KG" }, "1459652": { n: "Mohammed Mohiuddin Sayyad", c: "Pre-KG" }, "1459636": { n: "Nethra Narkurthi", c: "Pre-KG" }, "1463720": { n: "Reeyansh Bandi", c: "Pre-KG" }, "1459582": { n: "Rishi Manupati", c: "Pre-KG" }, "1459607": { n: "Rudransh Bandi", c: "Pre-KG" }, "1459604": { n: "Rudransh Bandi", c: "Pre-KG" }, "1459625": { n: "Sanvika Bandi", c: "Pre-KG" }, "1472074": { n: "Shanvith Khatha", c: "Pre-KG" }, "1469395": { n: "Shishira Jalagam", c: "Pre-KG" }, "1456748": { n: "Shiva Sai Mekala", c: "Pre-KG" }, "1459687": { n: "Shree Rudhraveer Chevvu", c: "Pre-KG" }, "1459572": { n: "Shreyansh Gangaraboina", c: "Pre-KG" }, "1459643": { n: "Sreeja Thalla", c: "Pre-KG" }, "1459603": { n: "Srikrithini Myakala", c: "Pre-KG" }, "1472536": { n: "Srivatsav Vanam", c: "Pre-KG" }, "1456743": { n: "Sriyansh Mekala", c: "Pre-KG" }, "1473500": { n: "Thanvika Lakka", c: "Pre-KG" }, "1463724": { n: "Thrilokansh Vudari", c: "Pre-KG" }, "1459694": { n: "Ujjwal Chekka", c: "Pre-KG" }, "1474815": { n: "Vaishnavi Lakka", c: "Pre-KG" }, "1460690": { n: "Vedansh Myakala", c: "Pre-KG" }, "1478250": { n: "Vishnu Priya Molugu", c: "Pre-KG" }, "1413563": { n: "Vyshnav Tej Boina", c: "Pre-KG" }, "1459577": { n: "Yafiah Mohammad", c: "Pre-KG" }, "1424084": { n: "Aadhya Sri Amaravadi", c: "KG-1" }, "1426519": { n: "Aditya Manda", c: "KG-1" }, "1426518": { n: "Aadhya Jella", c: "KG-1" }, "1392920": { n: "Advaita Gauri Bandi", c: "KG-1" }, "1392683": { n: "Aizah Amna Shaik", c: "KG-1" }, "1472077": { n: "Akshara Singaram", c: "KG-1" }, "1469394": { n: "Bhahuveer Raj Somishetti", c: "KG-1" }, "1392676": { n: "Gayathri Erroju", c: "KG-1" }, "1390570": { n: "Hanvika Mulkalapelli", c: "KG-1" }, "1396188": { n: "Manvith Kondoju", c: "KG-1" }, "1392703": { n: "Sayyad Vajeed", c: "KG-1" }, "1412110": { n: "Mekala Manu sri", c: "KG-1" }, "1392687": { n: "Oliva Grace Vallapu", c: "KG-1" }, "1392696": { n: "Rithwik Oggula", c: "KG-1" }, "1413326": { n: "Rithwika Kandagatla", c: "KG-1" }, "1392679": { n: "Srimahi Chevvu", c: "KG-1" }, "1459706": { n: "Thanvesh Thalla", c: "KG-1" }, "1317800": { n: "Trishul Nanduri", c: "KG-1" }, "1424085": { n: "Yoganshika Nanduri", c: "KG-1" }, "1387264": { n: "Yusra Mohammad", c: "KG-1" }, "1402461": { n: "Zainul Abideen Syed", c: "KG-1" }, "1298438": { n: "Deekshanth Sammeta", c: "KG-2" }, "1298439": { n: "Hanshith Erroju", c: "KG-2" }, "1298447": { n: "Harika Bandi", c: "KG-2" }, "1298432": { n: "Himarsha Naini", c: "KG-2" }, "1298440": { n: "Karthik Vallepu", c: "KG-2" }, "1298433": { n: "Kruthika Bandi", c: "KG-2" }, "1298441": { n: "Rajavardhan Gampala", c: "KG-2" }, "1298443": { n: "Roshan Kaitha", c: "KG-2" }, "1298448": { n: "Sri Anshu Ayaan Lyadala", c: "KG-2" }, "1298444": { n: "Srihansh Bandi", c: "KG-2" }, "1298435": { n: "Srikshitha Guduri", c: "KG-2" }, "1298445": { n: "Varshith Gonela", c: "KG-2" }, "1392815": { n: "Adyasri Makala", c: "KG-2" }, "1394463": { n: "Anvik Boini", c: "KG-2" }, "1459764": { n: "Anvith Pokanati", c: "KG-2" }, "1459748": { n: "Awais Ur Rehman Mohammad", c: "KG-2" }, "1459742": { n: "Dakshu Pothuganti", c: "KG-2" }, "1393477": { n: "Hansith Reddy Katukuri", c: "KG-2" }, "1459762": { n: "Harshith Pokanati", c: "KG-2" }, "1402310": { n: "Jella Aditya", c: "KG-2" }, "1390563": { n: "Krishank Nallabothula", c: "KG-2" }, "1459771": { n: "Kundana Katkuri", c: "KG-2" }, "1307790": { n: "Munukuntla Revanth Rudhra", c: "KG-2" }, "1459758": { n: "Niraja Nethri Siluveru", c: "KG-2" }, "1459752": { n: "Pranav Mattepelli", c: "KG-2" }, "1390566": { n: "Sreenith Yadav Naini", c: "KG-2" }, "1459756": { n: "Uvan Reddy Dasari", c: "KG-2" }, "1459775": { n: "Zayan Mohammad", c: "KG-2" }, "1459714": { n: "Zoya Mohammed", c: "KG-2" }, "1298423": { n: "Dheeraj Gattu", c: "Grade-1" }, "1298425": { n: "Preetham Sannayala", c: "Grade-1" }, "1298428": { n: "Shiva nandu Gonela", c: "Grade-1" }, "1298429": { n: "Shrayan Nuthanakanti", c: "Grade-1" }, "1392864": { n: "Sriyanksha Mandala", c: "Grade-1" }, "1298411": { n: "Advitha Garige", c: "Grade-1" }, "1298413": { n: "Harika Bandi", c: "Grade-1" }, "1298414": { n: "Himansi Kondoju", c: "Grade-1" }, "1392895": { n: "Izhaan Rahamath Syed", c: "Grade-1" }, "1298424": { n: "Jaisurya Myakala", c: "Grade-1" }, "1298415": { n: "Khadeeja Fathima", c: "Grade-1" }, "1298416": { n: "Manaswini Dandugula", c: "Grade-1" }, "1298417": { n: "Manusri Bandi", c: "Grade-1" }, "1298426": { n: "Rithwik krishna Amaravadi", c: "Grade-1" }, "1298427": { n: "Rohan Bandi", c: "Grade-1" }, "1392876": { n: "Shiva Junnu", c: "Grade-1" }, "1392885": { n: "Shivanandh Bandi", c: "Grade-1" }, "1459709": { n: "Sridha Thalla", c: "Grade-1" }, "1298419": { n: "Srinika Chengelly", c: "Grade-1" }, "1298420": { n: "Sriyanshi Oggula", c: "Grade-1" }, "1298431": { n: "Vishwak Chekka", c: "Grade-1" }, "1298397": { n: "Aliza Manha Shaik", c: "Grade-2" }, "1298407": { n: "Dhruvan Reddy Katukuri", c: "Grade-2" }, "1298398": { n: "Druthika Enugala", c: "Grade-2" }, "1298399": { n: "Manaswini Bandi", c: "Grade-2" }, "1298408": { n: "Rakshith Macharla", c: "Grade-2" }, "1298401": { n: "Sathwika Katkuri", c: "Grade-2" }, "1298402": { n: "Shalini Uppala", c: "Grade-2" }, "1459786": { n: "Chandu Devarakonda", c: "Grade-2" }, "1459815": { n: "Gnaneshwar Pokanati", c: "Grade-2" }, "1298409": { n: "Hasnain Syed", c: "Grade-2" }, "1459832": { n: "Koushik Siluveru", c: "Grade-2" }, "1316732": { n: "Senen Desabattula", c: "Grade-2" }, "1459817": { n: "Shivarajan Pothuganti", c: "Grade-2" }, "1298393": { n: "Nagavelly Manikanta", c: "Grade-3" }, "1459834": { n: "Mirja Ismail", c: "Grade-3" }, "1298390": { n: "Bandi Aryan", c: "Grade-3" }, "1298392": { n: "Dandugula Mahesh Babu", c: "Grade-3" }, "1298387": { n: "Bandi Tejasri", c: "Grade-3" }, "1298391": { n: "Bandi Harshavardhan", c: "Grade-3" }, "1298389": { n: "Gampala Vyshnavi", c: "Grade-3" }, "1298384": { n: "Gampala Laxmi", c: "Grade-3" }, "1298410": { n: "Garige Harshith", c: "Grade-3" }, "1459844": { n: "Katkuri Hanish", c: "Grade-3" }, "1459798": { n: "Katukuri Manideep", c: "Grade-3" }, "1459805": { n: "MD Abdul Quddus", c: "Grade-3" }, "1298395": { n: "Muppa Sathwik Patel", c: "Grade-3" }, "1298386": { n: "Nuthanakanti Sansita", c: "Grade-3" }, "1298396": { n: "Pasarakonda Ritwin", c: "Grade-3" }, "1459841": { n: "Pinninti Rakshith Rao", c: "Grade-3" }, "1400203": { n: "Rayi Sriman Adithya", c: "Grade-3" }, "1298376": { n: "Abdul Saqib Mohammad", c: "Grade-4" }, "1298366": { n: "Anudeep Chintha", c: "Grade-4" }, "1298368": { n: "Bhavan Bandi", c: "Grade-4" }, "1298370": { n: "Harshavardhan Gonela", c: "Grade-4" }, "1298372": { n: "Jayadev Chiluveru", c: "Grade-4" }, "1298373": { n: "Mahaboob Syed", c: "Grade-4" }, "1298374": { n: "Nandith Reddy Enugala", c: "Grade-4" }, "1392930": { n: "Sai Charan Goud Mandala", c: "Grade-4" }, "1298380": { n: "Sai Prasanna Keerthi", c: "Grade-4" }, "1298363": { n: "Ajmeri Shaik", c: "Grade-4" }, "1392939": { n: "Akshith Chiluveru", c: "Grade-4" }, "1298364": { n: "Jayasri Myakala", c: "Grade-4" }, "1298381": { n: "Rahul Kanjarla", c: "Grade-4" }, "1459784": { n: "Saketh Devarakonda", c: "Grade-4" }, "1298353": { n: "Adya Reddy Vangala", c: "Grade-5" }, "1298361": { n: "Kowshik Patel Muppa", c: "Grade-5" }, "1298355": { n: "Siri Singaram", c: "Grade-5" }, "1298360": { n: "Srikar Mandala", c: "Grade-5" }, "1459801": { n: "Abdus Salaam MD", c: "Grade-5" }, "1392968": { n: "Akshith Ram Kalvacharla", c: "Grade-5" }, "1392965": { n: "Jaffar Anas Shaik", c: "Grade-5" }, "1298359": { n: "Khaja Azeemuddin Mohammed", c: "Grade-5" }, "1459839": { n: "Nihan Mohammed", c: "Grade-5" }, "1392963": { n: "Saif Shaik", c: "Grade-5" }, "1459794": { n: "Saketh Renukuntla", c: "Grade-5" }, "1392955": { n: "Sreeja Dasari", c: "Grade-5" }, "1459821": { n: "Vidhaatri Sahani", c: "Grade-5" }, "1298347": { n: "Abdul Razzak Mohammad", c: "Grade-6" }, "1298341": { n: "Anudeepthi Chintha", c: "Grade-6" }, "1298350": { n: "Saketh Ranaveni", c: "Grade-6" }, "1298346": { n: "Shiva Sri Katukuri", c: "Grade-6" }, "1298348": { n: "Aklees Shaik", c: "Grade-6" }, "1392992": { n: "Akshya Kalvacharla", c: "Grade-6" }, "1472577": { n: "Prince Katkuri", c: "Grade-6" }, "1298339": { n: "Manikanta Sannayala", c: "Grade-7" }, "1298340": { n: "Sreeyan Reddy Karra", c: "Grade-7" }, "1393008": { n: "Jayadhithya Chiluveru", c: "Grade-7" }, "1459846": { n: "Akshaya Gampala", c: "Grade-8" }, "1298335": { n: "Ganesh Oggula", c: "Grade-8" }, "1459792": { n: "Gayathri Renukuntla", c: "Grade-8" }, "1298337": { n: "Khaja Sadeemuddin Mohammed", c: "Grade-8" }, "1298333": { n: "Sathwika Nagavelly", c: "Grade-8" }, "1298334": { n: "Vyshnavi Uppala", c: "Grade-8" }
+    };
 
-        if(!cls || !exam) {
-            display.style.display = "none";
-            empty.style.display = "block";
+    async function accessSyllabus() {
+        const roll = document.getElementById('rollInput').value;
+        const exam = document.getElementById('examInput').value;
+        const student = studentRegistry[roll];
+
+        if(!student) {
+            Swal.fire('Error', 'Invalid Roll Number!', 'error');
             return;
         }
+
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('studentProfile').style.display = 'flex';
+        document.getElementById('nameDisplay').innerText = student.n;
+        document.getElementById('classDisplay').innerText = `Class: ${student.c} | ID: ${roll}`;
+        
+        // Image path setup
+        document.getElementById('pfp').src = `photos/${roll}.png`;
+        document.getElementById('pfp').onerror = function() { this.src = 'default-avatar.png'; };
+
+        loadData(student.c, exam);
+    }
+
+    async function loadData(cls, exam) {
+        const container = document.getElementById('syllabusContainer');
+        const area = document.getElementById('contentArea');
+        const stamp = document.getElementById('stamp');
 
         const snap = await db.ref(`class_syllabus/${cls}/${exam}`).once('value');
         const data = snap.val();
 
         container.innerHTML = "";
-        
+        area.style.display = "block";
+
         if(!data) {
-            display.style.display = "none";
-            empty.innerHTML = `<i class="fas fa-exclamation-circle fa-2x"></i><br><br>Syllabus not yet uploaded for ${cls} ${exam}.`;
-            empty.style.display = "block";
-            updateTag.innerText = "";
+            container.innerHTML = `<div class="login-card" style="border:none; color:#888;">Syllabus for ${exam} has not been published for your class.</div>`;
             return;
         }
 
-        empty.style.display = "none";
-        display.style.display = "block";
-        updateTag.innerText = `Last Verified: ${data.lastUpdatedTime || 'Recently'}`;
+        stamp.innerText = `Verified: ${data.lastUpdatedTime || 'Recently'}`;
 
-        // Loop through subjects (excluding metadata)
         Object.keys(data).forEach(key => {
-            if(key !== "lastUpdatedBy" && key !== "lastUpdatedTime" && data[key].trim() !== "") {
-                const card = `
+            if(!["lastUpdatedBy", "lastUpdatedTime"].includes(key) && data[key].trim() !== "") {
+                container.innerHTML += `
                     <div class="subject-card">
-                        <div class="subject-header">
-                            <span>${key.toUpperCase()}</span>
-                            <i class="fas fa-chevron-right" style="font-size:10px; opacity:0.5;"></i>
-                        </div>
+                        <div class="subject-header">${key}</div>
                         <div class="subject-body">${data[key]}</div>
                     </div>
                 `;
-                container.innerHTML += card;
             }
         });
-
-        if(container.innerHTML === "") {
-             display.style.display = "none";
-             empty.innerHTML = "Syllabus content is empty.";
-             empty.style.display = "block";
-        }
     }
 </script>
 </body>
