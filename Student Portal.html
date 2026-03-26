@@ -187,7 +187,7 @@ async function searchStudent() {
         // --- FIXED IMAGE LOGIC ---
         const photoBox = document.getElementById('studentPhoto');
         // Added timestamp (?t=) to bypass browser cache
-        photoBox.src = `Student images/${student.Roll}.png?t=${new Date().getTime()}`;
+        photoBox.src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
         
         document.getElementById('pdfBtnSection').style.display = 'flex';
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
