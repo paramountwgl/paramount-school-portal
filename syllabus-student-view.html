@@ -84,17 +84,20 @@
         <div class="input-group">
             <label>Select Examination</label>
             <select id="examInput">
-                <option value="Formative Assessment-1">Formative Assessment-1</option> <option value="Formative Assessment-2">Formative Assessment-2</option>
-                     <option value="Formative Assessment-3">Formative Assessment-3</option> <option value="Formative Assessment-4">Formative Assessment-4</option>
-                    <option value="SA-1(Quarterly)">SA-1(Quarterly)</option><option value="SA-2(Half-Yearly)">SA-2(Half-Yearly)</option>
-                    <option value="END-TERM(Annual)">END-TERM(Annual)</option>
+                <option value="Formative Assessment-1">Formative Assessment-1</option> 
+                <option value="Formative Assessment-2">Formative Assessment-2</option>
+                <option value="Formative Assessment-3">Formative Assessment-3</option> 
+                <option value="Formative Assessment-4">Formative Assessment-4</option>
+                <option value="SA-1(Quarterly)">SA-1(Quarterly)</option>
+                <option value="SA-2(Half-Yearly)">SA-2(Half-Yearly)</option>
+                <option value="END-TERM(Annual)">END-TERM(Annual)</option>
             </select>
         </div>
         <button class="btn-view" onclick="accessSyllabus()">View My Syllabus</button>
     </div>
 
     <div id="studentProfile">
-        <img id="pfp" src="default-avatar.png" class="student-photo">
+        <img id="pfp" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="student-photo">
         <div class="student-info">
             <h2 id="nameDisplay">---</h2>
             <p id="classDisplay">---</p>
@@ -136,9 +139,13 @@
         document.getElementById('nameDisplay').innerText = student.n;
         document.getElementById('classDisplay').innerText = `Class: ${student.c} | ID: ${roll}`;
         
-        // Image path setup
-        document.getElementById('pfp').src = `photos/${roll}.png`;
-        document.getElementById('pfp').onerror = function() { this.src = 'default-avatar.png'; };
+        // Fix image logic for .png and bypass cache
+        const pfp = document.getElementById('pfp');
+        pfp.src = `photos/${roll}.png?t=${new Date().getTime()}`;
+        pfp.onerror = function() { 
+            this.src = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; 
+            this.style.backgroundColor = "white";
+        };
 
         loadData(student.c, exam);
     }
@@ -155,14 +162,16 @@
         area.style.display = "block";
 
         if(!data) {
-            container.innerHTML = `<div class="login-card" style="border:none; color:#888;">Syllabus for ${exam} has not been published for your class.</div>`;
+            container.innerHTML = `<div class="login-card" style="border:none; color:#888; font-size: 14px; padding: 20px;">Syllabus for <b>${exam}</b> has not been published yet for your class.</div>`;
+            stamp.innerText = "";
             return;
         }
 
         stamp.innerText = `Verified: ${data.lastUpdatedTime || 'Recently'}`;
 
         Object.keys(data).forEach(key => {
-            if(!["lastUpdatedBy", "lastUpdatedTime"].includes(key) && data[key].trim() !== "") {
+            // Only show actual subjects, ignore metadata keys
+            if(!["lastUpdatedBy", "lastUpdatedTime"].includes(key) && data[key] && data[key].trim() !== "") {
                 container.innerHTML += `
                     <div class="subject-card">
                         <div class="subject-header">${key}</div>
@@ -171,6 +180,10 @@
                 `;
             }
         });
+        
+        if(container.innerHTML === "") {
+             container.innerHTML = `<div class="login-card" style="border:none; color:#888; font-size: 14px; padding: 20px;">No subject data found.</div>`;
+        }
     }
 </script>
 </body>
