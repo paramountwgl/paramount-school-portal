@@ -41,13 +41,14 @@
             padding: 20px;
             margin: 15px auto;
             max-width: 500px;
-            display: none; /* Hidden by default, script will show it if events exist */
+            display: flex; 
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             border-bottom: 4px solid var(--gold);
             width: 92%;
         }
+        .event-info { text-align: left; flex: 1; }
         .event-info h3 { margin: 0; font-family: 'Montserrat'; font-size: 14px; color: var(--forest); text-transform: uppercase; }
         .event-info p { margin: 2px 0 0; font-size: 10px; color: #666; font-weight: bold; }
         .timer-display { display: flex; gap: 8px; }
@@ -142,7 +143,7 @@
     <div class="countdown-container" id="countdownSection">
         <div class="event-info">
             <h3 id="eventTitle">Loading...</h3>
-            <p id="eventSubtitle">Stay focused and prepared!</p>
+            <p id="eventSubtitle">Paramount English Medium School</p>
         </div>
         <div class="timer-display">
             <div class="time-block">
@@ -230,7 +231,6 @@ async function searchStudent() {
         document.getElementById('fatherName').innerText = student.Father;
         document.getElementById('phoneNumber').innerText = student.Phone;
 
-        // FIXED IMAGE LOGIC
         const photoBox = document.getElementById('studentPhoto');
         photoBox.src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
         
@@ -239,7 +239,6 @@ async function searchStudent() {
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
-        // Attendance Logic
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -255,7 +254,6 @@ async function searchStudent() {
         const attRate = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
         document.getElementById('attendanceRate').innerText = attRate + "%";
 
-        // ALERT LOGIC
         const alertBox = document.getElementById('lowAttAlert');
         const attBoxDisplay = document.getElementById('attBox');
         if (attRate < 40 && totalT > 0) {
@@ -268,7 +266,6 @@ async function searchStudent() {
             attBoxDisplay.style.borderColor = "#f0f0f0";
         }
 
-        // FEE SYNC LOGIC
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if(feeSnap.exists()){
@@ -292,10 +289,9 @@ async function searchStudent() {
     }
 }
 
-// --- DYNAMIC FIREBASE EVENT LOGIC ---
+// --- UPDATED FIREBASE EVENT LOGIC (WITH DESCRIPTION) ---
 let dynamicEvents = [];
 
-// Real-time listener for the events published in event-manager.html
 db.ref('school_events').on('value', snap => {
     dynamicEvents = [];
     if (snap.exists()) {
@@ -303,14 +299,13 @@ db.ref('school_events').on('value', snap => {
             dynamicEvents.push(child.val());
         });
     }
-    updateCountdown(); // Refresh UI as soon as data changes
+    updateCountdown(); 
 });
 
 function updateCountdown() {
     const now = new Date().getTime();
     const countdownBox = document.getElementById('countdownSection');
 
-    // Filter for future events and find the closest one
     const nextEvent = dynamicEvents
         .filter(ev => new Date(ev.date).getTime() > now)
         .sort((a, b) => new Date(a.date) - new Date(b.date))[0];
@@ -326,12 +321,15 @@ function updateCountdown() {
         const s = Math.floor((diff % (1000 * 60)) / 1000);
 
         document.getElementById('eventTitle').innerText = nextEvent.name;
+        
+        // --- DYNAMIC DESCRIPTION UPDATE ---
+        document.getElementById('eventSubtitle').innerText = nextEvent.desc || "Stay focused and prepared!";
+
         document.getElementById('days').innerText = d.toString().padStart(2, '0');
         document.getElementById('hours').innerText = h.toString().padStart(2, '0');
         document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
         document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
     } else {
-        // Automatically hide the timer if no future events exist
         countdownBox.style.display = 'none';
     }
 }
