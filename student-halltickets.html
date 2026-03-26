@@ -29,7 +29,6 @@
             text-align: center;
         }
 
-        /* Side-by-Side Logo & Name */
         .auth-brand-flex {
             display: flex;
             align-items: center;
@@ -68,8 +67,11 @@
         .school-logo-small { height: 50px; width: auto; }
         .school-name-block h1 { margin: 0; font-size: 18px; font-family: 'Montserrat', sans-serif; font-weight: 800; }
         .exam-badge { background: #000; color: #fff; padding: 4px 15px; font-weight: 800; text-transform: uppercase; font-size: 10px; display: inline-block; margin-top: 5px; border-radius: 3px; }
-        .student-photo-box { width: 85px; height: 105px; border: 2px solid #000; overflow: hidden; }
+        
+        /* Fixed Student Photo Box to ensure consistency */
+        .student-photo-box { width: 85px; height: 105px; border: 2px solid #000; overflow: hidden; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
         .student-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
         .details-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 12px; font-weight: 700; }
         .due-alert { color: #e53935; font-weight: 900; }
         .timetable { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -124,7 +126,7 @@
                 </div>
             </div>
             <div class="student-photo-box">
-                <img id="vPhoto" src="" onerror="this.src='logo.png'">
+                <img id="vPhoto" src="logo.png" alt="Student Photo">
             </div>
         </div>
 
@@ -209,12 +211,27 @@ async function accessHallTicket() {
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
+        // --- FIXED IMAGE LOGIC ---
+        const folder = "Student images";
+        const imgPath = `${folder}/${roll}.png`;
+        const photoEl = document.getElementById('vPhoto');
+        
+        photoEl.src = imgPath;
+        photoEl.onerror = function() {
+            // Try .jpg if .png fails
+            if (this.src.includes('.png')) {
+                this.src = `${folder}/${roll}.jpg`;
+            } else {
+                this.src = 'logo.png'; // Final fallback
+                this.onerror = null;
+            }
+        };
+
         document.getElementById('vName').innerText = student.Name.toUpperCase();
         document.getElementById('vClass').innerText = student.Class;
         document.getElementById('vReg').innerText = "100" + roll.slice(-2);
         document.getElementById('vDue').innerText = due;
         document.getElementById('vExamType').innerText = liveData.exam;
-        document.getElementById('vPhoto').src = `Student images/${roll}.png`;
 
         const subs = Object.keys(schedule).filter(k => !['lastUpdatedBy', 'lastUpdatedAt'].includes(k));
         let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td style="text-align:left; background:#f4f4f4;">Date/Time</td>`;
