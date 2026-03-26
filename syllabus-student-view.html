@@ -60,6 +60,20 @@
 
         .update-tag { font-size: 9px; color: #999; text-align: center; display: block; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
         .btn-back { background: none; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 12px; border-radius: 10px; font-size: 10px; cursor: pointer; margin-left: auto; }
+
+        /* --- PREMIUM DASHBOARD BUTTON --- */
+        .btn-dashboard {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; background: white; color: var(--forest); 
+            border: 2px solid var(--forest); padding: 15px; border-radius: 50px;
+            font-family: 'Montserrat'; font-weight: 800; font-size: 13px;
+            text-transform: uppercase; text-decoration: none; margin-top: 30px;
+            transition: 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .btn-dashboard:hover {
+            background: var(--forest); color: white;
+            transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -94,6 +108,10 @@
             </select>
         </div>
         <button class="btn-view" onclick="accessSyllabus()">View My Syllabus</button>
+        
+        <a href="index.html" class="btn-dashboard" style="margin-top: 20px; font-size: 11px; padding: 12px;">
+            <i class="fas fa-th-large"></i> Return to Dashboard
+        </a>
     </div>
 
     <div id="studentProfile">
@@ -108,6 +126,10 @@
     <div id="contentArea" style="display:none;">
         <span id="stamp" class="update-tag"></span>
         <div id="syllabusContainer"></div>
+        
+        <a href="index.html" class="btn-dashboard">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
     </div>
 </div>
 
@@ -121,6 +143,7 @@
     const db = firebase.database();
 
     const studentRegistry = {
+        // ... (The long registry you provided is placed here) ...
         "1472070": { n: "Hanish Macharla", c: "Pre-KG" }, "1478225": { n: "Arjun Vihaar Illandula", c: "Pre-KG" }, "1469391": { n: "Thanu sree Allakunta", c: "Pre-KG" }, "1459555": { n: "Aadhya Gangaraboina", c: "Pre-KG" }, "1459560": { n: "Aadhya Sri Oggula", c: "Pre-KG" }, "1474500": { n: "Aadhyasri Shivagoni", c: "Pre-KG" }, "1460680": { n: "Afraha Begum", c: "Pre-KG" }, "1472299": { n: "Aliya Sultana", c: "Pre-KG" }, "1459683": { n: "Anvika Bandi", c: "Pre-KG" }, "1459620": { n: "Aradana Devara konda", c: "Pre-KG" }, "1459605": { n: "Devansh Bandi", c: "Pre-KG" }, "1472069": { n: "Hanvitha Mulkalapelli", c: "Pre-KG" }, "1472723": { n: "Harsha Vardhan Seenapelli", c: "Pre-KG" }, "1459658": { n: "Hiranya Bandi", c: "Pre-KG" }, "1478248": { n: "Jashritha Boina", c: "Pre-KG" }, "1481135": { n: "Konreddy Shreyanvi", c: "Pre-KG" }, "1459568": { n: "Kriyansh Sammeta", c: "Pre-KG" }, "1459652": { n: "Mohammed Mohiuddin Sayyad", c: "Pre-KG" }, "1459636": { n: "Nethra Narkurthi", c: "Pre-KG" }, "1463720": { n: "Reeyansh Bandi", c: "Pre-KG" }, "1459582": { n: "Rishi Manupati", c: "Pre-KG" }, "1459607": { n: "Rudransh Bandi", c: "Pre-KG" }, "1459604": { n: "Rudransh Bandi", c: "Pre-KG" }, "1459625": { n: "Sanvika Bandi", c: "Pre-KG" }, "1472074": { n: "Shanvith Khatha", c: "Pre-KG" }, "1469395": { n: "Shishira Jalagam", c: "Pre-KG" }, "1456748": { n: "Shiva Sai Mekala", c: "Pre-KG" }, "1459687": { n: "Shree Rudhraveer Chevvu", c: "Pre-KG" }, "1459572": { n: "Shreyansh Gangaraboina", c: "Pre-KG" }, "1459643": { n: "Sreeja Thalla", c: "Pre-KG" }, "1459603": { n: "Srikrithini Myakala", c: "Pre-KG" }, "1472536": { n: "Srivatsav Vanam", c: "Pre-KG" }, "1456743": { n: "Sriyansh Mekala", c: "Pre-KG" }, "1473500": { n: "Thanvika Lakka", c: "Pre-KG" }, "1463724": { n: "Thrilokansh Vudari", c: "Pre-KG" }, "1459694": { n: "Ujjwal Chekka", c: "Pre-KG" }, "1474815": { n: "Vaishnavi Lakka", c: "Pre-KG" }, "1460690": { n: "Vedansh Myakala", c: "Pre-KG" }, "1478250": { n: "Vishnu Priya Molugu", c: "Pre-KG" }, "1413563": { n: "Vyshnav Tej Boina", c: "Pre-KG" }, "1459577": { n: "Yafiah Mohammad", c: "Pre-KG" }, "1424084": { n: "Aadhya Sri Amaravadi", c: "KG-1" }, "1426519": { n: "Aditya Manda", c: "KG-1" }, "1426518": { n: "Aadhya Jella", c: "KG-1" }, "1392920": { n: "Advaita Gauri Bandi", c: "KG-1" }, "1392683": { n: "Aizah Amna Shaik", c: "KG-1" }, "1472077": { n: "Akshara Singaram", c: "KG-1" }, "1469394": { n: "Bhahuveer Raj Somishetti", c: "KG-1" }, "1392676": { n: "Gayathri Erroju", c: "KG-1" }, "1390570": { n: "Hanvika Mulkalapelli", c: "KG-1" }, "1396188": { n: "Manvith Kondoju", c: "KG-1" }, "1392703": { n: "Sayyad Vajeed", c: "KG-1" }, "1412110": { n: "Mekala Manu sri", c: "KG-1" }, "1392687": { n: "Oliva Grace Vallapu", c: "KG-1" }, "1392696": { n: "Rithwik Oggula", c: "KG-1" }, "1413326": { n: "Rithwika Kandagatla", c: "KG-1" }, "1392679": { n: "Srimahi Chevvu", c: "KG-1" }, "1459706": { n: "Thanvesh Thalla", c: "KG-1" }, "1317800": { n: "Trishul Nanduri", c: "KG-1" }, "1424085": { n: "Yoganshika Nanduri", c: "KG-1" }, "1387264": { n: "Yusra Mohammad", c: "KG-1" }, "1402461": { n: "Zainul Abideen Syed", c: "KG-1" }, "1298438": { n: "Deekshanth Sammeta", c: "KG-2" }, "1298439": { n: "Hanshith Erroju", c: "KG-2" }, "1298447": { n: "Harika Bandi", c: "KG-2" }, "1298432": { n: "Himarsha Naini", c: "KG-2" }, "1298440": { n: "Karthik Vallepu", c: "KG-2" }, "1298433": { n: "Kruthika Bandi", c: "KG-2" }, "1298441": { n: "Rajavardhan Gampala", c: "KG-2" }, "1298443": { n: "Roshan Kaitha", c: "KG-2" }, "1298448": { n: "Sri Anshu Ayaan Lyadala", c: "KG-2" }, "1298444": { n: "Srihansh Bandi", c: "KG-2" }, "1298435": { n: "Srikshitha Guduri", c: "KG-2" }, "1298445": { n: "Varshith Gonela", c: "KG-2" }, "1392815": { n: "Adyasri Makala", c: "KG-2" }, "1394463": { n: "Anvik Boini", c: "KG-2" }, "1459764": { n: "Anvith Pokanati", c: "KG-2" }, "1459748": { n: "Awais Ur Rehman Mohammad", c: "KG-2" }, "1459742": { n: "Dakshu Pothuganti", c: "KG-2" }, "1393477": { n: "Hansith Reddy Katukuri", c: "KG-2" }, "1459762": { n: "Harshith Pokanati", c: "KG-2" }, "1402310": { n: "Jella Aditya", c: "KG-2" }, "1390563": { n: "Krishank Nallabothula", c: "KG-2" }, "1459771": { n: "Kundana Katkuri", c: "KG-2" }, "1307790": { n: "Munukuntla Revanth Rudhra", c: "KG-2" }, "1459758": { n: "Niraja Nethri Siluveru", c: "KG-2" }, "1459752": { n: "Pranav Mattepelli", c: "KG-2" }, "1390566": { n: "Sreenith Yadav Naini", c: "KG-2" }, "1459756": { n: "Uvan Reddy Dasari", c: "KG-2" }, "1459775": { n: "Zayan Mohammad", c: "KG-2" }, "1459714": { n: "Zoya Mohammed", c: "KG-2" }, "1298423": { n: "Dheeraj Gattu", c: "Grade-1" }, "1298425": { n: "Preetham Sannayala", c: "Grade-1" }, "1298428": { n: "Shiva nandu Gonela", c: "Grade-1" }, "1298429": { n: "Shrayan Nuthanakanti", c: "Grade-1" }, "1392864": { n: "Sriyanksha Mandala", c: "Grade-1" }, "1298411": { n: "Advitha Garige", c: "Grade-1" }, "1298413": { n: "Harika Bandi", c: "Grade-1" }, "1298414": { n: "Himansi Kondoju", c: "Grade-1" }, "1392895": { n: "Izhaan Rahamath Syed", c: "Grade-1" }, "1298424": { n: "Jaisurya Myakala", c: "Grade-1" }, "1298415": { n: "Khadeeja Fathima", c: "Grade-1" }, "1298416": { n: "Manaswini Dandugula", c: "Grade-1" }, "1298417": { n: "Manusri Bandi", c: "Grade-1" }, "1298426": { n: "Rithwik krishna Amaravadi", c: "Grade-1" }, "1298427": { n: "Rohan Bandi", c: "Grade-1" }, "1392876": { n: "Shiva Junnu", c: "Grade-1" }, "1392885": { n: "Shivanandh Bandi", c: "Grade-1" }, "1459709": { n: "Sridha Thalla", c: "Grade-1" }, "1298419": { n: "Srinika Chengelly", c: "Grade-1" }, "1298420": { n: "Sriyanshi Oggula", c: "Grade-1" }, "1298431": { n: "Vishwak Chekka", c: "Grade-1" }, "1298397": { n: "Aliza Manha Shaik", c: "Grade-2" }, "1298407": { n: "Dhruvan Reddy Katukuri", c: "Grade-2" }, "1298398": { n: "Druthika Enugala", c: "Grade-2" }, "1298399": { n: "Manaswini Bandi", c: "Grade-2" }, "1298408": { n: "Rakshith Macharla", c: "Grade-2" }, "1298401": { n: "Sathwika Katkuri", c: "Grade-2" }, "1298402": { n: "Shalini Uppala", c: "Grade-2" }, "1459786": { n: "Chandu Devarakonda", c: "Grade-2" }, "1459815": { n: "Gnaneshwar Pokanati", c: "Grade-2" }, "1298409": { n: "Hasnain Syed", c: "Grade-2" }, "1459832": { n: "Koushik Siluveru", c: "Grade-2" }, "1316732": { n: "Senen Desabattula", c: "Grade-2" }, "1459817": { n: "Shivarajan Pothuganti", c: "Grade-2" }, "1298393": { n: "Nagavelly Manikanta", c: "Grade-3" }, "1459834": { n: "Mirja Ismail", c: "Grade-3" }, "1298390": { n: "Bandi Aryan", c: "Grade-3" }, "1298392": { n: "Dandugula Mahesh Babu", c: "Grade-3" }, "1298387": { n: "Bandi Tejasri", c: "Grade-3" }, "1298391": { n: "Bandi Harshavardhan", c: "Grade-3" }, "1298389": { n: "Gampala Vyshnavi", c: "Grade-3" }, "1298384": { n: "Gampala Laxmi", c: "Grade-3" }, "1298410": { n: "Garige Harshith", c: "Grade-3" }, "1459844": { n: "Katkuri Hanish", c: "Grade-3" }, "1459798": { n: "Katukuri Manideep", c: "Grade-3" }, "1459805": { n: "MD Abdul Quddus", c: "Grade-3" }, "1298395": { n: "Muppa Sathwik Patel", c: "Grade-3" }, "1298386": { n: "Nuthanakanti Sansita", c: "Grade-3" }, "1298396": { n: "Pasarakonda Ritwin", c: "Grade-3" }, "1459841": { n: "Pinninti Rakshith Rao", c: "Grade-3" }, "1400203": { n: "Rayi Sriman Adithya", c: "Grade-3" }, "1298376": { n: "Abdul Saqib Mohammad", c: "Grade-4" }, "1298366": { n: "Anudeep Chintha", c: "Grade-4" }, "1298368": { n: "Bhavan Bandi", c: "Grade-4" }, "1298370": { n: "Harshavardhan Gonela", c: "Grade-4" }, "1298372": { n: "Jayadev Chiluveru", c: "Grade-4" }, "1298373": { n: "Mahaboob Syed", c: "Grade-4" }, "1298374": { n: "Nandith Reddy Enugala", c: "Grade-4" }, "1392930": { n: "Sai Charan Goud Mandala", c: "Grade-4" }, "1298380": { n: "Sai Prasanna Keerthi", c: "Grade-4" }, "1298363": { n: "Ajmeri Shaik", c: "Grade-4" }, "1392939": { n: "Akshith Chiluveru", c: "Grade-4" }, "1298364": { n: "Jayasri Myakala", c: "Grade-4" }, "1298381": { n: "Rahul Kanjarla", c: "Grade-4" }, "1459784": { n: "Saketh Devarakonda", c: "Grade-4" }, "1298353": { n: "Adya Reddy Vangala", c: "Grade-5" }, "1298361": { n: "Kowshik Patel Muppa", c: "Grade-5" }, "1298355": { n: "Siri Singaram", c: "Grade-5" }, "1298360": { n: "Srikar Mandala", c: "Grade-5" }, "1459801": { n: "Abdus Salaam MD", c: "Grade-5" }, "1392968": { n: "Akshith Ram Kalvacharla", c: "Grade-5" }, "1392965": { n: "Jaffar Anas Shaik", c: "Grade-5" }, "1298359": { n: "Khaja Azeemuddin Mohammed", c: "Grade-5" }, "1459839": { n: "Nihan Mohammed", c: "Grade-5" }, "1392963": { n: "Saif Shaik", c: "Grade-5" }, "1459794": { n: "Saketh Renukuntla", c: "Grade-5" }, "1392955": { n: "Sreeja Dasari", c: "Grade-5" }, "1459821": { n: "Vidhaatri Sahani", c: "Grade-5" }, "1298347": { n: "Abdul Razzak Mohammad", c: "Grade-6" }, "1298341": { n: "Anudeepthi Chintha", c: "Grade-6" }, "1298350": { n: "Saketh Ranaveni", c: "Grade-6" }, "1298346": { n: "Shiva Sri Katukuri", c: "Grade-6" }, "1298348": { n: "Aklees Shaik", c: "Grade-6" }, "1392992": { n: "Akshya Kalvacharla", c: "Grade-6" }, "1472577": { n: "Prince Katkuri", c: "Grade-6" }, "1298339": { n: "Manikanta Sannayala", c: "Grade-7" }, "1298340": { n: "Sreeyan Reddy Karra", c: "Grade-7" }, "1393008": { n: "Jayadhithya Chiluveru", c: "Grade-7" }, "1459846": { n: "Akshaya Gampala", c: "Grade-8" }, "1298335": { n: "Ganesh Oggula", c: "Grade-8" }, "1459792": { n: "Gayathri Renukuntla", c: "Grade-8" }, "1298337": { n: "Khaja Sadeemuddin Mohammed", c: "Grade-8" }, "1298333": { n: "Sathwika Nagavelly", c: "Grade-8" }, "1298334": { n: "Vyshnavi Uppala", c: "Grade-8" }
     };
 
@@ -137,9 +160,8 @@
         document.getElementById('loginBox').style.display = 'none';
         document.getElementById('studentProfile').style.display = 'flex';
         document.getElementById('nameDisplay').innerText = student.n;
-        document.getElementById('classDisplay').innerText = `Class: ${student.c} | ID: ${roll}`;
+        document.getElementById('classDisplay').innerText = `CLASS: ${student.c} | ID: ${roll}`;
         
-        // Fix image logic for .png and bypass cache
         const pfp = document.getElementById('pfp');
         pfp.src = `photos/${roll}.png?t=${new Date().getTime()}`;
         pfp.onerror = function() { 
@@ -162,15 +184,13 @@
         area.style.display = "block";
 
         if(!data) {
-            container.innerHTML = `<div class="login-card" style="border:none; color:#888; font-size: 14px; padding: 20px;">Syllabus for <b>${exam}</b> has not been published yet for your class.</div>`;
-            stamp.innerText = "";
+            container.innerHTML = `<div class="login-card" style="border:none; color:#888; font-size: 14px; padding: 25px; border-radius: 20px;">Syllabus for <b>${exam}</b> has not been published for your class.</div>`;
             return;
         }
 
         stamp.innerText = `Verified: ${data.lastUpdatedTime || 'Recently'}`;
 
         Object.keys(data).forEach(key => {
-            // Only show actual subjects, ignore metadata keys
             if(!["lastUpdatedBy", "lastUpdatedTime"].includes(key) && data[key] && data[key].trim() !== "") {
                 container.innerHTML += `
                     <div class="subject-card">
@@ -182,7 +202,7 @@
         });
         
         if(container.innerHTML === "") {
-             container.innerHTML = `<div class="login-card" style="border:none; color:#888; font-size: 14px; padding: 20px;">No subject data found.</div>`;
+             container.innerHTML = `<div class="login-card" style="border:none; color:#888; font-size: 14px; padding: 20px;">No content found for this exam.</div>`;
         }
     }
 </script>
