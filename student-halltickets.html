@@ -11,57 +11,102 @@
         :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; --dark-green: #004d26; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 100px; min-height: 100vh; }
+
+        /* --- NAVIGATION --- */
         .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
+
+        /* --- SEARCH SECTION --- */
         .search-section { max-width: 480px; margin: 80px auto; background: white; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border-top: 8px solid var(--forest); padding: 40px 30px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .shake { animation: shake 0.5s both; }
-        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } }
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+
+        .auth-brand-flex { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .ui-logo { height: 65px; width: auto; }
+        .school-text-box { text-align: left; line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--forest); letter-spacing: 0.5px; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+
+        .search-section h2 { font-family: 'Montserrat'; font-weight: 800; color: #333; margin: 0; font-size: 1.2rem; text-transform: uppercase; }
+        .search-section p { font-size: 13px; color: #777; margin-bottom: 10px; }
         .search-section input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; text-align: center; font-size: 18px; font-weight: 800; outline: none; background: #fafafa; margin-bottom: 20px; transition: 0.3s; }
+        .search-section input:focus { border-color: var(--forest); background: #fff; }
+
+        /* --- TICKET STYLES --- */
         .ticket-wrapper { width: 210mm; margin: 20px auto; background: #fff; padding: 10mm; display: none; }
-        .ticket { width: 100%; border: 3px solid #000; padding: 15px; position: relative; border-radius: 15px; }
+        .ticket { width: 100%; border: 3px solid #000; padding: 15px; box-sizing: border-box; position: relative; background: #fff; border-radius: 15px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
+        .student-photo-box { width: 85px; height: 105px; border: 2px solid #000; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #f9f9f9; }
+        .student-photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .details-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 12px; font-weight: 700; }
         .timetable { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .timetable th, .timetable td { border: 1px solid #000; padding: 8px; text-align: center; font-size: 11px; }
-        .btn-premium-unlock { background: var(--forest); color: white; padding: 16px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; width: 100%; text-transform: uppercase; }
-        .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 800; z-index: 1000; }
-        @media print { .portal-nav, .search-section, .btn-return-fixed, #downloadArea { display: none !important; } .ticket-wrapper { display: block !important; width: 100%; } }
+
+        .btn-premium-unlock { background: var(--forest); color: white; padding: 16px; border-radius: 50px; font-weight: 800; border: none; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
+        .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 12px; }
+
+        @media print { body { background: none; padding: 0; } .portal-nav, .search-section, .btn-return-fixed, #downloadArea { display: none !important; } .ticket-wrapper { display: block !important; width: 100%; margin: 0; padding: 0; } }
     </style>
 </head>
-<body>
+<body autocomplete="off">
 
-<div class="portal-nav">
-    <a href="#"><i class="fas fa-id-card"></i> Hall Tickets</a>
+<div class="portal-nav" id="mainNav">
+    <a href="student-portal.html"><i class="fas fa-home"></i> Profile</a>
+    <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
+    <a href="progres.html"><i class="fas fa-chart-line"></i> Progress</a>
+    <a href="#" class="active"><i class="fas fa-id-card"></i> Hall Tickets</a>
 </div>
 
 <div class="search-section" id="uiSearch">
-    <img src="logo.png" style="height:65px;">
+    <div class="auth-brand-flex">
+        <img src="logo.png" class="ui-logo" alt="Logo">
+        <div class="school-text-box">
+            <span class="school-name-main">PARAMOUNT</span><br>
+            <span class="school-name-sub">English Medium School</span>
+        </div>
+    </div>
     <h2>Hall Ticket Access</h2>
-    <p>Enter Roll Number for Any Class</p>
+    <p>Please enter your roll number to continue</p>
     <input type="text" id="rollInput" placeholder="Enter Roll Number">
-    <button onclick="accessHallTicket()" class="btn-premium-unlock">Generate Hall Ticket</button>
+    <button onclick="accessHallTicket()" class="btn-premium-unlock">Generate Hall Ticket <i class="fas fa-arrow-right"></i></button>
 </div>
 
 <div id="ticketContainer" class="ticket-wrapper">
     <div id="studentTicket" class="ticket">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #000; padding-bottom:10px;">
-            <div style="display:flex; align-items:center; gap:10px;">
+        <div class="header">
+            <div class="school-info" style="display:flex; align-items:center; gap:15px;">
                 <img src="logo.png" style="height:50px;">
                 <div>
-                    <h1 style="margin:0; font-size:16px;">PARAMOUNT ENGLISH MEDIUM SCHOOL</h1>
-                    <div id="vExamType" style="background:#000; color:#fff; padding:2px 8px; font-size:10px; display:inline-block;">EXAM</div>
+                    <h1 style="margin:0; font-size:18px; font-family:'Montserrat'; font-weight:800;">PARAMOUNT ENGLISH MEDIUM SCHOOL</h1>
+                    <div id="vExamType" class="exam-badge" style="background:#000; color:#fff; padding:4px 15px; font-weight:800; text-transform:uppercase; font-size:10px; display:inline-block; margin-top:5px; border-radius:3px;">EXAM TYPE</div>
                 </div>
             </div>
-            <div style="width:80px; height:100px; border:1px solid #000;"><img id="vPhoto" style="width:100%; height:100%; object-fit:cover;"></div>
+            <div class="student-photo-box">
+                <img id="vPhoto" src="logo.png" alt="Student Photo" crossorigin="anonymous">
+            </div>
         </div>
-        <div style="display:flex; justify-content:space-between; margin:10px 0; font-size:12px;">
-            <div><b>NAME:</b> <span id="vName"></span><br><b>CLASS:</b> <span id="vClass"></span></div>
-            <div style="text-align:right;"><b>REG NO:</b> <span id="vReg"></span><br><b style="color:red;">FEE DUE: ₹ <span id="vDue"></span></b></div>
+
+        <div class="details-row">
+            <div><b>NAME:</b> <span id="vName">---</span><br><b>CLASS:</b> <span id="vClass">---</span></div>
+            <div style="text-align:right;"><b>REG NO:</b> <span id="vReg">---</span><br><b style="color:#c62828;">FEE DUE: ₹ <span id="vDue">---</span></b></div>
         </div>
+
         <table class="timetable" id="vTable"></table>
+
+        <div style="display:flex; justify-content:space-between; margin-top:50px; font-size:10px; font-weight:800; text-transform:uppercase;">
+            <div style="border-top:2px solid #000; width:200px; text-align:center; padding-top:5px;">Class Teacher Signature</div>
+            <div style="border-top:2px solid #000; width:200px; text-align:center; padding-top:5px;">Correspondent Signature</div>
+        </div>
+    </div>
+    
+    <div id="downloadArea" style="text-align:center; margin-top:25px;">
+        <button onclick="window.print()" class="btn-premium-unlock" style="background:var(--dark-green); max-width:400px;">Download / Print PDF <i class="fas fa-file-pdf"></i></button>
     </div>
 </div>
 
-<a href="index.html" class="btn-return-fixed">Dashboard</a>
+<a href="index.html" class="btn-return-fixed">Return to Dashboard</a>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -72,88 +117,93 @@ const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", data
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Pre-KG Static List
 const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Roll: "1472070" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Roll: "1478225" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Roll: "1469391" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG", Roll: "1459555" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG", Roll: "1459560" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG", Roll: "1474500" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG", Roll: "1460680" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG", Roll: "1472299" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG", Roll: "1459683" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG", Roll: "1459620" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG", Roll: "1459605" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG", Roll: "1472069" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG", Roll: "1472723" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG", Roll: "1459658" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG", Roll: "1478248" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG", Roll: "1481135" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG", Roll: "1459568" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG", Roll: "1459652" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG", Roll: "1459636" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG", Roll: "1463720" }, "1459582": { Name: "Rishi Myakala", Class: "Pre-KG", Roll: "1459582" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459607" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459604" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG", Roll: "1459625" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG", Roll: "1472074" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG", Roll: "1469395" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG", Roll: "1456748" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG", Roll: "1459687" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG", Roll: "1459572" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG", Roll: "1459643" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG", Roll: "1459603" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG", Roll: "1472536" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG", Roll: "1456743" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG", Roll: "1473500" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG", Roll: "1463724" }, "1459694": { Name: "Ujjwal Checkka", Class: "Pre-KG", Roll: "1459694" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG", Roll: "1474815" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG", Roll: "1460690" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Roll: "1478250" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Roll: "1413563" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Roll: "1459577" } };
 
 async function accessHallTicket() {
     const box = document.getElementById('uiSearch');
-    const roll = document.getElementById('rollInput').value.trim();
-    if (!roll) return;
+    const inputVal = document.getElementById('rollInput').value.trim();
+    const roll = String(inputVal).replace(/\D/g, ''); 
+    const student = studentData[roll];
 
-    Swal.fire({ title: 'Searching...', didOpen: () => Swal.showLoading() });
+    // 1. Validate Roll Number locally first to prevent "Invalid" message for valid students
+    if (!student) {
+        box.classList.add('shake');
+        setTimeout(() => box.classList.remove('shake'), 500);
+        return Swal.fire('Error', 'Invalid Roll Number', 'error');
+    }
+
+    // 2. Roll found! Now check Firebase Status
+    Swal.fire({ title: 'Connecting...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
 
     try {
-        let student = studentData[roll];
-        let className = student ? student.Class : null;
+        const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
+        const liveData = liveSnap.val();
 
-        // If not in Pre-KG list, search Firebase for other classes
-        if (!student) {
-            const feeRecords = await db.ref('fee_records').once('value');
-            feeRecords.forEach(classSnap => {
-                classSnap.forEach(stuSnap => {
-                    const data = stuSnap.val();
-                    // Match by Roll Number or Name
-                    if (data.Roll === roll || data.roll === roll) {
-                        student = { Name: stuSnap.key, Class: classSnap.key, Roll: roll };
-                        className = classSnap.key;
-                    }
-                });
+        // 3. Status Check: Must be "Live"
+        if (!liveData || liveData.status !== "Live") {
+            return Swal.fire({
+                icon: 'info',
+                title: 'Access Denied',
+                text: 'Your hallticket is in process. Please check back later or approach the school office.',
+                confirmButtonColor: '#006633'
             });
         }
 
-        if (!student) {
-            box.classList.add('shake');
-            setTimeout(() => box.classList.remove('shake'), 500);
-            return Swal.fire('Error', 'Invalid Roll Number', 'error');
-        }
-
-        // Check Live Status for the detected class
-        const liveSnap = await db.ref(`portal_settings/halltickets_live/${className}`).once('value');
-        const liveData = liveSnap.val();
-
-        if (!liveData || liveData.status !== "Live") {
-            return Swal.fire({ icon: 'info', title: 'In Process', text: 'Hallticket for ' + className + ' is not published yet.' });
-        }
-
-        // Fee Check
-        const feeSnap = await db.ref(`fee_records/${className}/${student.Name}`).once('value');
+        // 4. Fee Monitoring
+        const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if (feeSnap.exists()) {
-            feeSnap.forEach(c => { tPaid += parseFloat(c.val().paid || 0); tFee = c.val().total; });
+            feeSnap.forEach(c => { 
+                const d = c.val(); tPaid += parseFloat(d.paid || 0); tFee = d.total; 
+            });
         }
         const due = tFee - tPaid;
-
         if (due > 5000) {
-            return Swal.fire({ icon: 'warning', title: 'ON HOLD', text: 'Approach office. Fee Due: ₹' + due });
+            return Swal.fire({ 
+                icon: 'warning', title: 'ON HOLD', 
+                html: '<b style="color:red; font-size:18px;">APPROACH THE OFFICE, THE HALL TICKET IS ON HOLD</b>',
+                confirmButtonColor: '#c62828'
+            });
         }
 
-        // Get Schedule
-        const schedSnap = await db.ref(`class_schedules/${className}/${liveData.exam}`).once('value');
+        // 5. Generate and Show Ticket
+        const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
-        // Render
+        const photoEl = document.getElementById('vPhoto');
+        const extensions = ['png', 'jpg', 'jpeg', 'PNG'];
+        let extIdx = 0;
+        function tryLoad() {
+            if (extIdx < extensions.length) {
+                photoEl.src = `students/${roll}.${extensions[extIdx]}`;
+                extIdx++;
+            } else { photoEl.src = 'logo.png'; photoEl.onerror = null; }
+        }
+        photoEl.onerror = tryLoad; tryLoad();
+
         document.getElementById('vName').innerText = student.Name.toUpperCase();
-        document.getElementById('vClass').innerText = className;
+        document.getElementById('vClass').innerText = student.Class;
         document.getElementById('vReg').innerText = "100" + roll.slice(-2);
         document.getElementById('vDue').innerText = due;
         document.getElementById('vExamType').innerText = liveData.exam;
-        document.getElementById('vPhoto').src = `students/${roll}.jpg`;
-        document.getElementById('vPhoto').onerror = function() { this.src = 'logo.png'; };
 
         const subs = Object.keys(schedule).filter(k => !['lastUpdatedBy', 'lastUpdatedAt'].includes(k));
-        let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td>Time</td>`;
+        let tableHtml = `<thead><tr><th>Subject</th>${subs.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody><tr><td>Date/Time</td>`;
         subs.forEach(s => {
-            let v = schedule[s] || "-";
-            tableHtml += `<td>${v.split(" @ ")[0].split('-').reverse().join('/')}<br>${v.split(" @ ")[1] || ""}</td>`;
+            let val = schedule[s] || "-";
+            let content = val !== "-" ? val.split(" @ ")[0].split('-').reverse().join('/') + "<br>" + (val.split(" @ ")[1] || "") : "-";
+            tableHtml += `<td>${content}</td>`;
         });
-        tableHtml += `</tr></tbody>`;
+        tableHtml += `</tr><tr style="height:45px;"><td>Sign</td>${subs.map(()=>`<td></td>`).join('')}</tr></tbody>`;
+        
         document.getElementById('vTable').innerHTML = tableHtml;
-
         document.getElementById('uiSearch').style.display = 'none';
         document.getElementById('ticketContainer').style.display = 'block';
         Swal.close();
+        window.scrollTo(0,0);
+
     } catch (e) {
-        Swal.fire('Error', 'Connection Error', 'error');
+        Swal.fire('Error', 'Server Connection Error.', 'error');
     }
 }
 </script>
