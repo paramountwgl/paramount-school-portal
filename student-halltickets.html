@@ -17,7 +17,7 @@
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
-        /* --- SEARCH SECTION (ADMIN STYLE) --- */
+        /* --- SEARCH SECTION --- */
         .search-section {
             max-width: 480px;
             margin: 80px auto;
@@ -68,7 +68,6 @@
         .school-name-block h1 { margin: 0; font-size: 18px; font-family: 'Montserrat', sans-serif; font-weight: 800; }
         .exam-badge { background: #000; color: #fff; padding: 4px 15px; font-weight: 800; text-transform: uppercase; font-size: 10px; display: inline-block; margin-top: 5px; border-radius: 3px; }
         
-        /* Fixed Student Photo Box to ensure consistency */
         .student-photo-box { width: 85px; height: 105px; border: 2px solid #000; overflow: hidden; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
         .student-photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -92,7 +91,7 @@
         }
     </style>
 </head>
-<body>
+<body autocomplete="off">
 
 <div class="portal-nav" id="mainNav">
     <a href="student-portal.html"><i class="fas fa-home"></i> Profile</a>
@@ -126,7 +125,7 @@
                 </div>
             </div>
             <div class="student-photo-box">
-                <img id="vPhoto" src="logo.png" alt="Student Photo">
+                <img id="vPhoto" src="logo.png" alt="Student Photo" crossorigin="anonymous">
             </div>
         </div>
 
@@ -211,21 +210,23 @@ async function accessHallTicket() {
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
-        // --- FIXED IMAGE LOGIC ---
-        const folder = "Student images";
-        const imgPath = `${folder}/${roll}.png`;
+        // --- NEW IMPROVED IMAGE FETCHING LOGIC ---
         const photoEl = document.getElementById('vPhoto');
-        
-        photoEl.src = imgPath;
-        photoEl.onerror = function() {
-            // Try .jpg if .png fails
-            if (this.src.includes('.png')) {
-                this.src = `${folder}/${roll}.jpg`;
+        const folder = "Student%20images"; 
+        const extensions = ['png', 'jpg', 'jpeg', 'PNG', 'JPG'];
+        let currentIndex = 0;
+
+        function tryNextExtension() {
+            if (currentIndex < extensions.length) {
+                photoEl.src = `${folder}/${roll}.${extensions[currentIndex]}`;
+                currentIndex++;
             } else {
-                this.src = 'logo.png'; // Final fallback
-                this.onerror = null;
+                photoEl.src = 'logo.png';
+                photoEl.onerror = null;
             }
-        };
+        }
+        photoEl.onerror = tryNextExtension;
+        tryNextExtension();
 
         document.getElementById('vName').innerText = student.Name.toUpperCase();
         document.getElementById('vClass').innerText = student.Class;
