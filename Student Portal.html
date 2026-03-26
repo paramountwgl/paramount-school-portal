@@ -34,14 +34,14 @@
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
-        /* COUNTDOWN TIMER CSS - CHANGED TO DISPLAY: FLEX */
+        /* COUNTDOWN TIMER CSS */
         .countdown-container {
             background: white;
             border-radius: 20px;
             padding: 20px;
             margin: 15px auto;
             max-width: 500px;
-            display: flex; 
+            display: none; /* Hidden by default, script will show it if events exist */
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
@@ -141,7 +141,7 @@
 
     <div class="countdown-container" id="countdownSection">
         <div class="event-info">
-            <h3 id="eventTitle">Loading Event...</h3>
+            <h3 id="eventTitle">Loading...</h3>
             <p id="eventSubtitle">Stay focused and prepared!</p>
         </div>
         <div class="timer-display">
@@ -292,19 +292,34 @@ async function searchStudent() {
     }
 }
 
-// PREMIUM COUNTDOWN LOGIC
-const schoolEvents = [
-    { name: "FA-4 Exams", date: "2026-04-10T09:00:00" },
-    { name: "S.A - 2 Exams", date: "2026-04-20T09:00:00" },
-    { name: "Summer Holidays", date: "2026-05-01T00:00:00" }
-];
+// --- DYNAMIC FIREBASE EVENT LOGIC ---
+let dynamicEvents = [];
+
+// Real-time listener for the events published in event-manager.html
+db.ref('school_events').on('value', snap => {
+    dynamicEvents = [];
+    if (snap.exists()) {
+        snap.forEach(child => {
+            dynamicEvents.push(child.val());
+        });
+    }
+    updateCountdown(); // Refresh UI as soon as data changes
+});
 
 function updateCountdown() {
     const now = new Date().getTime();
-    const nextEvent = schoolEvents.find(event => new Date(event.date).getTime() > now);
+    const countdownBox = document.getElementById('countdownSection');
+
+    // Filter for future events and find the closest one
+    const nextEvent = dynamicEvents
+        .filter(ev => new Date(ev.date).getTime() > now)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))[0];
 
     if (nextEvent) {
-        const diff = new Date(nextEvent.date).getTime() - now;
+        countdownBox.style.display = 'flex';
+        const eventDate = new Date(nextEvent.date).getTime();
+        const diff = eventDate - now;
+
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -315,10 +330,13 @@ function updateCountdown() {
         document.getElementById('hours').innerText = h.toString().padStart(2, '0');
         document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
         document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+    } else {
+        // Automatically hide the timer if no future events exist
+        countdownBox.style.display = 'none';
     }
 }
+
 setInterval(updateCountdown, 1000);
-updateCountdown();
 
 async function downloadPDF() {
     Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
@@ -329,8 +347,8 @@ async function downloadPDF() {
     document.getElementById('mainNav').style.display = 'none';
     document.getElementById('bottomNav').style.display = 'none';
     
-    // Hide timer in PDF to save space
     const countdown = document.getElementById('countdownSection');
+    const isVisible = countdown.style.display === 'flex';
     countdown.style.display = 'none';
 
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
@@ -343,7 +361,7 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'flex';
     document.getElementById('mainNav').style.display = 'flex';
     document.getElementById('bottomNav').style.display = 'flex';
-    countdown.style.display = 'flex';
+    if(isVisible) countdown.style.display = 'flex';
     Swal.close();
 }
 </script>
