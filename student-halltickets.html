@@ -17,7 +17,7 @@
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
-        /* --- SEARCH SECTION (ADMIN STYLE) --- */
+        /* --- SEARCH SECTION --- */
         .search-section {
             max-width: 480px;
             margin: 80px auto;
@@ -31,6 +31,15 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
+        }
+
+        /* Shake animation for errors */
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
         }
 
         .auth-brand-flex {
@@ -58,6 +67,7 @@
             font-weight: 800;
             outline: none;
             background: #fafafa;
+            margin-bottom: 20px;
             transition: 0.3s;
         }
         .search-section input:focus { border-color: var(--forest); background: #fff; }
@@ -97,7 +107,7 @@
         }
     </style>
 </head>
-<body>
+<body autocomplete="off">
 
 <div class="portal-nav" id="mainNav">
     <a href="student-portal.html"><i class="fas fa-home"></i> Profile</a>
@@ -164,7 +174,7 @@
     </div>
     
     <div id="downloadArea" style="text-align:center; margin-top:25px;">
-        <button onclick="window.print()" class="btn-premium-unlock" style="background:var(--dark-green); max-width:400px;">Download / Print Hallticket <i class="fas fa-file-pdf"></i></button>
+        <button onclick="window.print()" class="btn-premium-unlock" style="background:var(--dark-green); max-width:400px;">Download / Print PDF <i class="fas fa-file-pdf"></i></button>
     </div>
 </div>
 
@@ -182,19 +192,30 @@ const db = firebase.database();
 const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Roll: "1472070" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Roll: "1478225" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Roll: "1469391" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG", Roll: "1459555" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG", Roll: "1459560" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG", Roll: "1474500" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG", Roll: "1460680" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG", Roll: "1472299" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG", Roll: "1459683" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG", Roll: "1459620" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG", Roll: "1459605" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG", Roll: "1472069" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG", Roll: "1472723" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG", Roll: "1459658" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG", Roll: "1478248" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG", Roll: "1481135" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG", Roll: "1459568" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG", Roll: "1459652" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG", Roll: "1459636" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG", Roll: "1463720" }, "1459582": { Name: "Rishi Myakala", Class: "Pre-KG", Roll: "1459582" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459607" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG", Roll: "1459604" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG", Roll: "1459625" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG", Roll: "1472074" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG", Roll: "1469395" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG", Roll: "1456748" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG", Roll: "1459687" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG", Roll: "1459572" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG", Roll: "1459643" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG", Roll: "1459603" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG", Roll: "1472536" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG", Roll: "1456743" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG", Roll: "1473500" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG", Roll: "1463724" }, "1459694": { Name: "Ujjwal Checkka", Class: "Pre-KG", Roll: "1459694" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG", Roll: "1474815" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG", Roll: "1460690" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Roll: "1478250" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Roll: "1413563" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Roll: "1459577" } };
 
 async function accessHallTicket() {
+    const box = document.getElementById('uiSearch');
     const roll = document.getElementById('rollInput').value.trim();
     const student = studentData[roll];
 
-    if(!student) return Swal.fire('Error', 'Invalid Roll Number', 'error');
+    if(!student) {
+        box.classList.add('shake');
+        setTimeout(() => box.classList.remove('shake'), 500);
+        return Swal.fire('Error', 'Invalid Roll Number', 'error');
+    }
 
-    Swal.fire({ title: 'Generating your Hallticket...', didOpen: () => Swal.showLoading() });
+    Swal.fire({ title: 'Connecting...', didOpen: () => Swal.showLoading() });
 
     try {
         const liveSnap = await db.ref(`portal_settings/halltickets_live/${student.Class}`).once('value');
         const liveData = liveSnap.val();
 
+        // Specific Alert Requirement: "Your hallticket is in process"
         if(!liveData || liveData.status !== "Live") {
-            return Swal.fire('Notice', 'Hall tickets are not released yet. Please approach the school office.', 'info');
+            return Swal.fire({
+                icon: 'info',
+                title: 'Access Denied',
+                text: 'Your hallticket is in process. Please check back later or approach the school office.',
+                confirmButtonColor: '#006633'
+            });
         }
 
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
@@ -216,9 +237,9 @@ async function accessHallTicket() {
         const schedSnap = await db.ref(`class_schedules/${student.Class}/${liveData.exam}`).once('value');
         const schedule = schedSnap.val() || {};
 
-        // --- DYNAMIC IMAGE LOADER ---
+        // Image Path Fix: Folder 'students' (lowercase as seen in GitHub)
         const photoEl = document.getElementById('vPhoto');
-        const folder = "students"; // Folder name from GitHub Screenshot 483
+        const folder = "students"; 
         const extensions = ['png', 'jpg', 'jpeg', 'PNG'];
         let extIdx = 0;
 
@@ -249,7 +270,7 @@ async function accessHallTicket() {
             else {
                 let parts = val.split(" @ ");
                 let d = parts[0].split('-').reverse().join('/');
-                return tableHtml += `<td>${d}<br>${parts[1]}</td>`;
+                tableHtml += `<td>${d}<br>${parts[1]}</td>`;
             }
         });
         tableHtml += `</tr><tr style="height:45px;"><td style="text-align:left; background:#f4f4f4;">Sign</td>${subs.map(()=>`<td></td>`).join('')}</tr></tbody>`;
