@@ -29,7 +29,7 @@
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        /* SIDE-BY-SIDE COUNTDOWN SECTION */
+        /* COUNTDOWN SECTION */
         #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
         .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.3s; flex: 0 0 auto; }
         .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
@@ -38,12 +38,25 @@
         .t-block span { display: block; font-size: 20px; font-weight: 900; }
         .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
 
-        /* SEARCH & PROFILE */
-        .search-container { width: 100%; max-width: 500px; margin: 0 auto; display: flex; gap: 8px; }
+        /* SEARCH CONTAINER */
+        .search-container { width: 100%; max-width: 500px; margin: 15px auto; display: flex; gap: 8px; }
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
-        
-        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; display: none; }
+
+        /* OPTIMIZED PROFILE CARD */
+        .profile-card { 
+            max-width: 750px; 
+            margin: 30px auto; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            width: 92%; 
+            display: none; 
+            position: relative;
+            clear: both; 
+        }
+
         .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
         
@@ -52,8 +65,8 @@
         .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
         .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
 
-        /* ATTENDANCE & FINANCE TOOLS */
-        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; }
+        /* FINANCE TOOLS */
+        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
         .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
         .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
@@ -102,9 +115,10 @@
     <div id="countdownSection"></div>
 
     <div class="profile-card" id="profileCard">
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
+        <div id="regStamp" class="registered-stamp" style="position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5;"><i class="fas fa-check-circle"></i> Registered</div>
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"></div>
         <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
-        <div id="statusBadge" class="status-badge">PROFILE ACTIVE</div>
+        <div id="statusBadge" style="padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase;">PROFILE ACTIVE</div>
 
         <div class="info-grid">
             <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
@@ -115,7 +129,7 @@
             <div class="info-item"><label>Parent Phone</label><span id="phoneNumber">---</span></div>
         </div>
 
-        <div id="feeSection" style="display:none;">
+        <div id="feeSection">
             <div style="font-family:'Montserrat'; font-weight:800; color:var(--forest); margin-bottom:15px; font-size:12px;"><i class="fas fa-wallet"></i> FINANCE OVERVIEW</div>
             <div class="fee-progress-box">
                 <svg class="circle-svg"><circle class="circle-bg" cx="60" cy="60" r="50"></circle><circle id="feeCircle" class="circle-bar" cx="60" cy="60" r="50"></circle></svg>
@@ -144,7 +158,9 @@
 const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+
 const studentData = {
+    // PRE-KG
     "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" },
     "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" },
     "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" },
@@ -187,6 +203,7 @@ const studentData = {
     "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Father: "Shekar", Roll: "1413563", Phone: "7671807331", Adm: "2015" },
     "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Father: "Yousuf Shareef", Roll: "1459577", Phone: "9392670257", Adm: "2018" },
 
+    // KG-1
     "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1", Father: "Rakesh", Roll: "1424084", Phone: "9502626801", Adm: "2007" },
     "1426519": { Name: "Aditya Manda", Class: "KG-1", Father: "Mohan Lal", Roll: "1426519", Phone: "8374173873", Adm: "2004" },
     "1426518": { Name: "Aadhya Jella", Class: "KG-1", Father: "Bhikshapathi", Roll: "1426518", Phone: "9959633484", Adm: "2003" },
@@ -209,6 +226,7 @@ const studentData = {
     "1387264": { Name: "Yusra Mohammad", Class: "KG-1", Father: "Yousuf Shareef", Roll: "1387264", Phone: "9392661854", Adm: "1974" },
     "1402461": { Name: "Zainul Abideen Syed", Class: "KG-1", Father: "Akbar", Roll: "1402461", Phone: "8106972447", Adm: "1997" },
 
+    // KG-2
     "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2", Father: "Shivakumar", Roll: "1298438", Phone: "7842370658", Adm: "1946" },
     "1298439": { Name: "Hanshith Erroju", Class: "KG-2", Father: "Rajesh", Roll: "1298439", Phone: "9010150059", Adm: "1960" },
     "1298447": { Name: "Harika Bandi", Class: "KG-2", Father: "Raju", Roll: "1298447", Phone: "9573818773", Adm: "1968" },
@@ -239,6 +257,7 @@ const studentData = {
     "1459775": { Name: "Zayan Mohammad", Class: "KG-2", Father: "Zaffar", Roll: "1459775", Phone: "9182909190", Adm: "2034" },
     "1459714": { Name: "Zoya Mohammed", Class: "KG-2", Father: "Chand Pasha", Roll: "1459714", Phone: "9848465650", Adm: "2035" },
 
+    // GRADE 1
     "1298423": { Name: "Dheeraj Gattu", Class: "Grade-1", Father: "Raju", Roll: "1298423", Phone: "9346457748", Adm: "151" },
     "1298425": { Name: "Preetham Sannayala", Class: "Grade-1", Father: "Shiva", Roll: "1298425", Phone: "9000283858", Adm: "138" },
     "1298428": { Name: "Shiva nandu Gonela", Class: "Grade-1", Father: "Ramu", Roll: "1298428", Phone: "9966960107", Adm: "137" },
@@ -261,6 +280,7 @@ const studentData = {
     "1298420": { Name: "Sriyanshi Oggula", Class: "Grade-1", Father: "Sampath", Roll: "1298420", Phone: "7730886474", Adm: "142" },
     "1298431": { Name: "Vishwak Chekka", Class: "Grade-1", Father: "Naresh", Roll: "1298431", Phone: "9912945240", Adm: "143" },
 
+    // GRADE 2
     "1298397": { Name: "Aliza Manha Shaik", Class: "Grade-2", Father: "Moin Pasha", Roll: "1298397", Phone: "7989482920", Adm: "117" },
     "1298407": { Name: "Dhruvan Reddy Katukuri", Class: "Grade-2", Father: "Thirupathi Reddy", Roll: "1298407", Phone: "7995553736", Adm: "111" },
     "1298398": { Name: "Druthika Enugala", Class: "Grade-2", Father: "Karthik Reddy", Roll: "1298398", Phone: "8686077799", Adm: "116" },
@@ -275,6 +295,7 @@ const studentData = {
     "1316732": { Name: "Senen Desabattula", Class: "Grade-2", Father: "Samuel Sparjan Babu", Roll: "1316732", Phone: "9052820502", Adm: "119" },
     "1459817": { Name: "Shivarajan Pothuganti", Class: "Grade-2", Father: "Rajashekhar", Roll: "1459817", Phone: "8074781031", Adm: "163" },
 
+    // GRADE 3
     "1298393": { Name: "Nagavelly Manikanta", Class: "Grade-3", Father: "Ravi kumar", Roll: "1298393", Phone: "9492098006", Adm: "73" },
     "1459834": { Name: "Mirja Ismail", Class: "Grade-3", Father: "Yusuf Baig", Roll: "1459834", Phone: "9989367263", Adm: "166" },
     "1298390": { Name: "Bandi Aryan", Class: "Grade-3", Father: "Anil", Roll: "1298390", Phone: "9502098594", Adm: "88" },
@@ -293,6 +314,7 @@ const studentData = {
     "1459841": { Name: "Pinninti Rakshith Rao", Class: "Grade-3", Father: "Chander Rao (Late)", Roll: "1459841", Phone: "9848523514", Adm: "170" },
     "1400203": { Name: "Rayi Sriman Adithya", Class: "Grade-3", Father: "Venkataramana", Roll: "1400203", Phone: "6305872732", Adm: "135" },
 
+    // GRADE 4
     "1298376": { Name: "Abdul Saqib Mohammad", Class: "Grade-4", Father: "Abdul Rawoof", Roll: "1298376", Phone: "8328695850", Adm: "41" },
     "1298366": { Name: "Anudeep Chintha", Class: "Grade-4", Father: "Anil", Roll: "1298366", Phone: "9848448941", Adm: "64" },
     "1298368": { Name: "Bhavan Bandi", Class: "Grade-4", Father: "Devendar", Roll: "1298368", Phone: "8897141289", Adm: "95" },
@@ -308,6 +330,7 @@ const studentData = {
     "1298381": { Name: "Rahul Kanjarla", Class: "Grade-4", Father: "Kumaraswamy", Roll: "1298381", Phone: "8897047979", Adm: "79" },
     "1459784": { Name: "Saketh Devarakonda", Class: "Grade-4", Father: "Ramesh", Roll: "1459784", Phone: "9392270984", Adm: "159" },
 
+    // GRADE 5
     "1298353": { Name: "Adya Reddy Vangala", Class: "Grade-5", Father: "Mahipal Reddy", Roll: "1298353", Phone: "9949109221", Adm: "21" },
     "1298361": { Name: "Kowshik Patel Muppa", Class: "Grade-5", Father: "Janardhan", Roll: "1298361", Phone: "9553800447", Adm: "77" },
     "1298355": { Name: "Siri Singaram", Class: "Grade-5", Father: "Madhu", Roll: "1298355", Phone: "9550726263", Adm: "83" },
@@ -322,6 +345,7 @@ const studentData = {
     "1392955": { Name: "Sreeja Dasari", Class: "Grade-5", Father: "Kumar", Roll: "1392955", Phone: "6301871704", Adm: "123" },
     "1459821": { Name: "Vidhaatri Sahani", Class: "Grade-5", Father: "Abhishek Sahani", Roll: "1459821", Phone: "9704394869", Adm: "165" },
 
+    // GRADE 6
     "1298347": { Name: "Abdul Razzak Mohammad", Class: "Grade-6", Father: "Abdul Rawoof", Roll: "1298347", Phone: "9573226386", Adm: "19" },
     "1298341": { Name: "Anudeepthi Chintha", Class: "Grade-6", Father: "Anil", Roll: "1298341", Phone: "9052927765", Adm: "63" },
     "1298350": { Name: "Saketh Ranaveni", Class: "Grade-6", Father: "Sampath", Roll: "1298350", Phone: "8688129606", Adm: "61" },
@@ -330,10 +354,12 @@ const studentData = {
     "1392992": { Name: "Akshya Kalvacharla", Class: "Grade-6", Father: "Hareen Chary", Roll: "1392992", Phone: "7672058517", Adm: "125" },
     "1472577": { Name: "Prince Katkuri", Class: "Grade-6", Father: "Katkuri Suryad", Roll: "1472577", Phone: "9000557009", Adm: "0" },
 
+    // GRADE 7
     "1298339": { Name: "Manikanta Sannayala", Class: "Grade-7", Father: "Shiva", Roll: "1298339", Phone: "9000283858", Adm: "38" },
     "1298340": { Name: "Sreeyan Reddy Karra", Class: "Grade-7", Father: "Krishna Reddy", Roll: "1298340", Phone: "9848774257", Adm: "33" },
     "1393008": { Name: "Jayadhithya Chiluveru", Class: "Grade-7", Father: "CH.Madhava Rao", Roll: "1393008", Phone: "8886826838", Adm: "131" },
 
+    // GRADE 8
     "1459846": { Name: "Akshaya Gampala", Class: "Grade-8", Father: "Balaiah", Roll: "1459846", Phone: "9948184498", Adm: "171" },
     "1298335": { Name: "Ganesh Oggula", Class: "Grade-8", Father: "Cheralu", Roll: "1298335", Phone: "6304381153", Adm: "56" },
     "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8", Father: "Rajesh", Roll: "1459792", Phone: "7569518371", Adm: "156" },
@@ -342,20 +368,42 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
+function playPing() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch(e) { console.log("Audio blocked"); }
+}
+
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
+    
     if (student) {
+        // 1. IMMEDIATELY SHOW THE CARD
         document.getElementById('profileCard').style.display = 'block';
+        
+        // 2. FILL BASIC INFO
         document.getElementById('studentName').innerText = student.Name;
         document.getElementById('studentClass').innerText = student.Class;
         document.getElementById('RollNumber').innerText = student.Roll;
         document.getElementById('admissionNo').innerText = student.Adm;
         document.getElementById('fatherName').innerText = student.Father;
         document.getElementById('phoneNumber').innerText = student.Phone;
-        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
+        document.getElementById('studentPhoto').src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
+
+        // 3. SHOW FINANCE & PDF BUTTON
+        document.getElementById('feeSection').style.display = 'block';
+        document.getElementById('pdfBtnSection').style.display = 'flex';
         
-        // ATTENDANCE LOGIC
+        // 4. FETCH ATTENDANCE
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -369,7 +417,7 @@ async function searchStudent() {
         }
         document.getElementById('attendanceRate').innerText = `${totalT > 0 ? Math.round((totalP/totalT)*100) : 0}% (${totalP}/${totalT})`;
 
-        // FINANCE LOGIC
+        // 5. FETCH FINANCE
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if(feeSnap.exists()){
@@ -381,26 +429,47 @@ async function searchStudent() {
         document.getElementById('vDueFee').innerText = "₹ " + (tFee - tPaid);
         document.getElementById('feePercentLabel').innerText = feePct + "%";
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * feePct / 100);
-        document.getElementById('feeSection').style.display = 'block';
-        document.getElementById('pdfBtnSection').parentElement.style.display = 'flex';
-    } else { Swal.fire('Error', 'Roll Number not found.', 'error'); }
+
+        checkEventStatus(rollNo);
+    } else { 
+        Swal.fire('Error', 'Roll Number not found.', 'error'); 
+    }
+}
+
+async function checkEventStatus(rollNo) {
+    const stamp = document.getElementById('regStamp');
+    const eventSnap = await db.ref('school_events').limitToLast(1).once('value');
+    let latestName = "";
+    eventSnap.forEach(c => latestName = c.val().name);
+    if (latestName) {
+        const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
+        if (regCheck.exists()) {
+            stamp.style.display = 'block';
+            stamp.innerHTML = `<i class="fas fa-check-circle"></i> Registered: ${latestName}`;
+        } else { stamp.style.display = 'none'; }
+    }
 }
 
 let dynamicEvents = [];
+let hasPromptedEvent = false;
+
 db.ref('school_events').on('value', snap => {
     dynamicEvents = [];
     if (snap.exists()) { snap.forEach(child => { dynamicEvents.push(child.val()); }); }
     updateCountdown(); 
+    checkAndShowPopup();
 });
 
 function updateCountdown() {
     const now = new Date().getTime();
     const container = document.getElementById('countdownSection');
-    // FILTER FUTURE EVENTS AND SORT BY DATE
     const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    if (activeEvents.length === 0) { container.innerHTML = ""; return; }
-    
+    if (activeEvents.length === 0) {
+        container.innerHTML = ""; container.style.display = "none"; return;
+    }
+
+    container.style.display = "flex";
     let htmlContent = "";
     activeEvents.forEach((ev) => {
         const diff = new Date(ev.date).getTime() - now;
@@ -409,26 +478,52 @@ function updateCountdown() {
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
 
-        htmlContent += `
-            <div class="event-timer-card">
-                <h3>${ev.name}</h3>
-                <p style="font-size:11px; color:#666; font-weight:bold; margin-top:5px;">${ev.desc || 'Stay Prepared!'}</p>
-                <div class="timer-grid">
-                    <div class="t-block"><span>${d}</span><label>Days</label></div>
-                    <div class="t-block"><span>${h}</span><label>Hrs</label></div>
-                    <div class="t-block"><span>${m}</span><label>Min</label></div>
-                    <div class="t-block"><span>${s}</span><label>Sec</label></div>
-                </div>
-            </div>`;
+        htmlContent += `<div class="event-timer-card"><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
     });
     container.innerHTML = htmlContent;
+}
+
+async function checkAndShowPopup() {
+    if (!hasPromptedEvent && dynamicEvents.length > 0) {
+        const now = new Date().getTime();
+        const nextEvent = dynamicEvents.filter(ev => ev.isRegistration === true && new Date(ev.regDeadline).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date))[0];
+
+        if (nextEvent) {
+            const regSnap = await db.ref(`event_registrations/${nextEvent.name}`).once('value');
+            const count = regSnap.exists() ? Object.keys(regSnap.val()).length : 0;
+            const diffDays = Math.ceil((new Date(nextEvent.regDeadline).getTime() - now) / (1000 * 60 * 60 * 24));
+            hasPromptedEvent = true; 
+            showEventInvitation(nextEvent.name, nextEvent.desc, diffDays, count);
+        }
+    }
+}
+
+function showEventInvitation(name, desc, daysLeft, count) {
+    const isUrgent = daysLeft <= 2;
+    const themeColor = isUrgent ? '#ef4444' : '#006633';
+    const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
+    playPing();
+    Swal.fire({
+        title: `<div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 5px 0 10px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 45px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 18px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 8px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 1px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
+        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 12px;"><p style="margin: 0; font-size: 9px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 2px;">Exclusive Invitation</p><h2 style="margin: 5px 0; font-family: 'Montserrat'; font-size: 22px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 13px; font-weight: 500; margin-bottom: 10px; line-height: 1.3;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 8px; padding: 6px; margin-bottom: 10px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 10px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 4px 15px; border-radius: 50px; display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 20px !important; padding: 15px !important; width: 350px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 18px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 12px 0 !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 11px !important; text-transform: uppercase !important; letter-spacing: 1px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; box-shadow: 0 4px 12px rgba(0, 77, 38, 0.2) !important; margin: 15px auto 5px !important; width: 100% !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) scale(1.02) !important; box-shadow: 0 8px 15px rgba(0, 77, 38, 0.3) !important; background: #006633 !important; }.premium-reg-btn i { font-size: 11px; color: #ffd700; }</style>`,
+        showCloseButton: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Register My Name <i class="fas fa-chevron-right"></i>',
+        customClass: { confirmButton: 'premium-reg-btn' },
+        buttonsStyling: false,
+        allowOutsideClick: false,
+        width: '350px'
+    }).then((result) => {
+        if (result.isConfirmed) { window.location.href = `event-signup.html?event=${encodeURIComponent(name)}`; }
+    });
 }
 
 setInterval(updateCountdown, 1000);
 
 async function downloadPDF() {
+    Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
     const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#mainNav, #bottomNav, .search-container, #countdownSection').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
     const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
