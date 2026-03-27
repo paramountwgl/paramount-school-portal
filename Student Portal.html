@@ -20,21 +20,9 @@
         .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
-
-        /* Premium Navigation Button (Beside View Syllabus) */
-        .nav-reg-btn { 
-            border: 1.5px solid var(--gold) !important; 
-            color: var(--gold) !important; 
-            background: rgba(255, 255, 255, 0.1); 
-            font-weight: 800;
-            transition: 0.3s all ease;
-        }
-        .nav-reg-btn:hover {
-            background: var(--gold) !important;
-            color: var(--forest) !important;
-            transform: scale(1.05);
-        }
-        .nav-reg-btn i { margin-right: 5px; font-size: 1.1em; }
+        
+        /* Premium Nav Button */
+        .nav-reg-btn { border: 1.5px solid var(--gold) !important; color: var(--gold) !important; background: rgba(255, 255, 255, 0.1) !important; font-weight: 800; }
 
         /* HEADER */
         .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
@@ -45,7 +33,7 @@
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
         /* PREMIUM SEARCH BAR */
-        .search-container { width: 100%; max-width: 500px; margin: 0 auto; display: flex; gap: 8px; }
+        .search-container { width: 95%; max-width: 550px; margin: 0 auto; display: flex; gap: 8px; }
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
 
@@ -61,7 +49,7 @@
         .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
 
         /* PROFILE & FINANCE */
-        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
+        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; display: none; }
         .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
@@ -70,21 +58,34 @@
         .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
 
         /* FINANCE SECTION */
-        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
+        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; }
         .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
         .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
         .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
         #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
+        
         .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
         .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
         .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
         .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
-        .pdf-btn-container { display: none; justify-content: center; width: 100%; margin-top: 30px; }
-        .pdf-btn { background: var(--forest); color: white; border: none; padding: 16px 30px; border-radius: 50px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; transition: 0.3s; }
-        .pdf-btn:hover { background: #004d26; transform: scale(1.02); }
+        /* PREMIUM BUTTON STYLE */
+        .premium-btn-style { 
+            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); 
+            color: white; border: none; padding: 18px 25px; border-radius: 20px; 
+            font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; 
+            display: flex; align-items: center; justify-content: space-between; cursor: pointer; 
+            transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); 
+        }
+        .premium-btn-style:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); }
+        .btn-content { display: flex; align-items: center; gap: 15px; }
+        .btn-content i { font-size: 20px; color: var(--gold); }
+        .btn-content span { font-size: 12px; }
+
+        /* FIXED RETURN BUTTON */
+        .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; min-width: 250px; z-index: 1000; text-decoration: none; }
 
         @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
     </style>
@@ -109,7 +110,7 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
         </div>
-        <div class="search-container" id="searchBoxForPdf">
+        <div class="search-container">
             <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
             <button onclick="searchStudent();" class="search-btn"><i class="fas fa-search"></i></button>
         </div>
@@ -117,9 +118,9 @@
 
     <div id="countdownSection"></div>
 
-    <div class="profile-card">
-        <div id="regStamp" class="registered-stamp" style="position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5;"><i class="fas fa-check-circle"></i> Registered</div>
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"></div>
+    <div class="profile-card" id="profileCard">
+        <div id="regStamp" class="registered-stamp" style="display:none;"><i class="fas fa-check-circle"></i> Registered</div>
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
         <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
         <div id="statusBadge" class="status-badge" style="padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase;">AWAITING ROLL NUMBER</div>
 
@@ -143,15 +144,19 @@
                 <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
                 <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
             </div>
-        </div>
-
-        <div class="pdf-btn-container" id="pdfBtnSection">
-            <button onclick="downloadPDF()" class="pdf-btn"><i class="fas fa-file-pdf"></i> DOWNLOAD PROFILE REPORT</button>
+            <div class="pdf-btn-container" id="pdfBtnSection" style="display: flex;">
+                <button onclick="downloadPDF()" class="premium-pdf-btn">
+                    <div class="btn-content"><i class="fas fa-file-pdf"></i><span>DOWNLOAD PROFILE REPORT</span></div>
+                    <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
-<a href="index.html" class="btn-return" id="bottomNav">RETURN TO DASHBOARD</a>
+<a href="index.html" class="btn-return-fixed premium-pdf-btn" id="bottomNav">
+    <div class="btn-content"><i class="fas fa-home"></i><span>RETURN TO DASHBOARD</span></div>
+</a>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -468,12 +473,24 @@ function updateCountdown() {
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        
+        const isClickable = ev.isRegistration ? 'is-clickable' : '';
+        const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')"` : '';
 
-        const onclick = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')" class="event-timer-card is-clickable"` : `class="event-timer-card"`;
-
-        htmlContent += `<div ${onclick}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin-top:5px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
+        htmlContent += `<div class="event-timer-card ${isClickable}" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
     });
     container.innerHTML = htmlContent;
+}
+
+async function triggerSpecificPopup(eventName) {
+    const ev = dynamicEvents.find(e => e.name === eventName);
+    if (ev && ev.isRegistration) {
+        const now = new Date().getTime();
+        const regSnap = await db.ref(`event_registrations/${ev.name}`).once('value');
+        const count = regSnap.exists() ? Object.keys(regSnap.val()).length : 0;
+        const diffDays = Math.ceil((new Date(ev.regDeadline).getTime() - now) / (1000 * 60 * 60 * 24));
+        showEventInvitation(ev.name, ev.desc, diffDays, count);
+    }
 }
 
 async function checkAndShowPopup() {
@@ -502,18 +519,6 @@ function showEventInvitation(name, desc, daysLeft, count) {
     }).then((result) => {
         if (result.isConfirmed) { window.location.href = `event-signup.html?event=${encodeURIComponent(name)}`; }
     });
-}
-
-setInterval(updateCountdown, 1000);
-
-async function downloadPDF() {
-    const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#mainNav, #bottomNav, .search-container, #countdownSection').forEach(el => el.style.display = 'none');
-    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
-    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
-    pdf.save(`Paramount_Report_${roll}.pdf`);
-    location.reload();
 }
 </script>
 </body>
