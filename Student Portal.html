@@ -29,33 +29,53 @@
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        /* SIDE-BY-SIDE DYNAMIC COUNTDOWN CARDS */
+        /* MULTI-EVENT COUNTDOWN CARDS */
         #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.3s; flex: 0 0 auto; }
+        .event-timer-card { 
+            background: white; border-radius: 25px; padding: 20px 20px 25px 20px; min-width: 320px; max-width: 350px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; flex: 0 0 auto; transition: 0.3s; 
+            cursor: pointer; position: relative; overflow: hidden; border: 1px solid #eee;
+        }
+        .event-timer-card:hover { transform: translateY(-5px); border-color: var(--forest); }
         .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
         .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
         .t-block { background: var(--forest); color: white; padding: 10px; border-radius: 12px; min-width: 55px; }
         .t-block span { display: block; font-size: 20px; font-weight: 900; }
-        .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+        .t-block label { font-size: 8px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
 
-        /* PROFILE LOOKUP */
+        /* PROGRESS BAR ON CARDS */
+        .progress-container { width: 100%; background: #f0f0f0; height: 5px; position: absolute; bottom: 0; left: 0; }
+        .progress-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--forest)); width: 0%; transition: width 1s linear; }
+
+        /* SEARCH & PROFILE CARD */
         .search-container { width: 100%; max-width: 500px; margin: 0 auto; display: flex; gap: 8px; }
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
+
         .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
         .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
-        .registered-stamp { position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5; }
+        
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
         .info-item { padding: 12px; background: #fcfdfc; border-radius: 12px; border: 1px solid #f0f0f0; }
         .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
         .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
         .status-badge { padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase; }
-        .pdf-btn-container { display: none; justify-content: center; width: 100%; margin-top: 30px; }
-        .pdf-btn { background: var(--forest); color: white; border: none; padding: 16px 30px; border-radius: 50px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; }
-        .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+        /* RESTORED FEE SECTION CSS */
+        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
+        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
+        .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+        .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
+        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
+        .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
+        .fee-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .stat-card { padding: 12px; border-radius: 12px; background: white; border: 1px solid #f0f0f0; }
+        .stat-card span { font-size: 1.1rem; font-weight: 800; color: #1e293b; display: block; margin-top: 4px; }
+
+        .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        @media (min-width: 768px) { .info-grid, .fee-stats { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -86,7 +106,7 @@
     <div id="countdownSection"></div>
 
     <div class="profile-card">
-        <div id="regStamp" class="registered-stamp"><i class="fas fa-check-circle"></i> Successfully Registered</div>
+        <div id="regStamp" class="registered-stamp" style="position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5;"><i class="fas fa-check-circle"></i> Successfully Registered</div>
         <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"></div>
         <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
         <div id="statusBadge" class="status-badge">AWAITING ROLL NUMBER</div>
@@ -100,7 +120,19 @@
             <div class="info-item"><label>Parent Phone</label><span id="phoneNumber">---</span></div>
         </div>
 
-        <div class="pdf-btn-container" id="pdfBtnSection">
+        <div id="feeSection">
+            <div style="font-family:'Montserrat'; font-weight:800; color:var(--forest); margin-bottom:15px; font-size:12px;"><i class="fas fa-wallet"></i> FINANCE OVERVIEW</div>
+            <div class="fee-progress-box">
+                <svg class="circle-svg"><circle class="circle-bg" cx="60" cy="60" r="50"></circle><circle id="feeCircle" class="circle-bar" cx="60" cy="60" r="50"></circle></svg>
+                <div class="circle-text"><span id="feePercentLabel">0%</span></div>
+            </div>
+            <div class="fee-stats">
+                <div class="stat-card"><label style="font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase;">Total Paid</label><span id="vPaidFee" style="color:var(--paid);">₹ 0</span></div>
+                <div class="stat-card due" style="background:#fff5f5;"><label style="font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase;">Balance Due</label><span id="vDueFee" style="color:var(--danger);">₹ 0</span></div>
+            </div>
+        </div>
+
+        <div class="pdf-btn-container" id="pdfBtnSection" style="display:none; margin-top: 30px;">
             <button onclick="downloadPDF()" class="pdf-btn"><i class="fas fa-file-pdf"></i> DOWNLOAD PROFILE REPORT</button>
         </div>
     </div>
@@ -117,22 +149,7 @@ const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", data
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Full 185 Student List here...
-const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" } /* ...rest of students */ };
-
-function playPing() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
-    } catch(e) { console.log("Audio blocked"); }
-}
+const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" } /* Full list of 185 should be here */ };
 
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
@@ -149,6 +166,34 @@ async function searchStudent() {
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
+
+        // Restore Attendance Logic
+        const shortClass = student.Class.split(" ")[0]; 
+        const attSnap = await db.ref('daily_attendance').once('value');
+        let totalP = 0, totalT = 0;
+        if(attSnap.exists()){
+            const allData = attSnap.val();
+            Object.keys(allData).forEach(date => {
+                if(allData[date][shortClass] && allData[date][shortClass][student.Name] !== undefined) {
+                    totalT++; if(allData[date][shortClass][student.Name] === true) totalP++;
+                }
+            });
+        }
+        document.getElementById('attendanceRate').innerText = totalT > 0 ? Math.round((totalP/totalT)*100) + "%" : "0%";
+
+        // RESTORED FEE LOGIC
+        const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
+        let tPaid = 0, tFee = 0;
+        if(feeSnap.exists()){
+            feeSnap.forEach(c => { const d = c.val(); tPaid += parseFloat(d.paid || 0); tFee = d.total; });
+        }
+        const pct = tFee > 0 ? Math.round((tPaid/tFee)*100) : 0;
+        document.getElementById('vPaidFee').innerText = "₹ " + tPaid;
+        document.getElementById('vDueFee').innerText = "₹ " + (tFee - tPaid);
+        document.getElementById('feePercentLabel').innerText = pct + "%";
+        document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * pct / 100);
+        document.getElementById('feeSection').style.display = 'block';
+
         checkEventStatus(rollNo);
     } else { Swal.fire('Error', 'Roll Number not found.', 'error'); }
 }
@@ -162,17 +207,14 @@ async function checkEventStatus(rollNo) {
         const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
         if (regCheck.exists()) {
             stamp.style.display = 'block';
-            stamp.innerHTML = `<i class="fas fa-check-circle"></i> Registered: ${latestName}`;
         } else { stamp.style.display = 'none'; }
     }
 }
 
 let dynamicEvents = [];
-let hasPromptedEvent = false;
-
 db.ref('school_events').on('value', snap => {
     dynamicEvents = [];
-    if (snap.exists()) { snap.forEach(child => { dynamicEvents.push(child.val()); }); }
+    if (snap.exists()) { snap.forEach(child => dynamicEvents.push(child.val())); }
     updateCountdown(); 
     checkAndShowPopup();
 });
@@ -181,37 +223,39 @@ function updateCountdown() {
     const now = new Date().getTime();
     const container = document.getElementById('countdownSection');
     const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    if (activeEvents.length === 0) {
-        container.innerHTML = ""; container.style.display = "none"; return;
-    }
-
+    if (activeEvents.length === 0) { container.innerHTML = ""; container.style.display = "none"; return; }
     container.style.display = "flex";
     let htmlContent = "";
     activeEvents.forEach((ev) => {
         const diff = new Date(ev.date).getTime() - now;
+        const totalDuration = 30 * 24 * 60 * 60 * 1000; 
+        const progress = Math.min(100, Math.max(0, (diff / totalDuration) * 100));
         const d = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-
-        htmlContent += `<div class="event-timer-card"><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
+        htmlContent += `<div class="event-timer-card" onclick="triggerSpecificPopup('${ev.name}')"><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div><div class="progress-container"><div class="progress-fill" style="width: ${progress}%"></div></div></div>`;
     });
     container.innerHTML = htmlContent;
 }
 
+async function triggerSpecificPopup(eventName) {
+    const ev = dynamicEvents.find(e => e.name === eventName);
+    if (ev && ev.isRegistration) {
+        const now = new Date().getTime();
+        const regSnap = await db.ref(`event_registrations/${ev.name}`).once('value');
+        const count = regSnap.exists() ? Object.keys(regSnap.val()).length : 0;
+        const diffDays = Math.ceil((new Date(ev.regDeadline).getTime() - now) / (1000 * 60 * 60 * 24));
+        showEventInvitation(ev.name, ev.desc, diffDays, count);
+    }
+}
+
+let hasPromptedEvent = false;
 async function checkAndShowPopup() {
     if (!hasPromptedEvent && dynamicEvents.length > 0) {
         const now = new Date().getTime();
         const nextEvent = dynamicEvents.filter(ev => ev.isRegistration === true && new Date(ev.regDeadline).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date))[0];
-
-        if (nextEvent) {
-            const regSnap = await db.ref(`event_registrations/${nextEvent.name}`).once('value');
-            const count = regSnap.exists() ? Object.keys(regSnap.val()).length : 0;
-            const diffDays = Math.ceil((new Date(nextEvent.regDeadline).getTime() - now) / (1000 * 60 * 60 * 24));
-            hasPromptedEvent = true; 
-            showEventInvitation(nextEvent.name, nextEvent.desc, diffDays, count);
-        }
+        if (nextEvent) { hasPromptedEvent = true; triggerSpecificPopup(nextEvent.name); }
     }
 }
 
@@ -219,7 +263,6 @@ function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
     const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
-    playPing();
     Swal.fire({
         title: `<div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 5px 0 10px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 45px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 18px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 8px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 1px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
         html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 12px;"><p style="margin: 0; font-size: 9px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 2px;">Exclusive Invitation</p><h2 style="margin: 5px 0; font-family: 'Montserrat'; font-size: 22px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 13px; font-weight: 500; margin-bottom: 10px; line-height: 1.3;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 8px; padding: 6px; margin-bottom: 10px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 10px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 4px 15px; border-radius: 50px; display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 20px !important; padding: 15px !important; width: 350px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 18px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 12px 0 !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 11px !important; text-transform: uppercase !important; letter-spacing: 1px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; box-shadow: 0 4px 12px rgba(0, 77, 38, 0.2) !important; margin: 15px auto 5px !important; width: 100% !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) scale(1.02) !important; box-shadow: 0 8px 15px rgba(0, 77, 38, 0.3) !important; background: #006633 !important; }.premium-reg-btn i { font-size: 11px; color: #ffd700; }</style>`,
@@ -238,7 +281,6 @@ function showEventInvitation(name, desc, daysLeft, count) {
 setInterval(updateCountdown, 1000);
 
 async function downloadPDF() {
-    Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
     const roll = document.getElementById('RollNumber').innerText;
     document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
