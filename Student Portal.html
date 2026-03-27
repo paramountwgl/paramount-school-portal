@@ -53,7 +53,7 @@
             position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); 
             color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px;
             font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase;
-            transform: rotate(10deg); display: none; z-index: 5;
+            transform: rotate(10deg); display: none; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
@@ -106,7 +106,7 @@
         </div>
     </div>
 
-    <div class="countdown-container" id="countdownSection">
+    <div class="countdown-container" id="countdownSection" style="display:none;">
         <div class="event-info">
             <h3 id="eventTitle">Loading...</h3>
             <p id="eventSubtitle">Stay focused and prepared!</p>
@@ -197,7 +197,7 @@ async function searchStudent() {
         document.getElementById('pdfBtnSection').style.display = 'flex';
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
         document.getElementById('statusBadge').style.background = "#e8f5e9";
-  _       document.getElementById('statusBadge').style.color = "#006633";
+        document.getElementById('statusBadge').style.color = "#006633";
 
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
@@ -255,17 +255,38 @@ db.ref('school_events').on('value', snap => {
 function updateCountdown() {
     const now = new Date().getTime();
     const countdownBox = document.getElementById('countdownSection');
-    const nextEvent = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a,b) => new Date(a.date) - new Date(b.date))[0];
 
-    if (nextEvent) {
+    // 1. Filter for events that haven't happened yet
+    const upcomingEvents = dynamicEvents
+        .filter(ev => new Date(ev.date).getTime() > now)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // 2. If there's an upcoming event, show the timer
+    if (upcomingEvents.length > 0) {
+        const nextEvent = upcomingEvents[0];
         countdownBox.style.display = 'flex';
-        const diff = new Date(nextEvent.date).getTime() - now;
+        
+        const eventDate = new Date(nextEvent.date).getTime();
+        const diff = eventDate - now;
+
+        // Calculations
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        // Update UI
         document.getElementById('eventTitle').innerText = nextEvent.name;
-        document.getElementById('days').innerText = Math.floor(diff / (1000*60*60*24)).toString().padStart(2, '0');
-        document.getElementById('hours').innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60)).toString().padStart(2, '0');
-        document.getElementById('minutes').innerText = Math.floor((diff % (1000*60*60)) / (1000*60)).toString().padStart(2, '0');
-        document.getElementById('seconds').innerText = Math.floor((diff % (1000*60)) / 1000).toString().padStart(2, '0');
-    } else { countdownBox.style.display = 'none'; }
+        document.getElementById('eventSubtitle').innerText = nextEvent.desc || "Stay focused and prepared!";
+        
+        document.getElementById('days').innerText = d.toString().padStart(2, '0');
+        document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+        document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+        document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+    } else {
+        // 3. If the countdown reaches zero and no more events exist, hide it
+        countdownBox.style.display = 'none';
+    }
 }
 
 async function checkAndShowPopup() {
@@ -370,14 +391,14 @@ function showEventInvitation(name, desc, daysLeft, count) {
 setInterval(updateCountdown, 1000);
 
 async function downloadPDF() {
-    Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
-    const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
-    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
-    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
-    pdf.save(`Paramount_Report_${roll}.pdf`);
-    location.reload();
+    Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
+    const roll = document.getElementById('RollNumber').innerText;
+    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
+    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
+    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
+    pdf.save(`Paramount_Report_${roll}.pdf`);
+    location.reload();
 }
 </script>
 </body>
