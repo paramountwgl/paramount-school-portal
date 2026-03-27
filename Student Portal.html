@@ -21,10 +21,10 @@
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
         
-        /* Premium Navigation Button (Beside Syllabus) */
+        /* PREMIUM NAV REG BUTTON */
         .nav-reg-btn { border: 1.5px solid var(--gold) !important; color: var(--gold) !important; background: rgba(255, 255, 255, 0.1); font-weight: 800; }
 
-        /* HEADER & LOGO */
+        /* HEADER */
         .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
         .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
         .header-logo-box img { height: 60px; }
@@ -32,16 +32,15 @@
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        /* PREMIUM SEARCH BAR (AS REQUESTED) */
-        .premium-search-box { width: 95%; max-width: 550px; margin: 0 auto; padding: 10px 0; }
-        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        /* PREMIUM SEARCH BAR */
+        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 95%; max-width: 550px; margin: 10px auto; }
         .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
         #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
         .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
 
         /* COUNTDOWN CARDS & HOVER */
         #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s; flex: 0 0 auto; }
+        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s; flex: 0 0 auto; position: relative; overflow: hidden; }
         .event-timer-card:hover { transform: translateY(-8px); border-color: var(--forest); }
         .event-timer-card.is-clickable { cursor: pointer; }
         .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
@@ -59,7 +58,6 @@
         .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
         .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
 
-        /* FINANCE TRIPLE GRID */
         #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; }
         .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
         .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
@@ -67,20 +65,18 @@
         .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
         #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
+        
         .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
         .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
         .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
         .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
-        /* PREMIUM BUTTONS */
-        .premium-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); }
-        .premium-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); background: linear-gradient(135deg, #006633 0%, #008040 100%); }
+        /* PREMIUM PDF BUTTON */
+        .premium-pdf-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); margin-top: 35px; }
+        .premium-pdf-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); background: linear-gradient(135deg, #006633 0%, #008040 100%); }
         .btn-content { display: flex; align-items: center; gap: 15px; }
         .btn-content i { font-size: 20px; color: var(--gold); }
         .btn-content span { font-size: 12px; }
-
-        /* FIXED RETURN BUTTON (PREMIUM) */
-        .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; min-width: 250px; z-index: 1000; text-decoration: none; }
 
         @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
     </style>
@@ -105,7 +101,7 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
         </div>
-        <div class="premium-search-box">
+        <div class="search-container">
             <div class="premium-input-wrapper">
                 <input type="text" id="rollNumberInput" placeholder="Enter Roll Number to Search" onkeypress="if(event.key === 'Enter') searchStudent();">
                 <button onclick="searchStudent();" class="premium-search-btn">SEARCH</button>
@@ -141,7 +137,7 @@
                 <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
                 <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
             </div>
-            <button onclick="downloadPDF()" id="pdfBtnSection" class="premium-btn" style="margin-top: 35px;">
+            <button onclick="downloadPDF()" id="pdfBtnSection" class="premium-pdf-btn">
                 <div class="btn-content"><i class="fas fa-file-pdf"></i><span>DOWNLOAD PROFILE REPORT</span></div>
                 <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
             </button>
@@ -149,9 +145,7 @@
     </div>
 </div>
 
-<a href="index.html" class="btn-return-fixed premium-btn" id="bottomNav">
-    <div class="btn-content"><i class="fas fa-home"></i><span>RETURN TO DASHBOARD</span></div>
-</a>
+<a href="index.html" class="btn-return" id="bottomNav">RETURN TO DASHBOARD</a>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -371,6 +365,20 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
+function playPing() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch(e) {}
+}
+
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
@@ -387,7 +395,7 @@ async function searchStudent() {
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
-        // Attendance Stats Logic
+        // Attendance Logic
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -427,7 +435,10 @@ async function checkEventStatus(rollNo) {
     eventSnap.forEach(c => latestName = c.val().name);
     if (latestName) {
         const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
-        if (regCheck.exists()) { stamp.style.display = 'block'; } else { stamp.style.display = 'none'; }
+        if (regCheck.exists()) {
+            stamp.style.display = 'block';
+            stamp.innerHTML = `<i class="fas fa-check-circle"></i> Registered: ${latestName}`;
+        } else { stamp.style.display = 'none'; }
     }
 }
 
@@ -446,7 +457,9 @@ function updateCountdown() {
     const container = document.getElementById('countdownSection');
     const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    if (activeEvents.length === 0) { container.innerHTML = ""; container.style.display = "none"; return; }
+    if (activeEvents.length === 0) {
+        container.innerHTML = ""; container.style.display = "none"; return;
+    }
 
     container.style.display = "flex";
     let htmlContent = "";
@@ -456,24 +469,12 @@ function updateCountdown() {
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        
-        const clickableClass = ev.isRegistration ? 'is-clickable' : '';
-        const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')"` : '';
 
-        htmlContent += `<div class="event-timer-card ${clickableClass}" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
+        const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')" style="cursor:pointer;"` : "style='cursor:default;'";
+
+        htmlContent += `<div class="event-timer-card" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
     });
     container.innerHTML = htmlContent;
-}
-
-async function triggerSpecificPopup(eventName) {
-    const ev = dynamicEvents.find(e => e.name === eventName);
-    if (ev && ev.isRegistration) {
-        const now = new Date().getTime();
-        const regSnap = await db.ref(`event_registrations/${ev.name}`).once('value');
-        const count = regSnap.exists() ? Object.keys(regSnap.val()).length : 0;
-        const diffDays = Math.ceil((new Date(ev.regDeadline).getTime() - now) / (1000 * 60 * 60 * 24));
-        showEventInvitation(ev.name, ev.desc, diffDays, count);
-    }
 }
 
 async function checkAndShowPopup() {
@@ -488,6 +489,7 @@ function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
     const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
+    playPing();
     Swal.fire({
         title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 18px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
         html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 8px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div>`,
