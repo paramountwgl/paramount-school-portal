@@ -17,7 +17,7 @@
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--light); overflow-x: hidden; width: 100%; padding-bottom: 120px; }
         
         /* NAVIGATION */
-        .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
+        .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
@@ -33,27 +33,6 @@
         .search-container { width: 100%; max-width: 500px; margin: 0 auto; display: flex; gap: 8px; }
         #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
-
-        /* COUNTDOWN TIMER CSS - CHANGED TO DISPLAY: FLEX */
-        .countdown-container {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin: 15px auto;
-            max-width: 500px;
-            display: flex; 
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border-bottom: 4px solid var(--gold);
-            width: 92%;
-        }
-        .event-info h3 { margin: 0; font-family: 'Montserrat'; font-size: 14px; color: var(--forest); text-transform: uppercase; }
-        .event-info p { margin: 2px 0 0; font-size: 10px; color: #666; font-weight: bold; }
-        .timer-display { display: flex; gap: 8px; }
-        .time-block { background: var(--forest); color: white; padding: 8px; border-radius: 10px; min-width: 45px; text-align: center; }
-        .time-block span { display: block; font-size: 16px; font-weight: 800; }
-        .time-block label { font-size: 8px; text-transform: uppercase; font-weight: 700; color: var(--gold); }
 
         /* FLASHING LOW ATTENDANCE ALERT */
         #lowAttAlert { 
@@ -119,8 +98,6 @@
     <a href="#" class="active"><i class="fas fa-user-circle"></i> Profile</a>
     <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
     <a href="progres.html"><i class="fas fa-chart-line"></i> Progress</a>
-    <a href="student-halltickets.html"><i class="fas fa-id-card"></i> Hall Tickets</a>
-    <a href="syllabus-student-view.html"><i class="fas fa-book-open"></i> View Syllabus</a>
 </div>
 
 <div id="printableArea">
@@ -139,37 +116,10 @@
         </div>
     </div>
 
-    <div class="countdown-container" id="countdownSection">
-        <div class="event-info">
-            <h3 id="eventTitle">Loading Event...</h3>
-            <p id="eventSubtitle">Stay focused and prepared!</p>
-        </div>
-        <div class="timer-display">
-            <div class="time-block">
-                <span id="days">00</span>
-                <label>Days</label>
-            </div>
-            <div class="time-block">
-                <span id="hours">00</span>
-                <label>Hrs</label>
-            </div>
-            <div class="time-block">
-                <span id="minutes">00</span>
-                <label>Min</label>
-            </div>
-            <div class="time-block">
-                <span id="seconds">00</span>
-                <label>Sec</label>
-            </div>
-        </div>
-    </div>
-
     <div id="lowAttAlert"><i class="fas fa-exclamation-triangle"></i> ATTENTION: ATTENDANCE IS BELOW 40%</div>
 
     <div class="profile-card">
-        <div class="photo-container">
-            <img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';">
-        </div>
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'"></div>
         <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
         <div id="statusBadge" class="status-badge">AWAITING ROLL NUMBER</div>
 
@@ -212,6 +162,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
+// Logic remains consistent with your Firebase structure
 const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
@@ -229,10 +180,7 @@ async function searchStudent() {
         document.getElementById('admissionNo').innerText = student.Adm;
         document.getElementById('fatherName').innerText = student.Father;
         document.getElementById('phoneNumber').innerText = student.Phone;
-
-        // FIXED IMAGE LOGIC
-        const photoBox = document.getElementById('studentPhoto');
-        photoBox.src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
+        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
         
         document.getElementById('pdfBtnSection').style.display = 'flex';
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
@@ -255,7 +203,7 @@ async function searchStudent() {
         const attRate = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
         document.getElementById('attendanceRate').innerText = attRate + "%";
 
-        // ALERT LOGIC
+        // --- FLASHING LOW ATTENDANCE ALERT LOGIC ---
         const alertBox = document.getElementById('lowAttAlert');
         const attBoxDisplay = document.getElementById('attBox');
         if (attRate < 40 && totalT > 0) {
@@ -292,34 +240,6 @@ async function searchStudent() {
     }
 }
 
-// PREMIUM COUNTDOWN LOGIC
-const schoolEvents = [
-    { name: "FA-4 Exams", date: "2026-04-10T09:00:00" },
-    { name: "S.A - 2 Exams", date: "2026-04-20T09:00:00" },
-    { name: "Summer Holidays", date: "2026-05-01T00:00:00" }
-];
-
-function updateCountdown() {
-    const now = new Date().getTime();
-    const nextEvent = schoolEvents.find(event => new Date(event.date).getTime() > now);
-
-    if (nextEvent) {
-        const diff = new Date(nextEvent.date).getTime() - now;
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('eventTitle').innerText = nextEvent.name;
-        document.getElementById('days').innerText = d.toString().padStart(2, '0');
-        document.getElementById('hours').innerText = h.toString().padStart(2, '0');
-        document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
-        document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
-    }
-}
-setInterval(updateCountdown, 1000);
-updateCountdown();
-
 async function downloadPDF() {
     Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
     const roll = document.getElementById('RollNumber').innerText;
@@ -328,10 +248,6 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'none';
     document.getElementById('mainNav').style.display = 'none';
     document.getElementById('bottomNav').style.display = 'none';
-    
-    // Hide timer in PDF to save space
-    const countdown = document.getElementById('countdownSection');
-    countdown.style.display = 'none';
 
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
     const imgData = canvas.toDataURL('image/png');
@@ -343,9 +259,8 @@ async function downloadPDF() {
     document.getElementById('pdfBtnSection').style.display = 'flex';
     document.getElementById('mainNav').style.display = 'flex';
     document.getElementById('bottomNav').style.display = 'flex';
-    countdown.style.display = 'flex';
     Swal.close();
 }
 </script>
 </body>
-</html> 
+</html>   
