@@ -20,23 +20,11 @@
         .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
+        
+        /* Premium Navigation Button (Beside Syllabus) */
+        .nav-reg-btn { border: 1.5px solid var(--gold) !important; color: var(--gold) !important; background: rgba(255, 255, 255, 0.1); font-weight: 800; }
 
-        /* Premium Navigation Button (Beside View Syllabus) */
-        .nav-reg-btn { 
-            border: 1.5px solid var(--gold) !important; 
-            color: var(--gold) !important; 
-            background: rgba(255, 255, 255, 0.1); 
-            font-weight: 800;
-            transition: 0.3s all ease;
-        }
-        .nav-reg-btn:hover {
-            background: var(--gold) !important;
-            color: var(--forest) !important;
-            transform: scale(1.05);
-        }
-        .nav-reg-btn i { margin-right: 5px; font-size: 1.1em; }
-
-        /* HEADER */
+        /* HEADER & LOGO */
         .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
         .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
         .header-logo-box img { height: 60px; }
@@ -44,15 +32,17 @@
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        /* PREMIUM SEARCH BAR */
-        .search-container { width: 100%; max-width: 500px; margin: 0 auto; display: flex; gap: 8px; }
-        #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
+        /* PREMIUM SEARCH BAR (AS REQUESTED) */
+        .premium-search-box { width: 95%; max-width: 550px; margin: 0 auto; padding: 10px 0; }
+        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
+        #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
+        .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
 
         /* COUNTDOWN CARDS & HOVER */
         #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex: 0 0 auto; border: 1px solid #f0f0f0; }
-        .event-timer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s; flex: 0 0 auto; }
+        .event-timer-card:hover { transform: translateY(-8px); border-color: var(--forest); }
         .event-timer-card.is-clickable { cursor: pointer; }
         .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
         .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
@@ -61,7 +51,7 @@
         .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
 
         /* PROFILE & FINANCE */
-        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
+        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; display: none; }
         .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
@@ -69,8 +59,8 @@
         .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
         .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
 
-        /* FINANCE SECTION */
-        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
+        /* FINANCE TRIPLE GRID */
+        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; }
         .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
         .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
@@ -82,9 +72,15 @@
         .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
         .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
-        .pdf-btn-container { display: none; justify-content: center; width: 100%; margin-top: 30px; }
-        .pdf-btn { background: var(--forest); color: white; border: none; padding: 16px 30px; border-radius: 50px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; transition: 0.3s; }
-        .pdf-btn:hover { background: #004d26; transform: scale(1.02); }
+        /* PREMIUM BUTTONS */
+        .premium-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); }
+        .premium-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); background: linear-gradient(135deg, #006633 0%, #008040 100%); }
+        .btn-content { display: flex; align-items: center; gap: 15px; }
+        .btn-content i { font-size: 20px; color: var(--gold); }
+        .btn-content span { font-size: 12px; }
+
+        /* FIXED RETURN BUTTON (PREMIUM) */
+        .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; min-width: 250px; z-index: 1000; text-decoration: none; }
 
         @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
     </style>
@@ -109,17 +105,19 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
         </div>
-        <div class="search-container" id="searchBoxForPdf">
-            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
-            <button onclick="searchStudent();" class="search-btn"><i class="fas fa-search"></i></button>
+        <div class="premium-search-box">
+            <div class="premium-input-wrapper">
+                <input type="text" id="rollNumberInput" placeholder="Enter Roll Number to Search" onkeypress="if(event.key === 'Enter') searchStudent();">
+                <button onclick="searchStudent();" class="premium-search-btn">SEARCH</button>
+            </div>
         </div>
     </div>
 
     <div id="countdownSection"></div>
 
-    <div class="profile-card">
-        <div id="regStamp" class="registered-stamp" style="position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5;"><i class="fas fa-check-circle"></i> Registered</div>
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"></div>
+    <div class="profile-card" id="profileCard">
+        <div id="regStamp" class="registered-stamp" style="display:none;"><i class="fas fa-check-circle"></i> Registered</div>
+        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
         <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
         <div id="statusBadge" class="status-badge" style="padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase;">AWAITING ROLL NUMBER</div>
 
@@ -143,15 +141,17 @@
                 <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
                 <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
             </div>
-        </div>
-
-        <div class="pdf-btn-container" id="pdfBtnSection">
-            <button onclick="downloadPDF()" class="pdf-btn"><i class="fas fa-file-pdf"></i> DOWNLOAD PROFILE REPORT</button>
+            <button onclick="downloadPDF()" id="pdfBtnSection" class="premium-btn" style="margin-top: 35px;">
+                <div class="btn-content"><i class="fas fa-file-pdf"></i><span>DOWNLOAD PROFILE REPORT</span></div>
+                <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
+            </button>
         </div>
     </div>
 </div>
 
-<a href="index.html" class="btn-return" id="bottomNav">RETURN TO DASHBOARD</a>
+<a href="index.html" class="btn-return-fixed premium-btn" id="bottomNav">
+    <div class="btn-content"><i class="fas fa-home"></i><span>RETURN TO DASHBOARD</span></div>
+</a>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -371,20 +371,6 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
-function playPing() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
-    } catch(e) {}
-}
-
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
@@ -396,11 +382,12 @@ async function searchStudent() {
         document.getElementById('fatherName').innerText = student.Father;
         document.getElementById('phoneNumber').innerText = student.Phone;
         document.getElementById('studentPhoto').src = `students/${student.Roll}.png?t=${new Date().getTime()}`;
+        document.getElementById('pdfBtnSection').style.display = 'flex';
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
-        // Attendance Logic
+        // Attendance Stats Logic
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -428,19 +415,19 @@ async function searchStudent() {
         document.getElementById('feePercentLabel').innerText = feePct + "%";
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * feePct / 100);
         document.getElementById('feeSection').style.display = 'block';
-        document.getElementById('pdfBtnSection').style.display = 'flex';
 
         checkEventStatus(rollNo);
     } else { Swal.fire('Error', 'Roll Number not found.', 'error'); }
 }
 
 async function checkEventStatus(rollNo) {
+    const stamp = document.getElementById('regStamp');
     const eventSnap = await db.ref('school_events').limitToLast(1).once('value');
     let latestName = "";
     eventSnap.forEach(c => latestName = c.val().name);
     if (latestName) {
         const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
-        if (regCheck.exists()) { document.getElementById('regStamp').style.display = 'block'; } else { document.getElementById('regStamp').style.display = 'none'; }
+        if (regCheck.exists()) { stamp.style.display = 'block'; } else { stamp.style.display = 'none'; }
     }
 }
 
@@ -460,6 +447,7 @@ function updateCountdown() {
     const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if (activeEvents.length === 0) { container.innerHTML = ""; container.style.display = "none"; return; }
+
     container.style.display = "flex";
     let htmlContent = "";
     activeEvents.forEach((ev) => {
@@ -468,12 +456,24 @@ function updateCountdown() {
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        
+        const clickableClass = ev.isRegistration ? 'is-clickable' : '';
+        const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')"` : '';
 
-        const onclick = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')" class="event-timer-card is-clickable"` : `class="event-timer-card"`;
-
-        htmlContent += `<div ${onclick}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin-top:5px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
+        htmlContent += `<div class="event-timer-card ${clickableClass}" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
     });
     container.innerHTML = htmlContent;
+}
+
+async function triggerSpecificPopup(eventName) {
+    const ev = dynamicEvents.find(e => e.name === eventName);
+    if (ev && ev.isRegistration) {
+        const now = new Date().getTime();
+        const regSnap = await db.ref(`event_registrations/${ev.name}`).once('value');
+        const count = regSnap.exists() ? Object.keys(regSnap.val()).length : 0;
+        const diffDays = Math.ceil((new Date(ev.regDeadline).getTime() - now) / (1000 * 60 * 60 * 24));
+        showEventInvitation(ev.name, ev.desc, diffDays, count);
+    }
 }
 
 async function checkAndShowPopup() {
@@ -488,10 +488,9 @@ function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
     const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
-    playPing();
     Swal.fire({
-        title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
-        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 10px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 18px !important; padding: 12px !important; width: 310px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 16px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 8px 15px !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; transition: 0.2s ease; box-shadow: 0 4px 10px rgba(0, 77, 38, 0.2) !important; margin: 12px auto 2px !important; width: auto !important; min-width: 180px !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 15px rgba(0, 77, 38, 0.3) !important; background: #005a2d !important; }.premium-reg-btn i { font-size: 9px; color: #ffd700; }</style>`,
+        title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 18px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
+        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 8px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div>`,
         showCloseButton: true,
         showConfirmButton: true,
         confirmButtonText: 'REGISTER MY NAME <i class="fas fa-chevron-right"></i>',
