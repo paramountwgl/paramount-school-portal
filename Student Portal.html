@@ -53,7 +53,7 @@
             position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); 
             color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px;
             font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase;
-            transform: rotate(10deg); display: none; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transform: rotate(10deg); display: none; z-index: 5;
         }
 
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
@@ -312,75 +312,88 @@ async function checkAndShowPopup() {
 }
 
 function showEventInvitation(name, desc, daysLeft, count) {
-    const themeColor = daysLeft <= 3 ? '#ef4444' : '#006633';
-    const secondaryColor = daysLeft <= 3 ? '#fee2e2' : '#f0fdf4';
+    // Theme logic for urgency
+    const isUrgent = daysLeft <= 2;
+    const themeColor = isUrgent ? '#ef4444' : '#006633';
+    const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
 
-    // Badge for Participant Count
-    let participantBadge = count > 0 ? 
-        `<div style="margin-top: 10px; color: #b8860b; font-weight: 800; font-size: 13px;">
-            <i class="fas fa-users"></i> JOIN ${count} OTHERS ALREADY REGISTERED!
-        </div>` : 
-        `<div style="margin-top: 10px; color: #b8860b; font-weight: 800; font-size: 13px;">
-            <i class="fas fa-rocket"></i> BE THE FIRST TO REGISTER!
-        </div>`;
+    // Participant Count Text
+    const participantsText = count > 0 ? 
+        `<i class="fas fa-users"></i> Join ${count} others already registered!` : 
+        `<i class="fas fa-rocket"></i> Be the first to register!`;
 
     Swal.fire({
-        title: '',
+        title: `
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; margin-bottom: 5px;">
+                <img src="logo.png" style="height: 40px; width: auto;">
+                <div style="text-align: left; line-height: 1;">
+                    <span style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26; display: block; letter-spacing: 0.5px;">PARAMOUNT</span>
+                    <span style="font-size: 8px; color: #b8860b; font-weight: 700; text-transform: uppercase;">English Medium School</span>
+                </div>
+            </div>
+        `,
         html: `
-            <div style="padding: 10px; text-align: center; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--gold); opacity: 0.1; border-radius: 50%;"></div>
+            <div style="text-align: center; font-family: 'Segoe UI', sans-serif; overflow: hidden;">
+                <p style="margin: 0; font-size: 10px; font-weight: 800; color: #999; text-transform: uppercase; letter-spacing: 2px;">Exclusive Invitation</p>
                 
-                <i class="fas fa-star fa-3x" style="color: var(--gold); margin-bottom: 15px; animation: starBounce 2s infinite ease-in-out;"></i>
-                
-                <h4 style="margin: 0; font-family: 'Montserrat'; font-weight: 800; color: var(--forest); letter-spacing: 2px; font-size: 14px;">EXCLUSIVE INVITATION</h4>
-                
-                <h2 style="margin: 15px 0; font-family: 'Montserrat'; font-size: 32px; font-weight: 900; color: #1a1a1a; line-height: 1.1; text-transform: uppercase;">
+                <h2 style="margin: 10px auto; font-family: 'Montserrat'; font-size: 24px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.2; width: 100%;">
                     ${name}
                 </h2>
                 
-                <p style="color: #666; font-size: 15px; line-height: 1.6; margin: 0 auto 10px; max-width: 300px; font-weight: 500;">
-                    ${desc || "A world of excitement awaits at Paramount School!"}
+                <p style="color: #666; font-size: 13px; font-weight: 500; margin-bottom: 15px; line-height: 1.4;">
+                    ${desc || "Participate and showcase your talent!"}
                 </p>
 
-                ${participantBadge}
-
-                <div style="margin: 20px 0;">
-                    <div style="display: inline-flex; align-items: center; gap: 8px; background: ${secondaryColor}; color: ${themeColor}; padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 800; border: 1px solid ${themeColor}44; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <i class="fas fa-hourglass-half ${daysLeft <= 1 ? 'fa-spin' : ''}"></i> 
-                        REGISTRATIONS CLOSE IN ${daysLeft} DAYS
-                    </div>
+                <div style="color: #b8860b; font-weight: 800; font-size: 12px; margin-bottom: 15px; text-transform: uppercase;">
+                    ${participantsText}
                 </div>
 
-                <div style="background: #f8fafc; padding: 12px; border-radius: 15px; border: 1px solid #eee;">
-                    <p style="margin: 0; font-size: 10px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Join the elite list of participants today!</p>
+                <div style="background: ${bgColor}; color: ${themeColor}; padding: 6px 15px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; border: 1px solid ${themeColor}22; margin-bottom: 5px;">
+                    <i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> 
+                    CLOSES IN ${daysLeft} DAYS
                 </div>
             </div>
 
             <style>
-                @keyframes starBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px) scale(1.1); } }
-                .swal2-popup { border-radius: 35px !important; padding: 20px !important; }
-                .btn-reg-custom {
-                    background: var(--forest) !important;
-                    padding: 18px 40px !important;
-                    font-size: 16px !important;
-                    font-weight: 800 !important;
+                /* CUSTOM PREMIUM BUTTON STYLING */
+                .swal2-popup { border-radius: 25px !important; padding: 15px !important; width: 380px !important; }
+                .premium-reg-btn {
+                    background: #004d26 !important;
+                    color: white !important;
+                    border: none !important;
+                    padding: 14px 30px !important;
                     border-radius: 50px !important;
-                    box-shadow: 0 10px 20px rgba(0,102,51,0.2) !important;
-                    transition: 0.3s !important;
+                    font-weight: 800 !important;
+                    font-size: 14px !important;
                     text-transform: uppercase !important;
                     letter-spacing: 1px !important;
-                    color: white !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    gap: 10px !important;
+                    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+                    box-shadow: 0 6px 15px rgba(0, 77, 38, 0.2) !important;
+                    margin: 15px auto 0 !important;
+                    cursor: pointer;
                 }
-                .btn-reg-custom:hover { transform: translateY(-3px) !important; box-shadow: 0 15px 25px rgba(0,102,51,0.3) !important; }
+                .premium-reg-btn:hover {
+                    transform: translateY(-3px) scale(1.03) !important;
+                    box-shadow: 0 10px 20px rgba(0, 77, 38, 0.3) !important;
+                    background: #006633 !important;
+                }
+                .premium-reg-btn i { font-size: 12px; color: #ffd700; }
+                .swal2-close:hover { color: #ef4444 !important; }
             </style>
         `,
         showCloseButton: true,
-        confirmButtonText: 'REGISTER MY NAME <i class="fas fa-chevron-right" style="margin-left:10px;"></i>',
-        customClass: { confirmButton: 'btn-reg-custom' },
+        showConfirmButton: true,
+        confirmButtonText: 'Register My Name <i class="fas fa-id-badge"></i>',
+        customClass: {
+            confirmButton: 'premium-reg-btn'
+        },
         buttonsStyling: false,
-        width: '450px',
-        background: '#fff',
-        allowOutsideClick: false
+        allowOutsideClick: false,
+        width: '380px'
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = `event-signup.html?event=${encodeURIComponent(name)}`;
@@ -391,15 +404,15 @@ function showEventInvitation(name, desc, daysLeft, count) {
 setInterval(updateCountdown, 1000);
 
 async function downloadPDF() {
-    Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
-    const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
-    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
-    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
-    pdf.save(`Paramount_Report_${roll}.pdf`);
-    location.reload();
+    Swal.fire({ title: 'Generating PDF...', didOpen: () => Swal.showLoading() });
+    const roll = document.getElementById('RollNumber').innerText;
+    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
+    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
+    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
+    pdf.save(`Paramount_Report_${roll}.pdf`);
+    location.reload();
 }
 </script>
 </body>
-</html>
+</html>     
