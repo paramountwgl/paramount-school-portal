@@ -10,9 +10,63 @@
     <style>
         :root { --forest: #004d26; --gold: #ffd700; --light: #f4f7f6; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding: 20px; }
+        
+        /* Premium Dashboard Button Styling */
+        .btn-back-dash {
+            text-decoration: none;
+            color: var(--forest);
+            font-weight: 800;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border: 2px solid #f0f0f0;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .btn-back-dash i {
+            background: var(--forest);
+            color: var(--gold);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-back-dash:hover {
+            border-color: var(--forest);
+            color: var(--forest);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 102, 51, 0.15);
+        }
+
+        .btn-back-dash:hover i {
+            transform: rotate(-360deg);
+            background: var(--gold);
+            color: var(--forest);
+        }
+
         .reg-card { max-width: 500px; margin: 20px auto; background: white; padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border-top: 8px solid var(--forest); }
+        
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #fafafa; padding: 15px 20px; border-radius: 20px; border: 1px solid #eee; }
+
+        .school-header-row { display: flex; align-items: center; gap: 15px; }
+        .school-logo-img { height: 40px; }
+        .school-text-box { display: flex; flex-direction: column; line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat'; font-size: 1rem; font-weight: 800; color: var(--forest); }
+        .school-name-sub { font-size: 0.65rem; color: #b8860b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
         .header { text-align: center; margin-bottom: 25px; }
-        .header img { height: 60px; margin-bottom: 10px; }
         h2 { color: var(--forest); font-family: 'Montserrat'; margin: 0; font-size: 1.4rem; text-transform: uppercase; }
         
         .input-group { margin-bottom: 15px; }
@@ -27,8 +81,22 @@
 <body>
 
 <div class="reg-card">
+    <div class="top-bar">
+        <div class="school-header-row">
+            <img src="logo.png" class="school-logo-img">
+            <div class="school-text-box">
+                <span class="school-name-main">PARAMOUNT</span>
+                <span class="school-name-sub">Student Portal</span>
+            </div>
+        </div>
+        
+        <a href="index.html" class="btn-back-dash">
+            <span>Portal</span>
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+
     <div class="header">
-        <img src="logo.png">
         <h2>Event Registration</h2>
         <p style="font-size: 12px; color: #666; font-weight: 600;">Participate & Excel</p>
     </div>
@@ -79,27 +147,19 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // 1. Updated Event Loading Logic with Deadline Check
     db.ref('school_events').on('value', snap => {
         const selector = document.getElementById('eventSelector');
         selector.innerHTML = '<option value="">-- Choose Upcoming Event --</option>';
-        
         const now = new Date().getTime();
-
         snap.forEach(child => {
             const ev = child.val();
-            
-            // Check if regDeadline exists, otherwise default to a future date
             const deadline = ev.regDeadline ? new Date(ev.regDeadline).getTime() : new Date(ev.date).getTime();
-
-            // ONLY show the event in the dropdown if the current time is before the deadline
             if (now < deadline) {
                 selector.innerHTML += `<option value="${ev.name}">${ev.name}</option>`;
             }
         });
     });
 
-    // 2. Updated Registration Function with Server-Side Deadline Validation
     function registerStudent() {
         const eventName = document.getElementById('eventSelector').value;
         const roll = document.getElementById('rollInput').value.trim();
@@ -111,46 +171,30 @@
             return Swal.fire('Note', 'Please fill all required fields', 'info');
         }
 
-        // Final check: Fetch event data from Firebase to verify deadline hasn't passed while user was typing
         db.ref('school_events').orderByChild('name').equalTo(eventName).once('value', snap => {
             let eventData;
             snap.forEach(c => eventData = c.val());
-            
-            if(!eventData) return Swal.fire('Error', 'Event not found', 'error');
-
+            if(!eventData) return;
             const now = new Date().getTime();
             const deadline = eventData.regDeadline ? new Date(eventData.regDeadline).getTime() : new Date(eventData.date).getTime();
 
             if (now > deadline) {
-                Swal.fire('Expired', 'Registration for this event is now closed.', 'error');
+                Swal.fire('Expired', 'Registration is closed.', 'error');
                 return;
             }
 
-            // Prepare registration data
             const entry = { roll, name, cls, phone, timestamp: new Date().toISOString() };
-            
-            // Save to registrations node
             db.ref(`event_registrations/${eventName}/${roll}`).set(entry).then(() => {
-                // SUCCESS POPUP
                 Swal.fire({
                     title: 'Successfully Registered!',
-                    text: 'Your registration is confirmed. Check your profile card for the official stamp.',
+                    text: 'Confirmed! Check your profile for the stamp.',
                     icon: 'success',
                     confirmButtonColor: '#004d26'
-                }).then(() => {
-                    // Reset form fields
-                    document.getElementById('nameInput').value = '';
-                    document.getElementById('rollInput').value = '';
-                    document.getElementById('phoneInput').value = '';
-                    location.reload();
-                });
-            }).catch(error => {
-                Swal.fire('Error', 'Something went wrong. Please try again.', 'error');
+                }).then(() => { location.reload(); });
             });
         });
     }
 
-    // Auto-select event from URL if present (from the Student Portal Popup)
     window.addEventListener('DOMContentLoaded', () => {
         const params = new URLSearchParams(window.location.search);
         const eventParam = params.get('event');
