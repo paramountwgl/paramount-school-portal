@@ -83,6 +83,26 @@
         .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
 
+        /* NEW: REGISTERED STAMP STYLE */
+        .registered-stamp {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 215, 0, 0.1); /* Light Gold Tint */
+            color: #b8860b;
+            padding: 8px 12px;
+            border: 2px dashed #ffd700;
+            border-radius: 8px;
+            font-family: 'Montserrat';
+            font-weight: 800;
+            font-size: 10px;
+            text-transform: uppercase;
+            transform: rotate(10deg);
+            display: none; /* Hidden unless registered */
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
         .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
         .info-item { padding: 12px; background: #fcfdfc; border-radius: 12px; border: 1px solid #f0f0f0; }
         .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
@@ -168,6 +188,10 @@
     <div id="lowAttAlert"><i class="fas fa-exclamation-triangle"></i> ATTENTION: ATTENDANCE IS BELOW 40%</div>
 
     <div class="profile-card">
+        <div id="regStamp" class="registered-stamp">
+            <i class="fas fa-check-circle"></i> Successfully Registered
+        </div>
+
         <div class="photo-container">
             <img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';">
         </div>
@@ -239,6 +263,7 @@ async function searchStudent() {
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
+        // Attendance Logic
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -284,12 +309,37 @@ async function searchStudent() {
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * pct / 100);
         document.getElementById('feeSection').style.display = 'block';
 
+        // NEW: Check for event registration status
+        checkEventStatus(rollNo);
+
     } else {
         Swal.fire('Error', 'Roll Number not found.', 'error');
     }
 }
 
-// --- UPDATED FIREBASE EVENT LOGIC (WITH DESCRIPTION) ---
+// --- CHECK REGISTRATION STATUS LOGIC ---
+async function checkEventStatus(rollNo) {
+    const stamp = document.getElementById('regStamp');
+    
+    // 1. Get the most recent event
+    const eventSnap = await db.ref('school_events').limitToLast(1).once('value');
+    let latestEventName = "";
+    eventSnap.forEach(c => latestEventName = c.val().name);
+
+    if (latestEventName) {
+        // 2. Check if this student roll is in the registration list
+        const regCheck = await db.ref(`event_registrations/${latestEventName}/${rollNo}`).once('value');
+        
+        if (regCheck.exists()) {
+            stamp.style.display = 'block'; // Show the stamp
+            stamp.innerHTML = `<i class="fas fa-check-circle"></i> Registered: ${latestEventName}`;
+        } else {
+            stamp.style.display = 'none'; // Hide if not registered
+        }
+    }
+}
+
+// --- FIREBASE EVENT LOGIC (WITH DESCRIPTION) ---
 let dynamicEvents = [];
 
 db.ref('school_events').on('value', snap => {
@@ -321,8 +371,6 @@ function updateCountdown() {
         const s = Math.floor((diff % (1000 * 60)) / 1000);
 
         document.getElementById('eventTitle').innerText = nextEvent.name;
-        
-        // --- DYNAMIC DESCRIPTION UPDATE ---
         document.getElementById('eventSubtitle').innerText = nextEvent.desc || "Stay focused and prepared!";
 
         document.getElementById('days').innerText = d.toString().padStart(2, '0');
