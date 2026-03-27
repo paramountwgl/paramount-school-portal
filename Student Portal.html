@@ -21,8 +21,21 @@
         .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
         
-        /* Premium Nav Button */
-        .nav-reg-btn { border: 1.5px solid var(--gold) !important; color: var(--gold) !important; background: rgba(255, 255, 255, 0.1) !important; font-weight: 800; }
+        /* Premium Nav Button with Crown */
+        .nav-reg-btn { 
+            border: 1.5px solid var(--gold) !important; 
+            color: var(--gold) !important; 
+            background: rgba(255, 255, 255, 0.1) !important; 
+            font-weight: 800;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-reg-btn:after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.2), transparent);
+            transform: rotate(45deg); animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
 
         /* HEADER */
         .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
@@ -33,14 +46,15 @@
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
         /* PREMIUM SEARCH BAR */
-        .search-container { width: 95%; max-width: 550px; margin: 0 auto; display: flex; gap: 8px; }
-        #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: none; outline: none; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
+        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 95%; max-width: 550px; margin: 10px auto; }
+        .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
+        #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
+        .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; cursor: pointer; }
 
-        /* COUNTDOWN CARDS & HOVER */
+        /* COUNTDOWN CARDS */
         #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex: 0 0 auto; border: 1px solid #f0f0f0; }
-        .event-timer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s; flex: 0 0 auto; }
+        .event-timer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: var(--forest); }
         .event-timer-card.is-clickable { cursor: pointer; }
         .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
         .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
@@ -57,34 +71,28 @@
         .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
         .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
 
-        /* FINANCE SECTION */
+        /* FINANCE GRID */
         #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; }
         .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
         .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
-        .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
+        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
-        
+        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; }
         .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
         .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
-        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; }
         .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
-        /* PREMIUM BUTTON STYLE */
+        /* PREMIUM BUTTONS */
         .premium-btn-style { 
-            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); 
-            color: white; border: none; padding: 18px 25px; border-radius: 20px; 
-            font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; 
-            display: flex; align-items: center; justify-content: space-between; cursor: pointer; 
-            transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); 
+            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); 
         }
         .premium-btn-style:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); }
         .btn-content { display: flex; align-items: center; gap: 15px; }
         .btn-content i { font-size: 20px; color: var(--gold); }
         .btn-content span { font-size: 12px; }
 
-        /* FIXED RETURN BUTTON */
         .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; min-width: 250px; z-index: 1000; text-decoration: none; }
 
         @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
@@ -111,8 +119,10 @@
             </div>
         </div>
         <div class="search-container">
-            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
-            <button onclick="searchStudent();" class="search-btn"><i class="fas fa-search"></i></button>
+            <div class="premium-input-wrapper">
+                <input type="text" id="rollNumberInput" placeholder="Enter Roll Number to Search" onkeypress="if(event.key === 'Enter') searchStudent();">
+                <button onclick="searchStudent();" class="premium-search-btn">SEARCH</button>
+            </div>
         </div>
     </div>
 
@@ -129,7 +139,7 @@
             <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
             <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
             <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
-            <div id="attBox" class="info-item"><label>Live Attendance % (Present/Total Days)</label><span id="attendanceRate">---</span></div>
+            <div id="attBox" class="info-item"><label>Live Attendance % (Present/Total)</label><span id="attendanceRate">---</span></div>
             <div class="info-item"><label>Parent Phone</label><span id="phoneNumber">---</span></div>
         </div>
 
@@ -144,17 +154,15 @@
                 <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
                 <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
             </div>
-            <div class="pdf-btn-container" id="pdfBtnSection" style="display: flex;">
-                <button onclick="downloadPDF()" class="premium-pdf-btn">
-                    <div class="btn-content"><i class="fas fa-file-pdf"></i><span>DOWNLOAD PROFILE REPORT</span></div>
-                    <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
-                </button>
-            </div>
+            <button onclick="downloadPDF()" id="pdfBtnSection" class="premium-btn-style" style="display: none; margin-top: 35px;">
+                <div class="btn-content"><i class="fas fa-file-pdf"></i><span>DOWNLOAD PROFILE REPORT</span></div>
+                <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
+            </button>
         </div>
     </div>
 </div>
 
-<a href="index.html" class="btn-return-fixed premium-pdf-btn" id="bottomNav">
+<a href="index.html" class="btn-return-fixed premium-btn-style" id="bottomNav">
     <div class="btn-content"><i class="fas fa-home"></i><span>RETURN TO DASHBOARD</span></div>
 </a>
 
@@ -376,20 +384,6 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
-function playPing() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
-    } catch(e) {}
-}
-
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
@@ -405,7 +399,7 @@ async function searchStudent() {
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
-        // Attendance Logic
+        // Attendance stats logic
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -420,7 +414,7 @@ async function searchStudent() {
         const pct = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
         document.getElementById('attendanceRate').innerText = `${pct}% (${totalP}/${totalT})`;
 
-        // Finance Logic
+        // Finance circular gauge logic
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if(feeSnap.exists()){
@@ -432,20 +426,25 @@ async function searchStudent() {
         document.getElementById('vDueFee').innerText = "₹ " + (tFee - tPaid);
         document.getElementById('feePercentLabel').innerText = feePct + "%";
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * feePct / 100);
+        
         document.getElementById('feeSection').style.display = 'block';
-        document.getElementById('pdfBtnSection').style.display = 'flex';
+        document.getElementById('pdfBtnSection').style.display = 'block';
 
         checkEventStatus(rollNo);
     } else { Swal.fire('Error', 'Roll Number not found.', 'error'); }
 }
 
 async function checkEventStatus(rollNo) {
+    const stamp = document.getElementById('regStamp');
     const eventSnap = await db.ref('school_events').limitToLast(1).once('value');
     let latestName = "";
     eventSnap.forEach(c => latestName = c.val().name);
     if (latestName) {
         const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
-        if (regCheck.exists()) { document.getElementById('regStamp').style.display = 'block'; } else { document.getElementById('regStamp').style.display = 'none'; }
+        if (regCheck.exists()) {
+            stamp.style.display = 'block';
+            stamp.innerHTML = `<i class="fas fa-check-circle"></i> Registered: ${latestName}`;
+        } else { stamp.style.display = 'none'; }
     }
 }
 
@@ -465,6 +464,7 @@ function updateCountdown() {
     const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if (activeEvents.length === 0) { container.innerHTML = ""; container.style.display = "none"; return; }
+
     container.style.display = "flex";
     let htmlContent = "";
     activeEvents.forEach((ev) => {
@@ -473,11 +473,10 @@ function updateCountdown() {
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        
-        const isClickable = ev.isRegistration ? 'is-clickable' : '';
-        const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')"` : '';
 
-        htmlContent += `<div class="event-timer-card ${isClickable}" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
+        const isClickable = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')" style="cursor:pointer;"` : "style='cursor:default;'";
+
+        htmlContent += `<div class="event-timer-card" ${isClickable}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
     });
     container.innerHTML = htmlContent;
 }
@@ -505,10 +504,9 @@ function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
     const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
-    playPing();
     Swal.fire({
         title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
-        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 10px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 18px !important; padding: 12px !important; width: 310px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 16px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 8px 15px !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; transition: 0.2s ease; box-shadow: 0 4px 10px rgba(0, 77, 38, 0.2) !important; margin: 12px auto 2px !important; width: auto !important; min-width: 180px !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 15px rgba(0, 77, 38, 0.3) !important; background: #005a2d !important; }.premium-reg-btn i { font-size: 9px; color: #ffd700; }</style>`,
+        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 8px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div>`,
         showCloseButton: true,
         showConfirmButton: true,
         confirmButtonText: 'REGISTER MY NAME <i class="fas fa-chevron-right"></i>',
@@ -519,6 +517,18 @@ function showEventInvitation(name, desc, daysLeft, count) {
     }).then((result) => {
         if (result.isConfirmed) { window.location.href = `event-signup.html?event=${encodeURIComponent(name)}`; }
     });
+}
+
+setInterval(updateCountdown, 1000);
+
+async function downloadPDF() {
+    const roll = document.getElementById('RollNumber').innerText;
+    document.querySelectorAll('#mainNav, #bottomNav, .search-container, #countdownSection').forEach(el => el.style.display = 'none');
+    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
+    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
+    pdf.save(`Paramount_Report_${roll}.pdf`);
+    location.reload();
 }
 </script>
 </body>
