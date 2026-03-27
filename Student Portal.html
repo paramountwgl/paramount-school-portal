@@ -18,67 +18,63 @@
         
         /* NAVIGATION */
         .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
         /* HEADER */
-        .profile-header { background: var(--forest); color: white; padding: 30px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
-        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 25px; }
-        .header-logo-box img { height: 65px; }
+        .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
+        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
+        .header-logo-box img { height: 60px; }
         .school-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900; letter-spacing: 1px; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        /* MULTI-EVENT COUNTDOWN CARDS */
-        #countdownSection { display: flex; gap: 20px; padding: 25px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { 
-            background: white; border-radius: 30px; padding: 25px 20px 35px 20px; min-width: 330px; max-width: 360px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.06); text-align: center; flex: 0 0 auto; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            cursor: pointer; position: relative; overflow: hidden; border: 1px solid #f0f0f0;
-        }
-        .event-timer-card:hover { transform: translateY(-8px); border-color: var(--forest); }
-        .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 20px; color: var(--forest); text-transform: uppercase; font-weight: 900; }
-        .timer-grid { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
-        .t-block { background: var(--forest); color: white; padding: 12px; border-radius: 15px; min-width: 60px; }
-        .t-block span { display: block; font-size: 22px; font-weight: 900; }
-        .t-block label { font-size: 8px; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+        /* PREMIUM SEARCH BAR */
+        .search-container { width: 95%; max-width: 550px; margin: 0 auto; padding: 10px 0; }
+        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 22px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
+        #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
+        .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
+        .premium-search-btn:hover { background: #00331a; }
 
-        .progress-container { width: 100%; background: #f8f8f8; height: 6px; position: absolute; bottom: 0; left: 0; }
-        .progress-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--forest)); width: 0%; transition: width 1.5s ease-out; }
+        /* COUNTDOWN SECTION */
+        #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; flex: 0 0 auto; cursor: pointer; position: relative; overflow: hidden; }
+        .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
+        .t-block { background: var(--forest); color: white; padding: 10px; border-radius: 12px; min-width: 55px; }
+        .t-block span { display: block; font-size: 20px; font-weight: 900; }
+        .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+        .progress-container { width: 100%; background: #f0f0f0; height: 5px; position: absolute; bottom: 0; left: 0; }
+        .progress-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--forest)); width: 0%; transition: width 1s linear; }
 
         /* PROFILE CARD */
-        .profile-card { max-width: 800px; margin: 60px auto 30px auto; background: white; padding: 30px; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
-        .photo-container { width: 120px; height: 120px; margin: -85px auto 20px auto; border-radius: 50%; border: 6px solid white; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background: #fdfdfd; }
+        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
+        .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
-        
-        .info-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 30px; text-align: left; }
-        .info-item { padding: 15px; background: #fafdfb; border-radius: 18px; border: 1px solid #f1f1f1; }
-        .info-item label { font-size: 10px; font-weight: 800; color: #bbb; text-transform: uppercase; display: block; margin-bottom: 5px; }
-        .info-item span { font-weight: 700; color: #1a1a1a; font-size: 15px; display: block; }
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
+        .info-item { padding: 12px; background: #fcfdfc; border-radius: 12px; border: 1px solid #f0f0f0; }
+        .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
+        .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
+        .status-badge { padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase; }
 
         /* FINANCE SECTION */
-        #feeSection { margin-top: 40px; padding-top: 30px; border-top: 2px dashed #eee; text-align: left; display: none; }
-        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 25px; border-radius: 25px; margin-bottom: 25px; position: relative; }
-        .circle-svg { width: 130px; height: 130px; transform: rotate(-90deg); }
+        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
+        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
+        .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
-        .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
+        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-        #feePercentLabel { font-weight: 900; font-size: 1.6rem; color: #1e293b; display: block; }
-        
-        .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .stat-card-mini { padding: 15px 10px; border-radius: 20px; background: white; border: 1px solid #f0f0f0; text-align: center; }
-        .stat-card-mini label { font-size: 9px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 6px; }
-        .stat-card-mini span { font-size: 15px; font-weight: 900; display: block; }
+        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
+        .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
+        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
-        .premium-pdf-btn {
-            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none;
-            padding: 20px 30px; border-radius: 25px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
-            transition: 0.4s; box-shadow: 0 12px 25px rgba(0, 77, 38, 0.2); margin-top: 35px;
-        }
-        .premium-pdf-btn:hover { transform: translateY(-5px); box-shadow: 0 18px 35px rgba(0, 77, 38, 0.3); }
+        /* PREMIUM BUTTON */
+        .premium-pdf-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); margin-top: 30px; }
+        .premium-pdf-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); }
 
-        .btn-return { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #004d26; color: white; padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
         @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
     </style>
@@ -102,25 +98,32 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
         </div>
+        
         <div class="search-container" id="searchBoxForPdf">
-            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
-            <button onclick="searchStudent();" class="search-btn"><i class="fas fa-search"></i></button>
+            <div class="premium-input-wrapper">
+                <i class="fas fa-fingerprint" style="color: var(--gold); font-size: 18px; margin-right: 15px;"></i>
+                <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
+                <button onclick="searchStudent();" class="premium-search-btn">
+                    <span>SEARCH</span><i class="fas fa-arrow-right" style="color: var(--gold); font-size: 10px; margin-left: 8px;"></i>
+                </button>
+            </div>
         </div>
     </div>
 
     <div id="countdownSection"></div>
 
     <div class="profile-card">
+        <div id="regStamp" class="registered-stamp" style="position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5;"><i class="fas fa-check-circle"></i> Successfully Registered</div>
         <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';"></div>
         <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
-        <div id="statusBadge" class="status-badge" style="padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase;">AWAITING ROLL NUMBER</div>
+        <div id="statusBadge" class="status-badge">AWAITING ROLL NUMBER</div>
 
         <div class="info-grid">
             <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
             <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
             <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
             <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
-            <div id="attBox" class="info-item"><label>Live Attendance %</label><span id="attendanceRate">---</span></div>
+            <div id="attBox" class="info-item"><label>Live Attendance % (P/T)</label><span id="attendanceRate">---</span></div>
             <div class="info-item"><label>Parent Phone</label><span id="phoneNumber">---</span></div>
         </div>
 
@@ -154,8 +157,7 @@ const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", data
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const studentData = {
-    // PRE-KG (41 students)
+const studentData = { // PRE-KG (41 students)
     "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" },
     "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" },
     "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" },
@@ -361,21 +363,7 @@ const studentData = {
     "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8", Father: "Khaja Faheemuddin", Roll: "1298337", Phone: "9959414786", Adm: "28" },
     "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8", Father: "Ravi", Roll: "1298333", Phone: "9492098006", Adm: "39" },
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
-};
-
-function playPing() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
-    } catch(e) {}
-}
+ };
 
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
@@ -392,7 +380,7 @@ async function searchStudent() {
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
-        // Attendance Stats
+        // Attendance Stats Logic with (Present/Total)
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -404,9 +392,10 @@ async function searchStudent() {
                 }
             });
         }
-        document.getElementById('attendanceRate').innerText = totalT > 0 ? Math.round((totalP/totalT)*100) + "%" : "0%";
+        const percentage = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
+        document.getElementById('attendanceRate').innerText = `${percentage}% (${totalP}/${totalT})`;
 
-        // RESTORED FEE LOGIC
+        // Fee Logic
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if(feeSnap.exists()){
@@ -488,7 +477,6 @@ function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
     const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
-    playPing();
     Swal.fire({
         title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
         html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 8px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 18px !important; padding: 12px !important; width: 310px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 16px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 10px 20px !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.8px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; transition: 0.3s ease; box-shadow: 0 4px 10px rgba(0, 77, 38, 0.2) !important; margin: 12px auto 2px !important; width: auto !important; min-width: 180px !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 15px rgba(0, 77, 38, 0.3) !important; background: #005a2d !important; }.premium-reg-btn i { font-size: 9px; color: #ffd700; }</style>`,
