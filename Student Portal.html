@@ -29,15 +29,14 @@
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
-        /* PREMIUM SEARCH BAR (ICON REMOVED) */
+        /* PREMIUM SEARCH BAR */
         .search-container { width: 95%; max-width: 550px; margin: 0 auto; padding: 10px 0; }
         .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
         #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
         .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
-        .premium-search-btn:hover { background: #00331a; }
 
-        /* COUNTDOWN CARDS */
+        /* COUNTDOWN SECTION */
         #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
         .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; flex: 0 0 auto; position: relative; overflow: hidden; transition: 0.3s; }
         .event-timer-card.is-clickable { cursor: pointer; }
@@ -51,7 +50,7 @@
         .progress-container { width: 100%; background: #f0f0f0; height: 5px; position: absolute; bottom: 0; left: 0; }
         .progress-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--forest)); width: 0%; transition: width 1s linear; }
 
-        /* PROFILE CARD */
+        /* PROFILE SECTION */
         .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
         .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
@@ -65,7 +64,7 @@
         .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
         .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
-        .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
+        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
         #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
         .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
@@ -74,10 +73,9 @@
         .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
         .premium-pdf-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); margin-top: 30px; }
-        .premium-pdf-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); }
 
         .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 768px) { .info-grid, .fee-stats-triple { grid-template-columns: 1fr 1fr; } .fee-stats-triple { grid-template-columns: repeat(3, 1fr); } }
     </style>
 </head>
 <body>
@@ -99,7 +97,7 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
         </div>
-        <div class="search-container" id="searchBoxForPdf">
+        <div class="search-container">
             <div class="premium-input-wrapper">
                 <input type="text" id="rollNumberInput" placeholder="Enter Roll Number to Search" onkeypress="if(event.key === 'Enter') searchStudent();">
                 <button onclick="searchStudent();" class="premium-search-btn">
@@ -139,7 +137,7 @@
             </div>
             <button onclick="downloadPDF()" id="pdfBtnSection" class="premium-pdf-btn" style="display: none;">
                 <div class="btn-content"><i class="fas fa-file-pdf"></i><span>Download Profile Report</span></div>
-                <i class="fas fa-arrow-down-long"></i>
+                <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
             </button>
         </div>
     </div>
@@ -156,7 +154,8 @@ const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", data
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const studentData = { // PRE-KG (41 students)
+const studentData = {
+    // PRE-KG (41 students)
     "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" },
     "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" },
     "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" },
@@ -198,7 +197,7 @@ const studentData = { // PRE-KG (41 students)
     "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Father: "MM Suresh kumar", Roll: "1478250", Phone: "8247448532", Adm: "2006" },
     "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Father: "Shekar", Roll: "1413563", Phone: "7671807331", Adm: "2015" },
     "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Father: "Yousuf Shareef", Roll: "1459577", Phone: "9392670257", Adm: "2018" },
-    
+
     // KG-1 (21 students)
     "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1", Father: "Rakesh", Roll: "1424084", Phone: "9502626801", Adm: "2007" },
     "1426519": { Name: "Aditya Manda", Class: "KG-1", Father: "Mohan Lal", Roll: "1426519", Phone: "8374173873", Adm: "2004" },
@@ -364,6 +363,20 @@ const studentData = { // PRE-KG (41 students)
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
+function playPing() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch(e) {}
+}
+
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
@@ -379,7 +392,7 @@ async function searchStudent() {
         document.getElementById('statusBadge').style.background = "#e8f5e9";
         document.getElementById('statusBadge').style.color = "#006633";
 
-        // Attendance Stats Logic
+        // Attendance Logic
         const shortClass = student.Class.split(" ")[0]; 
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
@@ -429,40 +442,33 @@ db.ref('school_events').on('value', snap => {
     dynamicEvents = [];
     if (snap.exists()) { snap.forEach(child => dynamicEvents.push(child.val())); }
     updateCountdown(); 
-    checkAndShowPopup();
 });
 
 function updateCountdown() {
     const now = new Date().getTime();
     const container = document.getElementById('countdownSection');
-    const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
+    const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now);
     if (activeEvents.length === 0) { container.innerHTML = ""; container.style.display = "none"; return; }
     container.style.display = "flex";
     let htmlContent = "";
     activeEvents.forEach((ev) => {
         const diff = new Date(ev.date).getTime() - now;
-        const totalDuration = 30 * 24 * 60 * 60 * 1000; 
-        const progress = Math.min(100, Math.max(0, (diff / totalDuration) * 100));
         const d = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
         const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         
+        let progressHtml = '';
+        if (ev.isRegistration && ev.regDeadline) {
+             const totalDuration = 30 * 24 * 60 * 60 * 1000; 
+             const progress = Math.min(100, Math.max(0, (diff / totalDuration) * 100));
+             progressHtml = `<div class="progress-container"><div class="progress-fill" style="width: ${progress}%"></div></div>`;
+        }
+
         const clickableClass = ev.isRegistration ? 'is-clickable' : '';
         const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')"` : '';
 
-        htmlContent += `
-            <div class="event-timer-card ${clickableClass}" ${clickAction}>
-                <h3>${ev.name}</h3>
-                <p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p>
-                <div class="timer-grid">
-                    <div class="t-block"><span>${d}</span><label>Days</label></div>
-                    <div class="t-block"><span>${h}</span><label>Hrs</label></div>
-                    <div class="t-block"><span>${m}</span><label>Min</label></div>
-                    <div class="t-block"><span>${s}</span><label>Sec</label></div>
-                </div>
-                <div class="progress-container"><div class="progress-fill" style="width: ${progress}%"></div></div>
-            </div>`;
+        htmlContent += `<div class="event-timer-card ${clickableClass}" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div>${progressHtml}</div>`;
     });
     container.innerHTML = htmlContent;
 }
@@ -478,21 +484,12 @@ async function triggerSpecificPopup(eventName) {
     }
 }
 
-let hasPromptedEvent = false;
-async function checkAndShowPopup() {
-    if (!hasPromptedEvent && dynamicEvents.length > 0) {
-        const now = new Date().getTime();
-        const nextEvent = dynamicEvents.filter(ev => ev.isRegistration === true && new Date(ev.regDeadline).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date))[0];
-        if (nextEvent) { hasPromptedEvent = true; triggerSpecificPopup(nextEvent.name); }
-    }
-}
-
 function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
     const bgColor = isUrgent ? '#fff1f2' : '#f0fdf4';
     Swal.fire({
-        title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 18px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
+        title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
         html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 8px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 19px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 8px; line-height: 1.2; padding: 0 10px;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 18px !important; padding: 12px !important; width: 310px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 16px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 10px 20px !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.8px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; transition: 0.3s ease; box-shadow: 0 4px 10px rgba(0, 77, 38, 0.2) !important; margin: 12px auto 2px !important; width: auto !important; min-width: 180px !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 15px rgba(0, 77, 38, 0.3) !important; background: #005a2d !important; }.premium-reg-btn i { font-size: 9px; color: #ffd700; }</style>`,
         showCloseButton: true,
         showConfirmButton: true,
@@ -510,7 +507,7 @@ setInterval(updateCountdown, 1000);
 
 async function downloadPDF() {
     const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('#searchBoxForPdf, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
     const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
