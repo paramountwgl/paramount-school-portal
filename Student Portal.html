@@ -12,63 +12,91 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        :root { --forest: #004d26; --gold: #ffd700; --danger: #ef4444; --light: #f4f7f6; --paid: #4caf50; }
+        :root { --forest: #006633; --gold: #ffd700; --danger: #ef4444; --light: #f4f7f6; --paid: #4caf50; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--light); overflow-x: hidden; width: 100%; padding-bottom: 120px; }
         
         /* NAVIGATION */
-        .portal-nav { background: #00331a; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; border: 1px solid transparent; }
+        .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
         
-        /* SUPER COOL REGISTRATION BUTTON */
-        .nav-reg-btn { background: linear-gradient(135deg, #006633 0%, #004d26 100%) !important; border: 1px solid var(--gold) !important; color: var(--gold) !important; position: relative; overflow: hidden; }
-        .nav-reg-btn:after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,215,0,0.2), transparent); transform: rotate(45deg); animation: shimmer 3s infinite; }
-        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+        /* EVENTS REGISTRATION NAV BUTTON (Shimmer Removed) */
+        .nav-reg-btn { 
+            background: linear-gradient(135deg, #006633 0%, #004d26 100%) !important; 
+            border: 1px solid var(--gold) !important; 
+            color: var(--gold) !important; 
+        }
 
         /* HEADER */
-        .profile-header { background: var(--forest); color: white; padding: 30px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
-        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 25px; }
+        .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
+        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
         .header-logo-box img { height: 60px; }
         .school-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 900; letter-spacing: 1px; color: white; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
         /* PREMIUM SEARCH BAR */
-        .search-container { width: 95%; max-width: 500px; margin: 0 auto; display: flex; gap: 8px; background: white; padding: 6px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        #rollNumberInput { flex: 1; padding: 10px 20px; border: none; outline: none; font-size: 15px; font-weight: 600; }
-        .search-btn { background: var(--forest); color: white; border: none; padding: 0 25px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
+        #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
+        .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
 
-        /* COUNTDOWN CARDS */
-        #countdownSection { display: flex; gap: 20px; padding: 25px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 30px; padding: 25px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); flex: 0 0 auto; border: 1px solid #f0f0f0; border-bottom: 5px solid var(--gold); position: relative; overflow: hidden; }
-        .event-timer-card:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(0,77,38,0.12); border-color: var(--forest); }
-        .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 20px; color: var(--forest); text-transform: uppercase; font-weight: 900; }
-        .timer-grid { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
-        .t-block { background: var(--forest); color: white; padding: 12px; border-radius: 15px; min-width: 60px; box-shadow: 0 4px 10px rgba(0,77,38,0.2); }
-        .t-block span { display: block; font-size: 22px; font-weight: 900; }
-        .t-block label { font-size: 8px; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+        /* COUNTDOWN CARDS (Added Shimmer Effect) */
+        #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+        .event-timer-card { 
+            background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); 
+            text-align: center; transition: 0.3s; flex: 0 0 auto; position: relative; overflow: hidden;
+        }
+        .event-timer-card:hover { transform: translateY(-5px); }
+        .event-timer-card.is-clickable { cursor: pointer; }
+        
+        /* SHIMMER EFFECT FOR CARDS */
+        .event-timer-card:after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.15), transparent);
+            transform: rotate(45deg); animation: shimmer 4s infinite; pointer-events: none;
+        }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
+        .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
+        .t-block { background: var(--forest); color: white; padding: 10px; border-radius: 12px; min-width: 55px; position: relative; z-index: 2; }
+        .t-block span { display: block; font-size: 20px; font-weight: 900; }
+        .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+
+        /* PROFILE CARD */
+        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
+        .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
+        .student-photo { width: 100%; height: 100%; object-fit: cover; }
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
+        .info-item { padding: 12px; background: #fcfdfc; border-radius: 12px; border: 1px solid #f0f0f0; }
+        .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
+        .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
 
         /* FINANCE SECTION */
-        #feeSection { margin-top: 40px; padding-top: 30px; border-top: 2px dashed #eee; text-align: left; display: none; }
-        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 25px; border-radius: 25px; margin-bottom: 25px; position: relative; }
-        .circle-svg { width: 130px; height: 130px; transform: rotate(-90deg); }
+        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
+        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
+        .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
-        .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
+        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-        #feePercentLabel { font-weight: 900; font-size: 1.6rem; color: #1e293b; display: block; }
+        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
         
         .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .stat-card-mini { padding: 15px 10px; border-radius: 20px; background: white; border: 1px solid #f0f0f0; text-align: center; }
-        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 6px; }
-        .stat-card-mini span { font-size: 15px; font-weight: 900; display: block; }
+        .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
+        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
 
-        .premium-pdf-btn { 
-            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; 
-            padding: 20px 30px; border-radius: 25px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; 
-            letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; 
-            transition: 0.4s; box-shadow: 0 12px 25px rgba(0, 77, 38, 0.2); margin-top: 35px;
-        }
+        /* PREMIUM PDF BUTTON */
+        .premium-pdf-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); margin-top: 35px; }
+        .premium-pdf-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 77, 38, 0.3); background: linear-gradient(135deg, #006633 0%, #008040 100%); }
+        .btn-content { display: flex; align-items: center; gap: 15px; }
+        .btn-content i { font-size: 20px; color: var(--gold); }
+        .btn-content span { font-size: 12px; }
+
+        .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
         @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
     </style>
@@ -93,7 +121,7 @@
                 <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
             </div>
         </div>
-        <div class="search-container" id="searchBoxForPdf">
+        <div class="search-container">
             <div class="premium-input-wrapper">
                 <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
                 <button onclick="searchStudent();" class="premium-search-btn">SEARCH</button>
@@ -128,10 +156,12 @@
                 <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
                 <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
             </div>
-            <button onclick="downloadPDF()" id="pdfBtnSection" class="premium-pdf-btn" style="display: none;">
-                <div class="btn-content"><i class="fas fa-file-pdf"></i><span>Download Profile Report</span></div>
-                <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
-            </button>
+            <div class="pdf-btn-container" id="pdfBtnSection">
+                <button onclick="downloadPDF()" class="premium-pdf-btn">
+                    <div class="btn-content"><i class="fas fa-file-pdf"></i><span>Download Profile Report</span></div>
+                    <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -147,49 +177,9 @@ const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", data
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const studentData = {
-    // PRE-KG (41 students)
-    "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" },
-    "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" },
-    "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" },
-    "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG", Father: "Vijay", Roll: "1459555", Phone: "8686191768", Adm: "2024" },
-    "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG", Father: "Raju", Roll: "1459560", Phone: "9704592874", Adm: "2017" },
-    "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG", Father: "S.Abhinav", Roll: "1474500", Phone: "8074771010", Adm: "2058" },
-    "1460680": { Name: "Afraha Begum", Class: "Pre-KG", Father: "Amjad Khan", Roll: "1460680", Phone: "9440107489", Adm: "2043" },
-    "1472299": { Name: "Aliya Sultana", Class: "Pre-KG", Father: "MD.Allayar Khan", Roll: "1472299", Phone: "6304312988", Adm: "2054" },
-    "1459683": { Name: "Anvika Bandi", Class: "Pre-KG", Father: "Sridhar", Roll: "1459683", Phone: "9398418487", Adm: "2020" },
-    "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG", Father: "Rajendraprasad", Roll: "1459620", Phone: "6305756873", Adm: "2016" },
-    "1459605": { Name: "Devansh Bandi", Class: "Pre-KG", Father: "Rajukumar", Roll: "1459605", Phone: "9121285781", Adm: "2030" },
-    "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG", Father: "M.Rajkumar", Roll: "1472069", Phone: "7780262276", Adm: "2050" },
-    "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG", Father: "S.Prashanth", Roll: "1472723", Phone: "9515837322", Adm: "2056" },
-    "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG", Father: "Ramesh", Roll: "1459658", Phone: "8790611868", Adm: "2033" },
-    "1478248": { Name: "Jashritha Boina", Class: "Pre-KG", Father: "B.Poorna Chander", Roll: "1478248", Phone: "6302186195", Adm: "2060" },
-    "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG", Father: "K.Akhil", Roll: "1481135", Phone: "8179316869", Adm: "0" },
-    "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG", Father: "Shivakumar", Roll: "1459568", Phone: "7842370658", Adm: "2014" },
-    "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG", Father: "Sayeed", Roll: "1459652", Phone: "9948172033", Adm: "2023" },
-    "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG", Father: "Shivaram", Roll: "1459636", Phone: "9347825403", Adm: "2019" },
-    "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG", Father: "Ramesh", Roll: "1463720", Phone: "7386940719", Adm: "2045" },
-    "1459582": { Name: "Rishi Myakala", Class: "Pre-KG", Father: "Kittu", Roll: "1459582", Phone: "9391993955", Adm: "2039" },
-    "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG", Father: "Raju", Roll: "1459607", Phone: "8686262543", Adm: "2041" },
-    "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG", Father: "Ramulu", Roll: "1459604", Phone: "7893718047", Adm: "2032" },
-    "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG", Father: "Bixapathi", Roll: "1459625", Phone: "7702551738", Adm: "2038" },
-    "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG", Father: "K.Venkateshwarlu", Roll: "1472074", Phone: "8712525233", Adm: "2053" },
-    "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG", Father: "Yaka Swami", Roll: "1469395", Phone: "9052020711", Adm: "2042" },
-    "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG", Father: "VASU", Roll: "1456748", Phone: "9912101753", Adm: "2013" },
-    "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG", Father: "Shivaramakrishna", Roll: "1459687", Phone: "9398065483", Adm: "2040" },
-    "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG", Father: "Vijay", Roll: "1459572", Phone: "8686191768", Adm: "2012" },
-    "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG", Father: "Arun", Roll: "1459643", Phone: "9346300709", Adm: "2029" },
-    "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG", Father: "Srikanth", Roll: "1459603", Phone: "8309708832", Adm: "2037" },
-    "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG", Father: "V.Kiran Kumar", Roll: "1472536", Phone: "9642539015", Adm: "2055" },
-    "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG", Father: "RANGITH", Roll: "1456743", Phone: "9949327643", Adm: "2025" },
-    "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG", Father: "L.Rahul", Roll: "1473500", Phone: "9010913855", Adm: "2057" },
-    "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG", Father: "Bharat Kumar", Roll: "1463724", Phone: "8074833651", Adm: "2046" },
-    "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG", Father: "Kranthi", Roll: "1459694", Phone: "9963987952", Adm: "2022" },
-    "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG", Father: "L.Shiva", Roll: "1474815", Phone: "9182045866", Adm: "2059" },
-    "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG", Father: "Anil Kumar", Roll: "1460690", Phone: "9703293930", Adm: "2044" },
-    "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Father: "MM Suresh kumar", Roll: "1478250", Phone: "8247448532", Adm: "2006" },
-    "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Father: "Shekar", Roll: "1413563", Phone: "7671807331", Adm: "2015" },
-    "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Father: "Yousuf Shareef", Roll: "1459577", Phone: "9392670257", Adm: "2018" },
+const studentData = { 
+    // PRE-KG
+    "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG", Father: "Vijay", Roll: "1459555", Phone: "8686191768", Adm: "2024" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG", Father: "Raju", Roll: "1459560", Phone: "9704592874", Adm: "2017" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG", Father: "S.Abhinav", Roll: "1474500", Phone: "8074771010", Adm: "2058" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG", Father: "Amjad Khan", Roll: "1460680", Phone: "9440107489", Adm: "2043" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG", Father: "MD.Allayar Khan", Roll: "1472299", Phone: "6304312988", Adm: "2054" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG", Father: "Sridhar", Roll: "1459683", Phone: "9398418487", Adm: "2020" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG", Father: "Rajendraprasad", Roll: "1459620", Phone: "6305756873", Adm: "2016" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG", Father: "Rajukumar", Roll: "1459605", Phone: "9121285781", Adm: "2030" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG", Father: "M.Rajkumar", Roll: "1472069", Phone: "7780262276", Adm: "2050" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG", Father: "S.Prashanth", Roll: "1472723", Phone: "9515837322", Adm: "2056" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG", Father: "Ramesh", Roll: "1459658", Phone: "8790611868", Adm: "2033" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG", Father: "B.Poorna Chander", Roll: "1478248", Phone: "6302186195", Adm: "2060" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG", Father: "K.Akhil", Roll: "1481135", Phone: "8179316869", Adm: "0" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG", Father: "Shivakumar", Roll: "1459568", Phone: "7842370658", Adm: "2014" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG", Father: "Sayeed", Roll: "1459652", Phone: "9948172033", Adm: "2023" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG", Father: "Shivaram", Roll: "1459636", Phone: "9347825403", Adm: "2019" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG", Father: "Ramesh", Roll: "1463720", Phone: "7386940719", Adm: "2045" }, "1459582": { Name: "Rishi Myakala", Class: "Pre-KG", Father: "Kittu", Roll: "1459582", Phone: "9391993955", Adm: "2039" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG", Father: "Raju", Roll: "1459607", Phone: "8686262543", Adm: "2041" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG", Father: "Ramulu", Roll: "1459604", Phone: "7893718047", Adm: "2032" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG", Father: "Bixapathi", Roll: "1459625", Phone: "7702551738", Adm: "2038" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG", Father: "K.Venkateshwarlu", Roll: "1472074", Phone: "8712525233", Adm: "2053" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG", Father: "Yaka Swami", Roll: "1469395", Phone: "9052020711", Adm: "2042" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG", Father: "VASU", Roll: "1456748", Phone: "9912101753", Adm: "2013" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG", Father: "Shivaramakrishna", Roll: "1459687", Phone: "9398065483", Adm: "2040" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG", Father: "Vijay", Roll: "1459572", Phone: "8686191768", Adm: "2012" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG", Father: "Arun", Roll: "1459643", Phone: "9346300709", Adm: "2029" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG", Father: "Srikanth", Roll: "1459603", Phone: "8309708832", Adm: "2037" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG", Father: "V.Kiran Kumar", Roll: "1472536", Phone: "9642539015", Adm: "2055" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG", Father: "RANGITH", Roll: "1456743", Phone: "9949327643", Adm: "2025" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG", Father: "L.Rahul", Roll: "1473500", Phone: "9010913855", Adm: "2057" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG", Father: "Bharat Kumar", Roll: "1463724", Phone: "8074833651", Adm: "2046" }, "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG", Father: "Kranthi", Roll: "1459694", Phone: "9963987952", Adm: "2022" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG", Father: "L.Shiva", Roll: "1474815", Phone: "9182045866", Adm: "2059" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG", Father: "Anil Kumar", Roll: "1460690", Phone: "9703293930", Adm: "2044" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG", Father: "MM Suresh kumar", Roll: "1478250", Phone: "8247448532", Adm: "2006" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG", Father: "Shekar", Roll: "1413563", Phone: "7671807331", Adm: "2015" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG", Father: "Yousuf Shareef", Roll: "1459577", Phone: "9392670257", Adm: "2018" },
 
     // KG-1 (21 students)
     "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1", Father: "Rakesh", Roll: "1424084", Phone: "9502626801", Adm: "2007" },
@@ -392,7 +382,7 @@ async function searchStudent() {
         let totalP = 0, totalT = 0;
         if(attSnap.exists()){
             const allData = attSnap.val();
-            Object.keys(allData).forEach(date => {
+          0 Object.keys(allData).forEach(date => {
                 if(allData[date][shortClass] && allData[date][shortClass][student.Name] !== undefined) {
                     totalT++; if(allData[date][shortClass][student.Name] === true) totalP++;
                 }
@@ -434,13 +424,10 @@ async function checkEventStatus(rollNo) {
 }
 
 let dynamicEvents = [];
-let hasPromptedEvent = false;
-
 db.ref('school_events').on('value', snap => {
     dynamicEvents = [];
-    if (snap.exists()) { snap.forEach(child => { dynamicEvents.push(child.val()); }); }
+    if (snap.exists()) { snap.forEach(child => dynamicEvents.push(child.val())); }
     updateCountdown(); 
-    checkAndShowPopup();
 });
 
 function updateCountdown() {
@@ -461,17 +448,9 @@ function updateCountdown() {
         const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         
-        let progressHtml = '';
-        if (ev.isRegistration) {
-             const totalDuration = 30 * 24 * 60 * 60 * 1000; 
-             const progress = Math.min(100, Math.max(0, (diff / totalDuration) * 100));
-             progressHtml = `<div class="progress-container"><div class="progress-fill" style="width: ${progress}%"></div></div>`;
-        }
+        const onclick = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')" class="event-timer-card is-clickable"` : `class="event-timer-card"`;
 
-        const clickableClass = ev.isRegistration ? 'is-clickable' : '';
-        const clickAction = ev.isRegistration ? `onclick="triggerSpecificPopup('${ev.name}')"` : '';
-
-        htmlContent += `<div class="event-timer-card ${clickableClass}" ${clickAction}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div>${progressHtml}</div>`;
+        htmlContent += `<div ${onclick}><h3>${ev.name}</h3><p style="font-size: 11px; color: #666; font-weight: bold; margin: 5px 0 15px;">${ev.desc || 'Stay Prepared!'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
     });
     container.innerHTML = htmlContent;
 }
@@ -487,14 +466,6 @@ async function triggerSpecificPopup(eventName) {
     }
 }
 
-async function checkAndShowPopup() {
-    if (!hasPromptedEvent && dynamicEvents.length > 0) {
-        const now = new Date().getTime();
-        const nextEvent = dynamicEvents.filter(ev => ev.isRegistration === true && new Date(ev.regDeadline).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date))[0];
-        if (nextEvent) { hasPromptedEvent = true; triggerSpecificPopup(nextEvent.name); }
-    }
-}
-
 function showEventInvitation(name, desc, daysLeft, count) {
     const isUrgent = daysLeft <= 2;
     const themeColor = isUrgent ? '#ef4444' : '#006633';
@@ -502,7 +473,7 @@ function showEventInvitation(name, desc, daysLeft, count) {
     playPing();
     Swal.fire({
         title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 5px 0 8px; border-bottom: 1px solid #eee;"><img src="logo.png" style="height: 38px; width: auto;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26; letter-spacing: 0.5px; text-transform: uppercase; margin:0;">PARAMOUNT</div><div style="font-family: 'Montserrat'; font-size: 7px; font-weight: 700; color: #b8860b; text-transform: uppercase; letter-spacing: 0.5px; margin:0; padding-top: 1px;">English Medium School</div></div></div>`,
-        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 10px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 20px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 10px; line-height: 1.2;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 18px !important; padding: 12px !important; width: 310px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 16px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 10px 20px !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.8px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; transition: 0.3s ease; box-shadow: 0 4px 10px rgba(0, 77, 38, 0.2) !important; margin: 12px auto 2px !important; width: auto !important; min-width: 180px !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 15px rgba(0, 77, 38, 0.3) !important; background: #005a2d !important; }.premium-reg-btn i { font-size: 9px; color: #ffd700; }</style>`,
+        html: `<div style="text-align: center; font-family: 'Segoe UI', sans-serif; margin-top: 10px;"><p style="margin: 0; font-size: 8px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="margin: 3px 0; font-family: 'Montserrat'; font-size: 20px; font-weight: 900; color: #1a1a1a; text-transform: uppercase; line-height: 1.1;">${name}</h2><p style="color: #666; font-size: 11px; font-weight: 500; margin-bottom: 10px; line-height: 1.2;">${desc || "Participate and showcase your talent!"}</p><div style="background: #f8fafc; border-radius: 6px; padding: 5px; margin-bottom: 8px; border: 1px solid #edf2f7;"><div style="color: #b8860b; font-weight: 800; font-size: 9px; text-transform: uppercase;"><i class="fas fa-users"></i> ${count > 0 ? `JOIN ${count} OTHERS REGISTERED!` : 'BE THE FIRST TO REGISTER!'}</div></div><div style="background: ${bgColor}; color: ${themeColor}; padding: 3px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; border: 1px solid ${themeColor}22;"><i class="fas fa-clock ${isUrgent ? 'fa-beat' : ''}"></i> CLOSES IN ${daysLeft} DAYS</div></div><style>.swal2-popup { border-radius: 18px !important; padding: 12px !important; width: 310px !important; }.swal2-title, .swal2-html-container { margin: 0 !important; padding: 0 !important; }.swal2-close { font-size: 16px !important; top: 8px !important; right: 8px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 10px 0 !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 10px !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; transition: 0.2s ease-in-out !important; box-shadow: 0 4px 10px rgba(0, 41, 21, 0.2) !important; margin: 12px auto 2px !important; width: 85% !important; cursor: pointer; }.premium-reg-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 6px 12px rgba(0, 41, 21, 0.3) !important; background: #005a2d !important; }.premium-reg-btn i { font-size: 10px; color: #ffd700; }</style>`,
         showCloseButton: true,
         showConfirmButton: true,
         confirmButtonText: 'REGISTER MY NAME <i class="fas fa-chevron-right"></i>',
