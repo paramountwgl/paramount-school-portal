@@ -2,266 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Student Portal | Paramount School</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="logo.png">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Sign-Up | Paramount English Medium School</title>
     <style>
-        :root { --forest: #006633; --gold: #ffd700; --danger: #ef4444; --light: #f4f7f6; --paid: #4caf50; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--light); overflow-x: hidden; width: 100%; padding-bottom: 120px; }
-        
-        /* NAVIGATION */
-        .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
-        .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
-        .nav-reg-btn { border: 1.5px solid var(--gold) !important; color: var(--gold) !important; background: rgba(255, 255, 255, 0.1); font-weight: 800; }
-
-        /* HEADER */
-        .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
-        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
-        .header-logo-box img { height: 60px; }
-        .school-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
-
-        /* MULTIPLE COUNTDOWNS SIDE BY SIDE */
-        #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; transition: 0.4s; flex: 0 0 auto; border: 1px solid #f0f0f0; }
-        .event-timer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
-        .t-block { background: var(--forest); color: white; padding: 10px; border-radius: 12px; min-width: 55px; }
-        .t-block span { display: block; font-size: 20px; font-weight: 900; }
-        .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
-
-        /* SEARCH CONTAINER */
-        .search-container { width: 100%; max-width: 500px; margin: 15px auto; display: flex; gap: 8px; }
-        #rollNumberInput { flex: 1; padding: 12px 20px; border-radius: 30px; border: 1px solid #ddd; outline: none; font-size: 16px; }
-        .search-btn { background: var(--gold); color: var(--forest); border: none; padding: 0 20px; border-radius: 30px; font-weight: 800; cursor: pointer; }
-
-        /* PROFILE CARD TOOLS */
-        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; display: none; position: relative; }
-        .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
-        .student-photo { width: 100%; height: 100%; object-fit: cover; }
-        .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
-        .info-item { padding: 12px; background: #fcfdfc; border-radius: 12px; border: 1px solid #f0f0f0; }
-        .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
-        .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
-
-        /* FINANCE TOOLS GRID */
-        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; }
-        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
-        .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
-        .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
-        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
-        .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; }
-        
-        .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
-        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; }
-        .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
-
-        .pdf-btn-container { display: none; justify-content: center; width: 100%; margin-top: 30px; }
-        .premium-btn-style { 
-            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .btn-content { display: flex; align-items: center; gap: 15px; }
-        .btn-content i { font-size: 20px; color: var(--gold); }
-        .btn-return-fixed { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: auto; min-width: 250px; z-index: 1000; text-decoration: none; }
-
-        @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .section-divider {
+            border-top: 2px solid #eee;
+            margin: 1.5rem 0;
+            padding-top: 1rem;
+        }
+        .section-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
 
-<div class="portal-nav" id="mainNav">
-    <a href="#" class="active"><i class="fas fa-user-circle"></i> Profile</a>
-    <a href="homework.html"><i class="fas fa-book-open"></i> Homework</a>
-    <a href="progres.html"><i class="fas fa-chart-line"></i> Progress</a>
-    <a href="student-halltickets.html"><i class="fas fa-id-card"></i> Hall Tickets</a>
-    <a href="syllabus-student-view.html"><i class="fas fa-book-open"></i> View Syllabus</a>
-    <a href="event-signup.html" class="nav-reg-btn"><i class="fas fa-crown"></i> Events Registration</a>
+<div class="container">
+    <h2>Event Registration</h2>
+    <form action="/submit-signup" method="POST">
+        
+        <div class="form-group">
+            <label for="studentName">Student Name</label>
+            <input type="text" id="studentName" name="studentName" value="Shaik Tauseef Ali" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="event">Select Event</label>
+            <select id="event" name="event" required>
+                <option value="">-- Choose an Event --</option>
+                <option value="annual-day">Annual Day 2026</option>
+                <option value="sports-meet">Inter-School Sports Meet</option>
+                <option value="science-fair">Science & Tech Expo</option>
+            </select>
+        </div>
+
+        <div class="section-divider">
+            <span class="section-title">Attendance</span>
+            <div class="form-group">
+                <label for="attendance-type">Participation Mode</label>
+                <select id="attendance-type" name="attendance-type">
+                    <option value="present">In-Person (Full Day)</option>
+                    <option value="remote">Online Contributor</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <span class="section-title">Finance</span>
+            <div class="form-group">
+                <label for="fee">Registration Fee</label>
+                <input type="text" id="fee" name="fee" value="₹500.00" disabled>
+            </div>
+            <div class="form-group">
+                <label for="payment-method">Payment Status</label>
+                <select id="payment-method" name="payment-method">
+                    <option value="pending">Pay at Counter</option>
+                    <option value="online">Online Payment (UPI/Card)</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit">Confirm Registration</button>
+    </form>
 </div>
 
-<div id="printableArea">
-    <div class="profile-header">
-        <div class="header-logo-box">
-            <img src="logo.png" alt="Logo">
-            <div class="school-text">
-                <span class="school-name-main">PARAMOUNT</span>
-                <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
-            </div>
-        </div>
-        <div class="search-container">
-            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number" onkeypress="if(event.key === 'Enter') searchStudent();">
-            <button onclick="searchStudent();" class="search-btn"><i class="fas fa-search"></i></button>
-        </div>
-    </div>
-
-    <div id="countdownSection"></div>
-
-    <div class="profile-card" id="profileCard">
-        <div id="regStamp" style="position: absolute; top: 15px; right: 15px; background: rgba(255, 215, 0, 0.1); color: #b8860b; padding: 8px 12px; border: 2px dashed #ffd700; border-radius: 8px; font-family: 'Montserrat'; font-weight: 800; font-size: 10px; text-transform: uppercase; transform: rotate(10deg); display: none; z-index: 5;"><i class="fas fa-check-circle"></i> Registered</div>
-        <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo"></div>
-        <h2 id="studentName" style="color: var(--forest); margin: 0; font-weight: 900; text-transform: uppercase;">STUDENT NAME</h2>
-        <div id="statusBadge" style="padding: 6px 20px; border-radius: 20px; font-size: 12px; font-weight: 800; background: #eee; display: inline-block; margin-top: 10px; text-transform: uppercase;">PROFILE ACTIVE</div>
-
-        <div class="info-grid">
-            <div class="info-item"><label>Class / Section</label><span id="studentClass">---</span></div>
-            <div class="info-item"><label>Roll Number</label><span id="RollNumber">---</span></div>
-            <div class="info-item"><label>Admission No</label><span id="admissionNo">---</span></div>
-            <div class="info-item"><label>Father's Name</label><span id="fatherName">---</span></div>
-            <div id="attBox" class="info-item"><label>Live Attendance % (Present/Total Days)</label><span id="attendanceRate">---</span></div>
-            <div class="info-item"><label>Parent Phone</label><span id="phoneNumber">---</span></div>
-        </div>
-
-        <div id="feeSection">
-            <div style="font-family:'Montserrat'; font-weight:800; color:var(--forest); margin-bottom:15px; font-size:12px; margin-top:20px;"><i class="fas fa-wallet"></i> FINANCE OVERVIEW</div>
-            <div class="fee-progress-box">
-                <svg class="circle-svg"><circle class="circle-bg" cx="60" cy="60" r="50"></circle><circle id="feeCircle" class="circle-bar" cx="60" cy="60" r="50"></circle></svg>
-                <div class="circle-text"><span id="feePercentLabel">0%</span><label style="font-size: 8px; text-transform: uppercase; font-weight: 700; color: #666;">Cleared</label></div>
-            </div>
-            <div class="fee-stats-triple">
-                <div class="stat-card-mini"><label>Total Fee</label><span id="vTotalFee">₹ 0</span></div>
-                <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
-                <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
-            </div>
-        </div>
-
-        <div class="pdf-btn-container" id="pdfBtnSection">
-            <button onclick="downloadPDF()" class="premium-btn-style">
-                <div class="btn-content"><i class="fas fa-file-pdf"></i><span>DOWNLOAD PROFILE REPORT</span></div>
-                <i class="fas fa-arrow-down-long" style="color: var(--gold);"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-<a href="index.html" class="btn-return-fixed premium-btn-style" id="bottomNav">
-    <div class="btn-content"><i class="fas fa-home"></i><span>RETURN TO DASHBOARD</span></div>
-</a>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-<script>
-const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-const studentData = { "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" } /* All 185 students go here */ };
-
-async function searchStudent() {
-    const rollNo = document.getElementById('rollNumberInput').value.trim();
-    const student = studentData[rollNo];
-    if (student) {
-        document.getElementById('profileCard').style.display = 'block';
-        document.getElementById('studentName').innerText = student.Name;
-        document.getElementById('studentClass').innerText = student.Class;
-        document.getElementById('RollNumber').innerText = student.Roll;
-        document.getElementById('admissionNo').innerText = student.Adm;
-        document.getElementById('fatherName').innerText = student.Father;
-        document.getElementById('phoneNumber').innerText = student.Phone;
-        document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
-        
-        // RESTORED ATTENDANCE (P/T)
-        const shortClass = student.Class.split(" ")[0]; 
-        const attSnap = await db.ref('daily_attendance').once('value');
-        let totalP = 0, totalT = 0;
-        if(attSnap.exists()){
-            const allData = attSnap.val();
-            Object.keys(allData).forEach(date => {
-                if(allData[date][shortClass] && allData[date][shortClass][student.Name] !== undefined) {
-                    totalT++; if(allData[date][shortClass][student.Name] === true) totalP++;
-                }
-            });
-        }
-        document.getElementById('attendanceRate').innerText = `${totalT > 0 ? Math.round((totalP/totalT)*100) : 0}% (${totalP}/${totalT})`;
-
-        // RESTORED FINANCE
-        const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
-        let tPaid = 0, tFee = 0;
-        if(feeSnap.exists()){
-            feeSnap.forEach(c => { const data = c.val(); tPaid += parseFloat(data.paid || 0); tFee = parseFloat(data.total || 0); });
-        }
-        const pct = tFee > 0 ? Math.round((tPaid/tFee)*100) : 0;
-        document.getElementById('vTotalFee').innerText = "₹ " + tFee;
-        document.getElementById('vPaidFee').innerText = "₹ " + tPaid;
-        document.getElementById('vDueFee').innerText = "₹ " + (tFee - tPaid);
-        document.getElementById('feePercentLabel').innerText = pct + "%";
-        document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * pct / 100);
-        
-        document.getElementById('pdfBtnSection').style.display = 'flex';
-        checkEventStatus(rollNo);
-    } else { Swal.fire('Error', 'Roll Number not found.', 'error'); }
-}
-
-async function checkEventStatus(rollNo) {
-    const eventSnap = await db.ref('school_events').limitToLast(1).once('value');
-    let latestName = "";
-    eventSnap.forEach(c => latestName = c.val().name);
-    if (latestName) {
-        const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
-        if (regCheck.exists()) { document.getElementById('regStamp').style.display = 'block'; }
-    }
-}
-
-// RESTORED MULTIPLE COUNTDOWNS SIDE BY SIDE
-let dynamicEvents = [];
-db.ref('school_events').on('value', snap => {
-    dynamicEvents = [];
-    if (snap.exists()) { snap.forEach(child => dynamicEvents.push(child.val())); }
-    updateCountdown(); 
-});
-
-function updateCountdown() {
-    const now = new Date().getTime();
-    const container = document.getElementById('countdownSection');
-    const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
-    if (activeEvents.length === 0) { container.innerHTML = ""; return; }
-    
-    let htmlContent = "";
-    activeEvents.forEach((ev) => {
-        const diff = new Date(ev.date).getTime() - now;
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-        const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        
-        const clickLogic = ev.isRegistration ? `onclick="showEventInvitation('${ev.name}','${ev.desc}')" style="cursor:pointer;"` : "";
-
-        htmlContent += `<div class="event-timer-card" ${clickLogic}><h3>${ev.name}</h3><p>${ev.desc || 'Join the club today'}</p><div class="timer-grid"><div class="t-block"><span>${d}</span><label>Days</label></div><div class="t-block"><span>${h}</span><label>Hrs</label></div><div class="t-block"><span>${m}</span><label>Min</label></div><div class="t-block"><span>${s}</span><label>Sec</label></div></div></div>`;
-    });
-    container.innerHTML = htmlContent;
-}
-
-function showEventInvitation(name, desc) {
-    Swal.fire({
-        title: `<div style="display: flex; align-items: center; justify-content: center; gap: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px;"><img src="logo.png" style="height: 40px;"><div style="text-align: left; line-height: 1;"><div style="font-family: 'Montserrat'; font-size: 16px; font-weight: 900; color: #004d26;">PARAMOUNT</div><div style="font-size: 8px; color: #b8860b; font-weight: 700; text-transform: uppercase;">English Medium School</div></div></div>`,
-        html: `<div style="text-align: center; margin-top: 15px;"><p style="font-size: 9px; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1.5px;">Exclusive Invitation</p><h2 style="font-family: 'Montserrat'; font-size: 20px; font-weight: 900; color: #1a1a1a; margin: 5px 0;">${name}</h2><p style="font-size: 13px; color: #666; line-height: 1.4;">${desc}</p></div><style>.swal2-popup { border-radius: 20px !important; width: 350px !important; }.premium-reg-btn { background: #004d26 !important; color: white !important; border: none !important; padding: 12px 0 !important; border-radius: 50px !important; font-weight: 800 !important; font-size: 11px !important; text-transform: uppercase !important; width: 90% !important; margin: 20px auto 5px !important; cursor: pointer; }</style>`,
-        confirmButtonText: 'REGISTER MY NAME <i class="fas fa-chevron-right"></i>',
-        customClass: { confirmButton: 'premium-reg-btn' },
-        buttonsStyling: false
-    }).then((result) => { if (result.isConfirmed) { window.location.href = `event-signup.html?event=${encodeURIComponent(name)}`; } });
-}
-
-async function downloadPDF() {
-    const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#mainNav, #bottomNav, .search-container, #countdownSection').forEach(el => el.style.display = 'none');
-    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
-    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
-    pdf.save(`Paramount_Report_${roll}.pdf`);
-    location.reload();
-}
-setInterval(updateCountdown, 1000);
-</script>
 </body>
 </html>
