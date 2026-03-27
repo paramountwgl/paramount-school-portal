@@ -18,64 +18,80 @@
         
         /* NAVIGATION */
         .portal-nav { background: #004d26; padding: 12px 5px; display: flex; justify-content: center; gap: 5px; position: sticky; top: 0; z-index: 2000; box-shadow: 0 2px 8px rgba(0,0,0,0.2); overflow-x: auto; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 11px; padding: 8px 12px; border-radius: 25px; display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: 0.3s; }
         .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
 
         /* HEADER */
-        .profile-header { background: var(--forest); color: white; padding: 25px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
-        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; }
-        .header-logo-box img { height: 60px; }
+        .profile-header { background: var(--forest); color: white; padding: 30px 15px; border-bottom: 4px solid var(--gold); text-align: center; }
+        .header-logo-box { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 25px; }
+        .header-logo-box img { height: 65px; }
         .school-text { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; letter-spacing: 1px; color: white; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900; letter-spacing: 1px; color: white; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.8rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
 
         /* PREMIUM SEARCH BAR */
         .search-container { width: 95%; max-width: 550px; margin: 0 auto; padding: 10px 0; }
-        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .premium-input-wrapper { display: flex; align-items: center; background: white; padding: 8px 8px 8px 25px; border-radius: 50px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .premium-input-wrapper:focus-within { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 77, 38, 0.2); border-color: var(--forest); }
         #rollNumberInput { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-weight: 600; color: #333; }
         .premium-search-btn { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-family: 'Montserrat'; font-weight: 800; font-size: 11px; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
 
-        /* COUNTDOWN SECTION */
-        #countdownSection { display: flex; gap: 20px; padding: 20px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
-        .event-timer-card { background: white; border-radius: 25px; padding: 20px; min-width: 320px; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold); text-align: center; flex: 0 0 auto; position: relative; overflow: hidden; transition: 0.3s; }
+        /* SIDE-BY-SIDE COUNTDOWN CARDS */
+        #countdownSection { display: flex; gap: 20px; padding: 25px; overflow-x: auto; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+        .event-timer-card { 
+            background: white; border-radius: 30px; padding: 25px 20px 35px 20px; min-width: 330px; max-width: 360px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06); text-align: center; flex: 0 0 auto; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; overflow: hidden; border: 1px solid #f0f0f0;
+        }
+        /* Only registration cards get the click pointer and hover lift */
         .event-timer-card.is-clickable { cursor: pointer; }
-        .event-timer-card.is-clickable:hover { transform: translateY(-5px); border-color: var(--forest); }
-        .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 18px; color: var(--forest); text-transform: uppercase; font-weight: 800; }
-        .timer-grid { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
-        .t-block { background: var(--forest); color: white; padding: 10px; border-radius: 12px; min-width: 55px; }
-        .t-block span { display: block; font-size: 20px; font-weight: 900; }
-        .t-block label { font-size: 9px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+        .event-timer-card:hover { transform: translateY(-8px); border-color: var(--forest); box-shadow: 0 20px 45px rgba(0,102,51,0.12); }
         
-        .progress-container { width: 100%; background: #f0f0f0; height: 5px; position: absolute; bottom: 0; left: 0; }
-        .progress-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--forest)); width: 0%; transition: width 1s linear; }
+        .event-timer-card h3 { margin: 0; font-family: 'Montserrat'; font-size: 20px; color: var(--forest); text-transform: uppercase; font-weight: 900; }
+        .timer-grid { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+        .t-block { background: var(--forest); color: white; padding: 12px; border-radius: 15px; min-width: 60px; box-shadow: 0 4px 10px rgba(0,77,38,0.2); }
+        .t-block span { display: block; font-size: 22px; font-weight: 900; }
+        .t-block label { font-size: 8px; text-transform: uppercase; color: var(--gold); font-weight: 800; }
+
+        /* PREMIUM DAYS LEFT PROGRESS BAR */
+        .progress-container { width: 100%; background: #f8f8f8; height: 6px; position: absolute; bottom: 0; left: 0; }
+        .progress-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--forest)); width: 0%; transition: width 1.5s ease-out; }
 
         /* PROFILE SECTION */
-        .profile-card { max-width: 750px; margin: 60px auto 30px auto; background: white; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
-        .photo-container { width: 110px; height: 110px; margin: -60px auto 15px auto; border-radius: 50%; border: 5px solid white; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #eee; }
+        .profile-card { max-width: 800px; margin: 60px auto 30px auto; background: white; padding: 30px; border-radius: 35px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); text-align: center; width: 92%; position: relative; }
+        .photo-container { width: 120px; height: 110px; margin: -85px auto 20px auto; border-radius: 50%; border: 6px solid white; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background: #fdfdfd; }
         .student-photo { width: 100%; height: 100%; object-fit: cover; }
-        .info-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 25px; text-align: left; }
-        .info-item { padding: 12px; background: #fcfdfc; border-radius: 12px; border: 1px solid #f0f0f0; }
-        .info-item label { font-size: 9px; font-weight: 800; color: #999; text-transform: uppercase; display: block; }
-        .info-item span { font-weight: 700; color: #222; font-size: 14px; margin-top: 3px; display: block; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 30px; text-align: left; }
+        .info-item { padding: 15px; background: #fafdfb; border-radius: 18px; border: 1px solid #f1f1f1; }
+        .info-item label { font-size: 10px; font-weight: 800; color: #bbb; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .info-item span { font-weight: 700; color: #1a1a1a; font-size: 15px; display: block; }
 
         /* FINANCE SECTION */
-        #feeSection { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #f0f0f0; text-align: left; display: none; }
-        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 20px; border-radius: 20px; margin-bottom: 20px; position: relative; }
-        .circle-svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+        #feeSection { margin-top: 40px; padding-top: 30px; border-top: 2px dashed #eee; text-align: left; display: none; }
+        .fee-progress-box { display: flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 25px; border-radius: 25px; margin-bottom: 25px; position: relative; }
+        .circle-svg { width: 130px; height: 130px; transform: rotate(-90deg); }
         .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 10; }
-        .circle-bar { fill: none; stroke: var(--paid); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
+        .circle-bar { fill: none; stroke: var(--forest); stroke-width: 10; stroke-dasharray: 314.15; stroke-dashoffset: 314.15; transition: 1.5s ease-out; stroke-linecap: round; }
         .circle-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-        #feePercentLabel { font-weight: 800; font-size: 1.4rem; color: #1e293b; display: block; }
-        .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
-        .stat-card-mini { padding: 12px 8px; border-radius: 15px; background: white; border: 1px solid #f0f0f0; text-align: center; }
-        .stat-card-mini label { font-size: 8px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
-        .stat-card-mini span { font-size: 13px; font-weight: 800; display: block; }
+        #feePercentLabel { font-weight: 900; font-size: 1.6rem; color: #1e293b; display: block; }
+        
+        .fee-stats-triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .stat-card-mini { padding: 15px 10px; border-radius: 20px; background: white; border: 1px solid #f0f0f0; text-align: center; }
+        .stat-card-mini label { font-size: 9px; font-weight: 800; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 6px; }
+        .stat-card-mini span { font-size: 15px; font-weight: 900; display: block; }
 
-        .premium-pdf-btn { width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none; padding: 18px 25px; border-radius: 20px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(0, 77, 38, 0.2); margin-top: 30px; }
+        .premium-pdf-btn {
+            width: 100%; background: linear-gradient(135deg, #004d26 0%, #006633 100%); color: white; border: none;
+            padding: 20px 30px; border-radius: 25px; font-family: 'Montserrat'; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+            transition: 0.4s; box-shadow: 0 12px 25px rgba(0, 77, 38, 0.2); margin-top: 35px;
+        }
+        .premium-pdf-btn:hover { transform: translateY(-5px); box-shadow: 0 18px 35px rgba(0, 77, 38, 0.3); }
 
-        .btn-return { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--forest); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        @media (min-width: 768px) { .info-grid, .fee-stats-triple { grid-template-columns: 1fr 1fr; } .fee-stats-triple { grid-template-columns: repeat(3, 1fr); } }
+        .btn-return { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #004d26; color: white; padding: 18px 40px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--gold); z-index: 1000; font-size: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+
+        @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -154,8 +170,7 @@ const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", data
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const studentData = {
-    // PRE-KG (41 students)
+const studentData = {  // PRE-KG (41 students)
     "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" },
     "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" },
     "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" },
@@ -363,20 +378,6 @@ const studentData = {
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
-function playPing() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-        oscillator.start(audioCtx.currentTime); oscillator.stop(audioCtx.currentTime + 0.5);
-    } catch(e) {}
-}
-
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
@@ -421,20 +422,7 @@ async function searchStudent() {
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * feePct / 100);
         document.getElementById('feeSection').style.display = 'block';
         document.getElementById('pdfBtnSection').style.display = 'flex';
-
-        checkEventStatus(rollNo);
     } else { Swal.fire('Error', 'Roll Number not found.', 'error'); }
-}
-
-async function checkEventStatus(rollNo) {
-    const stamp = document.getElementById('regStamp');
-    const eventSnap = await db.ref('school_events').limitToLast(1).once('value');
-    let latestName = "";
-    eventSnap.forEach(c => latestName = c.val().name);
-    if (latestName) {
-        const regCheck = await db.ref(`event_registrations/${latestName}/${rollNo}`).once('value');
-        if (regCheck.exists()) { stamp.style.display = 'block'; } else { stamp.style.display = 'none'; }
-    }
 }
 
 let dynamicEvents = [];
@@ -447,7 +435,9 @@ db.ref('school_events').on('value', snap => {
 function updateCountdown() {
     const now = new Date().getTime();
     const container = document.getElementById('countdownSection');
-    const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now);
+    // Remove isRegistration filter so ALL events show
+    const activeEvents = dynamicEvents.filter(ev => new Date(ev.date).getTime() > now).sort((a, b) => new Date(a.date) - new Date(b.date));
+
     if (activeEvents.length === 0) { container.innerHTML = ""; container.style.display = "none"; return; }
     container.style.display = "flex";
     let htmlContent = "";
@@ -459,7 +449,7 @@ function updateCountdown() {
         const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         
         let progressHtml = '';
-        if (ev.isRegistration && ev.regDeadline) {
+        if (ev.isRegistration) {
              const totalDuration = 30 * 24 * 60 * 60 * 1000; 
              const progress = Math.min(100, Math.max(0, (diff / totalDuration) * 100));
              progressHtml = `<div class="progress-container"><div class="progress-fill" style="width: ${progress}%"></div></div>`;
@@ -507,7 +497,7 @@ setInterval(updateCountdown, 1000);
 
 async function downloadPDF() {
     const roll = document.getElementById('RollNumber').innerText;
-    document.querySelectorAll('#searchBoxForPdf, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('#searchBoxForPdf, #pdfBtnSection, #mainNav, #bottomNav, #countdownSection').forEach(el => el.style.display = 'none');
     const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
     const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
