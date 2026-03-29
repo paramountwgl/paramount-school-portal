@@ -335,52 +335,80 @@
         return ["TEL", "HIN", "ENG", "MAT", "SCI", "SOC"];
     }
 
-    async function generateReport() {
+   async function generateReport() {
         const roll = document.getElementById('rollInput').value.trim();
         const exam = document.getElementById('examSelect').value;
         const student = students[roll];
 
-        if (!student) { alert("Student not found!"); return; }
+        if (!student) { 
+            Swal.fire('Error', 'Student Roll Number not found in list.', 'error');
+            return; 
+        }
 
-        const dbClass = student.Class.split(' (')[0].trim();
-        const snap = await db.ref(`progress_cards/${dbClass}/${exam}/${student.Name}`).once('value');
-        const data = snap.val();
+        // --- Show Loading ---
+        Swal.fire({ title: 'Fetching Report...', didOpen: () => Swal.showLoading() });
 
-        if (!data) { alert("No results found for this exam."); return; }
+        try {
+            const dbClass = student.Class.split(' (')[0].trim();
+            const snap = await db.ref(`progress_cards/${dbClass}/${exam}/${student.Name}`).once('value');
+            const data = snap.val();
 
-        document.getElementById('pdfName').innerText = student.Name.toUpperCase();
-        document.getElementById('pdfClass').innerText = "CLASS: " + student.Class;
-        document.getElementById('pdfRoll').innerText = "ROLL NO: " + roll;
-        document.getElementById('pdfPhoto').src = `Student images/${roll}.png`;
-
-        const subjects = getSubjects(student.Class);
-        let tableHtml = "";
-        subjects.forEach(sub => {
-            const mark = data.marks[sub] || "-";
-            tableHtml += `<tr><td>${sub}</td><td>${mark}</td><td>100</td></tr>`;
-        });
-        document.getElementById('pdfMarksBody').innerHTML = tableHtml;
-
-        document.getElementById('pdfTotal').innerText = data.total;
-        document.getElementById('pdfPerc').innerText = data.percentage + "%";
-        document.getElementById('pdfGrade').innerText = data.grade;
-
-        if(chartInstance) chartInstance.destroy();
-        const ctx = document.getElementById('miniGraph').getContext('2d');
-        chartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: subjects,
-                datasets: [{ data: subjects.map(s => data.marks[s] || 0), backgroundColor: '#006633' }]
-            },
-            options: { 
-                maintainAspectRatio: false, 
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true, max: 100 } }
+            if (!data) { 
+                Swal.fire('Not Found', `No results found for ${student.Name} in ${exam}.`, 'info');
+                return; 
             }
-        });
 
-        document.getElementById('reportContainer').style.display = 'block';
+            // --- Set Profile Data ---
+            document.getElementById('pdfName').innerText = student.Name.toUpperCase();
+            document.getElementById('pdfClass').innerText = "CLASS: " + student.Class;
+            document.getElementById('pdfRoll').innerText = "ROLL NO: " + roll;
+            document.getElementById('pdfPhoto').src = `Student images/${roll}.png`;
+
+            // --- Handle Marks Logic (Fixes the blank data issue) ---
+            const subjects = getSubjects(student.Class);
+            let tableHtml = "";
+            
+            // Check if marks are nested under .marks or stored directly
+            const marksSource = data.marks ? data.marks : data;
+
+            subjects.forEach(sub => {
+                const mark = marksSource[sub] !== undefined ? marksSource[sub] : "-";
+                tableHtml += `<tr><td>${sub}</td><td>${mark}</td><td>100</td></tr>`;
+            });
+            document.getElementById('pdfMarksBody').innerHTML = tableHtml;
+
+            // --- Stats ---
+            document.getElementById('pdfTotal').innerText = data.total || "N/A";
+            document.getElementById('pdfPerc').innerText = (data.percentage || "0") + "%";
+            document.getElementById('pdfGrade').innerText = data.grade || "--";
+
+            // --- Chart Logic ---
+            if(chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('miniGraph').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: subjects,
+                    datasets: [{ 
+                        data: subjects.map(s => marksSource[s] || 0), 
+                        backgroundColor: '#006633',
+                        borderRadius: 5
+                    }]
+                },
+                options: { 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, max: 100 } }
+                }
+            });
+
+            document.getElementById('reportContainer').style.display = 'block';
+            Swal.close();
+
+        } catch (error) {
+            console.error("Firebase Error:", error);
+            Swal.fire('Sync Error', 'Could not reach database. Check your connection.', 'error');
+        }
     }
 
     async function downloadPDF() {
