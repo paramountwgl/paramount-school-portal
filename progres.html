@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Academic Report | Paramount School</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="logo.png">
     
     <style>
         :root { --forest: #006633; --gold: #ffd700; --danger: #ef4444; --light: #f0f2f5; --dark: #1a1a1a; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
 
-        /* --- PREMIUM HEADER STYLE --- */
         header { 
             background: var(--forest); color: white; padding: 12px 4%; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100; 
@@ -32,13 +34,11 @@
         .portal-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; padding-left: 15px; margin-left: 15px; border-left: 2px solid rgba(255,255,255,0.3); color: white; }
         .btn-exit { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 5px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        /* --- SEARCH CARD --- */
         .no-print-zone { max-width: 800px; margin: 25px auto; padding: 0 15px; text-align: center; }
         .search-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; border-top: 5px solid var(--gold); }
         input, select { padding: 12px 20px; border-radius: 50px; border: 2px solid #eee; outline: none; font-weight: 600; min-width: 180px; }
         .btn-action { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        /* --- REPORT CONTAINER (A4) --- */
         #reportContainer { 
             width: 800px; margin: 0 auto; background: white; padding: 40px; box-sizing: border-box; 
             border: 15px double var(--forest); position: relative; display: none;
@@ -82,9 +82,12 @@
     <div class="search-card">
         <input type="text" id="rollInput" placeholder="Roll No (e.g. 1472070)">
         <select id="examSelect">
-            <option value="FA-1">FA-1</option><option value="FA-2">FA-2</option>
-            <option value="FA-3">FA-3</option><option value="FA-4">FA-4</option>
-            <option value="SA-1">SA-1</option><option value="SA-2">SA-2</option>
+            <option value="FA-1">FA-1</option>
+            <option value="FA-2">FA-2</option>
+            <option value="FA-3">FA-3</option>
+            <option value="FA-4">FA-4</option>
+            <option value="SA-1">SA-1</option>
+            <option value="SA-2">SA-2</option>
             <option value="Annual">Annual</option>
         </select>
         <button class="btn-action" onclick="generateReport()">VIEW REPORT</button>
@@ -113,7 +116,13 @@
 
     <div class="marks-section">
         <table class="marks-table">
-            <thead><tr><th>Subject</th><th>Marks</th><th>Max</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Max</th>
+                </tr>
+            </thead>
             <tbody id="pdfMarksBody"></tbody>
         </table>
         <div style="height:220px; background:#fff; border:1px solid #eee; padding:10px; border-radius:10px;">
@@ -134,12 +143,17 @@
 </div>
 
 <script>
-    const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
+    const firebaseConfig = { 
+        apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", 
+        databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", 
+        projectId: "paramount-school-d55bc" 
+    };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
     let chartInstance = null;
 
+    // Student Database Object
     const students = {
         "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
         "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)" },
@@ -335,18 +349,18 @@
         return ["TEL", "HIN", "ENG", "MAT", "SCI", "SOC"];
     }
 
-   async function generateReport() {
+    async function generateReport() {
         const roll = document.getElementById('rollInput').value.trim();
         const exam = document.getElementById('examSelect').value;
         const student = students[roll];
 
         if (!student) { 
-            Swal.fire('Error', 'Student Roll Number not found in list.', 'error');
+            Swal.fire('Error', 'Roll Number not found in the school database.', 'error');
             return; 
         }
 
-        // --- Show Loading ---
-        Swal.fire({ title: 'Fetching Report...', didOpen: () => Swal.showLoading() });
+        // --- Start Loading UI ---
+        Swal.fire({ title: 'Syncing with Server...', didOpen: () => Swal.showLoading() });
 
         try {
             const dbClass = student.Class.split(' (')[0].trim();
@@ -354,35 +368,32 @@
             const data = snap.val();
 
             if (!data) { 
-                Swal.fire('Not Found', `No results found for ${student.Name} in ${exam}.`, 'info');
+                Swal.fire('Not Uploaded', `The marks for ${student.Name} (${exam}) have not been uploaded by the admin yet.`, 'info');
                 return; 
             }
 
-            // --- Set Profile Data ---
+            // --- Fill Data Fields ---
             document.getElementById('pdfName').innerText = student.Name.toUpperCase();
             document.getElementById('pdfClass').innerText = "CLASS: " + student.Class;
             document.getElementById('pdfRoll').innerText = "ROLL NO: " + roll;
             document.getElementById('pdfPhoto').src = `Student images/${roll}.png`;
 
-            // --- Handle Marks Logic (Fixes the blank data issue) ---
-            const subjects = getSubjects(student.Class);
-            let tableHtml = "";
-            
-            // Check if marks are nested under .marks or stored directly
+            // Fix path mismatch: check if data has a 'marks' child or holds marks directly
             const marksSource = data.marks ? data.marks : data;
-
+            const subjects = getSubjects(student.Class);
+            
+            let tableHtml = "";
             subjects.forEach(sub => {
                 const mark = marksSource[sub] !== undefined ? marksSource[sub] : "-";
                 tableHtml += `<tr><td>${sub}</td><td>${mark}</td><td>100</td></tr>`;
             });
             document.getElementById('pdfMarksBody').innerHTML = tableHtml;
 
-            // --- Stats ---
             document.getElementById('pdfTotal').innerText = data.total || "N/A";
             document.getElementById('pdfPerc').innerText = (data.percentage || "0") + "%";
             document.getElementById('pdfGrade').innerText = data.grade || "--";
 
-            // --- Chart Logic ---
+            // --- Graph Rendering ---
             if(chartInstance) chartInstance.destroy();
             const ctx = document.getElementById('miniGraph').getContext('2d');
             chartInstance = new Chart(ctx, {
@@ -406,13 +417,18 @@
             Swal.close();
 
         } catch (error) {
-            console.error("Firebase Error:", error);
-            Swal.fire('Sync Error', 'Could not reach database. Check your connection.', 'error');
+            console.error("Firebase Sync Error:", error);
+            Swal.fire('Connection Error', 'Unable to reach the school database.', 'error');
         }
     }
 
     async function downloadPDF() {
         const element = document.getElementById('reportContainer');
+        if (element.style.display === 'none') {
+            Swal.fire('Action Required', 'Please view the report first before downloading.', 'warning');
+            return;
+        }
+        
         const canvas = await html2canvas(element, { scale: 2, useCORS: true });
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
