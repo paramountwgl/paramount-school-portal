@@ -2,80 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Academic Report | Paramount School</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="logo.png">
     
     <style>
-        :root { --forest: #006633; --gold: #ffd700; --dark: #1a1a1a; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        :root { --forest: #006633; --gold: #ffd700; --danger: #ef4444; --light: #f0f2f5; --dark: #1a1a1a; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
 
-        .no-print-zone { max-width: 800px; margin: 0 auto 20px; text-align: center; }
-        .search-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        input, select { padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-weight: 600; min-width: 150px; }
-        .btn-action { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        .btn-action:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        #reportContainer { 
-            width: 800px; 
-            margin: 0 auto; 
-            background: white; 
-            padding: 40px; 
-            box-sizing: border-box; 
-            border: 15px double var(--forest); 
-            position: relative;
-            display: none;
+        /* --- PREMIUM HEADER STYLE --- */
+        header { 
+            background: var(--forest); color: white; padding: 12px 4%; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100; 
+            border-bottom: 4px solid var(--gold); 
         }
+        .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-logo { height: 55px; width: auto; }
+        .school-branding { line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px; color: white; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
+        .portal-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; padding-left: 15px; margin-left: 15px; border-left: 2px solid rgba(255,255,255,0.3); color: white; }
+        .btn-exit { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 5px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
+        /* --- SEARCH CARD --- */
+        .no-print-zone { max-width: 800px; margin: 25px auto; padding: 0 15px; text-align: center; }
+        .search-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; border-top: 5px solid var(--gold); }
+        input, select { padding: 12px 20px; border-radius: 50px; border: 2px solid #eee; outline: none; font-weight: 600; min-width: 180px; }
+        .btn-action { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+
+        /* --- REPORT CONTAINER (A4) --- */
+        #reportContainer { 
+            width: 800px; margin: 0 auto; background: white; padding: 40px; box-sizing: border-box; 
+            border: 15px double var(--forest); position: relative; display: none;
+        }
         #reportContainer::before {
-            content: 'PARAMOUNT';
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
+            content: 'PARAMOUNT'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
             font-size: 8rem; color: rgba(0, 102, 51, 0.03); font-weight: 900; z-index: 0; pointer-events: none;
         }
 
-        .report-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--forest); padding-bottom: 15px; margin-bottom: 20px; }
-        .school-info { text-align: center; flex-grow: 1; }
-        .school-info h1 { margin: 0; font-family: 'Montserrat'; font-size: 2.2rem; color: var(--forest); }
-        .school-info p { margin: 0; font-weight: 800; color: var(--gold); letter-spacing: 2px; }
-
-        .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; z-index: 1; }
+        .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; }
         .student-photo { width: 110px; height: 130px; border: 3px solid var(--forest); border-radius: 10px; object-fit: cover; background: white; }
-        .student-details h2 { margin: 0; color: var(--forest); font-size: 1.6rem; text-transform: uppercase; }
-        .student-details p { margin: 5px 0; font-weight: 700; color: #555; }
-
-        .marks-section { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: start; position: relative; z-index: 1; }
-        .marks-table { width: 100%; border-collapse: collapse; background: white; }
+        
+        .marks-section { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: start; }
+        .marks-table { width: 100%; border-collapse: collapse; }
         .marks-table th { background: var(--forest); color: white; padding: 10px; font-size: 12px; }
-        .marks-table td { border: 1px solid #ddd; padding: 10px; text-align: center; font-weight: 700; color: #333; }
+        .marks-table td { border: 1px solid #ddd; padding: 10px; text-align: center; font-weight: 700; }
         .marks-table td:first-child { text-align: left; background: #f4f4f4; color: var(--forest); padding-left: 15px; }
 
-        .chart-box { height: 220px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 10px; }
-
-        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 20px; position: relative; z-index: 1; }
-        .stat-card { flex: 1; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
-        .stat-card b { display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
-        .stat-card span { font-size: 1.5rem; font-weight: 900; color: var(--forest); }
-
-        .signature-section { margin-top: 60px; display: flex; justify-content: space-between; padding: 0 40px; position: relative; z-index: 1; }
-        .sig-box { border-top: 2px solid var(--dark); width: 200px; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.9rem; }
+        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 20px; }
+        .stat-card { flex: 1; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); }
+        .sig-box { border-top: 2px solid #333; width: 200px; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.9rem; margin-top: 60px; }
     </style>
 </head>
 <body>
 
-<div class="no-print-zone" id="uiZone">
+<header>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" class="header-logo">
+            <div class="school-branding">
+                <span class="school-name-main">PARAMOUNT</span>
+                <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
+            </div>
+            <div class="portal-title">ACADEMIC PROGRESS</div>
+        </div>
+        <button onclick="window.location.href='index.html'" class="btn-exit">EXIT</button>
+    </div>
+</header>
+
+<div class="no-print-zone">
     <div class="search-card">
-        <input type="text" id="rollInput" placeholder="Enter Roll No (e.g. 1234567)">
+        <input type="text" id="rollInput" placeholder="Roll No (e.g. 1472070)">
         <select id="examSelect">
-            <option value="FA-1">FA-1</option>
-            <option value="FA-2">FA-2</option>
-            <option value="FA-3">FA-3</option>
-            <option value="FA-4">FA-4</option>
-            <option value="SA-1">SA-1</option>
-            <option value="SA-2">SA-2</option>
+            <option value="FA-1">FA-1</option><option value="FA-2">FA-2</option>
+            <option value="FA-3">FA-3</option><option value="FA-4">FA-4</option>
+            <option value="SA-1">SA-1</option><option value="SA-2">SA-2</option>
             <option value="Annual">Annual</option>
         </select>
         <button class="btn-action" onclick="generateReport()">VIEW REPORT</button>
@@ -84,55 +93,45 @@
 </div>
 
 <div id="reportContainer">
-    <div class="report-header">
-        <img src="logo.png" style="height: 80px;" onerror="this.src='https://via.placeholder.com/80?text=Logo'">
-        <div class="school-info">
-            <h1>PARAMOUNT</h1>
-            <p>ENGLISH MEDIUM SCHOOL</p>
-            <div style="font-weight: 900; margin-top: 5px; text-decoration: underline; color: #333;">ACADEMIC PERFORMANCE REPORT</div>
+    <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:3px solid var(--forest); padding-bottom:15px; margin-bottom:20px;">
+        <img src="logo.png" style="height: 70px;">
+        <div style="text-align:center; flex-grow:1;">
+            <h1 style="margin:0; font-family:'Montserrat'; font-size:2rem; color:var(--forest);">PARAMOUNT</h1>
+            <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px;">ENGLISH MEDIUM SCHOOL</p>
         </div>
-        <div style="width: 80px; text-align: right; color: var(--forest); font-weight: 800; font-size: 10px;">SESSION<br>2025-26</div>
+        <div style="width:70px; text-align:right; font-weight:900; font-size:10px;">SESSION<br>2025-26</div>
     </div>
 
     <div class="student-profile">
-        <img id="pdfPhoto" src="logo.png" class="student-photo" onerror="this.src='https://via.placeholder.com/110x130?text=Student+Photo'">
-        <div class="student-details">
-            <h2 id="pdfName">STUDENT NAME</h2>
-            <p id="pdfClass">CLASS: --</p>
-            <p id="pdfRoll">ROLL NO: --</p>
-        </div>
-        <div style="margin-left: auto; text-align: center;">
-            <i class="fas fa-certificate" style="font-size: 3rem; color: var(--gold);"></i>
-            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL RECORD</div>
+        <img id="pdfPhoto" src="logo.png" class="student-photo">
+        <div>
+            <h2 id="pdfName" style="margin:0; color:var(--forest);">STUDENT NAME</h2>
+            <p id="pdfClass" style="margin:5px 0; font-weight:700;">CLASS: --</p>
+            <p id="pdfRoll" style="margin:5px 0; font-weight:700;">ROLL NO: --</p>
         </div>
     </div>
 
     <div class="marks-section">
         <table class="marks-table">
-            <thead>
-                <tr><th>Subject</th><th>Marks</th><th>Max</th></tr>
-            </thead>
+            <thead><tr><th>Subject</th><th>Marks</th><th>Max</th></tr></thead>
             <tbody id="pdfMarksBody"></tbody>
         </table>
-        <div class="chart-box">
+        <div style="height:220px; background:#fff; border:1px solid #eee; padding:10px; border-radius:10px;">
             <canvas id="miniGraph"></canvas>
         </div>
     </div>
 
     <div class="summary-row">
-        <div class="stat-card"><b>Total Score</b><span id="pdfTotal">0</span></div>
-        <div class="stat-card"><b>Percentage</b><span id="pdfPerc">0%</span></div>
-        <div class="stat-card" style="background: var(--forest); color: white;"><b>Grade</b><span id="pdfGrade" style="color:var(--gold);">--</span></div>
+        <div class="stat-card"><b>Total Score</b><br><span id="pdfTotal" style="font-size:1.5rem; font-weight:900;">0</span></div>
+        <div class="stat-card"><b>Percentage</b><br><span id="pdfPerc" style="font-size:1.5rem; font-weight:900;">0%</span></div>
+        <div class="stat-card" style="background:var(--forest); color:white;"><b>Grade</b><br><span id="pdfGrade" style="font-size:1.5rem; font-weight:900; color:var(--gold);">--</span></div>
     </div>
 
-    <div class="signature-section">
+    <div style="display:flex; justify-content:space-between; padding: 0 40px;">
         <div class="sig-box">Class Teacher</div>
-        <div class="sig-box">Principal / Correspondent<br><span style="font-size: 10px;">Mr. Shaik Ahmad</span></div>
+        <div class="sig-box">Correspondent Sign</div>
     </div>
 </div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
     const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
@@ -207,7 +206,7 @@
         "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2 (Amber)" },
         "1298439": { Name: "Hanshith Erroju", Class: "KG-2 (Amber)" },
         "1298447": { Name: "Harika Bandi", Class: "KG-2 (Amber)" },
-        "1298432": { Name: "Himarsha Naini", Class: "KG-2 (Amber)" },
+        "1298432": { Name: "Himarsha  Naini", Class: "KG-2 (Amber)" },
         "1298440": { Name: "Karthik Vallepu", Class: "KG-2 (Amber)" },
         "1298433": { Name: "Kruthika Bandi", Class: "KG-2 (Amber)" },
         "1298441": { Name: "Rajavardhan Gampala", Class: "KG-2 (Amber)" },
@@ -278,7 +277,7 @@
         "1298410": { Name: "Garige Harshith", Class: "Grade-3 (Crystal)" },
         "1459844": { Name: "Katkuri Hanish", Class: "Grade-3 (Crystal)" },
         "1459798": { Name: "Katukuri Manideep", Class: "Grade-3 (Crystal)" },
-        "1459805": { Name: "MD Abdul Quddus", Class: "Grade-3 (Crystal)" },
+        "1459805": { Name: "MD. Abdul Quddus", Class: "Grade-3 (Crystal)" },
         "1298395": { Name: "Muppa Sathwik Patel", Class: "Grade-3 (Crystal)" },
         "1298386": { Name: "Nuthanakanti Sansita", Class: "Grade-3 (Crystal)" },
         "1298396": { Name: "Pasarakonda Ritwin", Class: "Grade-3 (Crystal)" },
@@ -292,7 +291,7 @@
         "1298373": { Name: "Mahaboob Syed", Class: "Grade-4 (Citrine)" },
         "1298374": { Name: "Nandith Reddy Enugala", Class: "Grade-4 (Citrine)" },
         "1392930": { Name: "Sai Charan Goud Mandala", Class: "Grade-4 (Citrine)" },
-        "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4 (Citrine)" },
+        "1298380": { Name: "Sai  Prasanna Keerthi", Class: "Grade-4 (Citrine)" },
         "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4 (Citrine)" },
         "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4 (Citrine)" },
         "1298364": { Name: "Jayasri Myakala", Class: "Grade-4 (Citrine)" },
