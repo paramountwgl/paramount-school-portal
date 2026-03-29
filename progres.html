@@ -2,356 +2,399 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Academic Progress | Paramount School</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="logo.png">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Report | Paramount School</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root { --forest: #006633; --gold: #ffd700; --light: #f4f7f6; --danger: #e53935; --premium-gradient: linear-gradient(135deg, #006633 0%, #004d26 100%); }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Segoe UI', sans-serif; background: #eef2f1; margin: 0; padding-bottom: 120px; width: 100%; overflow-x: hidden; }
-        
-        /* NAVIGATION */
-        .portal-nav { background: #004d26; padding: 12px; display: flex; justify-content: center; gap: 8px; position: sticky; top: 0; z-index: 2000; }
-        .portal-nav a { color: white; text-decoration: none; font-weight: bold; font-size: 12px; padding: 8px 15px; border-radius: 25px; }
-        .portal-nav a.active { background: rgba(255,255,255,0.2); border: 1px solid var(--gold); color: var(--gold); }
+        :root { --forest: #006633; --gold: #ffd700; --dark: #1a1a1a; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
 
-        /* HEADER */
-        header { background: var(--forest); color: white; padding: 20px 10px; border-bottom: 4px solid var(--gold); text-align: center; }
-        .header-content { display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 1200px; margin: 0 auto; }
-        .header-logo { height: 60px; width: auto; }
-        .school-text { display: flex; flex-direction: column; line-height: 1.2; align-items: center; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
-        .page-brand { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem; color: white; margin-top: 5px; }
+        .no-print-zone { max-width: 800px; margin: 0 auto 20px; text-align: center; }
+        .search-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        input, select { padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-weight: 600; min-width: 150px; }
+        .btn-action { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-action:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        .container { width: 100%; max-width: 900px; margin: 15px auto; padding: 0 8px; }
-        .card { background: white; padding: 15px; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); width: 100%; position: relative; }
-        
-        /* SEARCH CONTROLS */
-        .search-area { position: relative; display: flex; align-items: center; margin-bottom: 15px; }
-        input { width: 100%; padding: 16px 20px; border-radius: 50px; border: 2px solid #eee; outline: none; font-size: 16px; }
-        .btn-search { position: absolute; right: 8px; background: var(--forest); color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        
-        .toggle-container { display: flex; gap: 8px; margin-bottom: 20px; flex-direction: column; }
-        select { width: 100%; padding: 14px; border-radius: 15px; border: 2px solid #eee; background: #fff; font-weight: 700; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23006633' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; }
-
-        .btn-premium { background: var(--premium-gradient); color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 11px; text-transform: uppercase; padding: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 20px rgba(0, 102, 51, 0.2); }
-        .btn-premium.back-mode { background: #fff; color: var(--forest); border: 2px solid var(--forest); }
-
-        /* STUDENT PROFILE */
-        .report-header { display: none; flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #fcfdfc; padding: 15px; border-radius: 20px; border: 1px solid #edf2ef; }
-        .student-meta h2 { color: var(--forest); margin: 0; font-size: 1.1rem; font-weight: 900; }
-        .photo-container { width: 75px; height: 75px; border-radius: 50%; border: 3px solid white; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .student-photo { width: 100%; height: 100%; object-fit: cover; }
-
-        /* SUBJECTS SECTION - DYNAMIC FOR PDF */
-        .results-container { display: none; width: 100%; }
-        #subjectGrid { display: flex; flex-direction: column; gap: 5px; border: 1px solid #eee; border-radius: 20px; padding: 10px; background: white; }
-        .subj-item { display: flex; justify-content: space-between; padding: 12px 10px; border-bottom: 1px solid #f9f9f9; font-weight: 700; font-size: 14px; }
-        
-        .all-exams-container { width: 100%; margin-top: 15px; overflow: hidden; }
-        .cumulative-view { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        .cumulative-view th { background: var(--forest); color: white; padding: 8px 1px; font-size: 9px; text-align: center; border: 1px solid #004d26; }
-        .cumulative-view td { padding: 8px 1px; text-align: center; border: 1px solid #eee; font-weight: 700; font-size: 10px; background: #fff; }
-        .subj-cell { text-align: left !important; padding-left: 4px !important; width: 22%; font-size: 8.5px !important; }
-
-        .graph-section { margin-top: 20px; border: 1px solid #eee; border-radius: 20px; padding: 10px; background: white; height: 260px; width: 100%; }
-
-        .summary-dashboard { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
-        .stat-ring-card { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #f0f0f0; }
-        .stat-value { font-size: 20px; font-weight: 900; color: var(--forest); margin-top: 10px; display: inline-block; }
-
-        .grade-highlight-box { background: var(--premium-gradient); color: white; padding: 25px; border-radius: 20px; text-align: center; }
-        .big-grade { font-size: 40px; font-weight: 900; display: block; color: var(--gold); }
-
-        .signatures-row { margin-top: 80px; display: none; justify-content: space-between; padding: 0 10px; }
-        .sig-block { text-align: center; width: 48%; border-top: 2px solid #333; padding-top: 8px; font-size: 9px; font-weight: 800; }
-
-        .btn-download { background: var(--forest); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; margin-top: 25px; width: 100%; display: none; justify-content: center; align-items: center; gap: 10px; font-size: 14px; }
-
-        /* DESKTOP & PDF OVERRIDE */
-        @media (min-width: 768px), print {
-            header { padding: 25px 3%; text-align: left; }
-            .header-content { flex-direction: row; justify-content: center; gap: 20px; }
-            .school-text { align-items: flex-start; }
-            .report-header { flex-direction: row; text-align: left; padding: 25px; }
-            .photo-container { width: 110px; height: 110px; }
-            .student-meta h2 { font-size: 1.6rem; }
-            #subjectGrid { display: grid; grid-template-columns: 1fr 1px 1fr; }
-            .center-divider { width: 1px; background: #eee; height: 100%; display: block !important; }
-            .toggle-container { flex-direction: row; }
-            .summary-dashboard { grid-template-columns: 1fr 1fr; }
-            .grade-highlight-box { grid-column: span 2; }
-            .cumulative-view th { font-size: 12px; padding: 15px; }
-            .cumulative-view td { font-size: 13px; padding: 12px; }
-            .subj-cell { font-size: 13px !important; width: 25%; }
-            .sig-block { width: 40%; font-size: 11px; }
+        #reportContainer { 
+            width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 40px; 
+            box-sizing: border-box; 
+            border: 15px double var(--forest); 
+            position: relative;
+            display: none;
         }
+
+        #reportContainer::before {
+            content: 'PARAMOUNT';
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 8rem; color: rgba(0, 102, 51, 0.03); font-weight: 900; z-index: 0; pointer-events: none;
+        }
+
+        .report-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--forest); padding-bottom: 15px; margin-bottom: 20px; }
+        .school-info { text-align: center; flex-grow: 1; }
+        .school-info h1 { margin: 0; font-family: 'Montserrat'; font-size: 2.2rem; color: var(--forest); }
+        .school-info p { margin: 0; font-weight: 800; color: var(--gold); letter-spacing: 2px; }
+
+        .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; z-index: 1; }
+        .student-photo { width: 110px; height: 130px; border: 3px solid var(--forest); border-radius: 10px; object-fit: cover; background: white; }
+        .student-details h2 { margin: 0; color: var(--forest); font-size: 1.6rem; text-transform: uppercase; }
+        .student-details p { margin: 5px 0; font-weight: 700; color: #555; }
+
+        .marks-section { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: start; position: relative; z-index: 1; }
+        .marks-table { width: 100%; border-collapse: collapse; background: white; }
+        .marks-table th { background: var(--forest); color: white; padding: 10px; font-size: 12px; }
+        .marks-table td { border: 1px solid #ddd; padding: 10px; text-align: center; font-weight: 700; color: #333; }
+        .marks-table td:first-child { text-align: left; background: #f4f4f4; color: var(--forest); padding-left: 15px; }
+
+        .chart-box { height: 220px; background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 10px; }
+
+        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 20px; position: relative; z-index: 1; }
+        .stat-card { flex: 1; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
+        .stat-card b { display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
+        .stat-card span { font-size: 1.5rem; font-weight: 900; color: var(--forest); }
+
+        .signature-section { margin-top: 60px; display: flex; justify-content: space-between; padding: 0 40px; position: relative; z-index: 1; }
+        .sig-box { border-top: 2px solid var(--dark); width: 200px; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-<div class="portal-nav" id="noPrintNav">
-    <a href="Student Portal.html">Profile</a>
-    <a href="progress.html" class="active">Progress</a>
-    <a href="homework.html">Homework</a>
+<div class="no-print-zone" id="uiZone">
+    <div class="search-card">
+        <input type="text" id="rollInput" placeholder="Enter Roll No (e.g. 1234567)">
+        <select id="examSelect">
+            <option value="FA-1">FA-1</option>
+            <option value="FA-2">FA-2</option>
+            <option value="FA-3">FA-3</option>
+            <option value="FA-4">FA-4</option>
+            <option value="SA-1">SA-1</option>
+            <option value="SA-2">SA-2</option>
+            <option value="Annual">Annual</option>
+        </select>
+        <button class="btn-action" onclick="generateReport()">VIEW REPORT</button>
+        <button class="btn-action" style="background:#e67e22;" onclick="downloadPDF()">DOWNLOAD PDF</button>
+    </div>
 </div>
 
-<div id="printableArea">
-    <header id="pdfHeader">
-        <div class="header-content">
-            <img src="logo.png" class="header-logo">
-            <div class="school-text">
-                <span class="school-name-main">PARAMOUNT</span>
-                <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
-            </div>
-            <div class="page-brand">ACADEMIC PROGRESS</div>
+<div id="reportContainer">
+    <div class="report-header">
+        <img src="logo.png" style="height: 80px;" onerror="this.src='https://via.placeholder.com/80?text=Logo'">
+        <div class="school-info">
+            <h1>PARAMOUNT</h1>
+            <p>ENGLISH MEDIUM SCHOOL</p>
+            <div style="font-weight: 900; margin-top: 5px; text-decoration: underline; color: #333;">ACADEMIC PERFORMANCE REPORT</div>
         </div>
-    </header>
+        <div style="width: 80px; text-align: right; color: var(--forest); font-weight: 800; font-size: 10px;">SESSION<br>2025-26</div>
+    </div>
 
-    <div class="container">
-        <div class="card" id="pdfCard">
-            <div id="searchControls">
-                <div class="search-area">
-                    <input type="text" id="rollNo" placeholder="Enter Roll Number">
-                    <button class="btn-search" onclick="fetchResults()"><i class="fas fa-search"></i></button>
-                </div>
-                <div class="toggle-container">
-                    <select id="examType" onchange="fetchResults()">
-                        <option value="FA-1">FA-1</option><option value="FA-2">FA-2</option><option value="FA-3">FA-3</option>
-                        <option value="FA-4">FA-4</option><option value="SA-1">SA-1</option>
-                        <option value="SA-2">SA-2</option><option value="Annual">Annual</option>
-                    </select>
-                    <button id="toggleBtn" class="btn-premium" onclick="toggleCumulative()">
-                        <i class="fas fa-layer-group"></i> All Exams View
-                    </button>
-                </div>
-            </div>
-
-            <div id="reportProfile" class="report-header">
-                <div class="photo-container"><img id="studentPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'"></div>
-                <div class="student-meta">
-                    <h2 id="dispName">-</h2>
-                    <p id="dispClass">-</p>
-                    <p id="dispRoll" style="color:var(--forest); font-weight:800; font-size:12px;">-</p>
-                </div>
-            </div>
-
-            <div id="singleResults" class="results-container">
-                <div id="subjectGrid">
-                    <div id="col1"></div>
-                    <div id="midDivider" class="center-divider" style="display:none;"></div>
-                    <div id="col2"></div>
-                </div>
-                <div class="graph-section" id="graphWrap"><canvas id="marksGraph"></canvas></div>
-            </div>
-
-            <div class="all-exams-container">
-                <table class="cumulative-view" id="allExamsTable">
-                    <thead>
-                        <tr>
-                            <th class="subj-cell">Subject</th>
-                            <th>FA-1</th><th>FA-2</th><th>FA-3</th><th>FA-4</th>
-                             <th>SA-1<br><span style="font-size:7px;">(Quarterly)</span></th>
-                            <th>SA-2<br><span style="font-size:7px;">(Pre-Annual)</span></th>
-                             <th>Annual<br><span style="font-size:7px;">(End-Term)</span></th>
-                        </tr>
-                    </thead>
-                    <tbody id="allExamsBody"></tbody>
-                </table>
-            </div>
-
-            <div id="summaryArea" class="results-container">
-                <div class="summary-dashboard" id="sumDash">
-                    <div id="totalBox" class="stat-ring-card"><span class="stat-label">TOTAL MARKS</span><span id="resTotal" class="stat-value">-</span></div>
-                    <div class="stat-ring-card"><span class="stat-label">AVG PERCENTAGE</span><span id="resPerc" class="stat-value">-</span></div>
-                    
-                    <div class="grade-highlight-box" id="promotionBox" style="display:none;">
-                        <label style="color:rgba(255,255,255,0.7); font-size:10px; font-weight:900;">GRADE</label>
-                        <span id="resGrade" class="big-grade">-</span>
-                    </div>
-                </div>
-                <div class="signatures-row" id="sigRow">
-                    <div class="sig-block">Class Teacher Sign</div>
-                    <div class="sig-block">Correspondent Sign<br><span style="color:var(--forest); font-size:11px; font-weight:900;">Mr. Shaik Ahmad (Correspondent)</span></div>
-                </div>
-            </div>
-            
-            <div style="display: flex; justify-content: center; width: 100%;">
-                <button class="btn-download" id="pdfBtn" onclick="downloadReport()"><i class="fas fa-file-pdf"></i> Download Official Report</button>
-            </div>
-            <div id="noData" style="text-align:center; padding: 40px; color: #999; display: none; font-size: 13px;">No Student Found. Check Roll Number.</div>
+    <div class="student-profile">
+        <img id="pdfPhoto" src="logo.png" class="student-photo" onerror="this.src='https://via.placeholder.com/110x130?text=Student+Photo'">
+        <div class="student-details">
+            <h2 id="pdfName">STUDENT NAME</h2>
+            <p id="pdfClass">CLASS: --</p>
+            <p id="pdfRoll">ROLL NO: --</p>
         </div>
+        <div style="margin-left: auto; text-align: center;">
+            <i class="fas fa-certificate" style="font-size: 3rem; color: var(--gold);"></i>
+            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL RECORD</div>
+        </div>
+    </div>
+
+    <div class="marks-section">
+        <table class="marks-table">
+            <thead>
+                <tr><th>Subject</th><th>Marks</th><th>Max</th></tr>
+            </thead>
+            <tbody id="pdfMarksBody"></tbody>
+        </table>
+        <div class="chart-box">
+            <canvas id="miniGraph"></canvas>
+        </div>
+    </div>
+
+    <div class="summary-row">
+        <div class="stat-card"><b>Total Score</b><span id="pdfTotal">0</span></div>
+        <div class="stat-card"><b>Percentage</b><span id="pdfPerc">0%</span></div>
+        <div class="stat-card" style="background: var(--forest); color: white;"><b>Grade</b><span id="pdfGrade" style="color:var(--gold);">--</span></div>
+    </div>
+
+    <div class="signature-section">
+        <div class="sig-box">Class Teacher</div>
+        <div class="sig-box">Principal / Correspondent<br><span style="font-size: 10px;">Mr. Shaik Ahmad</span></div>
     </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <script>
     const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    let chartInstance = null;
+
     const students = {
-        "1472070": { Name: "Hanish Macharla", Class: "Pre-KG" }, "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG" }, "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG" }, "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG" }, "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG" }, "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG" }, "1460680": { Name: "Afraha Begum", Class: "Pre-KG" }, "1472299": { Name: "Aliya Sultana", Class: "Pre-KG" }, "1459683": { Name: "Anvika Bandi", Class: "Pre-KG" }, "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG" }, "1459605": { Name: "Devansh Bandi", Class: "Pre-KG" }, "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG" }, "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG" }, "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG" }, "1478248": { Name: "Jashritha Boina", Class: "Pre-KG" }, "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG" }, "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG" }, "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG" }, "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG" }, "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG" }, "1459582": { Name: "Rishi Manupati", Class: "Pre-KG" }, "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG" }, "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG" }, "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG" }, "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG" }, "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG" }, "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG" }, "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG" }, "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG" }, "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG" }, "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG" }, "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG" }, "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG" }, "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG" }, "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG" }, "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG" }, "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG" }, "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG" }, "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG" }, "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG" }, "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG" }, "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1" }, "1426519": { Name: "Aditya Manda", Class: "KG-1" }, "1426518": { Name: "Aadhya Jella", Class: "KG-1" }, "1392920": { Name: "Advaita Gauri Bandi", Class: "KG-1" }, "1392683": { Name: "Aizah Amna Shaik", Class: "KG-1" }, "1472077": { Name: "Akshara Singaram", Class: "KG-1" }, "1469394": { Name: "Bhahuveer Raj Somishetti", Class: "KG-1" }, "1392676": { Name: "Gayathri Erroju", Class: "KG-1" }, "1390570": { Name: "Hanvika Mulkalapelli", Class: "KG-1" }, "1396188": { Name: "Manvith Kondoju", Class: "KG-1" }, "1392703": { Name: "Sayyad Vajeed", Class: "KG-1" }, "1412110": { Name: "Mekala Manu sri", Class: "KG-1" }, "1392687": { Name: "Oliva Grace Vallapu", Class: "KG-1" }, "1392696": { Name: "Rithwik Oggula", Class: "KG-1" }, "1413326": { Name: "Rithwika Kandagatla", Class: "KG-1" }, "1392679": { Name: "Srimahi Chevvu", Class: "KG-1" }, "1459706": { Name: "Thanvesh Thalla", Class: "KG-1" }, "1317800": { Name: "Trishul Nanduri", Class: "KG-1" }, "1424085": { Name: "Yoganshika Nanduri", Class: "KG-1" }, "1387264": { Name: "Yusra Mohammad", Class: "KG-1" }, "1402461": { Name: "Zainul Abideen Syed", Class: "KG-1" }, "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2" }, "1298439": { Name: "Hanshith Erroju", Class: "KG-2" }, "1298447": { Name: "Harika Bandi", Class: "KG-2" }, "1298432": { Name: "Himarsha Naini", Class: "KG-2" }, "1298440": { Name: "Karthik Vallepu", Class: "KG-2" }, "1298433": { Name: "Kruthika Bandi", Class: "KG-2" }, "1298441": { Name: "Rajavardhan Gampala", Class: "KG-2" }, "1298443": { Name: "Roshan Kaitha", Class: "KG-2" }, "1298448": { Name: "Sri Anshu Ayaan Lyadala", Class: "KG-2" }, "1298444": { Name: "Srihansh Bandi", Class: "KG-2" }, "1298435": { Name: "Srikshitha Guduri", Class: "KG-2" }, "1298445": { Name: "Varshith Gonela", Class: "KG-2" }, "1392815": { Name: "Adyasri Makala", Class: "KG-2" }, "1394463": { Name: "Anvik Boini", Class: "KG-2" }, "1459764": { Name: "Anvith Pokanati", Class: "KG-2" }, "1459748": { Name: "Awais Ur Rehman Mohammad", Class: "KG-2" }, "1459742": { Name: "Dakshu Pothuganti", Class: "KG-2" }, "1393477": { Name: "Hansith Reddy Katukuri", Class: "KG-2" }, "1459762": { Name: "Harshith Pokanati", Class: "KG-2" }, "1402310": { Name: "Jella Aditya", Class: "KG-2" }, "1390563": { Name: "Krishank Nallabothula", Class: "KG-2" }, "1459771": { Name: "Kundana Katkuri", Class: "KG-2" }, "1307790": { Name: "Munukuntla Revanth Rudhra", Class: "KG-2" }, "1459758": { Name: "Niraja Nethri Siluveru", Class: "KG-2" }, "1459752": { Name: "Pranav Mattepelli", Class: "KG-2" }, "1390566": { Name: "Sreenith Yadav Naini", Class: "KG-2" }, "1459756": { Name: "Uvan Reddy Dasari", Class: "KG-2" }, "1459775": { Name: "Zayan Mohammad", Class: "KG-2" }, "1459714": { Name: "Zoya Mohammed", Class: "KG-2" }, "1298423": { Name: "Dheeraj Gattu", Class: "Grade-1" }, "1298425": { Name: "Preetham Sannayala", Class: "Grade-1" }, "1298428": { Name: "Shiva nandu Gonela", Class: "Grade-1" }, "1298429": { Name: "Shrayan Nuthanakanti", Class: "Grade-1" }, "1392864": { Name: "Sriyanksha Mandala", Class: "Grade-1" }, "1298411": { Name: "Advitha Garige", Class: "Grade-1" }, "1298413": { Name: "Harika Bandi", Class: "Grade-1" }, "1298414": { Name: "Himansi Kondoju", Class: "Grade-1" }, "1392895": { Name: "Izhaan Rahamath Syed", Class: "Grade-1" }, "1298424": { Name: "Jaisurya Myakala", Class: "Grade-1" }, "1298415": { Name: "Khadeeja Fathima", Class: "Grade-1" }, "1298416": { Name: "Manaswini Dandugula", Class: "Grade-1" }, "1298417": { Name: "Manusri Bandi", Class: "Grade-1" }, "1298426": { Name: "Rithwik krishna Amaravadi", Class: "Grade-1" }, "1298427": { Name: "Rohan Bandi", Class: "Grade-1" }, "1392876": { Name: "Shiva Junnu", Class: "Grade-1" }, "1392885": { Name: "Shivanandh Bandi", Class: "Grade-1" }, "1459709": { Name: "Sridha Thalla", Class: "Grade-1" }, "1298419": { Name: "Srinika Chengelly", Class: "Grade-1" }, "1298420": { Name: "Sriyanshi Oggula", Class: "Grade-1" }, "1298431": { Name: "Vishwak Chekka", Class: "Grade-1" }, "1298397": { Name: "Aliza Manha Shaik", Class: "Grade-2" }, "1298407": { Name: "Dhruvan Reddy Katukuri", Class: "Grade-2" }, "1298398": { Name: "Druthika Enugala", Class: "Grade-2" }, "1298399": { Name: "Manaswini Bandi", Class: "Grade-2" }, "1298408": { Name: "Rakshith Macharla", Class: "Grade-2" }, "1298401": { Name: "Sathwika Katkuri", Class: "Grade-2" }, "1298402": { Name: "Shalini Uppala", Class: "Grade-2" }, "1459786": { Name: "Chandu Devarakonda", Class: "Grade-2" }, "1459815": { Name: "Gnaneshwar Pokanati", Class: "Grade-2" }, "1298409": { Name: "Hasnain Syed", Class: "Grade-2" }, "1459832": { Name: "Koushik Siluveru", Class: "Grade-2" }, "1316732": { Name: "Senen Desabattula", Class: "Grade-2" }, "1459817": { Name: "Shivarajan Pothuganti", Class: "Grade-2" }, "1298393": { Name: "Nagavelly Manikanta", Class: "Grade-3" }, "1459834": { Name: "Mirja Ismail", Class: "Grade-3" }, "1298390": { Name: "Bandi Aryan", Class: "Grade-3" }, "1298392": { Name: "Dandugula Mahesh Babu", Class: "Grade-3" }, "1298387": { Name: "Bandi Tejasri", Class: "Grade-3" }, "1298391": { Name: "Bandi Harshavardhan", Class: "Grade-3" }, "1298389": { Name: "Gampala Vyshnavi", Class: "Grade-3" }, "1298384": { Name: "Gampala Laxmi", Class: "Grade-3" }, "1298410": { Name: "Garige Harshith", Class: "Grade-3" }, "1459844": { Name: "Katkuri Hanish", Class: "Grade-3" }, "1459798": { Name: "Katukuri Manideep", Class: "Grade-3" }, "1459805": { Name: "MD Abdul Quddus", Class: "Grade-3" }, "1298395": { Name: "Muppa Sathwik Patel", Class: "Grade-3" }, "1298386": { Name: "Nuthanakanti Sansita", Class: "Grade-3" }, "1298396": { Name: "Pasarakonda Ritwin", Class: "Grade-3" }, "1459841": { Name: "Pinninti Rakshith Rao", Class: "Grade-3" }, "1400203": { Name: "Rayi Sriman Adithya", Class: "Grade-3" }, "1298376": { Name: "Abdul Saqib Mohammad", Class: "Grade-4" }, "1298366": { Name: "Anudeep Chintha", Class: "Grade-4" }, "1298368": { Name: "Bhavan Bandi", Class: "Grade-4" }, "1298370": { Name: "Harshavardhan Gonela", Class: "Grade-4" }, "1298372": { Name: "Jayadev Chiluveru", Class: "Grade-4" }, "1298373": { Name: "Mahaboob Syed", Class: "Grade-4" }, "1298374": { Name: "Nandith Reddy Enugala", Class: "Grade-4" }, "1392930": { Name: "Sai Charan Goud Mandala", Class: "Grade-4" }, "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4" }, "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4" }, "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4" }, "1298364": { Name: "Jayasri Myakala", Class: "Grade-4" }, "1298381": { Name: "Rahul Kanjarla", Class: "Grade-4" }, "1459784": { Name: "Saketh Devarakonda", Class: "Grade-4" }, "1298353": { Name: "Adya Reddy Vangala", Class: "Grade-5" }, "1298361": { Name: "Kowshik Patel Muppa", Class: "Grade-5" }, "1298355": { Name: "Siri Singaram", Class: "Grade-5" }, "1298360": { Name: "Srikar Mandala", Class: "Grade-5" }, "1459801": { Name: "Abdus Salaam MD", Class: "Grade-5" }, "1392968": { Name: "Akshith Ram Kalvacharla", Class: "Grade-5" }, "1392965": { Name: "Jaffar Anas Shaik", Class: "Grade-5" }, "1298359": { Name: "Khaja Azeemuddin Mohammed", Class: "Grade-5" }, "1459839": { Name: "Nihan Mohammed", Class: "Grade-5" }, "1392963": { Name: "Saif Shaik", Class: "Grade-5" }, "1459794": { Name: "Saketh Renukuntla", Class: "Grade-5" }, "1392955": { Name: "Sreeja Dasari", Class: "Grade-5" }, "1459821": { Name: "Vidhaatri Sahani", Class: "Grade-5" }, "1298347": { Name: "Abdul Razzak Mohammad", Class: "Grade-6" }, "1298341": { Name: "Anudeepthi Chintha", Class: "Grade-6" }, "1298350": { Name: "Saketh Ranaveni", Class: "Grade-6" }, "1298346": { Name: "Shiva Sri Katukuri", Class: "Grade-6" }, "1298348": { Name: "Aklees Shaik", Class: "Grade-6" }, "1392992": { Name: "Akshya Kalvacharla", Class: "Grade-6" }, "1472577": { Name: "Prince Katkuri", Class: "Grade-6" }, "1298339": { Name: "Manikanta Sannayala", Class: "Grade-7" }, "1298340": { Name: "Sreeyan Reddy Karra", Class: "Grade-7" }, "1393008": { Name: "Jayadhithya Chiluveru", Class: "Grade-7" }, "1459846": { Name: "Akshaya Gampala", Class: "Grade-8" }, "1298335": { Name: "Ganesh Oggula", Class: "Grade-8" }, "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8" }, "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8" }, "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8" }, "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8" }
+        "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
+        "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)" },
+        "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG (Diamond)" },
+        "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG (Diamond)" },
+        "1459560": { Name: "Aadhya Sri Oggula", Class: "Pre-KG (Diamond)" },
+        "1474500": { Name: "Aadhyasri Shivagoni", Class: "Pre-KG (Diamond)" },
+        "1460680": { Name: "Afraha Begum", Class: "Pre-KG (Diamond)" },
+        "1472299": { Name: "Aliya Sultana", Class: "Pre-KG (Diamond)" },
+        "1459683": { Name: "Anvika Bandi", Class: "Pre-KG (Diamond)" },
+        "1459620": { Name: "Aradana Devara konda", Class: "Pre-KG (Diamond)" },
+        "1459605": { Name: "Devansh Bandi", Class: "Pre-KG (Diamond)" },
+        "1472069": { Name: "Hanvitha Mulkalapelli", Class: "Pre-KG (Diamond)" },
+        "1472723": { Name: "Harsha Vardhan Seenapelli", Class: "Pre-KG (Diamond)" },
+        "1459658": { Name: "Hiranya Bandi", Class: "Pre-KG (Diamond)" },
+        "1478248": { Name: "Jashritha Boina", Class: "Pre-KG (Diamond)" },
+        "1481135": { Name: "Konreddy Shreyanvi", Class: "Pre-KG (Diamond)" },
+        "1459568": { Name: "Kriyansh Sammeta", Class: "Pre-KG (Diamond)" },
+        "1459652": { Name: "Mohammed Mohiuddin Sayyad", Class: "Pre-KG (Diamond)" },
+        "1459636": { Name: "Nethra Narkurthi", Class: "Pre-KG (Diamond)" },
+        "1463720": { Name: "Reeyansh Bandi", Class: "Pre-KG (Diamond)" },
+        "1459582": { Name: "Rishi Manupati", Class: "Pre-KG (Diamond)" },
+        "1459607": { Name: "Rudransh Bandi", Class: "Pre-KG (Diamond)" },
+        "1459604": { Name: "Rudransh Bandi", Class: "Pre-KG (Diamond)" },
+        "1459625": { Name: "Sanvika Bandi", Class: "Pre-KG (Diamond)" },
+        "1472074": { Name: "Shanvith Khatha", Class: "Pre-KG (Diamond)" },
+        "1469395": { Name: "Shishira Jalagam", Class: "Pre-KG (Diamond)" },
+        "1456748": { Name: "Shiva Sai Mekala", Class: "Pre-KG (Diamond)" },
+        "1459687": { Name: "Shree Rudhraveer Chevvu", Class: "Pre-KG (Diamond)" },
+        "1459572": { Name: "Shreyansh Gangaraboina", Class: "Pre-KG (Diamond)" },
+        "1459643": { Name: "Sreeja Thalla", Class: "Pre-KG (Diamond)" },
+        "1459603": { Name: "Srikrithini Myakala", Class: "Pre-KG (Diamond)" },
+        "1472536": { Name: "Srivatsav Vanam", Class: "Pre-KG (Diamond)" },
+        "1456743": { Name: "Sriyansh Mekala", Class: "Pre-KG (Diamond)" },
+        "1473500": { Name: "Thanvika Lakka", Class: "Pre-KG (Diamond)" },
+        "1463724": { Name: "Thrilokansh Vudari", Class: "Pre-KG (Diamond)" },
+        "1459694": { Name: "Ujjwal Chekka", Class: "Pre-KG (Diamond)" },
+        "1474815": { Name: "Vaishnavi Lakka", Class: "Pre-KG (Diamond)" },
+        "1460690": { Name: "Vedansh Myakala", Class: "Pre-KG (Diamond)" },
+        "1478250": { Name: "Vishnu Priya Molugu", Class: "Pre-KG (Diamond)" },
+        "1413563": { Name: "Vyshnav Tej Boina", Class: "Pre-KG (Diamond)" },
+        "1459577": { Name: "Yafiah Mohammad", Class: "Pre-KG (Diamond)" },
+        "1424084": { Name: "Aadhya Sri Amaravadi", Class: "KG-1 (Ruby)" },
+        "1426519": { Name: "Aditya Manda", Class: "KG-1 (Ruby)" },
+        "1426518": { Name: "Aadhya Jella", Class: "KG-1 (Ruby)" },
+        "1392920": { Name: "Advaita Gauri Bandi", Class: "KG-1 (Ruby)" },
+        "1392683": { Name: "Aizah Amna Shaik", Class: "KG-1 (Ruby)" },
+        "1472077": { Name: "Akshara Singaram", Class: "KG-1 (Ruby)" },
+        "1469394": { Name: "Bhahuveer Raj Somishetti", Class: "KG-1 (Ruby)" },
+        "1392676": { Name: "Gayathri Erroju", Class: "KG-1 (Ruby)" },
+        "1390570": { Name: "Hanvika Mulkalapelli", Class: "KG-1 (Ruby)" },
+        "1396188": { Name: "Manvith Kondoju", Class: "KG-1 (Ruby)" },
+        "1392703": { Name: "Mariyam", Class: "KG-1 (Ruby)" },
+        "1412110": { Name: "Mekala Manu sri", Class: "KG-1 (Ruby)" },
+        "1392687": { Name: "Oliva Grace Vallapu", Class: "KG-1 (Ruby)" },
+        "1392696": { Name: "Rithwik Oggula", Class: "KG-1 (Ruby)" },
+        "1413326": { Name: "Rithwika Kandagatla", Class: "KG-1 (Ruby)" },
+        "1392679": { Name: "Srimahi Chevvu", Class: "KG-1 (Ruby)" },
+        "1459706": { Name: "Thanvesh Thalla", Class: "KG-1 (Ruby)" },
+        "1317800": { Name: "Trishul Nanduri", Class: "KG-1 (Ruby)" },
+        "1424085": { Name: "Yoganshika Nanduri", Class: "KG-1 (Ruby)" },
+        "1387264": { Name: "Yusra Mohammad", Class: "KG-1 (Ruby)" },
+        "1402461": { Name: "Zainul Abideen Syed", Class: "KG-1 (Ruby)" },
+        "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2 (Amber)" },
+        "1298439": { Name: "Hanshith Erroju", Class: "KG-2 (Amber)" },
+        "1298447": { Name: "Harika Bandi", Class: "KG-2 (Amber)" },
+        "1298432": { Name: "Himarsha Naini", Class: "KG-2 (Amber)" },
+        "1298440": { Name: "Karthik Vallepu", Class: "KG-2 (Amber)" },
+        "1298433": { Name: "Kruthika Bandi", Class: "KG-2 (Amber)" },
+        "1298441": { Name: "Rajavardhan Gampala", Class: "KG-2 (Amber)" },
+        "1298443": { Name: "Roshan Kaitha", Class: "KG-2 (Amber)" },
+        "1298448": { Name: "Sri Anshu Ayaan Lyadala", Class: "KG-2 (Amber)" },
+        "1298444": { Name: "Srihansh Bandi", Class: "KG-2 (Amber)" },
+        "1298435": { Name: "Srikshitha Guduri", Class: "KG-2 (Amber)" },
+        "1298445": { Name: "Varshith Gonela", Class: "KG-2 (Amber)" },
+        "1392815": { Name: "Adyasri Makala", Class: "KG-2 (Amber)" },
+        "1394463": { Name: "Anvik Boini", Class: "KG-2 (Amber)" },
+        "1459764": { Name: "Anvith Pokanati", Class: "KG-2 (Amber)" },
+        "1459748": { Name: "Awais Ur Rehman Mohammad", Class: "KG-2 (Amber)" },
+        "1459742": { Name: "Dakshu Pothuganti", Class: "KG-2 (Amber)" },
+        "1393477": { Name: "Hansith Reddy Katukuri", Class: "KG-2 (Amber)" },
+        "1459762": { Name: "Harshith Pokanati", Class: "KG-2 (Amber)" },
+        "1402310": { Name: "Jella Aditya", Class: "KG-2 (Amber)" },
+        "1390563": { Name: "Krishank Nallabothula", Class: "KG-2 (Amber)" },
+        "1459771": { Name: "Kundana Katkuri", Class: "KG-2 (Amber)" },
+        "1307790": { Name: "Munukuntla Revanth Rudhra", Class: "KG-2 (Amber)" },
+        "1459758": { Name: "Niraja Nethri Siluveru", Class: "KG-2 (Amber)" },
+        "1459752": { Name: "Pranav Mattepelli", Class: "KG-2 (Amber)" },
+        "1390566": { Name: "Sreenith Yadav Naini", Class: "KG-2 (Amber)" },
+        "1459756": { Name: "Uvan Reddy Dasari", Class: "KG-2 (Amber)" },
+        "1459775": { Name: "Zayan Mohammad", Class: "KG-2 (Amber)" },
+        "1459714": { Name: "Zoya Mohammed", Class: "KG-2 (Amber)" },
+        "1298423": { Name: "Dheeraj Gattu", Class: "Grade-1 (Opal)" },
+        "1298425": { Name: "Preetham Sannayala", Class: "Grade-1 (Opal)" },
+        "1298428": { Name: "Shiva nandu Gonela", Class: "Grade-1 (Opal)" },
+        "1298429": { Name: "Shrayan Nuthanakanti", Class: "Grade-1 (Opal)" },
+        "1392864": { Name: "Sriyanksha Mandala", Class: "Grade-1 (Opal)" },
+        "1298411": { Name: "Advitha Garige", Class: "Grade-1 (Opal)" },
+        "1298413": { Name: "Harika Bandi", Class: "Grade-1 (Opal)" },
+        "1298414": { Name: "Himansi Kondoju", Class: "Grade-1 (Opal)" },
+        "1392895": { Name: "Izhaan Rahamath Syed", Class: "Grade-1 (Opal)" },
+        "1298424": { Name: "Jaisurya Myakala", Class: "Grade-1 (Opal)" },
+        "1298415": { Name: "Khadeeja Fathima", Class: "Grade-1 (Opal)" },
+        "1298416": { Name: "Manaswini Dandugula", Class: "Grade-1 (Opal)" },
+        "1298417": { Name: "Manusri Bandi", Class: "Grade-1 (Opal)" },
+        "1298426": { Name: "Rithwik krishna Amaravadi", Class: "Grade-1 (Opal)" },
+        "1298427": { Name: "Rohan Bandi", Class: "Grade-1 (Opal)" },
+        "1392876": { Name: "Shiva Junnu", Class: "Grade-1 (Opal)" },
+        "1392885": { Name: "Shivanandh Bandi", Class: "Grade-1 (Opal)" },
+        "1459709": { Name: "Sridha Thalla", Class: "Grade-1 (Opal)" },
+        "1298419": { Name: "Srinika Chengelly", Class: "Grade-1 (Opal)" },
+        "1298420": { Name: "Sriyanshi Oggula", Class: "Grade-1 (Opal)" },
+        "1298431": { Name: "Vishwak Chekka", Class: "Grade-1 (Opal)" },
+        "1298397": { Name: "Aliza Manha Shaik", Class: "Grade-2 (Emerald)" },
+        "1298407": { Name: "Dhruvan Reddy Katukuri", Class: "Grade-2 (Emerald)" },
+        "1298398": { Name: "Druthika Enugala", Class: "Grade-2 (Emerald)" },
+        "1298399": { Name: "Manaswini Bandi", Class: "Grade-2 (Emerald)" },
+        "1298408": { Name: "Rakshith Macharla", Class: "Grade-2 (Emerald)" },
+        "1298401": { Name: "Sathwika Katkuri", Class: "Grade-2 (Emerald)" },
+        "1298402": { Name: "Shalini Uppala", Class: "Grade-2 (Emerald)" },
+        "1459786": { Name: "Chandu Devarakonda", Class: "Grade-2 (Emerald)" },
+        "1459815": { Name: "Gnaneshwar Pokanati", Class: "Grade-2 (Emerald)" },
+        "1298409": { Name: "Hasnain Syed", Class: "Grade-2 (Emerald)" },
+        "1459832": { Name: "Koushik Siluveru", Class: "Grade-2 (Emerald)" },
+        "1316732": { Name: "Senen Desabattula", Class: "Grade-2 (Emerald)" },
+        "1459817": { Name: "Shivarajan Pothuganti", Class: "Grade-2 (Emerald)" },
+        "1298393": { Name: "Nagavelly Manikanta", Class: "Grade-3 (Crystal)" },
+        "1459834": { Name: "Mirja Ismail", Class: "Grade-3 (Crystal)" },
+        "1298390": { Name: "Bandi Aryan", Class: "Grade-3 (Crystal)" },
+        "1298392": { Name: "Dandugula Mahesh Babu", Class: "Grade-3 (Crystal)" },
+        "1298387": { Name: "Bandi Tejasri", Class: "Grade-3 (Crystal)" },
+        "1298391": { Name: "Bandi Harshavardhan", Class: "Grade-3 (Crystal)" },
+        "1298389": { Name: "Gampala Vyshnavi", Class: "Grade-3 (Crystal)" },
+        "1298384": { Name: "Gampala Laxmi", Class: "Grade-3 (Crystal)" },
+        "1298410": { Name: "Garige Harshith", Class: "Grade-3 (Crystal)" },
+        "1459844": { Name: "Katkuri Hanish", Class: "Grade-3 (Crystal)" },
+        "1459798": { Name: "Katukuri Manideep", Class: "Grade-3 (Crystal)" },
+        "1459805": { Name: "MD Abdul Quddus", Class: "Grade-3 (Crystal)" },
+        "1298395": { Name: "Muppa Sathwik Patel", Class: "Grade-3 (Crystal)" },
+        "1298386": { Name: "Nuthanakanti Sansita", Class: "Grade-3 (Crystal)" },
+        "1298396": { Name: "Pasarakonda Ritwin", Class: "Grade-3 (Crystal)" },
+        "1459841": { Name: "Pinninti Rakshith Rao", Class: "Grade-3 (Crystal)" },
+        "1400203": { Name: "Rayi Sriman Adithya", Class: "Grade-3 (Crystal)" },
+        "1298376": { Name: "Abdul Saqib Mohammad", Class: "Grade-4 (Citrine)" },
+        "1298366": { Name: "Anudeep Chintha", Class: "Grade-4 (Citrine)" },
+        "1298368": { Name: "Bhavan Bandi", Class: "Grade-4 (Citrine)" },
+        "1298370": { Name: "Harshavardhan Gonela", Class: "Grade-4 (Citrine)" },
+        "1298372": { Name: "Jayadev Chiluveru", Class: "Grade-4 (Citrine)" },
+        "1298373": { Name: "Mahaboob Syed", Class: "Grade-4 (Citrine)" },
+        "1298374": { Name: "Nandith Reddy Enugala", Class: "Grade-4 (Citrine)" },
+        "1392930": { Name: "Sai Charan Goud Mandala", Class: "Grade-4 (Citrine)" },
+        "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4 (Citrine)" },
+        "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4 (Citrine)" },
+        "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4 (Citrine)" },
+        "1298364": { Name: "Jayasri Myakala", Class: "Grade-4 (Citrine)" },
+        "1298381": { Name: "Rahul Kanjarla", Class: "Grade-4 (Citrine)" },
+        "1459784": { Name: "Saketh Devarakonda", Class: "Grade-4 (Citrine)" },
+        "1298353": { Name: "Adya Reddy Vangala", Class: "Grade-5 (Moonstone)" },
+        "1298361": { Name: "Kowshik Patel Muppa", Class: "Grade-5 (Moonstone)" },
+        "1298355": { Name: "Siri Singaram", Class: "Grade-5 (Moonstone)" },
+        "1298360": { Name: "Srikar Mandala", Class: "Grade-5 (Moonstone)" },
+        "1459801": { Name: "Abdus Salaam MD.", Class: "Grade-5 (Moonstone)" },
+        "1392968": { Name: "Akshith Ram Kalvacharla", Class: "Grade-5 (Moonstone)" },
+        "1392965": { Name: "Jaffar Anas Shaik", Class: "Grade-5 (Moonstone)" },
+        "1298359": { Name: "Khaja Azeemuddin Mohammed", Class: "Grade-5 (Moonstone)" },
+        "1459839": { Name: "Nihan Mohammed", Class: "Grade-5 (Moonstone)" },
+        "1392963": { Name: "Saif Shaik", Class: "Grade-5 (Moonstone)" },
+        "1459794": { Name: "Saketh Renukuntla", Class: "Grade-5 (Moonstone)" },
+        "1392955": { Name: "Sreeja Dasari", Class: "Grade-5 (Moonstone)" },
+        "1459821": { Name: "Vidhaatri Sahani", Class: "Grade-5 (Moonstone)" },
+        "1298347": { Name: "Abdul Razzak Mohammad", Class: "Grade-6 (Alluri)" },
+        "1298341": { Name: "Anudeepthi Chintha", Class: "Grade-6 (Alluri)" },
+        "1298350": { Name: "Saketh Ranaveni", Class: "Grade-6 (Alluri)" },
+        "1298346": { Name: "Shiva Sri Katukuri", Class: "Grade-6 (Alluri)" },
+        "1298348": { Name: "Aklees Shaik", Class: "Grade-6 (Alluri)" },
+        "1392992": { Name: "Akshya Kalvacharla", Class: "Grade-6 (Alluri)" },
+        "1472577": { Name: "Prince Katkuri", Class: "Grade-6 (Alluri)" },
+        "1298339": { Name: "Manikanta Sannayala", Class: "Grade-7 (Kalam)" },
+        "1298340": { Name: "Sreeyan Reddy Karra", Class: "Grade-7 (Kalam)" },
+        "1393008": { Name: "Jayadhithya Chiluveru", Class: "Grade-7 (Kalam)" },
+        "1459846": { Name: "Akshaya Gampala", Class: "Grade-8 (Bhagat)" },
+        "1298335": { Name: "Ganesh Oggula", Class: "Grade-8 (Bhagat)" },
+        "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8 (Bhagat)" },
+        "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8 (Bhagat)" },
+        "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8 (Bhagat)" },
+        "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)" }
     };
 
-    let chartObj;
-    let isCumulative = false;
-
-    function getGradeSubjects(className) {
-        if (["Grade-6", "Grade-7", "Grade-8"].includes(className)) return ["TEL", "HIN", "ENG", "MAT", "PHY", "CHE", "BIO", "SOC", "IIT"];
-        if (className === "Grade-5") return ["TEL", "HIN", "ENG", "MAT", "SCI", "SOC", "IIT"];
+    function getSubjects(className) {
+        if (className.includes("Grade-6") || className.includes("Grade-7") || className.includes("Grade-8")) 
+            return ["TEL", "HIN", "ENG", "MAT", "PHY", "BIO", "SOC", "IIT"];
+        if (className.includes("Grade-5")) return ["TEL", "HIN", "ENG", "MAT", "SCI", "SOC", "IIT"];
         return ["TEL", "HIN", "ENG", "MAT", "SCI", "SOC"];
     }
 
-    function toggleCumulative() {
-        if(!isCumulative) fetchAllExams();
-        else fetchResults();
-    }
-
-    function fetchResults() {
-        isCumulative = false;
-        document.getElementById('toggleBtn').innerHTML = '<i class="fas fa-layer-group"></i> All Exams View';
-        const roll = document.getElementById('rollNo').value.trim();
-        const exam = document.getElementById('examType').value;
+    async function generateReport() {
+        const roll = document.getElementById('rollInput').value.trim();
+        const exam = document.getElementById('examSelect').value;
         const student = students[roll];
 
-        if(!student) { if(roll) document.getElementById('noData').style.display = 'block'; return; }
+        if (!student) { alert("Student not found!"); return; }
 
-        db.ref(`progress_cards/${student.Class}/${exam}/${student.Name}`).once('value', (snap) => {
-            const data = snap.val();
-            document.getElementById('reportProfile').style.display = 'flex';
-            document.getElementById('dispName').innerText = student.Name;
-            document.getElementById('dispClass').innerText = student.Class;
-            document.getElementById('dispRoll').innerText = `Roll Number: ${roll}`;
-            document.getElementById('studentPhoto').src = `students/${roll}.png`;
+        const dbClass = student.Class.split(' (')[0].trim();
+        const snap = await db.ref(`progress_cards/${dbClass}/${exam}/${student.Name}`).once('value');
+        const data = snap.val();
 
-            if(data) {
-                document.getElementById('singleResults').style.display = 'block';
-                document.getElementById('summaryArea').style.display = 'block';
-                document.getElementById('allExamsTable').style.display = 'none';
-                document.getElementById('pdfBtn').style.display = 'flex';
-                document.getElementById('promotionBox').style.display = 'block';
-                document.getElementById('totalBox').style.display = 'block';
+        if (!data) { alert("No results found for this exam."); return; }
 
-                const subjects = getGradeSubjects(student.Class);
-                const m = data.marks || {};
-                document.getElementById('col1').innerHTML = ""; document.getElementById('col2').innerHTML = "";
-                const half = Math.ceil(subjects.length / 2);
-                
-                subjects.forEach((sub, idx) => {
-                    const mark = m[sub] !== undefined ? m[sub] : '-';
-                    const row = `<div class="subj-item"><span>${sub}</span><span>${mark}</span></div>`;
-                    if(idx < half) document.getElementById('col1').innerHTML += row;
-                    else document.getElementById('col2').innerHTML += row;
-                });
+        document.getElementById('pdfName').innerText = student.Name.toUpperCase();
+        document.getElementById('pdfClass').innerText = "CLASS: " + student.Class;
+        document.getElementById('pdfRoll').innerText = "ROLL NO: " + roll;
+        document.getElementById('pdfPhoto').src = `Student images/${roll}.png`;
 
-                if(chartObj) chartObj.destroy();
-                const ctx = document.getElementById('marksGraph').getContext('2d');
-                chartObj = new Chart(ctx, {
-                    type: 'bar',
-                    data: { labels: subjects, datasets: [{ data: subjects.map(s => m[s] || 0), backgroundColor: '#006633', borderRadius: 5 }] },
-                    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 100 } }, plugins: { legend: { display: false } } }
-                });
+        const subjects = getSubjects(student.Class);
+        let tableHtml = "";
+        subjects.forEach(sub => {
+            const mark = data.marks[sub] || "-";
+            tableHtml += `<tr><td>${sub}</td><td>${mark}</td><td>100</td></tr>`;
+        });
+        document.getElementById('pdfMarksBody').innerHTML = tableHtml;
 
-                document.getElementById('resTotal').innerText = data.total;
-                document.getElementById('resPerc').innerText = data.percentage.toString().replace('%','') + "%";
-                document.getElementById('resGrade').innerText = data.grade;
-                document.getElementById('noData').style.display = 'none';
-            } else { 
-                document.getElementById('singleResults').style.display = 'none';
-                document.getElementById('noData').style.display = 'block'; 
+        document.getElementById('pdfTotal').innerText = data.total;
+        document.getElementById('pdfPerc').innerText = data.percentage + "%";
+        document.getElementById('pdfGrade').innerText = data.grade;
+
+        if(chartInstance) chartInstance.destroy();
+        const ctx = document.getElementById('miniGraph').getContext('2d');
+        chartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: subjects,
+                datasets: [{ data: subjects.map(s => data.marks[s] || 0), backgroundColor: '#006633' }]
+            },
+            options: { 
+                maintainAspectRatio: false, 
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 100 } }
             }
         });
+
+        document.getElementById('reportContainer').style.display = 'block';
     }
 
-    async function fetchAllExams() {
-        const roll = document.getElementById('rollNo').value.trim();
-        const student = students[roll];
-        if(!student) return;
-
-        isCumulative = true;
-        const toggleBtn = document.getElementById('toggleBtn');
-        toggleBtn.innerHTML = '<i class="fas fa-undo"></i> Back to Single Exam';
-        document.getElementById('singleResults').style.display = 'none';
-
-        db.ref(`progress_cards/${student.Class}`).once('value', (snap) => {
-            const classData = snap.val();
-            const subjects = getGradeSubjects(student.Class);
-            const exams = ["FA-1", "FA-2", "FA-3", "SA-1", "SA-2"];
-            let tableHtml = ""; let grandTotal = 0; let totalPossible = 0;
-            let sa2Exists = (classData && classData["SA-2"] && classData["SA-2"][student.Name]);
-
-            subjects.forEach(sub => {
-                let row = `<tr><td class="subj-cell">${sub}</td>`;
-                exams.forEach(ex => {
-                    let mark = (classData && classData[ex] && classData[ex][student.Name]) ? classData[ex][student.Name].marks[sub] : '-';
-                    if (mark === undefined || mark === 'undefined') mark = '-';
-                    row += `<td class="${mark !== '-' && parseInt(mark) < 35 ? 'fail-mark' : ''}">${mark}</td>`;
-                    if(mark !== '-') { grandTotal += parseInt(mark); totalPossible += 100; }
-                });
-                tableHtml += row + `</tr>`;
-            });
-
-            document.getElementById('allExamsBody').innerHTML = tableHtml;
-            document.getElementById('allExamsTable').style.display = 'table';
-            document.getElementById('summaryArea').style.display = 'block';
-            document.getElementById('pdfBtn').style.display = 'flex';
-            document.getElementById('totalBox').style.display = 'none';
-            
-            const perc = totalPossible > 0 ? ((grandTotal / totalPossible) * 100).toFixed(1) : '0';
-            document.getElementById('resPerc').innerText = perc + "%";
-            document.getElementById('promotionBox').style.display = sa2Exists ? 'block' : 'none';
-            document.getElementById('resGrade').innerText = perc >= 35 ? "PROMOTED" : "RETAINED";
-        });
-    }
-
-    async function downloadReport() {
-        const nav = document.getElementById('noPrintNav');
-        const sc = document.getElementById('searchControls');
-        const sig = document.getElementById('sigRow');
-        const cont = document.getElementById('printableArea');
-        const col1 = document.getElementById('col1');
-        const col2 = document.getElementById('col2');
-        const grid = document.getElementById('subjectGrid');
-        const mid = document.getElementById('midDivider');
-
-        // FOR PDF PREVIEW: FORCE DESKTOP LAYOUT
-        const isMobile = window.innerWidth < 768;
-        if(isMobile) {
-            grid.style.display = "grid";
-            grid.style.gridTemplateColumns = "1fr 1px 1fr";
-            mid.style.display = "block";
-            document.body.style.width = "1024px";
-        }
-
-        nav.style.display = 'none'; sc.style.display = 'none'; sig.style.display = 'flex';
-
-        const canvas = await html2canvas(cont, { scale: 2, useCORS: true, width: 1024 });
-        const img = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-        const pdfW = pdf.internal.pageSize.getWidth();
-        const pdfH = (canvas.height * pdfW) / canvas.width;
-        
-        pdf.addImage(img, 'PNG', 0, 0, pdfW, pdfH);
-        pdf.save(`${document.getElementById('dispName').innerText}_Official_Report.pdf`);
-
-        // REVERT LAYOUT
-        if(isMobile) {
-            grid.style.display = "flex";
-            mid.style.display = "none";
-            document.body.style.width = "";
-        }
-        nav.style.display = 'flex'; sc.style.display = 'block'; sig.style.display = 'none';
+    async function downloadPDF() {
+        const element = document.getElementById('reportContainer');
+        const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${document.getElementById('pdfName').innerText}_Report.pdf`);
     }
 </script>
 </body>
-</html> 
+</html>
