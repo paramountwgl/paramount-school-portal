@@ -21,7 +21,7 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
 
-        /* --- PREMIUM HEADER --- */
+        /* --- UI HEADER --- */
         header { 
             background: var(--forest); color: white; padding: 12px 4%; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100; 
@@ -36,39 +36,40 @@
         .portal-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; padding-left: 15px; margin-left: 15px; border-left: 2px solid rgba(255,255,255,0.3); color: white; }
         .btn-exit { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 5px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        /* --- SEARCH CONTROLS --- */
         .no-print-zone { max-width: 800px; margin: 25px auto; padding: 0 15px; text-align: center; }
         .search-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; border-top: 5px solid var(--gold); }
         input, select { padding: 12px 20px; border-radius: 50px; border: 2px solid #eee; outline: none; font-weight: 600; min-width: 180px; }
         .btn-action { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        /* --- REPORT CONTAINER (A4 OPTIMIZED) --- */
+        /* --- REPORT CONTAINER (A4 CENTERED) --- */
+        #reportWrapper { padding: 20px; display: none; } /* Extra space around container for PDF capture */
         #reportContainer { 
-            width: 800px; margin: 0 auto; background: white; padding: 40px; box-sizing: border-box; 
-            border: 15px double var(--forest); position: relative; display: none;
+            width: 800px; margin: 0 auto; background: white; padding: 50px; box-sizing: border-box; 
+            border: 12px double var(--forest); position: relative; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
         #reportContainer::before {
             content: 'PARAMOUNT'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
             font-size: 8rem; color: rgba(0, 102, 51, 0.03); font-weight: 900; z-index: 0; pointer-events: none;
         }
 
-        .pdf-header-box { display:flex; align-items:center; justify-content:space-between; border-bottom:3px solid var(--forest); padding-bottom:15px; margin-bottom:20px; }
-        .exam-badge { background: black; color: white; padding: 5px 20px; border-radius: 5px; font-size: 13px; font-weight: 800; display: inline-block; margin-top: 10px; text-transform: uppercase; border: 1px solid white; }
+        .pdf-header-box { display:flex; align-items:center; justify-content:space-between; border-bottom:3px solid var(--forest); padding-bottom:15px; margin-bottom:20px; position: relative; z-index: 1;}
+        .exam-badge { background: black; color: white; padding: 6px 20px; border-radius: 5px; font-size: 13px; font-weight: 800; display: inline-block; margin-top: 10px; text-transform: uppercase; border: 1px solid white; }
 
-        .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; z-index: 1; border: 1px solid #eee; }
+        .student-profile { display: flex; gap: 30px; background: #fdfdfd; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; z-index: 1; border: 1px solid #f0f0f0; }
         .student-photo { width: 110px; height: 130px; border: 3px solid var(--forest); border-radius: 10px; object-fit: cover; background: white; }
         
         .marks-section { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 20px; align-items: start; position: relative; z-index: 1;}
         .marks-table { width: 100%; border-collapse: collapse; }
-        .marks-table th { background: var(--forest); color: white; padding: 10px; font-size: 10px; }
-        .marks-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: 700; font-size: 11px; }
-        .marks-table td:first-child { text-align: left; background: #f4f4f4; color: var(--forest); padding-left: 15px; font-size: 12px; }
+        .marks-table th { background: var(--forest); color: white; padding: 12px; font-size: 10px; text-transform: uppercase; }
+        .marks-table td { border: 1px solid #ddd; padding: 10px; text-align: center; font-weight: 700; font-size: 12px; }
+        .marks-table td:first-child { text-align: left; background: #f8faf9; color: var(--forest); padding-left: 15px; font-size: 13px; }
 
         .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 20px; position: relative; z-index: 1; }
         .stat-card { flex: 1; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
         .stat-card b { display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
         
-        .signature-row { display: flex; justify-content: space-between; margin-top: 60px; padding: 0 20px; position: relative; z-index: 1; }
+        .signature-row { display: flex; justify-content: space-between; margin-top: 80px; padding: 0 20px; position: relative; z-index: 1;}
         .sig-box { border-top: 2px solid #333; width: 30%; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.85rem; }
     </style>
 </head>
@@ -98,59 +99,61 @@
             <option value="FORMATIVE ASSESSMENT-4">FORMATIVE ASSESSMENT-4</option>
             <option value="SUMMATIVE ASSESSMENT-1">SUMMATIVE ASSESSMENT-1</option>
             <option value="SUMMATIVE ASSESSMENT-2">SUMMATIVE ASSESSMENT-2</option>
-            <option value="ANNUAL EXAM">ANNUAL EXAM</option>
+            <option value="Annual">Annual</option>
         </select>
         <button class="btn-action" onclick="generateReport()">VIEW REPORT</button>
         <button class="btn-action" style="background:#e67e22;" onclick="downloadPDF()">DOWNLOAD PDF</button>
     </div>
 </div>
 
-<div id="reportContainer">
-    <div class="pdf-header-box">
-        <img src="logo.png" style="height: 85px;">
-        <div style="text-align:center; flex-grow:1;">
-            <h1 style="margin:0; font-family:'Montserrat'; font-size:2.3rem; color:var(--forest);">PARAMOUNT</h1>
-            <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px; font-size: 0.9rem;">ENGLISH MEDIUM SCHOOL</p>
-            <div style="font-weight: 800; font-size: 14px; margin-top: 5px; color: #333;">ACADEMIC PERFORMANCE REPORT</div>
-            <div style="font-size: 11px; font-weight: 600; color: #555;">Penshionpur, Warangal 506166, Telangana.</div>
-            <div id="pdfExamBadge" class="exam-badge">---</div>
+<div id="reportWrapper">
+    <div id="reportContainer">
+        <div class="pdf-header-box">
+            <img src="logo.png" style="height: 85px;">
+            <div style="text-align:center; flex-grow:1;">
+                <h1 style="margin:0; font-family:'Montserrat'; font-size:2.3rem; color:var(--forest);">PARAMOUNT</h1>
+                <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px; font-size: 0.9rem;">ENGLISH MEDIUM SCHOOL</p>
+                <div style="font-weight: 800; font-size: 14px; margin-top: 5px; color: #333;">ACADEMIC PERFORMANCE REPORT</div>
+                <div style="font-size: 11px; font-weight: 600; color: #555;">Penshionpur, Warangal 506166, Telangana.</div>
+                <div id="pdfExamBadge" class="exam-badge">---</div>
+            </div>
+            <div style="width:80px; text-align:right; font-weight:900; font-size:11px; color:var(--forest);">SESSION<br>2025-26</div>
         </div>
-        <div style="width:80px; text-align:right; font-weight:900; font-size:11px; color:var(--forest);">SESSION<br>2025-26</div>
-    </div>
 
-    <div class="student-profile">
-        <img id="pdfPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'">
-        <div>
-            <h2 id="pdfName" style="margin:0; color:var(--forest); font-family: 'Montserrat'; letter-spacing: 1px;">STUDENT NAME</h2>
-            <p id="pdfClass" style="margin:8px 0; font-weight:700; color: #444;">CLASS: --</p>
-            <p id="pdfRoll" style="margin:5px 0; font-weight:700; color: #444;">ROLL NO: --</p>
+        <div class="student-profile">
+            <img id="pdfPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'">
+            <div>
+                <h2 id="pdfName" style="margin:0; color:var(--forest); font-family: 'Montserrat'; letter-spacing: 1px;">STUDENT NAME</h2>
+                <p id="pdfClass" style="margin:8px 0; font-weight:700; color: #444;">CLASS: --</p>
+                <p id="pdfRoll" style="margin:5px 0; font-weight:700; color: #444;">ROLL NO: --</p>
+            </div>
+            <div style="margin-left: auto; text-align: center;">
+                <i class="fas fa-medal" style="font-size: 3.5rem; color: var(--gold);"></i>
+                <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL SEAL</div>
+            </div>
         </div>
-        <div style="margin-left: auto; text-align: center;">
-            <i class="fas fa-medal" style="font-size: 3.5rem; color: var(--gold);"></i>
-            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL RECORD</div>
+
+        <div class="marks-section">
+            <table class="marks-table">
+                <thead id="pdfTableHead"></thead>
+                <tbody id="pdfMarksBody"></tbody>
+            </table>
+            <div style="height:250px; background:#fff; border:1px solid #eee; padding:10px; border-radius:12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+                <canvas id="miniGraph"></canvas>
+            </div>
         </div>
-    </div>
 
-    <div class="marks-section">
-        <table class="marks-table">
-            <thead id="pdfTableHead"></thead>
-            <tbody id="pdfMarksBody"></tbody>
-        </table>
-        <div style="height:250px; background:#fff; border:1px solid #eee; padding:10px; border-radius:12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
-            <canvas id="miniGraph"></canvas>
+        <div class="summary-row">
+            <div class="stat-card"><b>Total Score</b><span id="pdfTotal" style="font-size:1.5rem; font-weight:900; color:var(--forest);">0</span></div>
+            <div class="stat-card"><b>Percentage</b><span id="pdfPerc" style="font-size:1.5rem; font-weight:900; color:var(--forest);">0%</span></div>
+            <div class="stat-card" style="background:var(--forest); color:white;"><b>Grade</b><span id="pdfGrade" style="font-size:1.5rem; font-weight:900; color:var(--gold);">--</span></div>
         </div>
-    </div>
 
-    <div class="summary-row">
-        <div class="stat-card"><b>Total Score</b><span id="pdfTotal" style="font-size:1.5rem; font-weight:900; color:var(--forest);">0</span></div>
-        <div class="stat-card"><b>Percentage</b><span id="pdfPerc" style="font-size:1.5rem; font-weight:900; color:var(--forest);">0%</span></div>
-        <div class="stat-card" style="background:var(--forest); color:white;"><b>Grade</b><span id="pdfGrade" style="font-size:1.5rem; font-weight:900; color:var(--gold);">--</span></div>
-    </div>
-
-    <div class="signature-row">
-        <div class="sig-box">Class Teacher Signature</div>
-        <div class="sig-box">Parent Signature</div>
-        <div class="sig-box">Correspondent Sign</div>
+        <div class="signature-row">
+            <div class="sig-box">Class Teacher Signature</div>
+            <div class="sig-box">Parent Signature</div>
+            <div class="sig-box">Correspondent Sign</div>
+        </div>
     </div>
 </div>
 
@@ -161,9 +164,8 @@
 
     let chartInstance = null;
 
-    // Student Database Object (Your list of 185)
     const students = {
-         "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
+        "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
         "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)" },
         "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG (Diamond)" },
         "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG (Diamond)" },
@@ -228,7 +230,7 @@
         "1298438": { Name: "Deekshanth Sammeta", Class: "KG-2 (Amber)" },
         "1298439": { Name: "Hanshith Erroju", Class: "KG-2 (Amber)" },
         "1298447": { Name: "Harika Bandi", Class: "KG-2 (Amber)" },
-        "1298432": { Name: "Himarsha Naini", Class: "KG-2 (Amber)" },
+        "1298432": { Name: "Himarsha  Naini", Class: "KG-2 (Amber)" },
         "1298440": { Name: "Karthik Vallepu", Class: "KG-2 (Amber)" },
         "1298433": { Name: "Kruthika Bandi", Class: "KG-2 (Amber)" },
         "1298441": { Name: "Rajavardhan Gampala", Class: "KG-2 (Amber)" },
@@ -250,7 +252,7 @@
         "1307790": { Name: "Munukuntla Revanth Rudhra", Class: "KG-2 (Amber)" },
         "1459758": { Name: "Niraja Nethri Siluveru", Class: "KG-2 (Amber)" },
         "1459752": { Name: "Pranav Mattepelli", Class: "KG-2 (Amber)" },
-        "1390566": { Name: "Sreenith Yadav Naini", Class: "KG-2 (Amber)" },
+        "1390566": { Name: "Sreenith  Yadav Naini", Class: "KG-2 (Amber)" },
         "1459756": { Name: "Uvan Reddy Dasari", Class: "KG-2 (Amber)" },
         "1459775": { Name: "Zayan Mohammad", Class: "KG-2 (Amber)" },
         "1459714": { Name: "Zoya Mohammed", Class: "KG-2 (Amber)" },
@@ -261,7 +263,7 @@
         "1392864": { Name: "Sriyanksha Mandala", Class: "Grade-1 (Opal)" },
         "1298411": { Name: "Advitha Garige", Class: "Grade-1 (Opal)" },
         "1298413": { Name: "Harika Bandi", Class: "Grade-1 (Opal)" },
-        "1298414": { Name: "Himansi Kondoju", Class: "Grade-1 (Opal)" },
+        "1298414": { Name: "Himansi  Kondoju", Class: "Grade-1 (Opal)" },
         "1392895": { Name: "Izhaan Rahamath Syed", Class: "Grade-1 (Opal)" },
         "1298424": { Name: "Jaisurya Myakala", Class: "Grade-1 (Opal)" },
         "1298415": { Name: "Khadeeja Fathima", Class: "Grade-1 (Opal)" },
@@ -309,11 +311,11 @@
         "1298366": { Name: "Anudeep Chintha", Class: "Grade-4 (Citrine)" },
         "1298368": { Name: "Bhavan Bandi", Class: "Grade-4 (Citrine)" },
         "1298370": { Name: "Harshavardhan Gonela", Class: "Grade-4 (Citrine)" },
-        "1298372": { Name: "Jayadev Chiluveru", Class: "Grade-4 (Citrine)" },
+        "1298372": { Name: "Jayadev  Chiluveru", Class: "Grade-4 (Citrine)" },
         "1298373": { Name: "Mahaboob Syed", Class: "Grade-4 (Citrine)" },
         "1298374": { Name: "Nandith Reddy Enugala", Class: "Grade-4 (Citrine)" },
         "1392930": { Name: "Sai Charan Goud Mandala", Class: "Grade-4 (Citrine)" },
-        "1298380": { Name: "Sai  Prasanna Keerthi", Class: "Grade-4 (Citrine)" },
+        "1298380": { Name: "Sai Prasanna Keerthi", Class: "Grade-4 (Citrine)" },
         "1298363": { Name: "Ajmeri Shaik", Class: "Grade-4 (Citrine)" },
         "1392939": { Name: "Akshith Chiluveru", Class: "Grade-4 (Citrine)" },
         "1298364": { Name: "Jayasri Myakala", Class: "Grade-4 (Citrine)" },
@@ -348,7 +350,6 @@
         "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8 (Bhagat)" },
         "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8 (Bhagat)" },
         "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)" }
-        // ... include rest of students ...
     };
 
     function getGradeSubjects(className) {
@@ -423,19 +424,25 @@
             // Chart Rendering
             if(chartInstance) chartInstance.destroy();
             const ctx = document.getElementById('miniGraph').getContext('2d');
+            
+            const datasets = [];
+            if(isSenior) {
+                datasets.push({ label: 'External', data: graphDataExt, backgroundColor: '#006633' });
+                datasets.push({ label: 'Internal', data: graphDataInt, backgroundColor: '#ffd700' });
+            } else {
+                datasets.push({ label: 'Marks', data: graphDataExt, backgroundColor: '#006633' });
+            }
+
             chartInstance = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: graphLabels,
-                    datasets: isSenior ? [
-                        { label: 'External', data: graphDataExt, backgroundColor: '#006633' },
-                        { label: 'Internal', data: graphDataInt, backgroundColor: '#ffd700' }
-                    ] : [{ label: 'Marks', data: graphDataExt, backgroundColor: '#006633' }]
-                },
+                data: { labels: graphLabels, datasets: datasets },
                 options: { 
                     maintainAspectRatio: false, 
-                    scales: { y: { beginAtZero: true, max: isSenior ? maxExt : maxMarks } },
-                    plugins: { legend: { display: isSenior, labels: { boxWidth: 10 } } }
+                    scales: { 
+                        y: { beginAtZero: true, max: maxMarks, ticks: { font: { weight: 'bold' } } },
+                        x: { ticks: { font: { size: 10, weight: 'bold' } } }
+                    },
+                    plugins: { legend: { display: isSenior, labels: { boxWidth: 10, font: { size: 10 } } } }
                 }
             });
 
@@ -450,9 +457,15 @@
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
-        pdf.addImage(imgData, 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
+        
+        // Centering and Padding Logic
+        const margin = 10; // 10mm margin
+        const pdfWidth = pdf.internal.pageSize.getWidth() - (margin * 2);
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        pdf.addImage(imgData, 'PNG', margin, margin, pdfWidth, pdfHeight);
         pdf.save(`${document.getElementById('pdfName').innerText}_Report.pdf`);
     }
 </script>
 </body>
-</html>
+</html>          this is the complete code reorganise it as i mentioned in the previous turn parent report means it look good for them too it attract parents
