@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Academic Report | Paramount School</title>
+    <title>Academic Progress | Paramount School</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -21,6 +24,7 @@
         .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; width: 100%; }
         .header-left { display: flex; align-items: center; gap: 12px; }
         .header-logo { height: 55px; width: auto; }
+        .school-branding { line-height: 1.1; }
         .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px; color: white; }
         .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--gold); font-weight: 700; text-transform: uppercase; }
         .portal-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; padding-left: 15px; margin-left: 15px; border-left: 2px solid rgba(255,255,255,0.3); color: white; }
@@ -38,15 +42,18 @@
         .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; border: 1px solid #eee; }
         .student-photo { width: 110px; height: 130px; border: 3px solid var(--forest); border-radius: 10px; object-fit: cover; background: white; }
         
-        .marks-section { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 20px; align-items: start; }
+        .marks-section { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 20px; align-items: start; }
         .marks-table { width: 100%; border-collapse: collapse; }
         .marks-table th { background: var(--forest); color: white; padding: 10px; font-size: 11px; }
-        .marks-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: 700; font-size: 13px; }
+        .marks-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: 700; font-size: 12px; }
         .marks-table td:first-child { text-align: left; background: #f4f4f4; color: var(--forest); padding-left: 15px; }
 
-        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 20px; }
-        .stat-card { flex: 1; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
-        .sig-box { border-top: 2px solid #333; width: 30%; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.8rem; margin-top: 60px; }
+        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 15px; }
+        .stat-card { flex: 1; padding: 12px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
+        .stat-card b { display: block; font-size: 0.75rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
+        
+        .signature-row { display: flex; justify-content: space-between; margin-top: 60px; padding: 0 20px; }
+        .sig-box { border-top: 2px solid #333; width: 28%; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -69,13 +76,13 @@
     <div class="search-card">
         <input type="text" id="rollInput" placeholder="Enter Roll No (e.g. 1472070)">
         <select id="examSelect">
-            <option value="FORMATIVE ASSESSMENT-1">FORMATIVE ASSESSMENT-1</option>
-            <option value="FORMATIVE ASSESSMENT-2">FORMATIVE ASSESSMENT-2</option>
-            <option value="FORMATIVE ASSESSMENT-3">FORMATIVE ASSESSMENT-3</option>
-            <option value="FORMATIVE ASSESSMENT-4">FORMATIVE ASSESSMENT-4</option>
-            <option value="SUMMATIVE ASSESSMENT-1">SUMMATIVE ASSESSMENT-1</option>
-            <option value="SUMMATIVE ASSESSMENT-2">SUMMATIVE ASSESSMENT-2</option>
-            <option value="ANNUAL EXAM">ANNUAL EXAM</option>
+            <option value="FA-1">FORMATIVE ASSESSMENT-1</option>
+            <option value="FA-2">FORMATIVE ASSESSMENT-2</option>
+            <option value="FA-3">FORMATIVE ASSESSMENT-3</option>
+            <option value="FA-4">FORMATIVE ASSESSMENT-4</option>
+            <option value="SA-1">SUMMATIVE ASSESSMENT-1</option>
+            <option value="SA-2">SUMMATIVE ASSESSMENT-2</option>
+            <option value="Annual">Annual</option>
         </select>
         <button class="btn-action" onclick="generateReport()">VIEW REPORT</button>
         <button class="btn-action" style="background:#e67e22;" onclick="downloadPDF()">DOWNLOAD PDF</button>
@@ -87,7 +94,7 @@
         <img src="logo.png" style="height: 85px;">
         <div style="text-align:center; flex-grow:1;">
             <h1 style="margin:0; font-family:'Montserrat'; font-size:2.3rem; color:var(--forest);">PARAMOUNT</h1>
-            <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px; font-size: 0.8rem;">ENGLISH MEDIUM SCHOOL</p>
+            <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px;">ENGLISH MEDIUM SCHOOL</p>
             <div style="font-weight: 800; font-size: 14px; margin-top: 5px; color: #333;">ACADEMIC PERFORMANCE REPORT</div>
             <div style="font-size: 11px; font-weight: 600; color: #555;">Penshionpur, Warangal 506166, Telangana.</div>
             <div id="pdfExamBadge" class="exam-badge">---</div>
@@ -99,12 +106,12 @@
         <img id="pdfPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'">
         <div>
             <h2 id="pdfName" style="margin:0; color:var(--forest); font-family: 'Montserrat'; letter-spacing: 1px;">STUDENT NAME</h2>
-            <p id="pdfClass" style="margin:5px 0; font-weight:700;">CLASS: --</p>
+            <p id="pdfClass" style="margin:8px 0; font-weight:700;">CLASS: --</p>
             <p id="pdfRoll" style="margin:5px 0; font-weight:700;">ROLL NO: --</p>
         </div>
         <div style="margin-left: auto; text-align: center;">
-            <i class="fas fa-certificate" style="font-size: 3rem; color: var(--gold);"></i>
-            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL RECORD</div>
+            <i class="fas fa-medal" style="font-size: 3.5rem; color: var(--gold);"></i>
+            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL SEAL</div>
         </div>
     </div>
 
@@ -113,7 +120,7 @@
             <thead id="pdfTableHead"></thead>
             <tbody id="pdfMarksBody"></tbody>
         </table>
-        <div style="height:230px; background:#fff; border:1px solid #eee; padding:10px; border-radius:12px;">
+        <div style="height:250px; background:#fff; border:1px solid #eee; padding:10px; border-radius:12px;">
             <canvas id="miniGraph"></canvas>
         </div>
     </div>
@@ -124,15 +131,12 @@
         <div class="stat-card" style="background:var(--forest); color:white;"><b>Grade</b><span id="pdfGrade" style="font-size:1.5rem; font-weight:900; color:var(--gold);">--</span></div>
     </div>
 
-    <div style="display:flex; justify-content:space-between; padding: 0 40px;">
+    <div class="signature-row">
         <div class="sig-box">Class Teacher</div>
         <div class="sig-box">Parent Signature</div>
         <div class="sig-box">Correspondent Sign</div>
     </div>
 </div>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
     const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
@@ -141,9 +145,8 @@
 
     let chartInstance = null;
 
-    // Student Database Object (Include your full 185 list here)
-    const students = {
-          "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
+    // Place all 185 students here as provided before
+    const students = {   "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
         "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)" },
         "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG (Diamond)" },
         "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG (Diamond)" },
@@ -327,8 +330,7 @@
         "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8 (Bhagat)" },
         "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8 (Bhagat)" },
         "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8 (Bhagat)" },
-        "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)" }
-    };
+        "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)" } };
 
     function getGradeSubjects(className) {
         if (["Grade-6", "Grade-7", "Grade-8"].some(g => className.includes(g))) return ["TEL", "HIN", "ENG", "MAT", "PHY", "BIO", "SOC"];
@@ -340,71 +342,85 @@
         const exam = document.getElementById('examSelect').value;
         const student = students[roll];
 
-        if (!student) { Swal.fire('Error', 'Roll Number not found.', 'error'); return; }
+        if (!student) { Swal.fire('Error', 'Roll Number not found!', 'error'); return; }
 
-        Swal.fire({ title: 'Fetching Data...', didOpen: () => Swal.showLoading() });
+        Swal.fire({ title: 'Syncing Data...', didOpen: () => Swal.showLoading() });
 
         try {
             const dbClass = student.Class.split(' (')[0].trim();
             const snap = await db.ref(`progress_cards/${dbClass}/${exam}/${student.Name}`).once('value');
             const data = snap.val();
 
-            if (!data) { Swal.fire('Not Found', 'Records not uploaded yet.', 'info'); return; }
+            if (!data) { Swal.fire('No Data', 'Records not uploaded yet.', 'info'); return; }
 
             document.getElementById('pdfName').innerText = student.Name.toUpperCase();
             document.getElementById('pdfClass').innerText = "CLASS: " + student.Class;
             document.getElementById('pdfRoll').innerText = "ROLL NO: " + roll;
             document.getElementById('pdfExamBadge').innerText = exam;
-            document.getElementById('pdfPhoto').src = `Student images/${roll}.png`;
+            document.getElementById('pdfPhoto').src = `students/${roll}.png`;
 
             const subjects = getGradeSubjects(student.Class);
             const isSenior = ["Grade-6", "Grade-7", "Grade-8"].some(g => student.Class.includes(g));
             const isFA = exam.includes("FORMATIVE");
 
-            // Header Logic
+            // Dynamic Table Setup
             let headHtml = "<tr><th>Subject</th>";
             if(isSenior) headHtml += "<th>Ext</th><th>Int</th>";
             headHtml += "<th>Total</th><th>Max</th></tr>";
             document.getElementById('pdfTableHead').innerHTML = headHtml;
 
-            // Row Logic
-            let bodyHtml = "";
             const marksSource = data.marks ? data.marks : data;
-            const maxMarksPerSub = isFA ? 50 : 100;
+            const maxTotalPerSub = isFA ? 50 : 100;
+            const maxExt = isFA ? 40 : 80;
+            const maxInt = isFA ? 10 : 20;
+
+            let bodyHtml = "";
+            let graphDataExt = [], graphDataInt = [], graphLabels = [];
 
             subjects.forEach(sub => {
                 let row = `<tr><td>${sub}</td>`;
                 if(isSenior) {
-                    const extVal = marksSource[sub]?.ext || marksSource[sub] || 0;
-                    const intVal = marksSource[sub]?.int || 0;
-                    row += `<td>${extVal}</td><td>${intVal}</td><td>${parseInt(extVal)+parseInt(intVal)}</td><td>${maxMarksPerSub}</td>`;
+                    const extVal = parseInt(marksSource[sub]?.ext || marksSource[sub] || 0);
+                    const intVal = parseInt(marksSource[sub]?.int || 0);
+                    row += `<td>${extVal}</td><td>${intVal}</td><td>${extVal + intVal}</td><td>${maxTotalPerSub}</td>`;
+                    graphDataExt.push(extVal); graphDataInt.push(intVal);
                 } else {
-                    row += `<td>${marksSource[sub] || 0}</td><td>${maxMarksPerSub}</td>`;
+                    const total = parseInt(marksSource[sub] || 0);
+                    row += `<td>${total}</td><td>${maxTotalPerSub}</td>`;
+                    graphDataExt.push(total);
                 }
+                graphLabels.push(sub);
                 row += "</tr>";
                 bodyHtml += row;
             });
             document.getElementById('pdfMarksBody').innerHTML = bodyHtml;
-
             document.getElementById('pdfTotal').innerText = data.total;
             document.getElementById('pdfPerc').innerText = (data.percentage || "0") + "%";
             document.getElementById('pdfGrade').innerText = data.grade;
 
+            // Bar Graph Logic
             if(chartInstance) chartInstance.destroy();
             const ctx = document.getElementById('miniGraph').getContext('2d');
+            
+            const datasets = [];
+            if(isSenior) {
+                datasets.push({ label: 'External', data: graphDataExt, backgroundColor: '#006633' });
+                datasets.push({ label: 'Internal', data: graphDataInt, backgroundColor: '#ffd700' });
+            } else {
+                datasets.push({ label: 'Marks', data: graphDataExt, backgroundColor: '#006633' });
+            }
+
             chartInstance = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: subjects,
-                    datasets: [{ 
-                        data: subjects.map(s => {
-                            if(isSenior) return parseInt(marksSource[s]?.ext || marksSource[s] || 0) + parseInt(marksSource[s]?.int || 0);
-                            return parseInt(marksSource[s] || 0);
-                        }), 
-                        backgroundColor: '#006633' 
-                    }]
-                },
-                options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+                data: { labels: graphLabels, datasets: datasets },
+                options: { 
+                    maintainAspectRatio: false, 
+                    scales: { 
+                        y: { beginAtZero: true, max: maxTotalPerSub, ticks: { font: { weight: 'bold' } } },
+                        x: { ticks: { font: { size: 10, weight: 'bold' } } }
+                    },
+                    plugins: { legend: { display: isSenior, labels: { boxWidth: 10, font: { size: 10 } } } }
+                }
             });
 
             document.getElementById('reportContainer').style.display = 'block';
@@ -418,7 +434,7 @@
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
-        pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), (canvas.height * pdf.internal.pageSize.getWidth()) / canvas.width);
+        pdf.addImage(imgData, 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
         pdf.save(`${document.getElementById('pdfName').innerText}_Report.pdf`);
     }
 </script>
