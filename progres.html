@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Academic Progress | Paramount School</title>
+    <title>Academic Report | Paramount School</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
@@ -20,7 +21,12 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
 
-        header { background: var(--forest); color: white; padding: 12px 4%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--gold); }
+        /* --- PREMIUM HEADER --- */
+        header { 
+            background: var(--forest); color: white; padding: 12px 4%; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100; 
+            border-bottom: 4px solid var(--gold); 
+        }
         .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; width: 100%; }
         .header-left { display: flex; align-items: center; gap: 12px; }
         .header-logo { height: 55px; width: auto; }
@@ -30,30 +36,40 @@
         .portal-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; padding-left: 15px; margin-left: 15px; border-left: 2px solid rgba(255,255,255,0.3); color: white; }
         .btn-exit { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 5px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
+        /* --- SEARCH CONTROLS --- */
         .no-print-zone { max-width: 800px; margin: 25px auto; padding: 0 15px; text-align: center; }
         .search-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; border-top: 5px solid var(--gold); }
         input, select { padding: 12px 20px; border-radius: 50px; border: 2px solid #eee; outline: none; font-weight: 600; min-width: 180px; }
         .btn-action { background: var(--forest); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        #reportContainer { width: 800px; margin: 0 auto; background: white; padding: 40px; box-sizing: border-box; border: 15px double var(--forest); position: relative; display: none; }
+        /* --- REPORT CONTAINER (A4 OPTIMIZED) --- */
+        #reportContainer { 
+            width: 800px; margin: 0 auto; background: white; padding: 40px; box-sizing: border-box; 
+            border: 15px double var(--forest); position: relative; display: none;
+        }
+        #reportContainer::before {
+            content: 'PARAMOUNT'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 8rem; color: rgba(0, 102, 51, 0.03); font-weight: 900; z-index: 0; pointer-events: none;
+        }
+
         .pdf-header-box { display:flex; align-items:center; justify-content:space-between; border-bottom:3px solid var(--forest); padding-bottom:15px; margin-bottom:20px; }
         .exam-badge { background: black; color: white; padding: 5px 20px; border-radius: 5px; font-size: 13px; font-weight: 800; display: inline-block; margin-top: 10px; text-transform: uppercase; border: 1px solid white; }
 
-        .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; border: 1px solid #eee; }
+        .student-profile { display: flex; gap: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; align-items: center; position: relative; z-index: 1; border: 1px solid #eee; }
         .student-photo { width: 110px; height: 130px; border: 3px solid var(--forest); border-radius: 10px; object-fit: cover; background: white; }
         
-        .marks-section { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 20px; align-items: start; }
+        .marks-section { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 20px; align-items: start; position: relative; z-index: 1;}
         .marks-table { width: 100%; border-collapse: collapse; }
-        .marks-table th { background: var(--forest); color: white; padding: 10px; font-size: 11px; }
-        .marks-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: 700; font-size: 12px; }
-        .marks-table td:first-child { text-align: left; background: #f4f4f4; color: var(--forest); padding-left: 15px; }
+        .marks-table th { background: var(--forest); color: white; padding: 10px; font-size: 10px; }
+        .marks-table td { border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: 700; font-size: 11px; }
+        .marks-table td:first-child { text-align: left; background: #f4f4f4; color: var(--forest); padding-left: 15px; font-size: 12px; }
 
-        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 15px; }
-        .stat-card { flex: 1; padding: 12px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
-        .stat-card b { display: block; font-size: 0.75rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
+        .summary-row { display: flex; justify-content: space-around; margin-top: 30px; gap: 20px; position: relative; z-index: 1; }
+        .stat-card { flex: 1; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid var(--forest); background: white; }
+        .stat-card b { display: block; font-size: 0.8rem; color: #666; text-transform: uppercase; margin-bottom: 5px; }
         
-        .signature-row { display: flex; justify-content: space-between; margin-top: 60px; padding: 0 20px; }
-        .sig-box { border-top: 2px solid #333; width: 28%; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.8rem; }
+        .signature-row { display: flex; justify-content: space-between; margin-top: 60px; padding: 0 20px; position: relative; z-index: 1; }
+        .sig-box { border-top: 2px solid #333; width: 30%; text-align: center; padding-top: 10px; font-weight: 800; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -82,7 +98,7 @@
             <option value="FORMATIVE ASSESSMENT-4">FORMATIVE ASSESSMENT-4</option>
             <option value="SUMMATIVE ASSESSMENT-1">SUMMATIVE ASSESSMENT-1</option>
             <option value="SUMMATIVE ASSESSMENT-2">SUMMATIVE ASSESSMENT-2</option>
-            <option value="Annual">Annual</option>
+            <option value="ANNUAL EXAM">ANNUAL EXAM</option>
         </select>
         <button class="btn-action" onclick="generateReport()">VIEW REPORT</button>
         <button class="btn-action" style="background:#e67e22;" onclick="downloadPDF()">DOWNLOAD PDF</button>
@@ -94,7 +110,7 @@
         <img src="logo.png" style="height: 85px;">
         <div style="text-align:center; flex-grow:1;">
             <h1 style="margin:0; font-family:'Montserrat'; font-size:2.3rem; color:var(--forest);">PARAMOUNT</h1>
-            <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px;">ENGLISH MEDIUM SCHOOL</p>
+            <p style="margin:0; font-weight:800; color:var(--gold); letter-spacing:2px; font-size: 0.9rem;">ENGLISH MEDIUM SCHOOL</p>
             <div style="font-weight: 800; font-size: 14px; margin-top: 5px; color: #333;">ACADEMIC PERFORMANCE REPORT</div>
             <div style="font-size: 11px; font-weight: 600; color: #555;">Penshionpur, Warangal 506166, Telangana.</div>
             <div id="pdfExamBadge" class="exam-badge">---</div>
@@ -106,12 +122,12 @@
         <img id="pdfPhoto" src="logo.png" class="student-photo" onerror="this.src='logo.png'">
         <div>
             <h2 id="pdfName" style="margin:0; color:var(--forest); font-family: 'Montserrat'; letter-spacing: 1px;">STUDENT NAME</h2>
-            <p id="pdfClass" style="margin:8px 0; font-weight:700;">CLASS: --</p>
-            <p id="pdfRoll" style="margin:5px 0; font-weight:700;">ROLL NO: --</p>
+            <p id="pdfClass" style="margin:8px 0; font-weight:700; color: #444;">CLASS: --</p>
+            <p id="pdfRoll" style="margin:5px 0; font-weight:700; color: #444;">ROLL NO: --</p>
         </div>
         <div style="margin-left: auto; text-align: center;">
             <i class="fas fa-medal" style="font-size: 3.5rem; color: var(--gold);"></i>
-            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL BADGE</div>
+            <div style="font-size: 10px; font-weight: 900; margin-top: 5px;">OFFICIAL RECORD</div>
         </div>
     </div>
 
@@ -120,7 +136,7 @@
             <thead id="pdfTableHead"></thead>
             <tbody id="pdfMarksBody"></tbody>
         </table>
-        <div style="height:250px; background:#fff; border:1px solid #eee; padding:10px; border-radius:12px;">
+        <div style="height:250px; background:#fff; border:1px solid #eee; padding:10px; border-radius:12px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
             <canvas id="miniGraph"></canvas>
         </div>
     </div>
@@ -132,7 +148,7 @@
     </div>
 
     <div class="signature-row">
-        <div class="sig-box">Class Teacher</div>
+        <div class="sig-box">Class Teacher Signature</div>
         <div class="sig-box">Parent Signature</div>
         <div class="sig-box">Correspondent Sign</div>
     </div>
@@ -145,8 +161,9 @@
 
     let chartInstance = null;
 
-    // Place all 185 students here as provided before
-    const students = {   "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
+    // Student Database Object (Your list of 185)
+    const students = {
+         "1472070": { Name: "Hanish Macharla", Class: "Pre-KG (Diamond)" },
         "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG (Diamond)" },
         "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG (Diamond)" },
         "1459555": { Name: "Aadhya Gangaraboina", Class: "Pre-KG (Diamond)" },
@@ -330,7 +347,9 @@
         "1459792": { Name: "Gayathri Renukuntla", Class: "Grade-8 (Bhagat)" },
         "1298337": { Name: "Khaja Sadeemuddin Mohammed", Class: "Grade-8 (Bhagat)" },
         "1298333": { Name: "Sathwika Nagavelly", Class: "Grade-8 (Bhagat)" },
-        "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)" } };
+        "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8 (Bhagat)" }
+        // ... include rest of students ...
+    };
 
     function getGradeSubjects(className) {
         if (["Grade-6", "Grade-7", "Grade-8"].some(g => className.includes(g))) return ["TEL", "HIN", "ENG", "MAT", "PHY", "BIO", "SOC"];
@@ -344,14 +363,14 @@
 
         if (!student) { Swal.fire('Error', 'Roll Number not found!', 'error'); return; }
 
-        Swal.fire({ title: 'Syncing Data...', didOpen: () => Swal.showLoading() });
+        Swal.fire({ title: 'Generating Report...', didOpen: () => Swal.showLoading() });
 
         try {
             const dbClass = student.Class.split(' (')[0].trim();
             const snap = await db.ref(`progress_cards/${dbClass}/${exam}/${student.Name}`).once('value');
             const data = snap.val();
 
-            if (!data) { Swal.fire('No Data', 'Records not uploaded yet.', 'info'); return; }
+            if (!data) { Swal.fire('Not Found', 'Records not uploaded yet.', 'info'); return; }
 
             document.getElementById('pdfName').innerText = student.Name.toUpperCase();
             document.getElementById('pdfClass').innerText = "CLASS: " + student.Class;
@@ -363,63 +382,60 @@
             const isSenior = ["Grade-6", "Grade-7", "Grade-8"].some(g => student.Class.includes(g));
             const isFA = exam.includes("FORMATIVE");
 
-            // Dynamic Table Setup
-            let headHtml = "<tr><th>Subject</th>";
-            if(isSenior) headHtml += "<th>Ext</th><th>Int</th>";
-            headHtml += "<th>Total</th><th>Max</th></tr>";
-            document.getElementById('pdfTableHead').innerHTML = headHtml;
-
-            const marksSource = data.marks ? data.marks : data;
-            const maxTotalPerSub = isFA ? 50 : 100;
+            // Logic for Max Marks
+            const maxMarks = isFA ? 50 : 100;
             const maxExt = isFA ? 40 : 80;
             const maxInt = isFA ? 10 : 20;
 
+            // Table Header Construction
+            let headHtml = "<tr><th>Subject</th>";
+            if(isSenior) headHtml += "<th>Ext (Scored/Max)</th><th>Int (Scored/Max)</th>";
+            headHtml += `<th>Total (Scored/Max)</th></tr>`;
+            document.getElementById('pdfTableHead').innerHTML = headHtml;
+
+            const marksSource = data.marks ? data.marks : data;
             let bodyHtml = "";
-            let graphDataExt = [], graphDataInt = [], graphLabels = [];
+            let graphLabels = [], graphDataExt = [], graphDataInt = [];
 
             subjects.forEach(sub => {
                 let row = `<tr><td>${sub}</td>`;
                 if(isSenior) {
-                    const extVal = parseInt(marksSource[sub]?.ext || marksSource[sub] || 0);
-                    const intVal = parseInt(marksSource[sub]?.int || 0);
-                    row += `<td>${extVal}</td><td>${intVal}</td><td>${extVal + intVal}</td><td>${maxTotalPerSub}</td>`;
-                    graphDataExt.push(extVal); graphDataInt.push(intVal);
+                    const ext = parseInt(marksSource[sub]?.ext || marksSource[sub] || 0);
+                    const int = parseInt(marksSource[sub]?.int || 0);
+                    row += `<td>${ext} / ${maxExt}</td><td>${int} / ${maxInt}</td><td>${ext + int} / ${maxMarks}</td>`;
+                    graphDataExt.push(ext); graphDataInt.push(int);
                 } else {
-                    const total = parseInt(marksSource[sub] || 0);
-                    row += `<td>${total}</td><td>${maxTotalPerSub}</td>`;
-                    graphDataExt.push(total);
+                    const sc = parseInt(marksSource[sub] || 0);
+                    row += `<td>${sc} / ${maxMarks}</td>`;
+                    graphDataExt.push(sc);
                 }
                 graphLabels.push(sub);
                 row += "</tr>";
                 bodyHtml += row;
             });
+
             document.getElementById('pdfMarksBody').innerHTML = bodyHtml;
-            document.getElementById('pdfTotal').innerText = data.total;
+            const grandMax = subjects.length * maxMarks;
+            document.getElementById('pdfTotal').innerText = data.total + " / " + grandMax;
             document.getElementById('pdfPerc').innerText = (data.percentage || "0") + "%";
             document.getElementById('pdfGrade').innerText = data.grade;
 
-            // Bar Graph Logic
+            // Chart Rendering
             if(chartInstance) chartInstance.destroy();
             const ctx = document.getElementById('miniGraph').getContext('2d');
-            
-            const datasets = [];
-            if(isSenior) {
-                datasets.push({ label: 'External', data: graphDataExt, backgroundColor: '#006633' });
-                datasets.push({ label: 'Internal', data: graphDataInt, backgroundColor: '#ffd700' });
-            } else {
-                datasets.push({ label: 'Marks', data: graphDataExt, backgroundColor: '#006633' });
-            }
-
             chartInstance = new Chart(ctx, {
                 type: 'bar',
-                data: { labels: graphLabels, datasets: datasets },
+                data: {
+                    labels: graphLabels,
+                    datasets: isSenior ? [
+                        { label: 'External', data: graphDataExt, backgroundColor: '#006633' },
+                        { label: 'Internal', data: graphDataInt, backgroundColor: '#ffd700' }
+                    ] : [{ label: 'Marks', data: graphDataExt, backgroundColor: '#006633' }]
+                },
                 options: { 
                     maintainAspectRatio: false, 
-                    scales: { 
-                        y: { beginAtZero: true, max: maxTotalPerSub, ticks: { font: { weight: 'bold' } } },
-                        x: { ticks: { font: { size: 10, weight: 'bold' } } }
-                    },
-                    plugins: { legend: { display: isSenior, labels: { boxWidth: 10, font: { size: 10 } } } }
+                    scales: { y: { beginAtZero: true, max: isSenior ? maxExt : maxMarks } },
+                    plugins: { legend: { display: isSenior, labels: { boxWidth: 10 } } }
                 }
             });
 
