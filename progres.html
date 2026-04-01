@@ -150,7 +150,7 @@
 
         <div class="summary-cards">
             <div class="stat-card"><b>Marks Obtained</b><span id="pdfTotal">0 / 0</span></div>
-            <div class="stat-card"><b>Aggregate %</b><span id="pdfPerc">0</span></div>
+            <div class="stat-card"><b>Aggregate %</b><span id="pdfPerc">0%</span></div>
             <div class="stat-card" style="background:var(--forest); color:white;"><b>Overall Grade</b><span id="pdfGrade" style="color:var(--gold);">--</span></div>
         </div>
 
@@ -427,7 +427,9 @@
 
             // Totals
             document.getElementById('pdfTotal').innerText = data.total + " / " + (subjects.length * maxMarks);
-            document.getElementById('pdfPerc').innerText = (data.percentage || "0") + "%";
+           // This removes any existing % from the data before adding a single % at the end
+let percValue = String(data.percentage || "0").replace('%', '');
+document.getElementById('pdfPerc').innerText = percValue + "%";
             document.getElementById('pdfGrade').innerText = data.grade;
 
             // Chart
