@@ -139,10 +139,15 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
-const firebaseConfig = { apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", projectId: "paramount-school-d55bc" };
+const firebaseConfig = { 
+    apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", 
+    databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", 
+    projectId: "paramount-school-d55bc" 
+};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-    const studentData = {
+const db = firebase.database();{
+
+
     "1472070": { Name: "Hanish Macharla", Class: "Pre-KG", Father: "M.Vinay", Roll: "1472070", Phone: "9182861346", Adm: "2052" },
     "1478225": { Name: "Arjun Vihaar Illandula", Class: "Pre-KG", Father: "Illandula Ravi", Roll: "1478225", Phone: "9848742172", Adm: "2061" },
     "1469391": { Name: "Thanu sree Allakunta", Class: "Pre-KG", Father: "Srinu", Roll: "1469391", Phone: "9533030806", Adm: "2047" },
@@ -340,11 +345,13 @@ const db = firebase.database();
     "1298334": { Name: "Vyshnavi Uppala", Class: "Grade-8", Father: "Ramesh", Roll: "1298334", Phone: "8179254251", Adm: "34" }
 };
 
+
 async function searchStudent() {
     const rollNo = document.getElementById('rollNumberInput').value.trim();
     const student = studentData[rollNo];
     
     if (student) {
+        // Basic Info Update
         document.getElementById('studentName').innerText = student.Name;
         document.getElementById('studentClass').innerText = student.Class;
         document.getElementById('RollNumber').innerText = student.Roll;
@@ -353,23 +360,31 @@ async function searchStudent() {
         document.getElementById('phoneNumber').innerText = student.Phone;
         document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
 
-        // Attendance Logic
-        const shortClass = student.Class.split(" ")[0]; 
+        // FIXED ATTENDANCE LOGIC
+        const targetClass = student.Class; // Use full class name to match Teacher Portal
         const attSnap = await db.ref('daily_attendance').once('value');
         let totalP = 0, totalT = 0;
+
         if(attSnap.exists()){
             const allData = attSnap.val();
+            // Loop through dates
             Object.keys(allData).forEach(date => {
-                if(allData[date][shortClass] && allData[date][shortClass][student.Name] !== undefined) {
-                    totalT++; if(allData[date][shortClass][student.Name] === true) totalP++;
+                // Look for Class -> records -> Student Name
+                if(allData[date][targetClass] && allData[date][targetClass].records) {
+                    const classRecords = allData[date][targetClass].records;
+                    if(classRecords[student.Name] !== undefined) {
+                        totalT++; 
+                        if(classRecords[student.Name] === true) totalP++;
+                    }
                 }
             });
         }
+        
         const rate = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
         document.getElementById('attendanceRate').innerText = `${rate}% (${totalP}/${totalT})`;
         document.getElementById('lowAttAlert').style.display = (rate < 40 && totalT > 0) ? 'block' : 'none';
 
-        // Finance Logic (Total, Paid, Due)
+        // FINANCE LOGIC
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
         let tPaid = 0, tFee = 0;
         if(feeSnap.exists()){
@@ -386,6 +401,7 @@ async function searchStudent() {
         document.getElementById('feePercentLabel').innerText = pct + "%";
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * pct / 100);
         
+        // UI REVEAL
         document.getElementById('feeSection').style.display = 'block';
         document.getElementById('pdfBtnSection').style.display = 'flex';
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
@@ -398,12 +414,26 @@ async function searchStudent() {
 
 async function downloadPDF() {
     const roll = document.getElementById('RollNumber').innerText;
+    // Hide UI elements that shouldn't be in the PDF
     document.querySelectorAll('#mainNav, #bottomNav, .search-container').forEach(el => el.style.display = 'none');
-    const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
-    const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
-    pdf.save(`Report_${roll}.pdf`);
-    location.reload();
+    
+    try {
+        const canvas = await html2canvas(document.getElementById('printableArea'), { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`Report_${roll}.pdf`);
+    } catch (err) {
+        console.error("PDF Generation failed", err);
+    } finally {
+        // Restore UI and reload to reset state
+        location.reload();
+    }
 }
 </script>
 </body>
