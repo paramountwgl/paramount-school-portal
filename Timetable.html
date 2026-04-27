@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Student Timetable | Paramount School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        :root { --forest: #006633; --gold: #ffd700; --light: #f4f7f6; --dark-green: #004d26; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; } 
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
+
+        /* SHARED PREMIUM HEADER */
+        header { 
+            background: var(--forest); color: white; padding: 12px 4%; border-bottom: 4px solid var(--gold); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100;
+        }
+        .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .brand-group { display: flex; align-items: center; } 
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-logo { height: 50px; width: auto; }
+        .school-branding { display: flex; flex-direction: column; line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; color: white; }
+        .portal-label { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: var(--gold); margin-left: 15px; border-left: 2px solid rgba(255,255,255,0.3); padding-left: 15px; }
+
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        
+        /* SEARCH & SELECTION CARD */
+        .selection-card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
+        .selection-card h2 { font-size: 14px; text-transform: uppercase; color: var(--forest); margin-bottom: 15px; font-weight: 800; }
+        select { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #eee; font-size: 16px; font-weight: 700; color: #333; outline: none; background: #fff; cursor: pointer; }
+
+        /* TIMETABLE LIST STYLE */
+        .timetable-container { display: none; }
+        .period-card { 
+            background: white; margin-bottom: 12px; padding: 18px; border-radius: 18px; 
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border-left: 6px solid var(--forest); transition: 0.3s;
+        }
+        .time-slot { flex-shrink: 0; text-align: center; min-width: 85px; border-right: 1px solid #eee; padding-right: 15px; }
+        .time-slot .start { font-weight: 800; font-size: 14px; color: var(--forest); display: block; }
+        .time-slot .end { font-size: 11px; color: #888; font-weight: 600; }
+        
+        .subject-info { flex-grow: 1; }
+        .subject-name { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 800; color: #333; margin-bottom: 2px; }
+        .teacher-name { font-size: 12px; color: #666; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .teacher-name i { color: var(--forest); font-size: 10px; }
+
+        /* SPECIAL ROW FOR BREAKS */
+        .break-card { background: #fffde7; border-left-color: var(--gold); }
+        .break-card .subject-name { color: #856404; }
+        .break-card .time-slot .start { color: #856404; }
+
+        .status-badge { background: #e8f5e9; color: var(--forest); padding: 5px 12px; border-radius: 50px; font-size: 10px; font-weight: 800; display: inline-block; margin-bottom: 10px; }
+
+        @media (max-width: 480px) {
+            .portal-label { font-size: 1rem; }
+            .school-name-main { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="brand-group">
+                <div class="header-left">
+                    <img src="logo.png" class="header-logo">
+                    <div class="school-branding">
+                        <span class="school-name-main">PARAMOUNT</span>
+                    </div>
+                </div>
+                <div class="portal-label">LIVE SCHEDULE</div>
+            </div>
+            <div id="liveClock" style="font-weight: 800; color: var(--gold); font-size: 12px;">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="selection-card">
+            <div class="status-badge"><i class="fas fa-circle"></i> LIVE UPDATES ENABLED</div>
+            <h2>Select Student Class</h2>
+            <select id="classSelector" onchange="listenToTimetable()">
+                <option value="">-- Choose Class --</option>
+                <option value="Pre-KG">Pre-KG</option>
+                <option value="KG-1">KG-1</option>
+                <option value="KG-2">KG-2</option>
+                <option value="Grade-1">Grade-1</option>
+                <option value="Grade-2">Grade-2</option>
+                <option value="Grade-3">Grade-3</option>
+                <option value="Grade-4">Grade-4</option>
+                <option value="Grade-5">Grade-5</option>
+                <option value="Grade-6">Grade-6</option>
+                <option value="Grade-7">Grade-7</option>
+                <option value="Grade-8">Grade-8</option>
+            </select>
+        </div>
+
+        <div id="timetableList" class="timetable-container">
+            </div>
+
+        <div id="emptyState" style="text-align: center; margin-top: 50px; color: #bbb;">
+            <i class="fas fa-calendar-day" style="font-size: 48px; margin-bottom: 15px;"></i>
+            <p style="font-weight: 700;">Select a class to view the <br>current academic schedule.</p>
+        </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+    const firebaseConfig = { 
+        apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8", 
+        databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com", 
+        projectId: "paramount-school-d55bc" 
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function listenToTimetable() {
+        const className = document.getElementById('classSelector').value;
+        const list = document.getElementById('timetableList');
+        const empty = document.getElementById('emptyState');
+
+        if (!className) {
+            list.style.display = 'none';
+            empty.style.display = 'block';
+            return;
+        }
+
+        // Real-time listener: this is what makes it "Live"
+        db.ref(`timetables/${className}`).on('value', (snapshot) => {
+            const data = snapshot.val();
+            list.innerHTML = '';
+            
+            if (data && data.length > 0) {
+                empty.style.display = 'none';
+                list.style.display = 'block';
+
+                data.forEach(item => {
+                    const isBreak = item.subject.toLowerCase().includes('break') || item.subject.toLowerCase().includes('lunch');
+                    const cardClass = isBreak ? 'period-card break-card' : 'period-card';
+                    const teacherIcon = isBreak ? 'fa-mug-hot' : 'fa-user-tie';
+                    const displayTeacher = item.teacher ? `<i class="fas ${teacherIcon}"></i> ${item.teacher}` : '';
+
+                    list.innerHTML += `
+                        <div class="${cardClass}">
+                            <div class="time-slot">
+                                <span class="start">${item.start}</span>
+                                <span class="end">to ${item.end}</span>
+                            </div>
+                            <div class="subject-info">
+                                <div class="subject-name">${item.subject}</div>
+                                <div class="teacher-name">${displayTeacher}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                list.style.display = 'none';
+                empty.innerHTML = `<i class="fas fa-clock" style="font-size: 48px; margin-bottom: 15px;"></i><p style="font-weight:700;">No timetable has been uploaded <br>for ${className} yet.</p>`;
+                empty.style.display = 'block';
+            }
+        });
+    }
+
+    function updateClock() { 
+        document.getElementById('liveClock').innerText = new Date().toLocaleTimeString().toUpperCase(); 
+    }
+    setInterval(updateClock, 1000); 
+    updateClock();
+</script>
+</body>
+</html>
