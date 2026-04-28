@@ -15,7 +15,7 @@
     display: none; 
     position: fixed; 
     bottom: 30px; 
-    right: 105px; /* Positioned between Chat and WhatsApp */
+    right: 105px; 
     z-index: 999; 
     background-color: #004a99; 
     color: white;
@@ -26,9 +26,7 @@
     font-size: 20px;
     cursor: pointer;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-    transition: 0.3s;
-}
-        
+}        
         #schoolIntroBox {
             position: fixed;
             bottom: 30px;
@@ -47,7 +45,7 @@
 #chat-widget-container {
     position: fixed;
     bottom: 30px;
-    right: 170px; /* Positioned to the left of 'Back to Top' */
+    right: 170px;
     z-index: 10001;
 }
 #chat-icon {
@@ -63,8 +61,8 @@
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     border: 2px solid #ffd700;
-    transition: 0.3s;
 }
+
 
 #chat-window {
     display: none;
@@ -252,19 +250,26 @@
         .whatsapp-btn {
     position: fixed;
     bottom: 30px;
-    right: 30px; /* Far right */
-    width: 55px;
-    height: 55px;
-    padding: 0 !important; /* Reset padding for circular look */
+    right: 30px;
+    background-color: #25d366;
+    color: white;
+    width: 55px;  /* Fixed Width */
+    height: 55px; /* Fixed Height */
+    padding: 0 !important; /* Removes the original padding */
+    border-radius: 50% !important; /* Forces a perfect circle */
+    display: flex !important;
+    align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     z-index: 9999;
 }
-.whatsapp-btn span { display: none; }
-        .whatsapp-btn:hover {
-            transform: scale(1.1);
-            background-color: #128c7e;
-            color: white;
-        }
+.whatsapp-btn span {
+    display: none !important;
+}
+        .whatsapp-btn img {
+    width: 30px; /* Slightly larger icon to fit the circle */
+    height: 30px;
+}
 
         @keyframes pulse-animation {
             0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.7); }
