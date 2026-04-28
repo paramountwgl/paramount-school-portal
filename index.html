@@ -41,6 +41,115 @@
             background: #000; /* Black background hides any tiny gaps */
             transition: 0.4s ease;
         }
+        /* CHAT WIDGET STYLES */
+#chat-widget-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 10001;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+#chat-icon {
+    background: #006633;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 2px solid #ffd700;
+}
+
+#chat-window {
+    display: none;
+    width: 320px;
+    height: 480px;
+    background: white;
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+#chat-header {
+    background: #006633;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.bot-msg, .user-msg {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    max-width: 85%;
+    line-height: 1.4;
+}
+
+.bot-msg { background: #e8f5e9; align-self: flex-start; color: #333; border-bottom-left-radius: 2px; }
+.user-msg { background: #003366; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+.action-btn {
+    background: white;
+    border: 1.5px solid #006633;
+    color: #006633;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 4px;
+}
+
+.action-btn:hover { background: #006633; color: white; }
+
+#chat-input-area {
+    display: flex;
+    padding: 10px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+#chat-input-area input {
+    flex: 1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    outline: none;
+}
+
+#chat-send {
+    background: #006633;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    margin-left: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
         #videoFrame {
             width: 100%;
@@ -365,6 +474,77 @@
     function topFunction() {
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
+    // --- Chatbot Logic ---
+function toggleChat() {
+    const win = document.getElementById('chat-window');
+    win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+}
+
+function handleQuickAction(topic) {
+    appendChatMessage(topic, 'user-msg');
+    
+    let response = "";
+    let showYesNo = false;
+
+    switch(topic) {
+        case 'Admission':
+            response = "Admissions for 2026-27 are OPEN! 🎓 \n\nStep 1: Visit Campus \nStep 2: Principal Interaction \nStep 3: Document Submission. \n\nWould you like to speak to our counselor?";
+            showYesNo = true; // Flag to show Yes/No buttons
+            break;
+        case 'Fees':
+            response = "Our fee structure is transparent and value-based. Since we have different modes (Tuition/Bus), please visit the office for a precise breakdown based on your child's grade or call +91 9652188807 for more details .";
+            break;
+        case 'Timings':
+            response = "School Timings: \nPre-Primary: 8:45 AM - 4:00 PM \nPrimary School: 8:30 AM - 4:30 PM \nHigh School: 8:30 AM - 5:00 PM.";
+            break;
+        case 'Location':
+            response = "We are located at Pensionpur, Warangal. You can scroll down the page to get map section on our home page and you can see the button 'Open in Goggle Maps' by clicking it you will be redirected to the google maps with our school location.";
+            break;
+        case 'Principal':
+            response = "Our school is led by Mrs. Roqiya Begum, who ensures academic excellence and moral growth for every student.";
+            break;
+        case 'Contact':
+            response = "You can call us at +91 9652188807 or mail us on paramount0707@gmail.com. We are happy to help you and You can also click the green WhatsApp button on the bottom-right to chat directly with us!";
+            break;
+        case 'Yes':
+            response = "Our counselor is available now! Please contact +91 9652188807 for immediate assistance.";
+            break;
+        case 'No':
+            response = "No problem! Is there anything else I can help you with today?";
+            setTimeout(showMainMenu, 1500); // Show main buttons again after a short delay
+            break;
+        default:
+            response = "Hello! How can I assist you with Paramount School today?";
+    }
+
+    setTimeout(() => {
+        appendChatMessage(response, 'bot-msg');
+        if (showYesNo) {
+            appendYesNoButtons();
+        }
+    }, 600);
+}
+
+function sendInputMessage() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim();
+    if (text !== "") {
+        appendChatMessage(text, 'user-msg');
+        input.value = "";
+        setTimeout(() => {
+            appendChatMessage("Thank you for your message. For specific inquiries, please use the menu buttons or contact our office at 9000641355.", 'bot-msg');
+        }, 800);
+    }
+}
+
+function appendChatMessage(msg, className) {
+    const chatMessages = document.getElementById('chat-messages');
+    const div = document.createElement('div');
+    div.className = className;
+    div.innerText = msg;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
     // --- Video Intro Logic ---
     function closeIntroVideo() {
@@ -400,6 +580,32 @@
         }
     });
 </script>
+    <div id="chat-widget-container">
+    <div id="chat-window">
+        <div id="chat-header">
+            <span><i class="fas fa-robot"></i> Paramount Assistant</span>
+            <i class="fas fa-times" style="cursor:pointer" onclick="toggleChat()"></i>
+        </div>
+        <div id="chat-messages">
+            <div class="bot-msg">Welcome to Paramount School! How can I help you today? Please select an option:</div>
+            <div id="quick-actions" style="padding: 10px 0;">
+                <button class="action-btn" onclick="handleQuickAction('Admission')">Admission</button>
+                <button class="action-btn" onclick="handleQuickAction('Fees')">Fees</button>
+                <button class="action-btn" onclick="handleQuickAction('Timings')">Timings</button>
+                <button class="action-btn" onclick="handleQuickAction('Location')">Location</button>
+                <button class="action-btn" onclick="handleQuickAction('Principal')">Principal</button>
+                <button class="action-btn" onclick="handleQuickAction('Contact')">Contact</button>
+            </div>
+        </div>
+        <div id="chat-input-area">
+            <input type="text" id="user-input" placeholder="Type a message...">
+            <button id="chat-send" onclick="sendInputMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <div id="chat-icon" onclick="toggleChat()">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+</div>
 
 </body>
 </html>
