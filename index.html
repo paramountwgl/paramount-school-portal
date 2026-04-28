@@ -63,10 +63,13 @@ nav a:hover {
 }
 
 /* MOBILE ADAPTATION: STACKED PREMIUM BUTTONS */
+/* MOBILE ADAPTATION: PERFECTLY FITTED BUTTONS */
 @media (max-width: 992px) {
     header {
         flex-direction: column;
-        padding: 20px 5%;
+        padding: 15px 5%;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .logo-container {
@@ -76,36 +79,40 @@ nav a:hover {
     nav {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 buttons per row */
-        gap: 8px;
+        grid-template-columns: repeat(2, 1fr); /* Exactly 2 columns */
+        gap: 10px; /* Space between buttons */
         background: transparent;
         border: none;
         box-shadow: none;
         padding: 0;
         border-radius: 0;
+        box-sizing: border-box;
     }
 
     nav a {
         background: #ffffff;
-        border: 1.5px solid #006633; /* Forest Green Border */
+        border: 1.5px solid #006633;
         color: #003366;
-        margin: 0;
-        font-size: 0.75rem;
+        margin: 0; /* Remove any old margins */
+        font-size: 0.7rem;
         padding: 12px 5px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
+        border-radius: 12px; /* Slightly more modern than pill for grids */
+        box-sizing: border-box; /* IMPORTANT: Includes border/padding in the width */
     }
 
-    /* Highlight the Admissions/Portal buttons more strongly */
+    /* Admissions & Portal: Keep these prominent */
     nav a[href*="admissions"], nav a[href*="Portal"] {
         background: #006633;
         color: white;
         border-color: #ffd700;
     }
 
-    /* Last button spans full width if odd number */
+    /* If you have 5 buttons, the last one (Contact) spans the whole width */
     nav a:last-child:nth-child(odd) {
         grid-column: span 2;
     }
