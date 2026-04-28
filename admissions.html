@@ -43,43 +43,65 @@
         }
         /* UPDATED 4-COLUMN ROADMAP */
 .roadmap-grid {
-    display: grid;
-    /* Forces exactly 4 columns on desktop */
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 15px;
+    display: flex; /* Changed from grid to flex for better control */
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px; /* Minimal gap to save horizontal space */
     margin-top: 30px;
+    width: 100%;
 }
 
 .step-item {
+    flex: 1; /* This forces all 4 boxes to be exactly the same width */
     background: white;
-    padding: 20px 10px; /* Reduced padding to fit 4 in a row */
-    border-radius: 20px;
+    padding: 20px 8px; /* Slimmer padding */
+    border-radius: 15px;
     text-align: center;
     border-bottom: 4px solid var(--gold);
     box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-    transition: 0.3s ease;
+    min-width: 0; /* Critical: allows the box to shrink below its content size */
 }
 
+
 .step-item h3 {
-    font-size: 0.95rem; /* Slightly smaller to prevent text wrapping */
+    font-size: 0.85rem; /* Smaller font to ensure it fits in one line */
     margin-bottom: 8px;
     color: var(--forest-green);
+    white-space: nowrap; /* Prevents the heading from breaking into two lines */
 }
 
 .step-item p {
-    font-size: 0.75rem; /* Precise size for premium readability */
+    font-size: 0.7rem; /* Compact text for the description */
     color: #666;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.3;
 }
 
-/* On mobile, they will still stack for better readability */
-@media (max-width: 800px) {
+.step-num {
+    width: 35px; /* Smaller circles to save vertical and horizontal space */
+    height: 35px;
+    background: var(--forest-green);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-weight: 800;
+    font-size: 1rem;
+    border: 2px solid var(--gold);
+}
+
+/* On Tablets and Mobile, we MUST stack them, otherwise they will be unreadable */
+@media (max-width: 850px) {
     .roadmap-grid {
-        grid-template-columns: 1fr; 
+        flex-direction: column; 
+    }
+    .step-item {
+        width: 100%;
+        margin-bottom: 10px;
     }
 }
-
         .hero-header h1 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2.2rem, 7vw, 3.5rem);
