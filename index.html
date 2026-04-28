@@ -188,14 +188,14 @@
 
 .step-card {
     background: #ffffff;
-    padding: 25px 15px; /* Compact padding */
-    border-radius: 20px;
+    padding: 35px 20px; /* Increased padding for better internal spacing */
+    border-radius: 25px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     border: 1.5px solid #eee;
     transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
+    position: relative; /* Required for the watermark positioning */
+    overflow: hidden; /* Clips the number so it doesn't spill out */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -208,39 +208,57 @@
 }
 
 .step-number {
-    font-size: 3.5rem; /* Reduced background number size */
-    bottom: -10px;
-    right: -5px;
-    top: auto;
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    font-size: 5.5rem; /* Large, prestigious size */
+    font-weight: 900;
+    /* Very subtle forest green or gold watermark */
+    color: rgba(0, 102, 51, 0.06); 
+    line-height: 1;
+    z-index: 1; /* Places it behind the icon and text */
+    font-family: 'Arial Black', sans-serif; /* Thick font looks better as watermark */
+    pointer-events: none; /* Ensures parents can't accidentally click the number */
 }
 
 .step-icon {
-    width: 55px; /* Slightly smaller icons */
-    height: 55px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(135deg, #006633, #003366);
     color: #ffd700;
-    border-radius: 15px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    z-index: 2;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2; /* Sits above the watermark */
+    box-shadow: 0 8px 15px rgba(0, 102, 51, 0.15);
 }
 
 .step-card h3 {
-    font-size: 0.95rem; /* Smaller heading to prevent wrapping */
+    font-size: 1rem;
     font-weight: 800;
-    margin-bottom: 10px;
     color: #003366;
-    white-space: nowrap; /* Keeps heading on one line */
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
 }
-
 .step-card p {
-    font-size: 0.75rem; /* Compact description font */
+    font-size: 0.8rem;
     color: #666;
-    line-height: 1.4;
+    line-height: 1.5;
     margin: 0;
+    position: relative;
+    z-index: 2;
+}
+        .step-card-active {
+    border: 2px solid #ffd700 !important;
+    background: #fffdf5 !important;
+}
+        .step-card-active .step-number {
+    color: rgba(255, 215, 0, 0.15); /* Gold watermark for the final step */
 }
 
 
