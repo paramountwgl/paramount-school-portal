@@ -95,6 +95,104 @@
     padding: 40px 0;
     width: 100%;
 }
+        /* CINEMATIC GALLERY SECTION */
+.premium-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.gallery-card {
+    position: relative;
+    height: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: block;
+}
+
+/* The Background Image with Overlay */
+.gallery-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.8s ease;
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 51, 102, 0.9) 10%, rgba(0, 102, 51, 0.4) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 25px;
+    color: white;
+}
+
+/* Hover Effects */
+.gallery-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 102, 51, 0.3);
+}
+
+.gallery-card:hover .gallery-bg {
+    transform: scale(1.1);
+}
+
+.gallery-card:hover .drive-badge {
+    background: #ffd700;
+    color: #003366;
+}
+
+/* Drive Badge Styling */
+.drive-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.3);
+    text-transform: uppercase;
+}
+
+.gallery-card h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.gallery-card p {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin: 8px 0 0 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.view-btn-text {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #ffd700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .premium-visit-card {
     display: flex;
     background: #fff;
@@ -609,24 +707,49 @@
         <img src="leaders-of-the-school.jpg" alt="School Leaders" style="width: 100%; height: auto; display: block;">
     </div>
 </section>
-<section id="drive-events" style="padding: 50px 10%; background: #ffffff; text-align: center; font-family: 'Zilla Slab', serif;">
-    <h2 style="color: #006633; font-size: 2.2rem; margin-bottom: 10px;">SCHOOL EVENT GALLERIES</h2>
-    <div style="height: 4px; width: 60px; background: #ffd700; margin: 0 auto 30px;"></div>
+<section id="drive-events" class="section-padding" style="background: #fdfdfd;">
+    <div class="premium-heading">
+        <h2 style="color: #006633; font-weight: 900;">Event Photo Archives</h2>
+        <p style="color: #666;">Relive the moments through our official school galleries</p>
+        <div class="heading-line"></div>
+    </div>
     
-    <p style="color: #555; margin-bottom: 30px; font-family: sans-serif;">Click on an event to view full photos on Google Drive</p>
-    
-    <div style="max-width: 700px; margin: 0 auto; display: grid; gap: 15px;">
+    <div class="premium-gallery-grid">
         
-        <a href=" https://drive.google.com/drive/folders/1oqyOQXnL_fxUtX51hnJl5M91PztOluNJ?usp=sharing" target="_blank" 
-           style="display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; padding: 18px 25px; border-radius: 8px; text-decoration: none; border-left: 6px solid #006633; transition: 0.3s;">
-            <span style="color: #003366; font-size: 1.1rem; font-weight: bold;">📸 “THUNDERSTRIKE – 5th Annual Sports Day & Cultural Fest 2026”</span>
-            <span style="color: #006633; font-weight: bold;">Open Folder →</span>
+        <a href="https://drive.google.com/drive/folders/1oqyOQXnL_fxUtX51hnJl5M91PztOluNJ?usp=sharing" target="_blank" class="gallery-card">
+            <div class="gallery-bg" style="background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="gallery-overlay">
+                <div class="drive-badge">
+                    <i class="fab fa-google-drive"></i> G-Drive
+                </div>
+                <p>Cultural & Sports Fest</p>
+                <h3>Thunderstrike 2026</h3>
+                <div class="view-btn-text">View Full Gallery <i class="fas fa-arrow-right"></i></div>
+            </div>
         </a>
 
-        <a href="YOUR_LINK_HERE" target="_blank" 
-           style="display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; padding: 18px 25px; border-radius: 8px; text-decoration: none; border-left: 6px solid #006633; transition: 0.3s;">
-            <span style="color: #003366; font-size: 1.1rem; font-weight: bold;">🏆 Annual Sports Meet 2025</span>
-            <span style="color: #006633; font-weight: bold;">Open Folder →</span>
+        <a href="#" target="_blank" class="gallery-card">
+            <div class="gallery-bg" style="background-image: url('https://images.unsplash.com/photo-1541250848049-b4f71413cc30?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="gallery-overlay">
+                <div class="drive-badge">
+                    <i class="fab fa-google-drive"></i> G-Drive
+                </div>
+                <p>Athletic Excellence</p>
+                <h3>Annual Sports Meet 2025</h3>
+                <div class="view-btn-text">View Full Gallery <i class="fas fa-arrow-right"></i></div>
+            </div>
+        </a>
+
+        <a href="#" target="_blank" class="gallery-card">
+            <div class="gallery-bg" style="background-image: url('https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="gallery-overlay">
+                <div class="drive-badge">
+                    <i class="fab fa-google-drive"></i> G-Drive
+                </div>
+                <p>National Pride</p>
+                <h3>Republic Day Celebrations</h3>
+                <div class="view-btn-text">View Full Gallery <i class="fas fa-arrow-right"></i></div>
+            </div>
         </a>
 
     </div>
@@ -709,7 +832,7 @@
         </div>
 
         <div class="visit-map-visual">
-            <a href="https://maps.app.goo.gl/ChIJFZqwaZJaMzoRz9m_pzKqXdg" 
+            <a href="https://maps.app.goo.gl/avXc5D3XSLXbUwuJ9?g_st=ic" 
                target="_blank" 
                class="nav-action-btn">
                 <i class="fas fa-location-arrow"></i>
