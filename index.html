@@ -44,12 +44,11 @@
         /* CHAT WIDGET STYLES */
 #chat-widget-container {
     position: fixed;
-    bottom: 100px;
-    right: 30px;
+    bottom: 30px; /* Aligned with your video box */
+    left: 30px;   /* Moved to left to avoid overlapping right-side buttons */
     z-index: 10001;
     font-family: 'Segoe UI', sans-serif;
 }
-
 #chat-icon {
     background: #006633;
     color: white;
@@ -67,12 +66,12 @@
 
 #chat-window {
     display: none;
-    width: 320px;
-    height: 480px;
+    width: 300px;
+    height: 400px; /* Slightly shorter since there is no input bar */
     background: white;
     position: absolute;
-    bottom: 75px;
-    right: 0;
+    bottom: 80px;
+    left: 0;      /* Opens upward from the left */
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     flex-direction: column;
@@ -97,6 +96,7 @@
     background: #f9f9f9;
     display: flex;
     flex-direction: column;
+    padding-bottom: 20px; /* Space at the bottom */
 }
 
 .bot-msg, .user-msg {
@@ -133,12 +133,8 @@
     border-top: 1px solid #eee;
 }
 
-#chat-input-area input {
-    flex: 1;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-    outline: none;
+#chat-input-area {
+    display: none !important; /* This hides the typing bar completely */
 }
 
 #chat-send {
@@ -613,12 +609,12 @@ function showMainMenu() {
     <div id="chat-widget-container">
     <div id="chat-window">
         <div id="chat-header">
-            <span><i class="fas fa-robot"></i> Paramount Assistant</span>
+            <span><i class="fas fa-robot"></i> Paramount AI</span>
             <i class="fas fa-times" style="cursor:pointer" onclick="toggleChat()"></i>
         </div>
         <div id="chat-messages">
-            <div class="bot-msg">Welcome to Paramount School! How can I help you today? Please select an option:</div>
-            <div id="quick-actions" style="padding: 10px 0;">
+            <div class="bot-msg">Welcome to Paramount! Please select an option to begin:</div>
+            <div id="quick-actions">
                 <button class="action-btn" onclick="handleQuickAction('Admission')">Admission</button>
                 <button class="action-btn" onclick="handleQuickAction('Fees')">Fees</button>
                 <button class="action-btn" onclick="handleQuickAction('Timings')">Timings</button>
@@ -627,13 +623,9 @@ function showMainMenu() {
                 <button class="action-btn" onclick="handleQuickAction('Contact')">Contact</button>
             </div>
         </div>
-        <div id="chat-input-area">
-            <input type="text" id="user-input" placeholder="Type a message...">
-            <button id="chat-send" onclick="sendInputMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
     </div>
     <div id="chat-icon" onclick="toggleChat()">
-        <i class="fas fa-comment-dots"></i>
+        <i class="fas fa-robot"></i>
     </div>
 </div>
 
