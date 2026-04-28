@@ -86,6 +86,89 @@
     flex-direction: column;
     padding-bottom: 20px; /* Space at the bottom */
 }
+        /* CINEMATIC LEADERS SECTION */
+.leaders-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.leader-card {
+    background: white;
+    width: 300px;
+    border-radius: 30px;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    border: 1.5px solid #eee;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.leader-card:hover {
+    transform: translateY(-15px);
+    border-color: #ffd700;
+    box-shadow: 0 25px 50px rgba(0, 102, 51, 0.15);
+}
+
+/* Gold Badge at Top Right */
+.merit-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.leader-photo-container {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    padding: 8px;
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.leader-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+}
+
+.leader-info h3 {
+    color: #003366;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.leader-role {
+    color: #006633;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-top: 5px;
+    display: block;
+}
+
+.leader-quote {
+    font-size: 0.8rem;
+    color: #777;
+    font-style: italic;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .leader-card { width: 100%; max-width: 320px; }
+}
        /* PREMIUM ADMISSIONS ROADMAP */
 .admissions-container {
     display: grid;
@@ -699,12 +782,51 @@
 
     </div>
 </section>
-    <section style="background: white; padding: 20px 5%; text-align: center;">
-    <h2 style="color: #006633; font-family: 'Zilla Slab', serif; font-size: 2rem; margin-bottom: 20px;">
-        LEADERS OF THE SCHOOL (2026)
-    </h2>
-    <div style="max-width: 900px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-        <img src="leaders-of-the-school.jpg" alt="School Leaders" style="width: 100%; height: auto; display: block;">
+    <section id="leaders" class="section-padding" style="background: linear-gradient(to bottom, #ffffff, #f9f9f9);">
+    <div class="premium-heading">
+        <h2 style="color: #003366; font-weight: 900;">Student Leadership Board</h2>
+        <p style="color: #666;">Empowering the visionaries of tomorrow</p>
+        <div class="heading-line"></div>
+    </div>
+
+    <div class="leaders-grid">
+        
+        <div class="leader-card">
+            <i class="fas fa-award merit-badge"></i>
+            <div class="leader-photo-container">
+                <img src="vaishnavi.jpg" alt="Uppula Vaishnavi" class="leader-photo">
+            </div>
+            <div class="leader-info">
+                <h3>Uppula Vaishnavi</h3>
+                <span class="leader-role">HEAD GIRL</span>
+                <p class="leader-quote">"Leading with integrity to inspire excellence across Paramount."</p>
+            </div>
+        </div>
+
+        <div class="leader-card" style="border-color: #ffd700; transform: scale(1.05); z-index: 2;">
+            <i class="fas fa-crown merit-badge"></i>
+            <div class="leader-photo-container" style="background: linear-gradient(135deg, #006633, #003366);">
+                <img src="ganesh.jpg" alt="Oggula Ganesh" class="leader-photo">
+            </div>
+            <div class="leader-info">
+                <h3>Oggula Ganesh</h3>
+                <span class="leader-role">HEAD BOY</span>
+                <p class="leader-quote">"Service before self. Committed to the growth of every student."</p>
+            </div>
+        </div>
+
+        <div class="leader-card">
+            <i class="fas fa-star merit-badge"></i>
+            <div class="leader-photo-container">
+                <img src="manikanta.jpg" alt="Sannayala Manikanta" class="leader-photo">
+            </div>
+            <div class="leader-info">
+                <h3>Sannayala Manikanta</h3>
+                <span class="leader-role">VICE HEAD BOY</span>
+                <p class="leader-quote">"Aiding the vision and maintaining the discipline of our legacy."</p>
+            </div>
+        </div>
+
     </div>
 </section>
 <section id="drive-events" class="section-padding" style="background: #fdfdfd;">
