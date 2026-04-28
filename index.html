@@ -695,7 +695,7 @@
             padding: 12px 20px; 
             font-weight: bold; 
             font-size: 15px;
-            z-index: 1000;
+            z-index: 1050;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             animation: pulseBanner 2.5s infinite;
         }
@@ -721,7 +721,7 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1100;
     border-bottom: 3px solid #006633; /* Forest Green Bottom Border */
 }
         nav {
@@ -799,7 +799,9 @@ nav a:hover::before {
 }
 
 @media (max-width: 992px) {
-    nav { display: none; } /* Consider a mobile burger menu here */
+    nav a:not(:last-child)::after {
+        display: none; /* Remove dividers on mobile */
+    }
 }
         .logo-container { 
             display: flex; 
