@@ -305,14 +305,14 @@
 
 .visit-map-visual {
     flex: 1;
-    background: linear-gradient(rgba(0,51,102,0.3), rgba(0,102,51,0.3)), 
-                url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=1000');
     background-size: cover;
-    background-position: center;
+    background-position: center; /* This ensures the main part of the building is visible */
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 
 .nav-action-btn {
@@ -956,14 +956,15 @@
             </div>
         </div>
 
-        <div class="visit-map-visual">
-            <a href="https://maps.app.goo.gl/9JWP6sU4eQVSvQhi7?g_st=ic" 
-               target="_blank" 
-               class="nav-action-btn">
-                <i class="fas fa-location-arrow"></i>
-                📍GET DIRECTIONS ON GOOGLE MAPS
-            </a>
-        </div>
+       <div class="visit-map-visual" 
+     style="background-image: linear-gradient(rgba(0,51,102,0.4), rgba(0,102,51,0.4)), 
+            url('leaders images/campus.jpg');"> <a href="https://maps.app.goo.gl/ChIJFZqwaZJaMzoRz9m_pzKqXdg" 
+       target="_blank" 
+       class="nav-action-btn">
+        <i class="fas fa-location-arrow"></i>
+        📍GET DIRECTIONS ON GOOGLE MAPS
+    </a>
+</div>
     </div> 
  
 </section>
