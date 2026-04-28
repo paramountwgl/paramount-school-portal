@@ -86,6 +86,97 @@
     flex-direction: column;
     padding-bottom: 20px; /* Space at the bottom */
 }
+       /* PREMIUM ADMISSIONS ROADMAP */
+.admissions-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px 0;
+    position: relative;
+}
+
+.step-card {
+    background: #ffffff;
+    padding: 35px 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1.5px solid #eee;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.step-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--secondary);
+    box-shadow: 0 20px 40px rgba(0, 102, 51, 0.1);
+}
+
+.step-number {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(0, 102, 51, 0.05);
+    z-index: 1;
+}
+
+.step-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #006633, #003366);
+    color: var(--gold);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 15px rgba(0, 102, 51, 0.2);
+}
+
+.step-card h3 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.step-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+}
+
+/* Admissions Header Style */
+.premium-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.premium-heading h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.heading-line {
+    width: 80px;
+    height: 5px;
+    background: var(--gold);
+    margin: 0 auto;
+    border-radius: 10px;
+} 
 
 .bot-msg, .user-msg {
     margin-bottom: 12px;
@@ -434,19 +525,56 @@
 
     </div>
 </section>
-<section id="admissions" class="section-padding admissions-section">
-    <h2 style="color: var(--primary);">Admissions For 2026-27</h2>
-    <p>Join our academic excellence. </p>
-    <p>Follow The Below Steps</p>
-    <p>Step 1: Office Visit at our Campus</p>
-    <p>Step 2: Visit our Office thorugh Google Maps</p>
-    <p>Step 3: Document Submission</p>
-    <p>Step 4: Interaction with Mrs.Roqiya Begum(Principal) of the Paramount English Medium School</p>
-    <p>Step 5: Admission completed successfully.</p>
-   
-    
-</section>
+<section id="admissions" class="section-padding" style="background: #fafafa;">
+    <div class="premium-heading">
+        <h2>Admissions 2026-27</h2>
+        <p style="color: #666; font-size: 1.1rem;">Secure your child's future in 5 simple steps</p>
+        <div class="heading-line"></div>
+    </div>
 
+    <div class="admissions-container">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-icon"><i class="fas fa-school"></i></div>
+            <h3>Campus Visit</h3>
+            <p>Visit our modern campus at Pensionpur to witness our academic environment first-hand.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-icon"><i class="fas fa-map-marked-alt"></i></div>
+            <h3>Digital Check-in</h3>
+            <p>Use our integrated Google Maps feature to easily navigate to our office location.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-icon"><i class="fas fa-file-invoice"></i></div>
+            <h3>Documentation</h3>
+            <p>Submit the required academic records and identity proofs at our administrative office.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-icon"><i class="fas fa-user-tie"></i></div>
+            <h3>Principal Insight</h3>
+            <p>A personal interaction session with Mrs. Roqiya Begum to discuss your child's goals.</p>
+        </div>
+
+        <div class="step-card" style="border: 2px solid var(--gold); background: #fffdf5;">
+            <div class="step-number">5</div>
+            <div class="step-icon" style="background: var(--gold); color: #003366;"><i class="fas fa-check-circle"></i></div>
+            <h3>Enrollment</h3>
+            <p>Welcome to the Paramount family! Your child's journey to success officially begins here.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="admissions.html" style="background: var(--secondary); color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 10px 20px rgba(0, 102, 51, 0.2); transition: 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            Detailed Admission Guide <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+        </a>
+    </div>
+</section>
 <section id="location" style="padding: 60px 10%; background: #f4f4f4; text-align: center; font-family: sans-serif;">
     <h2 style="color: #003366; margin-bottom: 20px;">Visit Our Campus</h2>
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.136458315152!2d79.58027477521033!3d17.926044383057112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a335a9269b09a15%3A0x585daa32a7bfd9cf!2sParamount%20English%20Medium%20School!5e0!3m2!1sen!2sin!4v1709568000000!5m2!1sen!2sin" width="100%" height="400" style="border:0;" class="map-frame" allowfullscreen="" loading="lazy"></iframe>
