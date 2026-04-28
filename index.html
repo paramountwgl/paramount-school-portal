@@ -711,11 +711,96 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: #333; overflow-x: hidden; }
 
         /* Responsive Header */
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 10px 5%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-            position: sticky; top: 0; z-index: 1000; 
-        }
+        header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 6%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 3px solid #006633; /* Forest Green Bottom Border */
+}
+        nav {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 5px 15px;
+    border-radius: 50px;
+    border: 1px solid #eee;
+}
+
+nav a {
+    margin: 0;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #003366;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* The Gold Vertical Dividers */
+nav a:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 18px;
+    width: 1.5px;
+    background: #ffd700; /* Gold Divider */
+    opacity: 0.6;
+}
+
+/* Premium Hover Effect */
+nav a:hover {
+    color: #006633;
+    transform: translateY(-2px);
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #006633;
+    transition: 0.3s;
+    transform: translateX(-50%);
+}
+
+nav a:hover::before {
+    width: 30px;
+}
+
+/* School Name Enhancement */
+.name-main { 
+    font-size: 1.6rem; 
+    font-weight: 900; 
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #003366, #006633);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.name-sub { 
+    font-size: 0.8rem; 
+    font-weight: 800; 
+    color: #ffd700; /* Gold Sub-text */
+    letter-spacing: 3px; 
+}
+
+@media (max-width: 992px) {
+    nav { display: none; } /* Consider a mobile burger menu here */
+}
         .logo-container { 
             display: flex; 
             align-items: center; 
@@ -806,17 +891,18 @@
 
 <header id="home">
     <div class="logo-container">
-        <img src="logo.png" alt="Logo" class="logo-img">
+        <img src="logo.png" alt="Paramount Logo" class="logo-img">
         <div class="school-name-box">
             <span class="name-main">PARAMOUNT</span>
             <span class="name-sub">ENGLISH MEDIUM SCHOOL</span>
         </div>
     </div>
+    
     <nav>
-        <a href="Student Portal.html">Student Portal</a>
         <a href="#home">Home</a>
         <a href="#about">About</a>
-       <a href="admissions.html">Admissions</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="Student Portal.html">Student Portal</a>
         <a href="#contact">Contact</a>
     </nav>
 </header>
