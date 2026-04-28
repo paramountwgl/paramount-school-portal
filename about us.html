@@ -3,202 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Our Legacy | Paramount English Medium School</title>
+    <title>The Paramount Legacy | Excellence Personified</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="logo.png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,900&family=Montserrat:wght@300;400;700;900&display=swap');
+
         :root { 
-            --paramount-blue: #003366; 
-            --paramount-green: #006633; 
-            --paramount-gold: #ffd700; 
-            --text-dark: #1a1a1a;
-            --glass: rgba(255, 255, 255, 0.95);
+            --p-blue: #002347; 
+            --p-green: #004d26; 
+            --p-gold: #c5a059; /* Sophisticated Champagne Gold */
+            --p-light-gold: #f4e9d5;
+            --white: #ffffff;
         }
 
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; color: var(--text-dark); line-height: 1.8; overflow-x: hidden; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; color: #333; background: #fff; overflow-x: hidden; }
 
-        /* PREMIUM HEADER */
+        /* ELITE NAVIGATION BAR */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 6%;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
+            padding: 20px 8%;
+            background: rgba(255, 255, 255, 0.98);
             position: sticky;
             top: 0;
-            z-index: 2000;
-            border-bottom: 3px solid var(--paramount-green);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
         }
-        .logo-box { display: flex; align-items: center; gap: 15px; }
-        .logo-img { height: 65px; }
-        .school-title .main-name { display: block; font-size: 1.5rem; font-weight: 900; color: var(--paramount-blue); letter-spacing: 1px; }
-        .school-title .sub-name { font-size: 0.75rem; font-weight: 700; color: var(--paramount-green); letter-spacing: 3px; }
+        .brand { display: flex; align-items: center; gap: 20px; }
+        .logo { height: 75px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .brand-text h1 { margin: 0; font-size: 1.8rem; letter-spacing: 4px; color: var(--p-blue); font-weight: 900; }
+        .brand-text p { margin: 0; font-size: 0.8rem; letter-spacing: 6px; color: var(--p-green); font-weight: 700; }
 
-        /* CINEMATIC HERO SECTION */
-        .hero-banner {
-            height: 80vh;
-            background: linear-gradient(rgba(0,51,102,0.6), rgba(0,102,51,0.6)), url('leaders_images/campus.png');
+        /* CINEMATIC COVER */
+        .cover {
+            height: 90vh;
+            background: linear-gradient(to right, rgba(0,35,71,0.8), rgba(0,0,0,0.2)), url('leaders_images/campus.png');
             background-size: cover;
-            background-attachment: fixed;
+            background-position: center;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
+            padding: 0 10%;
+            color: var(--white);
         }
-        .hero-content h1 { font-size: 4rem; margin: 0; text-transform: uppercase; letter-spacing: 5px; font-weight: 900; }
-        .hero-content p { font-size: 1.4rem; color: var(--paramount-gold); font-style: italic; }
+        .cover-content { max-width: 700px; }
+        .cover-content h2 { font-family: 'Playfair Display', serif; font-size: 5rem; margin: 0; line-height: 1.1; }
+        .cover-content p { font-size: 1.2rem; letter-spacing: 2px; color: var(--p-gold); text-transform: uppercase; margin-top: 20px; }
 
-        /* CORE PILLARS SECTION */
-        .pillars-container {
+        /* THE FOUNDER'S VISION (LUXURY SECTION) */
+        .vision-section {
+            padding: 120px 10%;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            background: var(--p-light-gold);
+        }
+        .founder-frame {
+            position: relative;
+            flex: 1;
+        }
+        .founder-frame img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 30px 30px 0 var(--p-gold);
+        }
+        .vision-text { flex: 1.5; }
+        .vision-text h3 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--p-blue); margin-bottom: 30px; }
+        .signature { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; color: var(--p-gold); margin-top: 40px; }
+
+        /* ELITE FACILITIES (GRID CARDS) */
+        .grid-section { padding: 100px 8%; background: var(--white); }
+        .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0;
-            background: var(--paramount-blue);
-            color: white;
-        }
-        .pillar-box {
-            padding: 60px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.5s;
-        }
-        .pillar-box:hover { background: var(--paramount-green); }
-        .pillar-box i { font-size: 3rem; color: var(--paramount-gold); margin-bottom: 20px; }
-        .pillar-box h3 { font-size: 1.5rem; letter-spacing: 2px; }
-
-        /* DETAILED HISTORY SECTION */
-        .history-section { padding: 100px 10%; background: #fff; }
-        .history-flex { display: flex; gap: 50px; align-items: center; }
-        .history-text { flex: 1; }
-        .history-text h2 { font-size: 2.8rem; color: var(--paramount-blue); border-left: 8px solid var(--paramount-gold); padding-left: 20px; }
-        .year-badge { background: var(--paramount-gold); color: var(--paramount-blue); padding: 5px 15px; border-radius: 5px; font-weight: 900; }
-
-        /* FACULTY ELITE GRID */
-        .faculty-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            padding: 40px 0;
         }
-        .faculty-card {
-            background: #fdfdfd;
+        .elite-card {
+            padding: 50px 30px;
+            background: var(--white);
             border: 1px solid #eee;
-            padding: 40px;
-            border-radius: 20px;
             text-align: center;
-            transition: 0.4s;
+            transition: 0.5s;
+            position: relative;
         }
-        .faculty-card:hover { border-color: var(--paramount-gold); transform: translateY(-10px); }
-        .faculty-card i { font-size: 3rem; color: var(--paramount-green); opacity: 0.2; position: absolute; top: 20px; right: 20px; }
+        .elite-card:hover { border-color: var(--p-gold); background: var(--p-blue); color: white; transform: translateY(-10px); }
+        .elite-card i { font-size: 3.5rem; color: var(--p-gold); margin-bottom: 25px; }
+        .elite-card h4 { font-size: 1.3rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* PREMIUM FOOTER */
-        footer { background: var(--paramount-blue); color: white; padding: 60px 10%; text-align: center; border-top: 5px solid var(--paramount-gold); }
-        .back-btn { display: inline-block; margin-top: 20px; padding: 12px 30px; border: 2px solid var(--paramount-gold); color: var(--paramount-gold); text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
-        .back-btn:hover { background: var(--paramount-gold); color: var(--paramount-blue); }
+        /* THE HISTORY TIMELINE */
+        .timeline {
+            padding: 100px 10%;
+            background: var(--p-blue);
+            color: white;
+            text-align: center;
+        }
+        .timeline h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--p-gold); }
+        .timeline-box {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 60px;
+        }
+        .time-item h5 { font-size: 3rem; color: var(--p-gold); margin: 0; }
+        .time-item p { letter-spacing: 2px; opacity: 0.7; }
 
-        @media (max-width: 992px) {
-            .pillars-container { grid-template-columns: 1fr; }
-            .history-flex { flex-direction: column; text-align: center; }
-            .hero-content h1 { font-size: 2.5rem; }
+        /* FOOTER */
+        footer {
+            background: #00152b;
+            padding: 80px 10%;
+            text-align: center;
+            color: white;
+            border-top: 8px solid var(--p-gold);
+        }
+        .btn-home {
+            text-decoration: none;
+            color: var(--p-gold);
+            border: 2px solid var(--p-gold);
+            padding: 15px 40px;
+            border-radius: 0;
+            font-weight: bold;
+            letter-spacing: 3px;
+            transition: 0.3s;
+        }
+        .btn-home:hover { background: var(--p-gold); color: var(--p-blue); }
+
+        @media (max-width: 768px) {
+            .vision-section, .grid-container, .timeline-box { flex-direction: column; }
+            .cover-content h2 { font-size: 3rem; }
+            .grid-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-box">
-            <img src="logo.png" alt="School Logo" class="logo-img">
-            <div class="school-title">
-                <span class="main-name">PARAMOUNT</span>
-                <span class="sub-name">ENGLISH MEDIUM SCHOOL</span>
+        <div class="brand">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div class="brand-text">
+                <h1>PARAMOUNT</h1>
+                <p>ENGLISH MEDIUM SCHOOL</p>
             </div>
         </div>
-        <a href="index.html" style="text-decoration: none; color: var(--paramount-blue); font-weight: bold;"><i class="fas fa-home"></i> Home</a>
+        <a href="index.html" style="color: var(--p-blue); text-decoration: none; font-weight: 700; letter-spacing: 1px;">HOME PORTAL</a>
     </header>
 
-    <section class="hero-banner">
-        <div class="hero-content">
-            <p>ESTABLISHED 2019</p>
-            <h1>SHAPING TOMORROW</h1>
-            <p>Experience the Paramount Standard of Education</p>
+    <section class="cover">
+        <div class="cover-content">
+            <p>Institutional Excellence Since 2019</p>
+            <h2>The Standard of Global Education.</h2>
         </div>
     </section>
 
-    <section class="pillars-container">
-        <div class="pillar-box">
-            <i class="fas fa-microchip"></i>
-            <h3>Digital First</h3>
-            <p>Integrating Jitsi and Firebase technologies for real-time academic interaction.</p>
-        </div>
-        <div class="pillar-box">
-            <i class="fas fa-gavel"></i>
-            <h3>Moral Foundation</h3>
-            <p>Cultivating ethics and character alongside academic prowess.</p>
-        </div>
-        <div class="pillar-box">
-            <i class="fas fa-trophy"></i>
-            <h3>Athletic Mastery</h3>
-            <p>Home to elite coaching centers and the Paramount Hockey Academy.</p>
+    <section class="timeline">
+        <h2>Our Milestone</h2>
+        <div class="timeline-box">
+            <div class="time-item"><h5>2019</h5><p>ESTABLISHED</p></div>
+            <div class="time-item"><h5>500+</h5><p>STUDENTS ENROLLED</p></div>
+            <div class="time-item"><h5>100%</h5><p>ACADEMIC SUCCESS</p></div>
         </div>
     </section>
 
-    <section class="history-section">
-        <div class="history-flex">
-            <div class="history-text">
-                <h2>Our Journey <span class="year-badge">SINCE 2019</span></h2>
-                <p>Located in the heart of Laxmipur, Warangal, <strong>Paramount English Medium School</strong> was founded with a singular vision: to bring world-class education to our community. What started as a vision by <strong>Mr. Shaik Ahmad</strong> has grown into a multi-disciplinary institution spanning polycet coaching, SI & PC training, and professional sports academies.</p>
-                <p>We believe that education should be accessible and technologically advanced. Our 2026 academic infrastructure is built on the pillars of safety, innovation, and result-oriented learning.</p>
-            </div>
-            <div style="flex: 1;">
-                <div style="padding: 30px; background: #f9f9f9; border-radius: 20px; border: 1px solid #eee;">
-                    <h4 style="color: var(--paramount-green);">Administrative Leadership</h4>
-                    <p><strong>Correspondent:</strong> Mr. Shaik Ahmad</p>
-                    <p><strong>Principal:</strong> Mrs. Roqiya Begum</p>
-                    <hr>
-                    <h4 style="color: var(--paramount-green);">Institutional Branches</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li><i class="fas fa-check-circle" style="color: var(--paramount-gold);"></i> Paramount Polycet Coaching</li>
-                        <li><i class="fas fa-check-circle" style="color: var(--paramount-gold);"></i> Paramount SI & PC Center</li>
-                        <li><i class="fas fa-check-circle" style="color: var(--paramount-gold);"></i> Paramount Hockey Academy</li>
-                    </ul>
-                </div>
-            </div>
+    <section class="vision-section">
+        <div class="founder-frame">
+            <img src="chairman.png" alt="Founder">
+        </div>
+        <div class="vision-text">
+            <h3>The Founder's Message</h3>
+            <p style="font-size: 1.1rem; color: #555;">At Paramount, we don't just provide lessons; we provide a platform for greatness. Since 2019, our focus has been on creating a safe, technologically advanced, and ethically rich environment for the children of Warangal.</p>
+            <p style="font-size: 1.1rem; color: #555;">We invite you to be part of a legacy where your child's success is our only priority. This institution is built on trust, transparency, and a relentless drive for results.</p>
+            <div class="signature">— Mr. Shaik Ahmad, Correspondent</div>
         </div>
     </section>
 
-    <section class="section-padding" style="background: #fafafa; padding: 100px 10%;">
-        <div class="premium-heading">
-            <h2>Elite Academic Facilities</h2>
-            <div class="heading-line"></div>
+    <section class="grid-section">
+        <div style="text-align: center; margin-bottom: 70px;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--p-blue);">World Class Infrastructure</h2>
         </div>
-        
-        <div class="faculty-grid">
-            <div class="faculty-card">
-                <i class="fas fa-wifi"></i>
-                <h3>Smart Campus</h3>
-                <p>Full-campus high-speed connectivity supporting our dedicated student meeting portals and real-time result tracking.</p>
+        <div class="grid-container">
+            <div class="elite-card">
+                <i class="fas fa-microscope"></i>
+                <h4>Advanced Labs</h4>
+                <p>Fostering scientific inquiry through hands-on practical learning modules.</p>
             </div>
-            <div class="faculty-card">
-                <i class="fas fa-chalkboard-teacher"></i>
-                <h3>Vetted Faculty</h3>
-                <p>Our teaching staff undergoes rigorous professional training to maintain the high standards set by Mrs. Roqiya Begum.</p>
+            <div class="elite-card">
+                <i class="fas fa-hockey-puck"></i>
+                <h4>Elite Sports</h4>
+                <p>Home to the Paramount Hockey Academy, building champions for the national stage.</p>
             </div>
-            <div class="faculty-card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Secure Environment</h3>
-                <p>24/7 CCTV surveillance and a digital check-in system for visitors to ensure absolute student safety.</p>
+            <div class="elite-card">
+                <i class="fas fa-user-shield"></i>
+                <h4>Safety First</h4>
+                <p>A high-security campus with 24/7 digital surveillance for total peace of mind.</p>
+            </div>
+            <div class="elite-card">
+                <i class="fas fa-laptop-code"></i>
+                <h4>Digital Hub</h4>
+                <p>Proprietary student portals and real-time academic tracking for modern parents.</p>
+            </div>
+            <div class="elite-card">
+                <i class="fas fa-bus"></i>
+                <h4>Fleet Service</h4>
+                <p>Premium transportation network ensuring safe and timely transit for all students.</p>
+            </div>
+            <div class="elite-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>Faculty</h4>
+                <p>Led by Principal Mrs. Roqiya Begum, our staff consists of highly vetted academic experts.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <h2 style="color: var(--paramount-gold);">PARAMOUNT</h2>
-        <p>Your Way To Success</p>
-        <p>Pensionpur, Warangal, Telangana 506005</p>
-        <a href="index.html" class="back-btn">RETURN TO MAIN PORTAL</a>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--p-gold);">PARAMOUNT</h2>
+        <p style="letter-spacing: 5px; margin-bottom: 40px;">YOUR WAY TO SUCCESS</p>
+        <p style="opacity: 0.6;">Pensionpur, Warangal, Telangana - 506005</p>
+        <br><br>
+        <a href="index.html" class="btn-home">BACK TO PORTAL</a>
     </footer>
 
 </body>
