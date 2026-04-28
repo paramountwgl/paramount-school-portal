@@ -14,9 +14,9 @@
         #backToTopBtn {
     display: none; 
     position: fixed; 
-    bottom: 30px; 
-    right: 105px; 
-    z-index: 999; 
+    bottom: 170px; /* 100px + 55px size + 15px gap */
+    right: 30px; 
+    z-index: 10000; 
     background-color: #004a99; 
     color: white;
     border: none;
@@ -26,7 +26,7 @@
     font-size: 20px;
     cursor: pointer;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-}        
+}       
         #schoolIntroBox {
             position: fixed;
             bottom: 30px;
@@ -44,8 +44,8 @@
         /* CHAT WIDGET STYLES */
 #chat-widget-container {
     position: fixed;
-    bottom: 30px;
-    right: 170px;
+    bottom: 100px; /* 30px + 55px size + 15px gap */
+    right: 30px;
     z-index: 10001;
 }
 #chat-icon {
@@ -62,16 +62,14 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     border: 2px solid #ffd700;
 }
-
-
 #chat-window {
     display: none;
     width: 300px;
     height: 420px;
     background: white;
     position: absolute;
-    bottom: 70px;
-    right: 0;
+    bottom: 0; /* Aligned with the bot icon */
+    right: 70px; /* Opens to the LEFT of the buttons */
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     flex-direction: column;
@@ -247,29 +245,25 @@
     .whatsapp-btn { right: 30px; }
 }
         
-        .whatsapp-btn {
+        ..whatsapp-btn {
     position: fixed;
-    bottom: 30px;
+    bottom: 30px; /* Base position */
     right: 30px;
     background-color: #25d366;
     color: white;
-    width: 55px;  /* Fixed Width */
-    height: 55px; /* Fixed Height */
-    padding: 0 !important; /* Removes the original padding */
-    border-radius: 50% !important; /* Forces a perfect circle */
+    width: 55px;
+    height: 55px;
+    padding: 0 !important;
+    border-radius: 50% !important;
     display: flex !important;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 9999;
+    z-index: 10002;
+    animation: pulse-animation 2s infinite;
 }
-.whatsapp-btn span {
-    display: none !important;
-}
-        .whatsapp-btn img {
-    width: 30px; /* Slightly larger icon to fit the circle */
-    height: 30px;
-}
+.whatsapp-btn span { display: none !important; }
+.whatsapp-btn img { width: 30px; height: 30px; }
 
         @keyframes pulse-animation {
             0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.7); }
