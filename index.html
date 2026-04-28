@@ -545,6 +545,36 @@ function appendChatMessage(msg, className) {
     chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+    // --- ADD THESE TWO FUNCTIONS BELOW appendChatMessage ---
+
+function appendYesNoButtons() {
+    const chatMessages = document.getElementById('chat-messages');
+    const btnContainer = document.createElement('div');
+    btnContainer.style.padding = "10px 0";
+    btnContainer.innerHTML = `
+        <button class="action-btn" onclick="handleQuickAction('Yes')">Yes, please</button>
+        <button class="action-btn" onclick="handleQuickAction('No')">No, thank you</button>
+    `;
+    chatMessages.appendChild(btnContainer);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showMainMenu() {
+    const chatMessages = document.getElementById('chat-messages');
+    const menuContainer = document.createElement('div');
+    menuContainer.style.padding = "10px 0";
+    menuContainer.innerHTML = `
+        <div class="bot-msg">Please select an option:</div>
+        <button class="action-btn" onclick="handleQuickAction('Admission')">Admission</button>
+        <button class="action-btn" onclick="handleQuickAction('Fees')">Fees</button>
+        <button class="action-btn" onclick="handleQuickAction('Timings')">Timings</button>
+        <button class="action-btn" onclick="handleQuickAction('Location')">Location</button>
+        <button class="action-btn" onclick="handleQuickAction('Principal')">Principal</button>
+        <button class="action-btn" onclick="handleQuickAction('Contact')">Contact</button>
+    `;
+    chatMessages.appendChild(menuContainer);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
     // --- Video Intro Logic ---
     function closeIntroVideo() {
