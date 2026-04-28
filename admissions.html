@@ -41,6 +41,44 @@
             height: 90px;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
         }
+        /* UPDATED 4-COLUMN ROADMAP */
+.roadmap-grid {
+    display: grid;
+    /* Forces exactly 4 columns on desktop */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.step-item {
+    background: white;
+    padding: 20px 10px; /* Reduced padding to fit 4 in a row */
+    border-radius: 20px;
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+    transition: 0.3s ease;
+}
+
+.step-item h3 {
+    font-size: 0.95rem; /* Slightly smaller to prevent text wrapping */
+    margin-bottom: 8px;
+    color: var(--forest-green);
+}
+
+.step-item p {
+    font-size: 0.75rem; /* Precise size for premium readability */
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* On mobile, they will still stack for better readability */
+@media (max-width: 800px) {
+    .roadmap-grid {
+        grid-template-columns: 1fr; 
+    }
+}
 
         .hero-header h1 {
             font-family: 'Playfair Display', serif;
