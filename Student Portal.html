@@ -391,45 +391,47 @@ async function searchStudent() {
         } catch (e) { console.error("Attendance Error:", e); }
 
         // 3. FINANCE LOGIC (With Safety Checks)
-       // UPDATED FINANCE LOGIC (Handles Flat Discount or Percentage)
+      // 3. FINANCE LOGIC (Fixed for Summation and Percentage Math)
         try {
             const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
             let totalPaid = 0;
-            let rawBaseFee = 0;
-            let discountValue = 0;
+            let totalBaseFee = 0;
+            let totalDiscountPct = 0;
 
             if(feeSnap.exists()){
                 feeSnap.forEach(c => { 
                     const d = c.val(); 
                     totalPaid += parseFloat(d.paid || 0); 
-                    rawBaseFee = parseFloat(d.total || 0); // The 20,000
-                    discountValue = parseFloat(d.discount || 0); // The 15
+                    totalBaseFee += parseFloat(d.total || 0); 
+                    // We assume the discount is a percentage (like 15)
+                    totalDiscountPct = parseFloat(d.discount || 0); 
                 });
             }
 
-            // MATH: Calculate 15% of the raw fee
-            // If discount is 15, then: 20000 - (20000 * 0.15) = 17000
-            const discountAmount = (rawBaseFee * (discountValue / 100));
-            const finalPayable = rawBaseFee - discountAmount;
+            // Calculation: Base Fee - (Base Fee * Percentage / 100)
+            const discountAmount = (totalBaseFee * (totalDiscountPct / 100));
+            const finalPayable = totalBaseFee - discountAmount;
             
             const balanceDue = finalPayable - totalPaid;
             const pct = finalPayable > 0 ? Math.round((totalPaid / finalPayable) * 100) : 0;
 
-            // Update UI
-            // Parents will now see 17000 instead of 20000
-            document.getElementById('vTotalFee').innerText = "₹ " + finalPayable.toLocaleString(); 
-            document.getElementById('vPaidFee').innerText = "₹ " + totalPaid.toLocaleString();
-            document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? balanceDue.toLocaleString() : 0);
+            // Debugging: If numbers are still wrong, check your browser console (F12)
+            console.log("Base:", totalBaseFee, "Discount %:", totalDiscountPct, "Payable:", finalPayable);
+
+            // Update UI with formatted numbers
+            document.getElementById('vTotalFee').innerText = "₹ " + Math.round(finalPayable).toLocaleString(); 
+            document.getElementById('vPaidFee').innerText = "₹ " + Math.round(totalPaid).toLocaleString();
+            document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? Math.round(balanceDue).toLocaleString() : 0);
             
             document.getElementById('feePercentLabel').innerText = pct + "%";
             
-            // Update Circle Progress
+            // Update Progress Circle
             const offset = 314.15 - (314.15 * (pct > 100 ? 100 : pct) / 100);
             document.getElementById('feeCircle').style.strokeDashoffset = offset;
             
             document.getElementById('feeSection').style.display = 'block';
         } catch (e) { 
-            console.error("Finance Error:", e); 
+            console.error("Finance Calculation Error:", e); 
         }
         
         // 4. UI REVEAL
