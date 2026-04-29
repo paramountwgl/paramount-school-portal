@@ -121,7 +121,7 @@
                 <div class="circle-text"><span id="feePercentLabel">0%</span></div>
             </div>
             <div class="fee-stats-triple">
-                <div class="stat-card-mini"><label>Total Fee</label><span id="vTotalFee">₹ 0</span></div>
+                <div class="stat-card-mini"><label>Net Payable</label> <span id="vTotalFee">₹ 0</span></div>
                 <div class="stat-card-mini"><label>Total Paid</label><span id="vPaidFee" style="color: var(--paid);">₹ 0</span></div>
                 <div class="stat-card-mini" style="background:#fff5f5;"><label>Balance Due</label><span id="vDueFee" style="color: var(--danger);">₹ 0</span></div>
             </div>
@@ -391,31 +391,46 @@ async function searchStudent() {
         } catch (e) { console.error("Attendance Error:", e); }
 
         // 3. FINANCE LOGIC (With Safety Checks)
+       // UPDATED FINANCE LOGIC (Handles Flat Discount or Percentage)
         try {
             const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
-            let tPaid = 0, tFee = 0, tDiscount = 0;
+            let totalPaid = 0;
+            let rawBaseFee = 0;
+            let discountValue = 0;
 
             if(feeSnap.exists()){
                 feeSnap.forEach(c => { 
                     const d = c.val(); 
-                    tPaid += parseFloat(d.paid || 0); 
-                    tFee += parseFloat(d.total || 0); // Added += to sum multiple records
-                    tDiscount += parseFloat(d.discount || 0); 
+                    totalPaid += parseFloat(d.paid || 0); 
+                    rawBaseFee = parseFloat(d.total || 0); // The 20,000
+                    discountValue = parseFloat(d.discount || 0); // The 15
                 });
             }
 
-            const finalPayable = tFee - tDiscount;
-            const balanceDue = finalPayable - tPaid;
-            const pct = finalPayable > 0 ? Math.round((tPaid / finalPayable) * 100) : 0;
+            // MATH: Calculate 15% of the raw fee
+            // If discount is 15, then: 20000 - (20000 * 0.15) = 17000
+            const discountAmount = (rawBaseFee * (discountValue / 100));
+            const finalPayable = rawBaseFee - discountAmount;
+            
+            const balanceDue = finalPayable - totalPaid;
+            const pct = finalPayable > 0 ? Math.round((totalPaid / finalPayable) * 100) : 0;
 
-            document.getElementById('vTotalFee').innerText = "₹ " + finalPayable;
-            document.getElementById('vPaidFee').innerText = "₹ " + tPaid;
-            document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? balanceDue : 0);
+            // Update UI
+            // Parents will now see 17000 instead of 20000
+            document.getElementById('vTotalFee').innerText = "₹ " + finalPayable.toLocaleString(); 
+            document.getElementById('vPaidFee').innerText = "₹ " + totalPaid.toLocaleString();
+            document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? balanceDue.toLocaleString() : 0);
+            
             document.getElementById('feePercentLabel').innerText = pct + "%";
-            document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * (pct > 100 ? 100 : pct) / 100);
+            
+            // Update Circle Progress
+            const offset = 314.15 - (314.15 * (pct > 100 ? 100 : pct) / 100);
+            document.getElementById('feeCircle').style.strokeDashoffset = offset;
             
             document.getElementById('feeSection').style.display = 'block';
-        } catch (e) { console.error("Finance Error:", e); }
+        } catch (e) { 
+            console.error("Finance Error:", e); 
+        }
         
         // 4. UI REVEAL
         document.getElementById('pdfBtnSection').style.display = 'flex';
