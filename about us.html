@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>About Our Legacy | Paramount English Medium School</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
@@ -17,7 +17,16 @@
             --white: #ffffff;
         }
 
-        body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; background: #fafafa; overflow-x: hidden; }
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #fafafa; 
+            overflow-x: hidden; 
+            width: 100%;
+        }
 
         /* ELITE NAVIGATION */
         header {
@@ -33,32 +42,33 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .header-brand { display: flex; align-items: center; gap: 12px; }
-        .header-logo { height: 50px; }
-        .header-text .m-name { display: block; font-size: 1.2rem; font-weight: 900; color: var(--p-blue); letter-spacing: 1px; }
+        .header-logo { height: 45px; width: auto; }
+        .header-text .m-name { display: block; font-size: 1.1rem; font-weight: 900; color: var(--p-blue); letter-spacing: 1px; }
         
         /* ULTRA-PREMIUM CINEMATIC HERO */
         .hero {
-            height: 90vh;
+            min-height: 90vh;
             background: linear-gradient(rgba(0, 77, 38, 0.75), rgba(0, 51, 102, 0.65)), url('leaders_images/campus.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-attachment: fixed; /* Parallax effect */
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
+            padding: 40px 20px;
         }
 
         .hero-branding-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn 1.5s ease-out;
+            width: 100%;
+            max-width: 1000px;
         }
 
         .hero-logo-large {
-            height: 160px;
+            height: clamp(100px, 15vh, 160px);
             margin-bottom: 25px;
             filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.4));
         }
@@ -66,53 +76,65 @@
         .p-name-main {
             display: block;
             font-family: 'Cinzel', serif;
-            font-size: 4rem;
+            font-size: clamp(1.8rem, 8vw, 4rem);
             font-weight: 900;
-            letter-spacing: 15px;
+            letter-spacing: clamp(5px, 2vw, 15px);
             color: var(--white);
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            line-height: 1;
+            line-height: 1.2;
         }
 
         .p-name-sub {
             display: block;
-            font-size: 1.1rem;
+            font-size: clamp(0.7rem, 2vw, 1.1rem);
             font-weight: 700;
-            letter-spacing: 8px;
+            letter-spacing: clamp(3px, 1.5vw, 8px);
             color: var(--p-gold);
             margin-top: 15px;
             text-transform: uppercase;
         }
 
         .hero-gold-line {
-            width: 200px;
+            width: clamp(100px, 30%, 200px);
             height: 3px;
             background: linear-gradient(to right, transparent, var(--p-gold), transparent);
-            margin: 30px 0;
+            margin: clamp(15px, 4vh, 30px) 0;
         }
 
-        .hero-title p { font-size: 1.2rem; color: #eee; letter-spacing: 4px; text-transform: uppercase; margin: 0; }
-        .hero-title h2 { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--p-gold); margin: 10px 0 0; }
+        .hero-title p { font-size: clamp(0.9rem, 2.5vw, 1.2rem); color: #eee; letter-spacing: 3px; text-transform: uppercase; margin: 0; }
+        .hero-title h2 { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 4vw, 2.5rem); color: var(--p-gold); margin: 10px 0 0; }
 
         /* FOUNDER SECTION */
-        .section { padding: 100px 10%; }
-        .founder-sec { background: var(--p-green); color: white; display: flex; align-items: center; gap: 60px; }
-        .founder-img-box { flex: 1; }
+        .section { padding: clamp(40px, 8vh, 100px) 10%; }
+        .founder-sec { 
+            background: var(--p-green); 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            gap: 60px; 
+        }
+        .founder-img-box { flex: 1; min-width: 300px; }
         .founder-img-box img { 
             width: 100%; 
+            height: auto;
             border-radius: 20px; 
             border: 3px solid var(--p-gold); 
-            box-shadow: 25px 25px 0 rgba(197, 160, 89, 0.1); 
+            box-shadow: 20px 20px 0 rgba(197, 160, 89, 0.1); 
         }
         .founder-text { flex: 1.5; }
-        .founder-text h3 { font-family: 'Cinzel', serif; font-size: 2.8rem; color: var(--p-gold); margin-bottom: 20px; }
-        .founder-text p { font-size: 1.15rem; line-height: 1.9; opacity: 0.95; }
+        .founder-text h3 { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--p-gold); margin-bottom: 20px; }
+        .founder-text p { font-size: 1.1rem; line-height: 1.8; opacity: 0.95; }
 
         /* ECOSYSTEM TOOLS */
-        .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; margin-top: 50px; }
+        .tool-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 25px; 
+            margin-top: 50px; 
+        }
         .tool-card {
             background: white;
-            padding: 50px 30px;
+            padding: 40px 25px;
             border-radius: 25px;
             text-align: center;
             text-decoration: none;
@@ -120,29 +142,36 @@
             border: 1px solid #eee;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .tool-card:hover { transform: translateY(-15px); background: var(--p-green); border-color: var(--p-gold); }
+        .tool-card:hover { transform: translateY(-12px); background: var(--p-green); border-color: var(--p-gold); }
         .tool-card:hover h4, .tool-card:hover p { color: white; }
-        .tool-card i { font-size: 3.5rem; color: var(--p-gold); margin-bottom: 25px; }
-        .tool-card h4 { margin: 0; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .tool-card p { margin-top: 10px; color: #666; transition: 0.3s; }
+        .tool-card i { font-size: 3rem; color: var(--p-gold); margin-bottom: 20px; }
+        .tool-card h4 { margin: 0; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .tool-card p { margin-top: 10px; color: #666; transition: 0.3s; font-size: 0.9rem; }
 
         /* ELITE FOOTER */
         .elite-footer {
             background: #001a0d;
-            padding: 100px 10% 50px;
+            padding: 80px 10% 40px;
             color: white;
             border-top: 8px solid var(--p-gold);
         }
-        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px; }
-        .footer-links h5 { font-family: 'Cinzel', serif; color: var(--p-gold); font-size: 1.4rem; margin-bottom: 30px; letter-spacing: 2px; }
-        .footer-links p { opacity: 0.8; line-height: 2; font-size: 0.95rem; }
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 50px; 
+        }
+        .footer-links h5 { font-family: 'Cinzel', serif; color: var(--p-gold); font-size: 1.3rem; margin-bottom: 25px; letter-spacing: 2px; }
+        .footer-links p { opacity: 0.8; line-height: 1.8; font-size: 0.9rem; }
         
         /* SOCIAL ICONS */
-        .connect-us { margin-top: 35px; display: flex; gap: 18px; flex-wrap: wrap; }
+        .connect-us { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
         .social-tool {
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(255,255,255,0.05);
             display: flex;
@@ -150,46 +179,59 @@
             justify-content: center;
             color: white;
             text-decoration: none;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             transition: 0.4s;
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
         .social-tool:hover { 
-            transform: translateY(-10px) rotate(360deg); 
+            transform: translateY(-8px) rotate(360deg); 
             background: var(--p-gold); 
             color: var(--p-blue); 
-            box-shadow: 0 0 25px var(--p-gold); 
+            box-shadow: 0 0 20px var(--p-gold); 
         }
 
         .footer-bottom {
             text-align: center;
-            margin-top: 80px;
+            margin-top: 60px;
             padding-top: 30px;
             border-top: 1px solid rgba(255,215,0,0.1);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             opacity: 0.6;
+            text-transform: uppercase;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* MOBILE OPTIMIZATION */
+        /* TABLET & MOBILE FIXES */
         @media (max-width: 992px) {
-            .hero { height: 70vh; }
-            .p-name-main { font-size: 2.2rem; letter-spacing: 6px; }
-            .p-name-sub { font-size: 0.7rem; letter-spacing: 4px; }
-            .hero-logo-large { height: 110px; }
-            .founder-sec, .footer-grid { flex-direction: column; text-align: center; }
-            .connect-us { justify-content: center; }
+            header { padding: 15px 5%; }
+            .hero { background-attachment: scroll; } /* Better performance on mobile */
+            .founder-sec { flex-direction: column; text-align: center; gap: 40px; }
+            .founder-img-box { width: 80%; max-width: 400px; }
             .section { padding: 60px 5%; }
+            .footer-grid { text-align: center; }
+            .connect-us { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .header-text .m-name { font-size: 0.9rem; }
+            .hero { min-height: 80vh; }
+            .tool-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <header>
+        <div class="header-brand">
+            <img src="logo.png" alt="Logo" class="header-logo">
+            <div class="header-text">
+                <span class="m-name">PARAMOUNT E/M SCHOOL</span>
+            </div>
+        </div>
         <nav>
-            <a href="index.html" style="text-decoration: none; color: var(--p-blue); font-weight: 900;"><i class="fas fa-home"></i> HOME</a>
+            <a href="index.html" style="text-decoration: none; color: var(--p-blue); font-weight: 900; font-size: 0.9rem;"><i class="fas fa-home"></i> HOME</a>
         </nav>
     </header>
 
@@ -214,36 +256,36 @@
         </div>
         <div class="founder-text">
             <h3>The Founder's Vision</h3>
-            <p>Under the visionary leadership of 'Mr. Shaik Ahmad', Paramount English Medium School has emerged as a beacon of academic brilliance in Warangal. Since 2019, our commitment remains unshakable: providing a safe, tech-enabled, and ethically grounded environment where your child is not just a student, but a future leader.</p>
+            <p>Under the visionary leadership of **Mr. Shaik Ahmad**, Paramount English Medium School has emerged as a beacon of academic brilliance in Warangal. Since 2019, our commitment remains unshakable: providing a safe, tech-enabled, and ethically grounded environment where your child is not just a student, but a future leader.</p>
             <p>“We don't just teach, we inspire.” — Shaik Ahmad.</p>
         </div>
     </section>
 
     <section class="section" style="background: #fff;">
-        <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="color: var(--p-blue); font-family: 'Cinzel', serif; font-size: 2.8rem;">Our Specialized Wings</h2>
-            <p style="color: #666; letter-spacing: 2px;">THE PARAMOUNT EDUCATIONAL ECOSYSTEM</p>
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h2 style="color: var(--p-blue); font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 5vw, 2.8rem);">Our Specialized Wings</h2>
+            <p style="color: #666; letter-spacing: 2px; font-size: 0.85rem;">THE PARAMOUNT EDUCATIONAL ECOSYSTEM</p>
         </div>
         <div class="tool-grid">
             <a href="#" class="tool-card">
                 <i class="fas fa-university"></i>
                 <h4>Main Academy</h4>
-                <p>Excellence in Schooling</p>
+                <p>Nursery to High School excellence.</p>
             </a>
             <a href="#" class="tool-card">
                 <i class="fas fa-microchip"></i>
                 <h4>Polycet Center</h4>
-                <p>Technical Entrance Experts</p>
+                <p>Technical entrance examination coaching.</p>
             </a>
             <a href="#" class="tool-card">
                 <i class="fas fa-shield-alt"></i>
                 <h4>SI & PC Academy</h4>
-                <p>Building Future Officers</p>
+                <p>Training the law enforcement of tomorrow.</p>
             </a>
             <a href="#" class="tool-card">
                 <i class="fas fa-hockey-puck"></i>
                 <h4>Hockey Academy</h4>
-                <p>National Level Sports Training</p>
+                <p>Professional national level sports training.</p>
             </a>
         </div>
     </section>
@@ -255,8 +297,8 @@
                 <p>Stay updated with the latest campus news and academic achievements through our official channels.</p>
                 <div class="connect-us">
                     <a href="#" class="social-tool" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/paramount.07" class="social-tool" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/919652188807" class="social-tool" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://instagram.com/paramount.07" target="_blank" class="social-tool" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/919652188807" target="_blank" class="social-tool" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     <a href="tel:+919652188807" class="social-tool" title="Call Us"><i class="fas fa-phone-alt"></i></a>
                     <a href="mailto:paramount0707@gmail.com" class="social-tool" title="Email Us"><i class="fas fa-envelope"></i></a>
                 </div>
@@ -267,9 +309,9 @@
             </div>
             <div class="footer-links">
                 <h5>Quick Access</h5>
-                <p><a href="Student Portal.html" style="color: var(--p-gold); text-decoration: none;">Student Portal</a></p>
-                <p><a href="admissions.html" style="color: var(--p-gold); text-decoration: none;">2026 Admissions</a></p>
-                <p><a href="index.html" style="color: var(--p-gold); text-decoration: none;">Home Portal</a></p>
+                <p><a href="Student Portal.html" style="color: var(--p-gold); text-decoration: none;">Student Portal Login</a></p>
+                <p><a href="admissions.html" style="color: var(--p-gold); text-decoration: none;">2026-27 Admissions</a></p>
+                <p><a href="index.html" style="color: var(--p-gold); text-decoration: none;">Return to Home</a></p>
             </div>
         </div>
         <div class="footer-bottom">
