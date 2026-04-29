@@ -391,45 +391,51 @@ async function searchStudent() {
         } catch (e) { console.error("Attendance Error:", e); }
 
         // 3. FINANCE LOGIC (With Safety Checks)
-      // 3. FINANCE LOGIC (Fixed for Summation and Percentage Math)
+     // 3. UPDATED FINANCE LOGIC (Handles Discount % and Net Payable)
         try {
             const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
             let totalPaid = 0;
             let totalBaseFee = 0;
-            let totalDiscountPct = 0;
+            let discountPercentage = 0;
 
             if(feeSnap.exists()){
                 feeSnap.forEach(c => { 
                     const d = c.val(); 
+                    // Accumulate all payments made
                     totalPaid += parseFloat(d.paid || 0); 
-                    totalBaseFee += parseFloat(d.total || 0); 
-                    // We assume the discount is a percentage (like 15)
-                    totalDiscountPct = parseFloat(d.discount || 0); 
+                    // Get the base fee (e.g., 30000)
+                    totalBaseFee = parseFloat(d.total || 0); 
+                    // Get the discount percentage (e.g., 15)
+                    discountPercentage = parseFloat(d.discount || 0); 
                 });
             }
 
-            // Calculation: Base Fee - (Base Fee * Percentage / 100)
-            const discountAmount = (totalBaseFee * (totalDiscountPct / 100));
-            const finalPayable = totalBaseFee - discountAmount;
+            // MATH LOGIC:
+            // 1. Calculate the discount amount: (30000 * 15 / 100) = 4500
+            const discountAmount = (totalBaseFee * (discountPercentage / 100));
             
-            const balanceDue = finalPayable - totalPaid;
-            const pct = finalPayable > 0 ? Math.round((totalPaid / finalPayable) * 100) : 0;
+            // 2. Calculate Net Payable: 30000 - 4500 = 25500
+            const netPayable = totalBaseFee - discountAmount;
+            
+            // 3. Calculate Balance Due: 25500 - 5000 = 20500
+            const balanceDue = netPayable - totalPaid;
+            
+            // 4. Calculate Percentage for the circular bar
+            const paymentPct = netPayable > 0 ? Math.round((totalPaid / netPayable) * 100) : 0;
 
-            // Debugging: If numbers are still wrong, check your browser console (F12)
-            console.log("Base:", totalBaseFee, "Discount %:", totalDiscountPct, "Payable:", finalPayable);
-
-            // Update UI with formatted numbers
-            document.getElementById('vTotalFee').innerText = "₹ " + Math.round(finalPayable).toLocaleString(); 
+            // UPDATE THE UI LABELS
+            document.getElementById('vTotalFee').innerText = "₹ " + Math.round(netPayable).toLocaleString(); 
             document.getElementById('vPaidFee').innerText = "₹ " + Math.round(totalPaid).toLocaleString();
             document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? Math.round(balanceDue).toLocaleString() : 0);
             
-            document.getElementById('feePercentLabel').innerText = pct + "%";
+            document.getElementById('feePercentLabel').innerText = paymentPct + "%";
             
-            // Update Progress Circle
-            const offset = 314.15 - (314.15 * (pct > 100 ? 100 : pct) / 100);
+            // Update Circle Progress Bar
+            const offset = 314.15 - (314.15 * (paymentPct > 100 ? 100 : paymentPct) / 100);
             document.getElementById('feeCircle').style.strokeDashoffset = offset;
             
             document.getElementById('feeSection').style.display = 'block';
+            
         } catch (e) { 
             console.error("Finance Calculation Error:", e); 
         }
