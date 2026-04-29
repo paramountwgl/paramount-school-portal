@@ -391,50 +391,60 @@ async function searchStudent() {
         } catch (e) { console.error("Attendance Error:", e); }
 
         // 3. FINANCE LOGIC (With Safety Checks)
-     // 3. FORCE MATH FINANCE LOGIC (With Diagnostic Alert)
+    // 3. UPDATED FINANCE LOGIC (Percentage Calculation)
         try {
-            const feePath = `fee_records/${student.Class}/${student.Name}`;
-            const feeSnap = await db.ref(feePath).once('value');
-            
+            const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
             let totalPaid = 0;
-            let baseFee = 0;
-            let discPercent = 0;
+            let totalBaseFee = 0;
+            let discountApplied = 0;
 
             if(feeSnap.exists()){
                 feeSnap.forEach(child => { 
                     const data = child.val(); 
-                    totalPaid += parseFloat(data.paid || 0); 
-                    // We take the highest base fee and discount entered
-                    if(parseFloat(data.total) > baseFee) baseFee = parseFloat(data.total);
-                    if(parseFloat(data.discount) > discPercent) discPercent = parseFloat(data.discount);
+                    
+                    // 1. Sum up all payments made across different months
+                    totalPaid += parseFloat(data.paid || 0);
+                    
+                    // 2. Identify the Base Fee and the Discount %
+                    // We check both 'discount' and 'discountPct' for safety
+                    const recordTotal = data.total || 0;
+                    const recordDisc = data.discount || data.discountPct || 0;
+
+                    // We use the highest values found in the history
+                    if(parseFloat(recordTotal) > totalBaseFee) totalBaseFee = parseFloat(recordTotal);
+                    if(parseFloat(recordDisc) > discountApplied) discountApplied = parseFloat(recordDisc);
                 });
 
-                // --- THE CALCULATION ---
-                const discountAmount = (baseFee * (discPercent / 100));
-                const netPayable = baseFee - discountAmount;
+                // --- THE PREMIUM MATH ---
+                // Calculate the 15% reduction: (30000 * 15 / 100) = 4500
+                const discountAmount = (totalBaseFee * (discountApplied / 100));
+                
+                // Final Price parent sees: 30000 - 4500 = 25500
+                const netPayable = totalBaseFee - discountAmount;
+                
+                // Balance: 25500 - 5000 = 20500
                 const balanceDue = netPayable - totalPaid;
+                
+                // Progress: 5000 is what % of 25500?
                 const paymentPct = netPayable > 0 ? Math.round((totalPaid / netPayable) * 100) : 0;
 
-                // DIAGNOSTIC ALERT: (Remove this line once it works)
-                console.log(`System Check: Base ${baseFee} | Disc ${discPercent}% | Net ${netPayable}`);
-
-                // --- UPDATE THE UI ---
+                // --- UPDATE THE UI LABELS ---
+                // We use Math.round to keep the numbers clean for parents
                 document.getElementById('vTotalFee').innerText = "₹ " + Math.round(netPayable).toLocaleString(); 
                 document.getElementById('vPaidFee').innerText = "₹ " + Math.round(totalPaid).toLocaleString();
                 document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? Math.round(balanceDue).toLocaleString() : "0");
                 
                 document.getElementById('feePercentLabel').innerText = paymentPct + "%";
                 
+                // Update the Progress Circle (314.15 is the circumference)
                 const offset = 314.15 - (314.15 * (paymentPct > 100 ? 100 : paymentPct) / 100);
                 document.getElementById('feeCircle').style.strokeDashoffset = offset;
                 
                 document.getElementById('feeSection').style.display = 'block';
-            } else {
-                console.log("No fee records found at: " + feePath);
             }
             
         } catch (error) { 
-            console.error("Critical Finance Error:", error); 
+            console.error("Student Portal Finance Error:", error); 
         }
         
         // 4. UI REVEAL
