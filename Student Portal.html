@@ -353,94 +353,76 @@ async function searchStudent() {
     const student = studentData[rollNo];
     
     if (student) {
-        // Basic Info Update
-        document.getElementById('studentName').innerText = student.Name;
-        document.getElementById('studentClass').innerText = student.Class;
-        document.getElementById('RollNumber').innerText = student.Roll;
-        document.getElementById('admissionNo').innerText = student.Adm;
-        document.getElementById('fatherName').innerText = student.Father;
-        document.getElementById('phoneNumber').innerText = student.Phone;
+        // Reset the UI first so old data doesn't stay
+        document.getElementById('feeSection').style.display = 'none';
+
+        // 1. Basic Info Update
+        document.getElementById('studentName').innerText = student.Name || "N/A";
+        document.getElementById('studentClass').innerText = student.Class || "N/A";
+        document.getElementById('RollNumber').innerText = student.Roll || "N/A";
+        document.getElementById('admissionNo').innerText = student.Adm || "N/A";
+        document.getElementById('fatherName').innerText = student.Father || "N/A";
+        document.getElementById('phoneNumber').innerText = student.Phone || "N/A";
+        
+        // Safety for Photo - checks if folder path is correct
         document.getElementById('studentPhoto').src = `students/${student.Roll}.png`;
 
-        // FIXED ATTENDANCE LOGIC
-        const targetClass = student.Class; // Use full class name to match Teacher Portal
-        const attSnap = await db.ref('daily_attendance').once('value');
-        let totalP = 0, totalT = 0;
+        // 2. ATTENDANCE LOGIC (With Safety)
+        try {
+            const targetClass = student.Class;
+            const attSnap = await db.ref('daily_attendance').once('value');
+            let totalP = 0, totalT = 0;
 
-        if(attSnap.exists()){
-            const allData = attSnap.val();
-            // Loop through dates
-            Object.keys(allData).forEach(date => {
-                // Look for Class -> records -> Student Name
-                if(allData[date][targetClass] && allData[date][targetClass].records) {
-                    const classRecords = allData[date][targetClass].records;
-                    if(classRecords[student.Name] !== undefined) {
-                        totalT++; 
-                        if(classRecords[student.Name] === true) totalP++;
+            if(attSnap.exists()){
+                const allData = attSnap.val();
+                Object.keys(allData).forEach(date => {
+                    if(allData[date][targetClass] && allData[date][targetClass].records) {
+                        const classRecords = allData[date][targetClass].records;
+                        if(classRecords[student.Name] !== undefined) {
+                            totalT++; 
+                            if(classRecords[student.Name] === true) totalP++;
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
+            const rate = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
+            document.getElementById('attendanceRate').innerText = `${rate}% (${totalP}/${totalT})`;
+            document.getElementById('lowAttAlert').style.display = (rate < 40 && totalT > 0) ? 'block' : 'none';
+        } catch (e) { console.error("Attendance Error:", e); }
+
+        // 3. FINANCE LOGIC (With Safety Checks)
+        try {
+            const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
+            let tPaid = 0, tFee = 0, tDiscount = 0;
+
+            if(feeSnap.exists()){
+                feeSnap.forEach(c => { 
+                    const d = c.val(); 
+                    tPaid += parseFloat(d.paid || 0); 
+                    tFee += parseFloat(d.total || 0); // Added += to sum multiple records
+                    tDiscount += parseFloat(d.discount || 0); 
+                });
+            }
+
+            const finalPayable = tFee - tDiscount;
+            const balanceDue = finalPayable - tPaid;
+            const pct = finalPayable > 0 ? Math.round((tPaid / finalPayable) * 100) : 0;
+
+            document.getElementById('vTotalFee').innerText = "₹ " + finalPayable;
+            document.getElementById('vPaidFee').innerText = "₹ " + tPaid;
+            document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? balanceDue : 0);
+            document.getElementById('feePercentLabel').innerText = pct + "%";
+            document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * (pct > 100 ? 100 : pct) / 100);
+            
+            document.getElementById('feeSection').style.display = 'block';
+        } catch (e) { console.error("Finance Error:", e); }
         
-        const rate = totalT > 0 ? Math.round((totalP/totalT)*100) : 0;
-        document.getElementById('attendanceRate').innerText = `${rate}% (${totalP}/${totalT})`;
-        document.getElementById('lowAttAlert').style.display = (rate < 40 && totalT > 0) ? 'block' : 'none';
-
-       // UPDATED FINANCE LOGIC (Subtracting Discounts)
-        const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
-        let tPaid = 0, tFee = 0, tDiscount = 0;
-
-        if(feeSnap.exists()){
-            feeSnap.forEach(c => { 
-                const d = c.val(); 
-                tPaid += parseFloat(d.paid || 0); 
-                tFee = parseFloat(d.total || 0); 
-                tDiscount += parseFloat(d.discount || 0); // Fetch discount
-            });
-        }
-
-       // UPDATED FINANCE LOGIC (Strict Discount Subtraction)
-        const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
-        let totalPaid = 0;
-        let baseFee = 0;
-        let totalDiscount = 0;
-
-        if(feeSnap.exists()){
-            feeSnap.forEach(child => { 
-                const d = child.val(); 
-                totalPaid += parseFloat(d.paid || 0); 
-                baseFee += parseFloat(d.total || 0); 
-                totalDiscount += parseFloat(d.discount || 0); 
-            });
-        }
-
-        // Calculate the Final Amount the parent actually owes
-        const finalPayable = baseFee - totalDiscount;
-        const currentBalance = finalPayable - totalPaid;
-        
-        // Calculate percentage based on the discounted total
-        const paymentPercentage = finalPayable > 0 ? Math.round((totalPaid / finalPayable) * 100) : 0;
-
-        // Debugging: View this in your browser console (F12) to see if data is flowing
-        console.log(`Base: ${baseFee}, Discount: ${totalDiscount}, Net: ${finalPayable}`);
-
-        // Update the UI
-        document.getElementById('vTotalFee').innerText = "₹ " + finalPayable; // Shows Net Amount
-        document.getElementById('vPaidFee').innerText = "₹ " + totalPaid;
-        document.getElementById('vDueFee').innerText = "₹ " + (currentBalance > 0 ? currentBalance : 0);
-        document.getElementById('feePercentLabel').innerText = paymentPercentage + "%";
-        
-        // Animate the Circle
-        const offset = 314.15 - (314.15 * (paymentPercentage > 100 ? 100 : paymentPercentage) / 100);
-        document.getElementById('feeCircle').style.strokeDashoffset = offset;
-        // UI REVEAL
-        document.getElementById('feeSection').style.display = 'block';
+        // 4. UI REVEAL
         document.getElementById('pdfBtnSection').style.display = 'flex';
         document.getElementById('statusBadge').innerText = "PROFILE ACTIVE";
-        document.getElementById('statusBadge').style.background = "#e8f5e9";
-        document.getElementById('statusBadge').style.color = "#006633";
+        document.getElementById('statusBadge').style.cssText = "background: #e8f5e9; color: #006633;";
     } else {
-        Swal.fire('Error', 'Roll Number not found.', 'error');
+        Swal.fire('Not Found', 'Please check the Roll Number.', 'error');
     }
 }
 
