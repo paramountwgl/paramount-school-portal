@@ -386,20 +386,28 @@ async function searchStudent() {
         document.getElementById('attendanceRate').innerText = `${rate}% (${totalP}/${totalT})`;
         document.getElementById('lowAttAlert').style.display = (rate < 40 && totalT > 0) ? 'block' : 'none';
 
-        // FINANCE LOGIC
+       // UPDATED FINANCE LOGIC (Subtracting Discounts)
         const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
-        let tPaid = 0, tFee = 0;
+        let tPaid = 0, tFee = 0, tDiscount = 0;
+
         if(feeSnap.exists()){
             feeSnap.forEach(c => { 
                 const d = c.val(); 
                 tPaid += parseFloat(d.paid || 0); 
                 tFee = parseFloat(d.total || 0); 
+                tDiscount += parseFloat(d.discount || 0); // Fetch discount
             });
         }
-        const pct = tFee > 0 ? Math.round((tPaid/tFee)*100) : 0;
-        document.getElementById('vTotalFee').innerText = "₹ " + tFee;
+
+        // Final Payable is Total Fee minus Discount
+        const finalPayable = tFee - tDiscount;
+        const balanceDue = finalPayable - tPaid;
+        const pct = finalPayable > 0 ? Math.round((tPaid / finalPayable) * 100) : 0;
+
+        // Update UI with Discounted Amount
+        document.getElementById('vTotalFee').innerText = "₹ " + finalPayable; // Shows amount after discount
         document.getElementById('vPaidFee').innerText = "₹ " + tPaid;
-        document.getElementById('vDueFee').innerText = "₹ " + (tFee - tPaid);
+        document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? balanceDue : 0);
         document.getElementById('feePercentLabel').innerText = pct + "%";
         document.getElementById('feeCircle').style.strokeDashoffset = 314.15 - (314.15 * pct / 100);
         
