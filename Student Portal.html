@@ -391,53 +391,50 @@ async function searchStudent() {
         } catch (e) { console.error("Attendance Error:", e); }
 
         // 3. FINANCE LOGIC (With Safety Checks)
-     // 3. UPDATED FINANCE LOGIC (Handles Discount % and Net Payable)
+     // 3. FORCE MATH FINANCE LOGIC (With Diagnostic Alert)
         try {
-            const feeSnap = await db.ref(`fee_records/${student.Class}/${student.Name}`).once('value');
+            const feePath = `fee_records/${student.Class}/${student.Name}`;
+            const feeSnap = await db.ref(feePath).once('value');
+            
             let totalPaid = 0;
-            let totalBaseFee = 0;
-            let discountPercentage = 0;
+            let baseFee = 0;
+            let discPercent = 0;
 
             if(feeSnap.exists()){
-                feeSnap.forEach(c => { 
-                    const d = c.val(); 
-                    // Accumulate all payments made
-                    totalPaid += parseFloat(d.paid || 0); 
-                    // Get the base fee (e.g., 30000)
-                    totalBaseFee = parseFloat(d.total || 0); 
-                    // Get the discount percentage (e.g., 15)
-                    discountPercentage = parseFloat(d.discount || 0); 
+                feeSnap.forEach(child => { 
+                    const data = child.val(); 
+                    totalPaid += parseFloat(data.paid || 0); 
+                    // We take the highest base fee and discount entered
+                    if(parseFloat(data.total) > baseFee) baseFee = parseFloat(data.total);
+                    if(parseFloat(data.discount) > discPercent) discPercent = parseFloat(data.discount);
                 });
+
+                // --- THE CALCULATION ---
+                const discountAmount = (baseFee * (discPercent / 100));
+                const netPayable = baseFee - discountAmount;
+                const balanceDue = netPayable - totalPaid;
+                const paymentPct = netPayable > 0 ? Math.round((totalPaid / netPayable) * 100) : 0;
+
+                // DIAGNOSTIC ALERT: (Remove this line once it works)
+                console.log(`System Check: Base ${baseFee} | Disc ${discPercent}% | Net ${netPayable}`);
+
+                // --- UPDATE THE UI ---
+                document.getElementById('vTotalFee').innerText = "₹ " + Math.round(netPayable).toLocaleString(); 
+                document.getElementById('vPaidFee').innerText = "₹ " + Math.round(totalPaid).toLocaleString();
+                document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? Math.round(balanceDue).toLocaleString() : "0");
+                
+                document.getElementById('feePercentLabel').innerText = paymentPct + "%";
+                
+                const offset = 314.15 - (314.15 * (paymentPct > 100 ? 100 : paymentPct) / 100);
+                document.getElementById('feeCircle').style.strokeDashoffset = offset;
+                
+                document.getElementById('feeSection').style.display = 'block';
+            } else {
+                console.log("No fee records found at: " + feePath);
             }
-
-            // MATH LOGIC:
-            // 1. Calculate the discount amount: (30000 * 15 / 100) = 4500
-            const discountAmount = (totalBaseFee * (discountPercentage / 100));
             
-            // 2. Calculate Net Payable: 30000 - 4500 = 25500
-            const netPayable = totalBaseFee - discountAmount;
-            
-            // 3. Calculate Balance Due: 25500 - 5000 = 20500
-            const balanceDue = netPayable - totalPaid;
-            
-            // 4. Calculate Percentage for the circular bar
-            const paymentPct = netPayable > 0 ? Math.round((totalPaid / netPayable) * 100) : 0;
-
-            // UPDATE THE UI LABELS
-            document.getElementById('vTotalFee').innerText = "₹ " + Math.round(netPayable).toLocaleString(); 
-            document.getElementById('vPaidFee').innerText = "₹ " + Math.round(totalPaid).toLocaleString();
-            document.getElementById('vDueFee').innerText = "₹ " + (balanceDue > 0 ? Math.round(balanceDue).toLocaleString() : 0);
-            
-            document.getElementById('feePercentLabel').innerText = paymentPct + "%";
-            
-            // Update Circle Progress Bar
-            const offset = 314.15 - (314.15 * (paymentPct > 100 ? 100 : paymentPct) / 100);
-            document.getElementById('feeCircle').style.strokeDashoffset = offset;
-            
-            document.getElementById('feeSection').style.display = 'block';
-            
-        } catch (e) { 
-            console.error("Finance Calculation Error:", e); 
+        } catch (error) { 
+            console.error("Critical Finance Error:", error); 
         }
         
         // 4. UI REVEAL
