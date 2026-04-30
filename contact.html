@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Directory | Paramount School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; --sky: #2196f3; --dark: #121212; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
 
+        /* PREMIUM HEADER */
+        header { 
+            background: var(--forest); color: white; padding: 12px 4%; border-bottom: 4px solid var(--gold); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000;
+        }
+        .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-logo { height: 55px; width: auto; }
+        .school-branding { display: flex; flex-direction: column; line-height: 1.1; }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--gold); font-weight: 600; text-transform: uppercase; }
+        .divider-line { width: 2px; height: 35px; background-color: rgba(255,255,255,0.3); margin: 0 15px; }
+        .portal-label { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: white; }
+        .nav-tools { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        .live-clock { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--gold); font-size: 13px; }
+        .btn-home { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 5px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-home:hover { background: white; color: var(--forest); }
+
+        /* HERO AREA */
+        .hero-section { background: white; padding: 60px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 40px; }
+        .hero-section h1 { font-family: 'Montserrat'; color: var(--forest); font-size: 2.5rem; margin-bottom: 10px; }
+        .hero-section p { color: #666; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+        /* FACULTY GRID */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        
+        .faculty-card { 
+            background: white; border-radius: 20px; padding: 30px 20px; text-align: center; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
+        }
+        .faculty-card:hover { transform: translateY(-12px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,102,51,0.1); }
+        .faculty-card::after { content: 'FACULTY'; position: absolute; top: 15px; right: 15px; font-size: 8px; font-weight: 900; background: var(--gold); color: var(--forest); padding: 3px 8px; border-radius: 4px; }
+
+        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--forest); margin: 0 auto 20px; padding: 3px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .profile-img img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+        .faculty-card h3 { font-family: 'Montserrat'; font-size: 1.1rem; color: var(--forest); margin-bottom: 5px; }
+        .faculty-card .role { font-size: 0.7rem; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 20px; }
+
+        .social-row { display: flex; justify-content: center; gap: 12px; }
+        .social-btn { 
+            width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            background: #f8fafc; color: var(--forest); text-decoration: none; font-size: 1rem; 
+            border: 1px solid #e2e8f0; transition: 0.3s;
+        }
+        .social-btn:hover { background: var(--forest); color: white; transform: scale(1.15); border-color: var(--forest); }
+
+        /* PREMIUM FOOTER */
+        footer { background: var(--dark); color: white; padding: 70px 4% 30px; margin-top: 80px; border-top: 5px solid var(--gold); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; }
+        .footer-col h4 { font-family: 'Montserrat'; color: var(--gold); text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1.5px; }
+        .footer-col p { font-size: 0.95rem; opacity: 0.7; line-height: 1.8; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 12px; font-size: 0.9rem; opacity: 0.8; }
+        .footer-links i { color: var(--gold); margin-right: 10px; width: 15px; }
+        .copyright { text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; opacity: 0.5; }
+
+        @media (max-width: 768px) { .divider-line, .portal-label { display: none; } .hero-section h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" class="header-logo">
+            <div class="school-branding">
+                <span class="school-name-main">PARAMOUNT</span>
+                <span class="school-name-sub">ENGLISH MEDIUM SCHOOL</span>
+            </div>
+        </div>
+        <div class="divider-line"></div>
+        <div class="portal-label">Faculty Directory</div>
+        <div class="nav-tools">
+            <div id="liveClock" class="live-clock">00:00:00</div>
+            <button class="btn-home" onclick="window.location.href='index.html'">DASHBOARD</button>
+        </div>
+    </div>
+</header>
+
+<div class="hero-section">
+    <h1>Our Professional Faculty</h1>
+    <p>Meet the dedicated team of educators committed to excellence at Paramount Institutions. Our staff brings digital innovation and academic discipline to every classroom.</p>
+</div>
+
+<div class="container">
+    <div class="faculty-grid" id="facultyList">
+        <!-- Faculty cards will be generated here -->
+    </div>
+</div>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>About Paramount</h4>
+            <p>Paramount English Medium School, Warangal, India. A premier institution focused on premium digital infrastructure and educational growth.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Contact</h4>
+            <ul class="footer-links">
+                <li><i class="fas fa-map-marker-alt"></i> Warangal, Telangana, India</li>
+                <li><i class="fas fa-envelope"></i> admin@paramountwgl.com</li>
+                <li><i class="fas fa-clock"></i> Mon - Sat: 8:30 AM - 4:30 PM</li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Institutions</h4>
+            <ul class="footer-links">
+                <li><i class="fas fa-school"></i> Paramount English Medium School</li>
+                <li><i class="fas fa-user-graduate"></i> Paramount Polycet Coaching</li>
+                <li><i class="fas fa-hockey-puck"></i> Paramount Hockey Academy</li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        &copy; 2026 Paramount English Medium School. All Rights Reserved. Managed by Paramount Digital Development Team.
+    </div>
+</footer>
+
+<script>
+    // Full Faculty Data
+    const faculty = [
+        { name: "Mr. Shaik Ahmad", role: "Administrator & Proprietor" },
+        { name: "Ms. Riha", role: "IIT Coordinator" },
+        { name: "Ms. Raniya Zainab", role: "Physics Faculty" },
+        { name: "Ms. Roqiya Begum", role: "Digital Developer & Staff" },
+        { name: "Ms. G. Rajitha", role: "Faculty Member" },
+        { name: "Ms. Ameena Tabassum", role: "Faculty Member" },
+        { name: "Ms. Shaik Shabana", role: "Faculty Member" },
+        { name: "Ms. B. Ravali", role: "Faculty Member" },
+        { name: "Ms. L. Kalyani", role: "Faculty Member" },
+        { name: "Ms. J. Alaya Sree", role: "Faculty Member" },
+        { name: "Ms. S. Sujatha", role: "Faculty Member" },
+        { name: "Ms. J. Prathibha", role: "Faculty Member" },
+        { name: "Ms. P. Shailaja", role: "Faculty Member" },
+        { name: "Ms. A. Jhansi Rani", role: "Faculty Member" },
+        { name: "Ms. S. Neelima", role: "Faculty Member" }
+    ];
+
+    function renderFaculty() {
+        const grid = document.getElementById('facultyList');
+        grid.innerHTML = faculty.map(teacher => `
+            <div class="faculty-card">
+                <div class="profile-img">
+                    <img src="logo.png" alt="${teacher.name}">
+                </div>
+                <h3>${teacher.name}</h3>
+                <span class="role">${teacher.role}</span>
+                <div class="social-row">
+                    <a href="#" class="social-btn"><i class="fas fa-phone"></i></a>
+                    <a href="#" class="social-btn"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('liveClock').innerText = now.toLocaleTimeString().toUpperCase();
+    }
+
+    window.onload = () => {
+        renderFaculty();
+        updateClock();
+        setInterval(updateClock, 1000);
+    };
+</script>
+
+</body>
+</html>
