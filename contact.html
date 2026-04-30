@@ -6,10 +6,22 @@
     <title>Faculty Directory | Paramount School</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <link rel="icon" type="image/png" href="logo.png">
     <style>
         :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; --sky: #2196f3; --dark: #121212; }
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
+        .subject-tag {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--forest);
+        background: #e8f5e9;
+        padding: 4px 12px;
+        border-radius: 50px;
+        display: inline-block;
+        margin-bottom: 15px;
+        border: 1px solid #c8e6c9;
+    }
 
         /* PREMIUM HEADER */
         header { 
@@ -133,23 +145,143 @@
 </footer>
 
 <script>
-    // Full Faculty Data
+    // --- UPDATE THIS DATA SECTION FOR EACH FACULTY ---
     const faculty = [
-        { name: "Mr. Shaik Ahmad", role: "Administrator & Proprietor" },
-        { name: "Ms. Riha", role: "IIT Coordinator" },
-        { name: "Ms. Raniya Zainab", role: "Physics Faculty" },
-        { name: "Ms. Roqiya Begum", role: "Digital Developer & Staff" },
-        { name: "Ms. G. Rajitha", role: "Faculty Member" },
-        { name: "Ms. Ameena Tabassum", role: "Faculty Member" },
-        { name: "Ms. Shaik Shabana", role: "Faculty Member" },
-        { name: "Ms. B. Ravali", role: "Faculty Member" },
-        { name: "Ms. L. Kalyani", role: "Faculty Member" },
-        { name: "Ms. J. Alaya Sree", role: "Faculty Member" },
-        { name: "Ms. S. Sujatha", role: "Faculty Member" },
-        { name: "Ms. J. Prathibha", role: "Faculty Member" },
-        { name: "Ms. P. Shailaja", role: "Faculty Member" },
-        { name: "Ms. A. Jhansi Rani", role: "Faculty Member" },
-        { name: "Ms. S. Neelima", role: "Faculty Member" }
+        { 
+            name: "Mr. Shaik Ahmad", 
+            role: "Correspondent Sir ", 
+            subject: "-",
+            phone: "#", 
+            email: "#", 
+            whatsapp: "#",
+            image: "faculty_ahmad.png" // Replace with actual image path
+        },
+        { 
+            name: "Ms. Roqiya Begum", 
+            role: "Digital Developer", 
+            subject: "Computer Science",
+            phone: "+910000000000", 
+            email: "roqiya@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png"
+        },
+        { 
+           name: "Ms. Raniya Zainab", 
+            role: "Physics Faculty", 
+            subject: "Physical Sciences",
+            phone: "+910000000000", 
+            email: "raniya@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png"  
+        },
+        { 
+            name: "Ms. Riha", 
+            role: "IIT Coordinator", 
+            subject: "Mathematics / IIT",
+            phone: "+910000000000", 
+            email: "riha@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. G. Rajitha", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "rajitha@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. Ameena Tabassum", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "ameena@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. Shaik Shabana", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "shabana@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. B. Ravali", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "ravali@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. L. Kalyani", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "kalyani@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. J. Alaya Sree", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "alaya@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. S. Sujatha", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "sujatha@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. J. Prathibha", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "prathibha@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. P. Shailaja", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "shailaja@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. A. Jhansi Rani", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "jhansi@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        },
+        { 
+            name: "Ms. S. Neelima", 
+            role: "Faculty Member", 
+            subject: "General Studies",
+            phone: "+910000000000", 
+            email: "neelima@paramountwgl.com", 
+            whatsapp: "910000000000",
+            image: "logo.png" 
+        }
     ];
 
     function renderFaculty() {
@@ -157,14 +289,24 @@
         grid.innerHTML = faculty.map(teacher => `
             <div class="faculty-card">
                 <div class="profile-img">
-                    <img src="logo.png" alt="${teacher.name}">
+                    <img src="${teacher.image}" alt="${teacher.name}">
                 </div>
                 <h3>${teacher.name}</h3>
                 <span class="role">${teacher.role}</span>
+                <span class="subject-tag">${teacher.subject}</span>
                 <div class="social-row">
-                    <a href="#" class="social-btn"><i class="fas fa-phone"></i></a>
-                    <a href="#" class="social-btn"><i class="fas fa-envelope"></i></a>
-                    <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+                    <!-- Clickable Phone Link -->
+                    <a href="tel:${teacher.phone}" class="social-btn" title="Call">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <!-- Clickable Email Link -->
+                    <a href="mailto:${teacher.email}" class="social-btn" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <!-- Clickable WhatsApp Link (Direct Chat) -->
+                    <a href="https://wa.me/${teacher.whatsapp}" target="_blank" class="social-btn" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
                 </div>
             </div>
         `).join('');
