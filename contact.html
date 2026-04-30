@@ -2,156 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Faculty Directory | Paramount School</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/png" href="logo.png">
     <style>
-        :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; --sky: #2196f3; --dark: #121212; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
-        /* --- PREMIUM HIERARCHY REORG --- */
-.executive-section {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    gap: 30px;
-    margin: 40px auto 80px;
-    padding: 0 20px;
-}
+        :root { --forest: #006633; --gold: #ffd700; --light: #f4f7f6; --dark: #121212; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; overflow-x: hidden; }
 
-/* Tier 1: The Correspondent - The "Platinum" Card */
-.card-correspondent {
-    flex: 1;
-    max-width: 420px;
-    border: 1px solid var(--gold) !important;
-    background: linear-gradient(145deg, #ffffff, #fffdf0) !important;
-    box-shadow: 0 25px 50px rgba(184, 134, 11, 0.15) !important;
-    padding: 40px 30px !important;
-}
-
-.card-correspondent::after {
-    content: 'CEO & CORRESPONDENT' !important;
-    top: -12px !important;
-    left: 50% !important;
-    transform: translateX(-50%);
-    background: #1a1a1a !important;
-    color: var(--gold) !important;
-    padding: 6px 20px !important;
-    border: 1px solid var(--gold);
-    border-radius: 50px;
-    font-size: 11px !important;
-    letter-spacing: 1px;
-}
-
-/* Tier 2: The Principal - The "Elite" Card */
-.card-principal {
-    flex: 1;
-    max-width: 380px;
-    border-top: 6px solid var(--forest) !important;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
-    padding: 35px 25px !important;
-}
-
-.card-principal::after {
-    content: 'PRINCIPAL' !important;
-    top: -12px !important;
-    left: 50% !important;
-    transform: translateX(-50%);
-    background: var(--forest) !important;
-    color: white !important;
-    padding: 5px 18px !important;
-    border-radius: 50px;
-    font-size: 10px !important;
-}
-
-/* Image scaling fixes to prevent the "logo" look in the screenshot */
-.card-correspondent .profile-img { width: 150px; height: 150px; border-width: 5px; }
-.card-principal .profile-img { width: 130px; height: 130px; border-width: 4px; }
-
-        /* PREMIUM HEADER */
+        /* --- PREMIUM HEADER --- */
         header { 
             background: var(--forest); color: white; padding: 12px 4%; border-bottom: 4px solid var(--gold); 
             box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000;
         }
         .header-content { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; width: 100%; }
         .header-left { display: flex; align-items: center; gap: 12px; }
-        .header-logo { height: 55px; width: auto; }
+        .header-logo { height: 50px; width: auto; }
         .school-branding { display: flex; flex-direction: column; line-height: 1.1; }
-        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px; }
-        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: var(--gold); font-weight: 600; text-transform: uppercase; }
-        .divider-line { width: 2px; height: 35px; background-color: rgba(255,255,255,0.3); margin: 0 15px; }
-        .portal-label { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; color: white; }
-        .nav-tools { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-        .live-clock { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--gold); font-size: 13px; }
-        .btn-home { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 5px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        .btn-home:hover { background: white; color: var(--forest); }
+        .school-name-main { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 800; letter-spacing: 0.5px; }
+        .school-name-sub { font-family: 'Montserrat', sans-serif; font-size: 0.6rem; color: var(--gold); font-weight: 600; text-transform: uppercase; }
+        .divider-line { width: 2px; height: 30px; background-color: rgba(255,255,255,0.3); margin: 0 15px; }
+        .portal-label { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; text-transform: uppercase; color: white; }
+        .live-clock { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--gold); font-size: 12px; }
+        .btn-home { background: rgba(255,255,255,0.1); border: 1.5px solid white; color: white; padding: 6px 18px; border-radius: 50px; font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        /* HERO AREA */
-        .hero-section { background: white; padding: 60px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 40px; }
-        .hero-section h1 { font-family: 'Montserrat'; color: var(--forest); font-size: 2.5rem; margin-bottom: 10px; }
-        .hero-section p { color: #666; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+        /* --- MAIN LAYOUT --- */
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
+        .hero-section { background: white; padding: 40px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 40px; }
+        .hero-section h1 { font-family: 'Montserrat'; color: var(--forest); font-size: clamp(1.8rem, 5vw, 2.5rem); margin: 0 0 10px; }
+        .hero-section p { color: #666; font-size: 1rem; max-width: 700px; margin: 0 auto; }
 
-        /* HIERARCHY STYLING */
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-        .executive-section { display: flex; flex-direction: column; align-items: center; gap: 60px; margin-bottom: 80px; }
-        
-        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        
+        /* --- EXECUTIVE SECTION (RESPONSIVE) --- */
+        .executive-section { 
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; 
+            gap: 30px; margin-bottom: 80px; 
+        }
+
         .faculty-card { 
-            background: white; border-radius: 20px; padding: 30px 20px; text-align: center; 
+            background: white; border-radius: 20px; padding: 35px 20px; text-align: center; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; 
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
+            flex: 1; min-width: 300px;
         }
-        .faculty-card:hover { transform: translateY(-12px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,102,51,0.1); }
-        .faculty-card::after { content: 'FACULTY'; position: absolute; top: 15px; right: 15px; font-size: 8px; font-weight: 900; background: var(--gold); color: var(--forest); padding: 3px 8px; border-radius: 4px; }
 
-        /* Tier 1: Correspondent (CEO) */
-        .card-correspondent {
-            width: 100%; max-width: 450px; transform: scale(1.1);
-            border: 2px solid var(--gold) !important;
-            background: linear-gradient(145deg, #ffffff, #fdfbf0) !important;
-            box-shadow: 0 20px 50px rgba(184, 134, 11, 0.2) !important;
+        /* Correspondent Specific */
+        .card-correspondent { 
+            max-width: 440px; border: 1px solid var(--gold) !important; 
+            background: linear-gradient(145deg, #ffffff, #fffdf2) !important;
+            box-shadow: 0 25px 50px rgba(184, 134, 11, 0.15) !important;
         }
-        .card-correspondent:hover { transform: scale(1.12) translateY(-5px); }
-        .card-correspondent::after { content: 'CEO & CORRESPONDENT' !important; background: #000 !important; color: var(--gold) !important; padding: 5px 15px !important; font-size: 10px !important; }
-        .card-correspondent .profile-img { width: 140px; height: 140px; border-color: var(--gold); }
-        .card-correspondent h3 { font-size: 1.8rem; }
-
-        /* Tier 2: Principal */
-        .card-principal {
-            width: 100%; max-width: 380px;
-            border-top: 8px solid var(--forest) !important;
-            background: #ffffff !important;
-            box-shadow: 0 15px 35px rgba(0, 102, 51, 0.15) !important;
+        .card-correspondent::after { 
+            content: 'CEO & CORRESPONDENT'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: #1a1a1a; color: var(--gold); padding: 6px 20px; border: 1px solid var(--gold);
+            border-radius: 50px; font-size: 10px; font-weight: 800; letter-spacing: 1px; white-space: nowrap;
         }
-        .card-principal::after { content: 'HEAD OF SCHOOL' !important; background: var(--forest) !important; color: white !important; }
-        .card-principal .profile-img { width: 120px; height: 120px; }
 
-        .profile-img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--forest); margin: 0 auto 20px; padding: 3px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; }
+        /* Principal Specific */
+        .card-principal { 
+            max-width: 400px; border-top: 6px solid var(--forest) !important; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08) !important;
+        }
+        .card-principal::after { 
+            content: 'PRINCIPAL'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--forest); color: white; padding: 6px 20px;
+            border-radius: 50px; font-size: 10px; font-weight: 800; letter-spacing: 1px;
+        }
+
+        /* --- FACULTY GRID --- */
+        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .faculty-card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,102,51,0.1); }
+
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--forest); margin: 0 auto 20px; padding: 3px; background: white; overflow: hidden; }
         .profile-img img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .card-correspondent .profile-img { width: 140px; height: 140px; border-color: var(--gold); }
 
-        .faculty-card h3 { font-family: 'Montserrat'; font-size: 1.1rem; color: var(--forest); margin-bottom: 5px; }
-        .faculty-card .role { font-size: 0.7rem; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 20px; }
+        .faculty-card h3 { font-family: 'Montserrat'; font-size: 1.15rem; color: var(--forest); margin: 0 0 5px; }
+        .role { font-size: 0.75rem; font-weight: 800; color: #888; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px; }
+        .subject-tag { font-size: 0.7rem; font-weight: 700; color: var(--forest); background: #e8f5e9; padding: 5px 15px; border-radius: 50px; display: inline-block; margin-bottom: 20px; border: 1px solid #c8e6c9; }
 
-        .subject-tag { font-size: 0.75rem; font-weight: 700; color: var(--forest); background: #e8f5e9; padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 15px; border: 1px solid #c8e6c9; }
+        .social-row { display: flex; justify-content: center; gap: 15px; }
+        .social-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f8fafc; color: var(--forest); text-decoration: none; border: 1px solid #e2e8f0; transition: 0.3s; }
+        .social-btn:hover { background: var(--forest); color: white; transform: scale(1.1); }
 
-        .social-row { display: flex; justify-content: center; gap: 12px; }
-        .social-btn { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #f8fafc; color: var(--forest); text-decoration: none; font-size: 1rem; border: 1px solid #e2e8f0; transition: 0.3s; }
-        .social-btn:hover { background: var(--forest); color: white; transform: scale(1.15); border-color: var(--forest); }
-
-        /* PREMIUM FOOTER */
-        footer { background: var(--dark); color: white; padding: 70px 4% 30px; margin-top: 80px; border-top: 5px solid var(--gold); }
+        /* --- FOOTER --- */
+        footer { background: #1a1a1a; color: white; padding: 60px 4% 20px; margin-top: 80px; border-top: 5px solid var(--gold); }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1400px; margin: 0 auto; }
-        .footer-col h4 { font-family: 'Montserrat'; color: var(--gold); text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1.5px; }
-        .footer-col p { font-size: 0.95rem; opacity: 0.7; line-height: 1.8; }
-        .footer-links { list-style: none; padding: 0; }
-        .footer-links li { margin-bottom: 12px; font-size: 0.9rem; opacity: 0.8; }
-        .footer-links i { color: var(--gold); margin-right: 10px; width: 15px; }
-        .copyright { text-align: center; margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; opacity: 0.5; }
+        .footer-col h4 { color: var(--gold); font-family: 'Montserrat'; text-transform: uppercase; margin-bottom: 20px; font-size: 0.9rem; }
+        .footer-col p { opacity: 0.7; font-size: 0.9rem; line-height: 1.6; }
+        .copyright { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; opacity: 0.5; }
 
-        @media (max-width: 768px) { .divider-line, .portal-label { display: none; } .hero-section h1 { font-size: 1.8rem; } .card-correspondent { transform: scale(1); } .card-correspondent:hover { transform: scale(1.02); } }
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .divider-line, .portal-label { display: none; }
+            .executive-section { gap: 40px; }
+            .faculty-card { min-width: 100%; }
+            .hero-section { padding: 30px 15px; }
+        }
     </style>
 </head>
 <body>
@@ -166,58 +114,43 @@
             </div>
         </div>
         <div class="divider-line"></div>
-        <div class="portal-label">Faculty Directory</div>
+        <div class="portal-label">FACULTY</div>
         <div class="nav-tools">
             <div id="liveClock" class="live-clock">00:00:00</div>
-            <button class="btn-home" onclick="window.location.href='admin.html'">DASHBOARD</button>
+            <button class="btn-home" onclick="window.location.href='index.html'">HOME</button>
         </div>
     </div>
 </header>
 
 <div class="hero-section">
-    <h1>Our Professional Faculty</h1>
-    <p>Meet the dedicated team of educators committed to excellence at Paramount Institutions.</p>
+    <h1>Our Faculty</h1>
+    <p>Professional educators dedicated to academic excellence.</p>
 </div>
 
 <div class="container">
-    <!-- REORGANIZED LEADERSHIP ROW -->
+    <!-- Executive Leadership Tier -->
     <div class="executive-section">
-        <!-- Correspondent on the Left (or Center if only one) -->
         <div id="correspondentContainer"></div>
-        
-        <!-- Principal on the Right -->
         <div id="principalContainer"></div>
     </div>
 
     <!-- Academic Faculty Tier -->
-    <h2 style="text-align:center; font-family:'Montserrat'; color:var(--forest); margin-bottom:30px; text-transform:uppercase; letter-spacing:2px;">Academic Faculty</h2>
+    <h2 style="text-align:center; font-family:'Montserrat'; color:var(--forest); margin-bottom:30px; text-transform:uppercase; letter-spacing:2px; font-size: 1.2rem;">Academic Staff</h2>
     <div class="faculty-grid" id="facultyList"></div>
 </div>
 
 <footer>
     <div class="footer-grid">
         <div class="footer-col">
-            <h4>About Paramount</h4>
-            <p>Paramount English Medium School, Warangal, India. Leading the way in digital excellence.</p>
+            <h4>Paramount Institutions</h4>
+            <p>Providing premium education and digital innovation in Warangal, India.</p>
         </div>
         <div class="footer-col">
-            <h4>Quick Contact</h4>
-            <ul class="footer-links">
-                <li><i class="fas fa-map-marker-alt"></i> Warangal, Telangana, India</li>
-                <li><i class="fas fa-envelope"></i> admin@paramountwgl.com</li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4>Institutions</h4>
-            <ul class="footer-links">
-                <li><i class="fas fa-school"></i> Paramount English Medium School</li>
-                <li><i class="fas fa-hockey-puck"></i> Paramount Hockey Academy</li>
-            </ul>
+            <h4>Contact</h4>
+            <p>Email: admin@paramountwgl.com<br>Location: Warangal, India</p>
         </div>
     </div>
-    <div class="copyright">
-        &copy; 2026 Paramount English Medium School. All Rights Reserved.
-    </div>
+    <div class="copyright">© 2026 Paramount English Medium School.</div>
 </footer>
 
 <script>
@@ -233,7 +166,7 @@
     };
 
     const faculty = [
-        
+        { name: "Ms. Riha", role: "IIT Coordinator", subject: "IIT-Foundation", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. Raniya Zainab", role: "Physics Faculty", subject: "Physical Science", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. G. Rajitha", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. Ameena Tabassum", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
@@ -242,7 +175,6 @@
         { name: "Ms. L. Kalyani", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. J. Alaya Sree", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. S. Sujatha", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
-        { name: "Ms. Riha", role: "IIT Coordinator", subject: "IIT-Foundation", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. J. Prathibha", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. P. Shailaja", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
         { name: "Ms. A. Jhansi Rani", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
@@ -265,21 +197,13 @@
         `;
     }
 
-    function renderPortal() {
+    window.onload = () => {
         document.getElementById('correspondentContainer').innerHTML = createCardHTML(leadership.correspondent, 'card-correspondent');
         document.getElementById('principalContainer').innerHTML = createCardHTML(leadership.principal, 'card-principal');
-        const grid = document.getElementById('facultyList');
-        grid.innerHTML = faculty.map(teacher => createCardHTML(teacher, '')).join('');
-    }
-
-    function updateClock() {
-        document.getElementById('liveClock').innerText = new Date().toLocaleTimeString().toUpperCase();
-    }
-
-    window.onload = () => {
-        renderPortal();
-        updateClock();
-        setInterval(updateClock, 1000);
+        document.getElementById('facultyList').innerHTML = faculty.map(t => createCardHTML(teacher=t, '')).join('');
+        setInterval(() => {
+            document.getElementById('liveClock').innerText = new Date().toLocaleTimeString().toUpperCase();
+        }, 1000);
     };
 </script>
 </body>
