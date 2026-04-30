@@ -144,183 +144,145 @@
     </div>
 </footer>
 
-<script>
-    // --- UPDATE THIS DATA SECTION FOR EACH FACULTY ---
-    const faculty = [
-        { 
-            name: "Mr. Shaik Ahmad", 
-            role: "Correspondent Sir ", 
-            subject: "-",
-            phone: "#", 
-            email: "#", 
-            whatsapp: "#",
-            image: "faculty_ahmad.png" // Replace with actual image path
-        },
-        { 
-            name: "Ms. Roqiya Begum", 
-            role: "Principal", 
-            subject: "Social Studies",
-            phone: "#", 
-            email: "#", 
-            whatsapp: "#",
-            image: "logo.png"
-        },
-        { 
-           name: "Ms. Raniya Zainab", 
-            role: "Physics Faculty", 
-            subject: "Physical Sciences",
-            phone: "#", 
-            email: "#", 
-            whatsapp: "#",
-            image: "logo.png"  
-        },
-        { 
-            name: "Ms. Riha", 
-            role: "IIT Coordinator", 
-            subject: "Mathematics / IIT",
-            phone: "#", 
-            email: "#", 
-            whatsapp: "#",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. G. Rajitha", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "#", 
-            email: "#", 
-            whatsapp: "#",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. Ameena Tabassum", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "#", 
-            email: "#", 
-            whatsapp: "#",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. Shaik Shabana", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "shabana@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. B. Ravali", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "ravali@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. L. Kalyani", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "kalyani@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. J. Alaya Sree", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "alaya@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. S. Sujatha", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "sujatha@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. J. Prathibha", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "prathibha@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. P. Shailaja", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "shailaja@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. A. Jhansi Rani", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "jhansi@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        },
-        { 
-            name: "Ms. S. Neelima", 
-            role: "Faculty Member", 
-            subject: "General Studies",
-            phone: "+910000000000", 
-            email: "neelima@paramountwgl.com", 
-            whatsapp: "910000000000",
-            image: "logo.png" 
-        }
-    ];
-
-    function renderFaculty() {
-        const grid = document.getElementById('facultyList');
-        grid.innerHTML = faculty.map(teacher => `
-            <div class="faculty-card">
-                <div class="profile-img">
-                    <img src="${teacher.image}" alt="${teacher.name}">
-                </div>
-                <h3>${teacher.name}</h3>
-                <span class="role">${teacher.role}</span>
-                <span class="subject-tag">${teacher.subject}</span>
-                <div class="social-row">
-                    <!-- Clickable Phone Link -->
-                    <a href="tel:${teacher.phone}" class="social-btn" title="Call">
-                        <i class="fas fa-phone"></i>
-                    </a>
-                    <!-- Clickable Email Link -->
-                    <a href="mailto:${teacher.email}" class="social-btn" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <!-- Clickable WhatsApp Link (Direct Chat) -->
-                    <a href="https://wa.me/${teacher.whatsapp}" target="_blank" class="social-btn" title="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </div>
-            </div>
-        `).join('');
+<style>
+    /* --- HIERARCHY STYLING --- */
+    .executive-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        margin-bottom: 60px;
     }
 
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('liveClock').innerText = now.toLocaleTimeString().toUpperCase();
+    /* Tier 1: Correspondent (CEO) */
+    .card-correspondent {
+        width: 100%;
+        max-width: 450px;
+        transform: scale(1.1);
+        border: 2px solid var(--gold) !important;
+        background: linear-gradient(145deg, #ffffff, #fdfbf0) !important;
+        box-shadow: 0 20px 50px rgba(184, 134, 11, 0.2) !important;
+    }
+    .card-correspondent::after { 
+        content: 'CEO & CORRESPONDENT' !important; 
+        background: #000 !important; 
+        color: var(--gold) !important;
+        padding: 5px 15px !important;
+        font-size: 10px !important;
+    }
+    .card-correspondent .profile-img { width: 140px; height: 140px; border-color: var(--gold); }
+    .card-correspondent h3 { font-size: 1.8rem; }
+
+    /* Tier 2: Principal */
+    .card-principal {
+        width: 100%;
+        max-width: 380px;
+        border-top: 8px solid var(--forest) !important;
+        background: #ffffff !important;
+        box-shadow: 0 15px 35px rgba(0, 102, 51, 0.15) !important;
+    }
+    .card-principal::after { content: 'HEAD OF SCHOOL' !important; background: var(--forest) !important; color: white !important; }
+    .card-principal .profile-img { width: 120px; height: 120px; }
+
+    /* Subject Tag for all cards */
+    .subject-tag {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--forest);
+        background: #e8f5e9;
+        padding: 4px 12px;
+        border-radius: 50px;
+        display: inline-block;
+        margin-bottom: 15px;
+        border: 1px solid #c8e6c9;
+    }
+</style>
+
+<div class="container">
+    <!-- Executive Leadership Tier -->
+    <div class="executive-section">
+        <!-- Correspondent Card -->
+        <div id="correspondentContainer"></div>
+        
+        <!-- Principal Card -->
+        <div id="principalContainer"></div>
+    </div>
+
+    <!-- Faculty Tier -->
+    <h2 style="text-align:center; font-family:'Montserrat'; color:var(--forest); margin-bottom:30px; text-transform:uppercase; letter-spacing:2px;">Academic Faculty</h2>
+    <div class="faculty-grid" id="facultyList">
+        <!-- General Faculty cards will be generated here -->
+    </div>
+</div>
+
+<script>
+    // --- UPDATED DATA STRUCTURE ---
+    const leadership = {
+        correspondent: { 
+            name: "Mr. Shaik Ahmad", 
+            role: "Proprietor & Correspondent", 
+            subject: "Institutional Management",
+            phone: "+91XXXXXXXXXX", email: "admin@paramountwgl.com", whatsapp: "91XXXXXXXXXX",
+            image: "logo.png" 
+        },
+        principal: { 
+            name: "Ms. Roqiya Begum", 
+            role: "Principal", 
+            subject: "Academic Administration",
+            phone: "+91XXXXXXXXXX", email: "principal@paramountwgl.com", whatsapp: "91XXXXXXXXXX",
+            image: "logo.png" 
+        }
+    };
+
+    const faculty = [
+        { name: "Ms. Raniya Zainab", role: "Physics Faculty", subject: "Physical Science", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. G. Rajitha", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. Ameena Tabassum", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. Shaik Shabana", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. B. Ravali", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. L. Kalyani", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. Riha", role: "IIT Coordinator", subject: "IIT-Foundation", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. J. Alaya Sree", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. S. Sujatha", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. J. Prathibha", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. P. Shailaja", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. A. Jhansi Rani", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" },
+        { name: "Ms. S. Neelima", role: "Faculty Member", subject: "General Studies", phone: "+91", email: "@", whatsapp: "91", image: "logo.png" }
+    ];
+
+    function createCardHTML(person, typeClass) {
+        return `
+            <div class="faculty-card ${typeClass}">
+                <div class="profile-img">
+                    <img src="${person.image}" alt="${person.name}">
+                </div>
+                <h3>${person.name}</h3>
+                <span class="role">${person.role}</span>
+                <span class="subject-tag">${person.subject}</span>
+                <div class="social-row">
+                    <a href="tel:${person.phone}" class="social-btn"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:${person.email}" class="social-btn"><i class="fas fa-envelope"></i></a>
+                    <a href="https://wa.me/${person.whatsapp}" target="_blank" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderPortal() {
+        // Render Correspondent
+        document.getElementById('correspondentContainer').innerHTML = createCardHTML(leadership.correspondent, 'card-correspondent');
+        
+        // Render Principal
+        document.getElementById('principalContainer').innerHTML = createCardHTML(leadership.principal, 'card-principal');
+        
+        // Render Others
+        const grid = document.getElementById('facultyList');
+        grid.innerHTML = faculty.map(teacher => createCardHTML(teacher, '')).join('');
     }
 
     window.onload = () => {
-        renderFaculty();
-        updateClock();
-        setInterval(updateClock, 1000);
+        renderPortal();
+        // live clock logic here...
     };
 </script>
 
