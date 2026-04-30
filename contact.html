@@ -11,6 +11,64 @@
         :root { --forest: #006633; --gold: #ffd700; --danger: #c62828; --light: #f4f7f6; --sky: #2196f3; --dark: #121212; }
         * { box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--light); margin: 0; padding-bottom: 50px; }
+        /* --- PREMIUM HIERARCHY REORG --- */
+.executive-section {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+}
+
+/* Tier 1: The Correspondent - The "Platinum" Card */
+.card-correspondent {
+    flex: 1;
+    max-width: 420px;
+    border: 1px solid var(--gold) !important;
+    background: linear-gradient(145deg, #ffffff, #fffdf0) !important;
+    box-shadow: 0 25px 50px rgba(184, 134, 11, 0.15) !important;
+    padding: 40px 30px !important;
+}
+
+.card-correspondent::after {
+    content: 'CEO & CORRESPONDENT' !important;
+    top: -12px !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    background: #1a1a1a !important;
+    color: var(--gold) !important;
+    padding: 6px 20px !important;
+    border: 1px solid var(--gold);
+    border-radius: 50px;
+    font-size: 11px !important;
+    letter-spacing: 1px;
+}
+
+/* Tier 2: The Principal - The "Elite" Card */
+.card-principal {
+    flex: 1;
+    max-width: 380px;
+    border-top: 6px solid var(--forest) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
+    padding: 35px 25px !important;
+}
+
+.card-principal::after {
+    content: 'PRINCIPAL' !important;
+    top: -12px !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    background: var(--forest) !important;
+    color: white !important;
+    padding: 5px 18px !important;
+    border-radius: 50px;
+    font-size: 10px !important;
+}
+
+/* Image scaling fixes to prevent the "logo" look in the screenshot */
+.card-correspondent .profile-img { width: 150px; height: 150px; border-width: 5px; }
+.card-principal .profile-img { width: 130px; height: 130px; border-width: 4px; }
 
         /* PREMIUM HEADER */
         header { 
@@ -122,9 +180,12 @@
 </div>
 
 <div class="container">
-    <!-- Executive Leadership Tier -->
+    <!-- REORGANIZED LEADERSHIP ROW -->
     <div class="executive-section">
+        <!-- Correspondent on the Left (or Center if only one) -->
         <div id="correspondentContainer"></div>
+        
+        <!-- Principal on the Right -->
         <div id="principalContainer"></div>
     </div>
 
