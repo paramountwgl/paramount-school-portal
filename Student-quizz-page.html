@@ -400,8 +400,92 @@ if (timeLeft <= 0) {
         document.getElementById('nextBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'none' : 'block';
         document.getElementById('submitBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'block' : 'none';
     }
-        // Run this when the page loads to see if the student was already logged in
-async function checkExistingSession() {
+        
+    async function saveAnswer(optIndex) {
+        localAnswers[localIdx] = optIndex;
+        renderQuiz();
+        const resRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_Q${localIdx}`);
+        await setDoc(resRef, {
+            studentName: currentUser.name, rollNo: currentUser.roll, parentMobile: currentUser.mobile,
+            qIdx: localIdx, choice: optIndex, correct: optIndex === quizData.questions[localIdx].correctIndex,
+            timestamp: new Date().toISOString()
+        });
+    }
+
+   window.finalSubmit = async function(isAuto = false) {
+    // If it's a manual click, ask for confirmation. If auto-submit, skip confirm.
+    if(!isAuto && !confirm("Confirm assessment completion?")) return;
+    
+    try {
+        const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+        
+        // 1. Save the status to Firebase
+        await setDoc(statusRef, {
+            studentName: currentUser.name,
+            rollNo: currentUser.roll,
+            status: "SUBMITTED",
+            autoSubmitted: isAuto,
+            timestamp: new Date().toISOString()
+        });
+
+        // 2. Clear the local session now that the quiz is done
+        localStorage.removeItem('paramount_student'); 
+
+        alert(isAuto ? "Out of time! Your quiz was submitted automatically." : "Assessment Submitted Successfully!");
+        location.reload();
+    } catch (e) {
+        console.error("Submission Error:", e);
+    }
+};
+        window.finalSubmit = async function(isAuto = false) {
+    // If it's a manual click, ask for confirmation. If auto-submit, skip confirm.
+    if(!isAuto && !confirm("Confirm assessment completion?")) return;
+    
+    try {
+        const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+        
+        // 1. Save the status to Firebase
+        await setDoc(statusRef, {
+            studentName: currentUser.name,
+            rollNo: currentUser.roll,
+            status: "SUBMITTED",
+            autoSubmitted: isAuto,
+            timestamp: new Date().toISOString()
+        });
+
+        // 2. Clear the local session now that the quiz is done
+        localStorage.removeItem('paramount_student'); 
+
+        alert(isAuto ? "Out of time! Your quiz was submitted automatically." : "Assessment Submitted Successfully!");
+        location.reload();
+    } catch (e) {
+        console.error("Submission Error:", e);
+    }
+};// Function for Save & Exit
+window.saveAndExit = function() {
+    if(confirm("Your progress is saved. You can return later, but the timer will NOT stop. Exit to login?")) {
+        // We do NOT clear localStorage here so they can resume
+        location.reload(); 
+    }
+};
+
+window.quitAssessment = async function() {
+    if(confirm("Are you sure you want to quit? This will forfeit your attempt and clear your current data.")) {
+        const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+        await setDoc(quitRef, {
+            studentName: currentUser.name,
+            rollNo: currentUser.roll,
+            status: "QUIT/FORFEIT",
+            timestamp: new Date().toISOString()
+        });
+        
+        // Clear local session so they have to re-login from scratch
+        localStorage.removeItem('paramount_student');
+        alert("Assessment forfeited. Data cleared.");
+        location.reload();
+    }
+};
+        async function checkExistingSession() {
     const savedUser = localStorage.getItem('paramount_student');
     if (savedUser) {
         currentUser = JSON.parse(savedUser);
@@ -433,62 +517,6 @@ function startLiveListener(targetClass) {
         }
     });
 }
-
-    async function saveAnswer(optIndex) {
-        localAnswers[localIdx] = optIndex;
-        renderQuiz();
-        const resRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_Q${localIdx}`);
-        await setDoc(resRef, {
-            studentName: currentUser.name, rollNo: currentUser.roll, parentMobile: currentUser.mobile,
-            qIdx: localIdx, choice: optIndex, correct: optIndex === quizData.questions[localIdx].correctIndex,
-            timestamp: new Date().toISOString()
-        });
-    }
-
-    window.finalSubmit = async function(isAuto = false) {
-    // If it's a manual click, ask for confirmation. If auto-submit, skip confirm.
-    if(!isAuto && !confirm("Confirm assessment completion?")) return;
-    
-    try {
-        const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
-        await setDoc(statusRef, {
-            studentName: currentUser.name,
-            rollNo: currentUser.roll,
-            status: "SUBMITTED",
-            autoSubmitted: isAuto,
-            timestamp: new Date().toISOString()
-            localStorage.removeItem('paramount_student'); 
-        });
-
-        alert(isAuto ? "Out of time! Your quiz was submitted automatically." : "Assessment Submitted Successfully!");
-        location.reload();
-    } catch (e) {
-        console.error("Submission Error:", e);
-    }
-}; // Function for Save & Exit
-window.saveAndExit = function() {
-    if(confirm("Your progress is saved. You can return later, but the timer will NOT stop. Exit to login?")) {
-        // We do NOT clear localStorage here so they can resume
-        location.reload(); 
-    }
-};
-
-window.quitAssessment = async function() {
-    if(confirm("Are you sure you want to quit? This will forfeit your attempt and clear your current data.")) {
-        const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
-        await setDoc(quitRef, {
-            studentName: currentUser.name,
-            rollNo: currentUser.roll,
-            status: "QUIT/FORFEIT",
-            timestamp: new Date().toISOString()
-        });
-        
-        // Clear local session so they have to re-login from scratch
-        localStorage.removeItem('paramount_student');
-        alert("Assessment forfeited. Data cleared.");
-        location.reload();
-    }
-};
 </script>
 </body>
 </html>
