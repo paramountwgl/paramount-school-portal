@@ -351,76 +351,76 @@
     let quizData = null;
     let localIdx = 0;
 
-   window.handleLogin = function() {
-    const name = document.getElementById('studentName').value;
-    const roll = document.getElementById('rollNo').value;
-    const sClass = document.getElementById('studentClass').value;
-    const mobile = document.getElementById('parentMobile').value;
+    window.handleLogin = function() {
+        const name = document.getElementById('studentName').value;
+        const roll = document.getElementById('rollNo').value;
+        const sClass = document.getElementById('studentClass').value;
+        const mobile = document.getElementById('parentMobile').value;
 
-    if(!name || !roll || !sClass || !mobile) { alert("Please complete all profile details."); return; }
+        if(!name || !roll || !sClass || !mobile) { alert("Please complete all profile details."); return; }
 
-    // 1. Define the user first
-    currentUser = { name, roll, sClass, mobile };
+        currentUser = { name, roll, sClass, mobile };
+        localStorage.setItem('paramount_student', JSON.stringify(currentUser));
 
-    // 2. Then save it to memory
-    localStorage.setItem('paramount_student', JSON.stringify(currentUser));
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('waiting-screen').style.display = 'block';
+        document.getElementById('welcomeMsg').innerText = `Welcome, ${name}`;
+        
+        startLiveListener(sClass);
+    };
 
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('waiting-screen').style.display = 'block';
-    document.getElementById('welcomeMsg').innerText = `Welcome, ${name}`;
-    
-    startLiveListener(sClass);
-};
-// NEW: Listener that shows ALL available quizzes for the student's class
-function startLiveListener(targetClass) {
-    const lobbyList = document.getElementById('lobby-list');
-    const noQuizMsg = document.getElementById('no-quiz-msg');
+    function startLiveListener(targetClass) {
+        const lobbyList = document.getElementById('lobby-list');
+        const noQuizMsg = document.getElementById('no-quiz-msg');
 
-    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-        lobbyList.innerHTML = ""; // Clear the lobby list for refresh
+        onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+            lobbyList.innerHTML = ""; 
 
-        if (!snapshot.exists()) {
-            noQuizMsg.style.display = "block";
-            lobbyList.appendChild(noQuizMsg);
-            // If they were already in a quiz and it was deleted by teacher, kick them out
-            if (document.getElementById('quiz-section').style.display === 'block') {
-                alert("This quiz has been ended by the teacher.");
-                localStorage.removeItem('paramount_student');
-                location.reload();
+            if (!snapshot.exists()) {
+                noQuizMsg.style.display = "block";
+                lobbyList.appendChild(noQuizMsg);
+                if (document.getElementById('quiz-section').style.display === 'block') {
+                    alert("This quiz has been ended by the teacher.");
+                    localStorage.removeItem('paramount_student');
+                    location.reload();
+                }
+                return;
             }
-            return;
-        }
 
-        quizData = snapshot.data();
-        if (quizData.isLive) {
-            noQuizMsg.style.display = "none";
-            const card = document.createElement('div');
-            card.className = "premium-card";
-            card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
-            card.innerHTML = `
-                <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
-                    Subject: ${quizData.subject} | Duration: ${quizData.duration} Mins
-                </p>
-                <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
-            `;
-            lobbyList.appendChild(card);
-        }
-    });
-}
-  window.startActualQuiz = async function() {
-    if(!confirm("Are you ready to begin the assessment?")) return;
+            quizData = snapshot.data();
+            if (quizData.isLive) {
+                noQuizMsg.style.display = "none";
+                const card = document.createElement('div');
+                card.className = "premium-card";
+                card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
+                card.innerHTML = `
+                    <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+                        Subject: ${quizData.subject}
+                    </p>
+                    <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
+                `;
+                lobbyList.appendChild(card);
+            }
+        });
+    }
 
-    // We no longer calculate or save a start time for a timer.
-    // We just transition to the quiz view.
-    document.getElementById('waiting-screen').style.display = 'none';
-    document.getElementById('quiz-section').style.display = 'block';
-    document.getElementById('quitHeaderBtn').style.display = 'block';
-    document.getElementById('displayTitle').innerText = quizData.title;
-    
-    renderQuiz();
-};
+    window.startActualQuiz = async function() {
+        if(!confirm("Are you ready to begin?")) return;
+        document.getElementById('waiting-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        document.getElementById('quitHeaderBtn').style.display = 'block';
+        document.getElementById('displayTitle').innerText = quizData.title;
+        renderQuiz();
+    };
 
+    // --- NAVIGATION ---
+    window.changeQuestion = function(dir) {
+        localIdx += dir;
+        renderQuiz();
+    };
+
+    // --- DYNAMIC RENDERING FOR OPTIONS vs TEXT ---
     function renderQuiz() {
         const q = quizData.questions[localIdx];
         document.getElementById('qNumber').innerText = `QUESTION ${localIdx + 1} OF ${quizData.questions.length}`;
@@ -429,90 +429,109 @@ function startLiveListener(targetClass) {
         const container = document.getElementById('optionsContainer');
         container.innerHTML = "";
 
-        q.options.forEach((opt, i) => {
-            const isSelected = localAnswers[localIdx] === i;
-            const div = document.createElement('div');
-            div.className = `option-card ${isSelected ? 'selected' : ''}`;
-            div.innerHTML = `<div class="dot"></div> <span>${opt}</span>`;
-            div.onclick = () => saveAnswer(i);
-            container.appendChild(div);
-        });
+        // Check the type defined in the Admin Designer ('options' or 'text')
+        if (q.type === 'options' || !q.type) {
+            // MULTIPLE CHOICE RENDER
+            q.options.forEach((opt, i) => {
+                const isSelected = localAnswers[localIdx] === i;
+                const div = document.createElement('div');
+                div.className = `option-card ${isSelected ? 'selected' : ''}`;
+                div.innerHTML = `<div class="dot"></div> <span>${opt}</span>`;
+                div.onclick = () => saveAnswer(i, true);
+                container.appendChild(div);
+            });
+        } else {
+            // TEXT ENTRY RENDER
+            const savedText = localAnswers[localIdx] || "";
+            container.innerHTML = `
+                <div style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 2px dashed var(--gold);">
+                    <label style="font-size: 0.75rem; color: var(--forest-green); font-weight: 700; margin-bottom: 10px; display: block;">TYPE YOUR ANSWER BELOW</label>
+                    <textarea id="manualInput" 
+                        placeholder="Start typing here..." 
+                        style="width: 100%; height: 150px; border: none; background: transparent; font-size: 1.1rem; font-family: inherit; outline: none; resize: none;"
+                        oninput="saveAnswer(this.value, false)">${savedText}</textarea>
+                </div>
+            `;
+        }
 
         document.getElementById('prevBtn').disabled = (localIdx === 0);
         document.getElementById('nextBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'none' : 'block';
         document.getElementById('submitBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'block' : 'none';
     }
+
+    // --- UNIFIED SAVE FUNCTION ---
+    window.saveAnswer = async function(value, isOption) {
+        localAnswers[localIdx] = value;
         
-    async function saveAnswer(optIndex) {
-        localAnswers[localIdx] = optIndex;
-        renderQuiz();
+        // Only re-render for options to show the "selected" color immediately
+        if (isOption) renderQuiz();
+
         const resRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_Q${localIdx}`);
-        await setDoc(resRef, {
-            studentName: currentUser.name, rollNo: currentUser.roll, parentMobile: currentUser.mobile,
-            qIdx: localIdx, choice: optIndex, correct: optIndex === quizData.questions[localIdx].correctIndex,
-            timestamp: new Date().toISOString()
-        });
-    }
-
-   window.finalSubmit = async function() {
-    if(!confirm("Confirm assessment completion?")) return;
-    
-    try {
-        const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
         
-        await setDoc(statusRef, {
+        const payload = {
             studentName: currentUser.name,
             rollNo: currentUser.roll,
-            status: "SUBMITTED",
+            parentMobile: currentUser.mobile,
+            qIdx: localIdx,
+            type: quizData.questions[localIdx].type || 'options',
             timestamp: new Date().toISOString()
-        });
+        };
 
-        localStorage.removeItem('paramount_student'); 
-        alert("Assessment Submitted Successfully!");
-        location.reload();
-    } catch (e) {
-        console.error("Submission Error:", e);
-    }
-};
-        
-window.saveAndExit = function() {
-    if(confirm("Your progress is saved. You can return later to continue. Exit to login?")) {
-        location.reload(); 
-    }
-};
+        if (isOption) {
+            payload.choice = value;
+            payload.correct = (value === quizData.questions[localIdx].correctIndex);
+        } else {
+            payload.typedAnswer = value;
+        }
 
-window.quitAssessment = async function() {
-    if(confirm("Are you sure you want to quit? This will forfeit your attempt and clear your current data.")) {
-        const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
-        await setDoc(quitRef, {
-            studentName: currentUser.name,
-            rollNo: currentUser.roll,
-            status: "QUIT/FORFEIT",
-            timestamp: new Date().toISOString()
-        });
-        
-        // Clear local session so they have to re-login from scratch
-        localStorage.removeItem('paramount_student');
-        alert("Assessment forfeited. Data cleared.");
-        location.reload();
-    }
-};
-        async function checkExistingSession() {
-    const savedUser = localStorage.getItem('paramount_student');
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        
-        // Sync UI
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('waiting-screen').style.display = 'block';
-        document.getElementById('welcomeMsg').innerText = `Welcome back, ${currentUser.name}`;
-        
-        startLiveListener(currentUser.sClass);
-    }
-}
-checkExistingSession(); // Initialize on page load
+        await setDoc(resRef, payload);
+    };
 
+    window.finalSubmit = async function() {
+        if(!confirm("Confirm assessment completion?")) return;
+        try {
+            const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+            await setDoc(statusRef, {
+                studentName: currentUser.name,
+                rollNo: currentUser.roll,
+                status: "SUBMITTED",
+                timestamp: new Date().toISOString()
+            });
+            localStorage.removeItem('paramount_student'); 
+            alert("Assessment Submitted Successfully!");
+            location.reload();
+        } catch (e) { console.error(e); }
+    };
 
+    window.saveAndExit = function() {
+        if(confirm("Exit to portal? Your progress is saved.")) location.reload();
+    };
+
+    window.quitAssessment = async function() {
+        if(confirm("Forfeit and quit?")) {
+            const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+            await setDoc(quitRef, {
+                studentName: currentUser.name,
+                rollNo: currentUser.roll,
+                status: "QUIT/FORFEIT",
+                timestamp: new Date().toISOString()
+            });
+            localStorage.removeItem('paramount_student');
+            location.reload();
+        }
+    };
+
+    async function checkExistingSession() {
+        const savedUser = localStorage.getItem('paramount_student');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('waiting-screen').style.display = 'block';
+            document.getElementById('welcomeMsg').innerText = `Welcome back, ${currentUser.name}`;
+            startLiveListener(currentUser.sClass);
+        }
+    }
+    checkExistingSession();
 </script>
 </body>
 </html>
