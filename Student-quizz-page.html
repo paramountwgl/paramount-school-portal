@@ -290,6 +290,8 @@
         const roll = document.getElementById('rollNo').value;
         const sClass = document.getElementById('studentClass').value;
         const mobile = document.getElementById('parentMobile').value;
+        // Save user to browser memory so refresh doesn't log them out
+        localStorage.setItem('paramount_student', JSON.stringify(currentUser));
 
         if(!name || !roll || !sClass || !mobile) { alert("Please complete all profile details."); return; }
 
@@ -395,6 +397,39 @@ if (timeLeft <= 0) {
         document.getElementById('nextBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'none' : 'block';
         document.getElementById('submitBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'block' : 'none';
     }
+        // Run this when the page loads to see if the student was already logged in
+async function checkExistingSession() {
+    const savedUser = localStorage.getItem('paramount_student');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        
+        // Sync UI
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('waiting-screen').style.display = 'block';
+        document.getElementById('welcomeMsg').innerText = `Welcome back, ${currentUser.name}`;
+        
+        startLiveListener(currentUser.sClass);
+    }
+}
+checkExistingSession(); // Initialize on page load
+
+// Update your startLiveListener to handle quiz deletion
+function startLiveListener(targetClass) {
+    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+        if (!snapshot.exists()) {
+            // Teacher deleted the quiz
+            alert("This quiz has been ended or deleted by the teacher.");
+            localStorage.removeItem('paramount_student');
+            location.reload();
+            return;
+        }
+        
+        quizData = snapshot.data();
+        if (quizData.isLive && quizData.questions && quizData.questions.length > 0) {
+            startQuizSession();
+        }
+    });
+}
 
     async function saveAnswer(optIndex) {
         localAnswers[localIdx] = optIndex;
@@ -428,14 +463,14 @@ if (timeLeft <= 0) {
     }
 }; // Function for Save & Exit
 window.saveAndExit = function() {
-    if(confirm("Your progress is saved in real-time. You can return later, but the timer will NOT stop. Exit now?")) {
+    if(confirm("Your progress is saved. You can return later, but the timer will NOT stop. Exit to login?")) {
+        // We do NOT clear localStorage here so they can resume
         location.reload(); 
     }
 };
 
-// Function for Quitting (Forfeit)
 window.quitAssessment = async function() {
-    if(confirm("Are you sure you want to quit? This will forfeit your attempt completely.")) {
+    if(confirm("Are you sure you want to quit? This will forfeit your attempt and clear your current data.")) {
         const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
         await setDoc(quitRef, {
             studentName: currentUser.name,
@@ -443,7 +478,10 @@ window.quitAssessment = async function() {
             status: "QUIT/FORFEIT",
             timestamp: new Date().toISOString()
         });
-        alert("Assessment forfeited.");
+        
+        // Clear local session so they have to re-login from scratch
+        localStorage.removeItem('paramount_student');
+        alert("Assessment forfeited. Data cleared.");
         location.reload();
     }
 };
