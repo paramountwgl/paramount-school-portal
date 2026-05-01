@@ -285,23 +285,26 @@
     let timeLeft = 0;
     let timerInterval = null;
 
-    window.handleLogin = function() {
-        const name = document.getElementById('studentName').value;
-        const roll = document.getElementById('rollNo').value;
-        const sClass = document.getElementById('studentClass').value;
-        const mobile = document.getElementById('parentMobile').value;
-        // Save user to browser memory so refresh doesn't log them out
-        localStorage.setItem('paramount_student', JSON.stringify(currentUser));
+   window.handleLogin = function() {
+    const name = document.getElementById('studentName').value;
+    const roll = document.getElementById('rollNo').value;
+    const sClass = document.getElementById('studentClass').value;
+    const mobile = document.getElementById('parentMobile').value;
 
-        if(!name || !roll || !sClass || !mobile) { alert("Please complete all profile details."); return; }
+    if(!name || !roll || !sClass || !mobile) { alert("Please complete all profile details."); return; }
 
-        currentUser = { name, roll, sClass, mobile };
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('waiting-screen').style.display = 'block';
-        document.getElementById('welcomeMsg').innerText = `Welcome, ${name}`;
-        
-        startLiveListener(sClass);
-    };
+    // 1. Define the user first
+    currentUser = { name, roll, sClass, mobile };
+
+    // 2. Then save it to memory
+    localStorage.setItem('paramount_student', JSON.stringify(currentUser));
+
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('waiting-screen').style.display = 'block';
+    document.getElementById('welcomeMsg').innerText = `Welcome, ${name}`;
+    
+    startLiveListener(sClass);
+};
 
     function startLiveListener(targetClass) {
         onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
@@ -442,7 +445,7 @@ function startLiveListener(targetClass) {
         });
     }
 
-    wwindow.finalSubmit = async function(isAuto = false) {
+    window.finalSubmit = async function(isAuto = false) {
     // If it's a manual click, ask for confirmation. If auto-submit, skip confirm.
     if(!isAuto && !confirm("Confirm assessment completion?")) return;
     
@@ -454,6 +457,7 @@ function startLiveListener(targetClass) {
             status: "SUBMITTED",
             autoSubmitted: isAuto,
             timestamp: new Date().toISOString()
+            localStorage.removeItem('paramount_student'); 
         });
 
         alert(isAuto ? "Out of time! Your quiz was submitted automatically." : "Assessment Submitted Successfully!");
