@@ -405,12 +405,17 @@
         });
     }
 
-    window.startActualQuiz = async function() {
+   window.startActualQuiz = async function() {
         if(!confirm("Are you ready to begin?")) return;
+        
+        // 1. Fetch previously saved answers from Firebase before showing the quiz
+        await loadExistingAnswers();
+
         document.getElementById('waiting-screen').style.display = 'none';
         document.getElementById('quiz-section').style.display = 'block';
         document.getElementById('quitHeaderBtn').style.display = 'block';
         document.getElementById('displayTitle').innerText = quizData.title;
+        
         renderQuiz();
     };
 
@@ -520,6 +525,26 @@
             location.reload();
         }
     };
+        async function loadExistingAnswers() {
+        // Loop through the quiz questions to check if responses exist in Firebase
+        for (let i = 0; i < quizData.questions.length; i++) {
+            const resRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_Q${i}`);
+            try {
+                const resSnap = await getDoc(resRef);
+                if (resSnap.exists()) {
+                    const data = resSnap.data();
+                    // Restore the answer based on question type
+                    if (data.type === 'text') {
+                        localAnswers[i] = data.typedAnswer;
+                    } else {
+                        localAnswers[i] = data.choice;
+                    }
+                }
+            } catch (e) {
+                console.error("Error loading saved answer for Q" + i, e);
+            }
+        }
+    }
 
     async function checkExistingSession() {
         const savedUser = localStorage.getItem('paramount_student');
