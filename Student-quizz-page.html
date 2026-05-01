@@ -98,29 +98,36 @@
             text-align: center; color: var(--text-muted);
             margin-bottom: 40px; font-size: 0.95rem;
         }
-
-       /* Find the .grid-row class in your <style> and replace it with this */
+/* Replace these in your <style> section */
 .grid-row { 
-    display: flex; 
+    display: grid; 
+    grid-template-columns: 1fr 1.5fr; /* Roll Number gets 40%, Grade gets 60% */
     gap: 20px; 
     margin-bottom: 25px; 
-    width: 100%;
-    flex-wrap: wrap; /* This is the key to preventing overlap */
+    align-items: flex-end;
 }
 
-/* Add or update the .input-wrapper class */
+/* Specific styling for the Roll Number to make it smaller */
+#rollNo {
+    max-width: 100%;
+}
+
 .input-wrapper { 
-    flex: 1; 
-    min-width: 240px; /* Forces stacking if the space gets too tight */
-    margin-bottom: 0px; 
+    display: flex;
+    flex-direction: column;
 }
 
-/* Ensures the full-width inputs look consistent */
 .input-wrapper-full {
     width: 100%;
     margin-bottom: 25px;
 }
 
+/* Mobile Fix: Stacks them only on very small screens */
+@media (max-width: 480px) {
+    .grid-row {
+        grid-template-columns: 1fr;
+    }
+}
         label { 
             display: block; font-weight: 700; margin-bottom: 10px; 
             color: var(--forest-green); font-size: 0.85rem; letter-spacing: 0.5px;
@@ -221,11 +228,13 @@
     <h2 class="section-title">Student Login</h2>
     <p class="section-subtitle">Welcome to the Paramount Digital Excellence Portal.</p>
     
+    <!-- Full Width Name -->
     <div class="input-wrapper-full">
         <label>FULL NAME</label>
         <input type="text" id="studentName" placeholder="Enter Full Name">
     </div>
 
+    <!-- Organized Grid for Roll & Grade -->
     <div class="grid-row">
         <div class="input-wrapper">
             <label>ROLL NUMBER</label>
@@ -236,20 +245,21 @@
             <select id="studentClass">
                 <option value="" disabled selected>Select Grade</option>
                 <option value="Pre-KG">Pre-KG</option>
-                            <option value="LKG">LKG</option>
-                            <option value="UKG">UKG</option>
-                            <option value="Grade 1">Grade 1</option>
-                            <option value="Grade 2">Grade 2</option>
-                            <option value="Grade 3">Grade 3</option>
-                            <option value="Grade 4">Grade 4</option>
-                            <option value="Grade 5">Grade 5</option>
-                            <option value="Grade 6">Grade 6</option>
-                            <option value="Grade 7">Grade 7</option>
-                            <option value="Grade 8">Grade 8</option>
+                <option value="LKG">LKG</option>
+                <option value="UKG">UKG</option>
+                <option value="Grade 1">Grade 1</option>
+                <option value="Grade 2">Grade 2</option>
+                <option value="Grade 3">Grade 3</option>
+                <option value="Grade 4">Grade 4</option>
+                <option value="Grade 5">Grade 5</option>
+                <option value="Grade 6">Grade 6</option>
+                <option value="Grade 7">Grade 7</option>
+                <option value="Grade 8">Grade 8</option>
             </select>
         </div>
     </div>
 
+    <!-- Full Width Mobile -->
     <div class="input-wrapper-full">
         <label>PARENT MOBILE CONTACT</label>
         <input type="number" id="parentMobile" placeholder="WhatsApp Primary Contact">
