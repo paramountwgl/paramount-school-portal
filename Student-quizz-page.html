@@ -305,17 +305,23 @@
     
     startLiveListener(sClass);
 };
-
-    function startLiveListener(targetClass) {
-        onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-            if (snapshot.exists()) {
-                quizData = snapshot.data();
-                if (quizData.isLive && quizData.questions && quizData.questions.length > 0) {
-                    startQuizSession();
-                }
-            }
-        });
-    }
+// Update your startLiveListener to handle quiz deletion
+function startLiveListener(targetClass) {
+    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+        if (!snapshot.exists()) {
+            // Teacher deleted the quiz
+            alert("This quiz has been ended or deleted by the teacher.");
+            localStorage.removeItem('paramount_student');
+            location.reload();
+            return;
+        }
+        
+        quizData = snapshot.data();
+        if (quizData.isLive && quizData.questions && quizData.questions.length > 0) {
+            startQuizSession();
+        }
+    });
+}
 
    async function startQuizSession() {
     // Reference to this specific student's start time
@@ -500,23 +506,7 @@ window.quitAssessment = async function() {
 }
 checkExistingSession(); // Initialize on page load
 
-// Update your startLiveListener to handle quiz deletion
-function startLiveListener(targetClass) {
-    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-        if (!snapshot.exists()) {
-            // Teacher deleted the quiz
-            alert("This quiz has been ended or deleted by the teacher.");
-            localStorage.removeItem('paramount_student');
-            location.reload();
-            return;
-        }
-        
-        quizData = snapshot.data();
-        if (quizData.isLive && quizData.questions && quizData.questions.length > 0) {
-            startQuizSession();
-        }
-    });
-}
+
 </script>
 </body>
 </html>
