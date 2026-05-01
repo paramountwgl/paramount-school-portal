@@ -222,7 +222,7 @@
 </head>
 <body>
 
-    <header>
+   <header>
     <div class="brand">
         <div class="logo-box">
             <img src="logo.png" alt="P" style="width: 40px;">
@@ -230,14 +230,11 @@
         <h1 id="displayTitle">Paramount</h1>
     </div>
     <div style="display: flex; gap: 15px; align-items: center;">
-        <div class="header-tag" id="timerDisplay">TIME: --:--</div>
-        
-        <!-- NEW: Exit to Portal Button -->
+        <!-- Timer display removed from here -->
         <a href="Student Portal.html" onclick="return confirm('Exit to Portal? Progress is saved.')" 
            style="background: rgba(255,255,255,0.1); color: white; text-decoration: none; padding: 6px 15px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s;">
            <i class="fa-solid fa-house"></i> EXIT
         </a>
-
         <button id="quitHeaderBtn" onclick="quitAssessment()" style="display:none; background:rgba(255,0,0,0.2); color:white; border:1px solid red; padding:5px 15px; border-radius:20px; cursor:pointer; font-weight:700;">QUIT</button>
     </div>
 </header>
@@ -353,8 +350,6 @@
     let localAnswers = {};
     let quizData = null;
     let localIdx = 0;
-    let timeLeft = 0;
-    let timerInterval = null;
 
    window.handleLogin = function() {
     const name = document.getElementById('studentName').value;
@@ -413,71 +408,18 @@ function startLiveListener(targetClass) {
         }
     });
 }
-   // NEW: This is triggered ONLY when the student clicks the button in the lobby
-window.startActualQuiz = async function() {
-    if(!confirm("Are you ready? The timer will start immediately once you click OK.")) return;
+  window.startActualQuiz = async function() {
+    if(!confirm("Are you ready to begin the assessment?")) return;
 
-    // We check for an existing start time ONLY when the quiz actually starts
-    const startTimeRef = doc(db, `live_quizzes/${quizData.targetClass}/start_times`, currentUser.roll);
-    const startTimeSnap = await getDoc(startTimeRef);
-    
-    let startTime;
-    if (!startTimeSnap.exists()) {
-        startTime = Date.now();
-        await setDoc(startTimeRef, { 
-            time: startTime,
-            studentName: currentUser.name,
-            rollNo: currentUser.roll 
-        });
-    } else {
-        startTime = startTimeSnap.data().time;
-    }
-
-    // Timer calculation based on the saved start time
-    const totalDurationMs = parseInt(quizData.duration) * 60 * 1000;
-    const elapsedTime = Date.now() - startTime;
-    timeLeft = Math.floor((totalDurationMs - elapsedTime) / 1000);
-
-    if (timeLeft <= 0) {
-        alert("Sorry, your time for this assessment has already expired.");
-        finalSubmit(true);
-        return;
-    }
-
-    // Switch View to the Quiz
+    // We no longer calculate or save a start time for a timer.
+    // We just transition to the quiz view.
     document.getElementById('waiting-screen').style.display = 'none';
     document.getElementById('quiz-section').style.display = 'block';
     document.getElementById('quitHeaderBtn').style.display = 'block';
     document.getElementById('displayTitle').innerText = quizData.title;
     
-    if (!timerInterval) {
-        startCountdown();
-    }
     renderQuiz();
 };
-
-    function startCountdown() {
-        timerInterval = setInterval(() => {
-            const mins = Math.floor(timeLeft / 60);
-            const secs = timeLeft % 60;
-            document.getElementById('timerDisplay').innerText = `TIME: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            
-            // Inside your startCountdown interval:
-if (timeLeft <= 0) {
-    clearInterval(timerInterval);
-    finalSubmit(true); // Pass 'true' to signify an auto-submission
-}
-            timeLeft--;
-        }, 1000);
-    }
-
-    window.changeQuestion = function(step) {
-        const nextIdx = localIdx + step;
-        if (nextIdx >= 0 && nextIdx < quizData.questions.length) {
-            localIdx = nextIdx;
-            renderQuiz();
-        }
-    };
 
     function renderQuiz() {
         const q = quizData.questions[localIdx];
@@ -512,59 +454,29 @@ if (timeLeft <= 0) {
         });
     }
 
-   window.finalSubmit = async function(isAuto = false) {
-    // If it's a manual click, ask for confirmation. If auto-submit, skip confirm.
-    if(!isAuto && !confirm("Confirm assessment completion?")) return;
+   window.finalSubmit = async function() {
+    if(!confirm("Confirm assessment completion?")) return;
     
     try {
         const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
         
-        // 1. Save the status to Firebase
         await setDoc(statusRef, {
             studentName: currentUser.name,
             rollNo: currentUser.roll,
             status: "SUBMITTED",
-            autoSubmitted: isAuto,
             timestamp: new Date().toISOString()
         });
 
-        // 2. Clear the local session now that the quiz is done
         localStorage.removeItem('paramount_student'); 
-
-        alert(isAuto ? "Out of time! Your quiz was submitted automatically." : "Assessment Submitted Successfully!");
+        alert("Assessment Submitted Successfully!");
         location.reload();
     } catch (e) {
         console.error("Submission Error:", e);
     }
 };
-        window.finalSubmit = async function(isAuto = false) {
-    // If it's a manual click, ask for confirmation. If auto-submit, skip confirm.
-    if(!isAuto && !confirm("Confirm assessment completion?")) return;
-    
-    try {
-        const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
         
-        // 1. Save the status to Firebase
-        await setDoc(statusRef, {
-            studentName: currentUser.name,
-            rollNo: currentUser.roll,
-            status: "SUBMITTED",
-            autoSubmitted: isAuto,
-            timestamp: new Date().toISOString()
-        });
-
-        // 2. Clear the local session now that the quiz is done
-        localStorage.removeItem('paramount_student'); 
-
-        alert(isAuto ? "Out of time! Your quiz was submitted automatically." : "Assessment Submitted Successfully!");
-        location.reload();
-    } catch (e) {
-        console.error("Submission Error:", e);
-    }
-};// Function for Save & Exit
 window.saveAndExit = function() {
-    if(confirm("Your progress is saved. You can return later, but the timer will NOT stop. Exit to login?")) {
-        // We do NOT clear localStorage here so they can resume
+    if(confirm("Your progress is saved. You can return later to continue. Exit to login?")) {
         location.reload(); 
     }
 };
