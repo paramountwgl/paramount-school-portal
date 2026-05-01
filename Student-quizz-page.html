@@ -98,15 +98,14 @@
             text-align: center; color: var(--text-muted);
             margin-bottom: 40px; font-size: 0.95rem;
         }
-.grid-row { 
-    display: grid; 
-    /* This gives Roll Number 35% and Grade 65% of the space */
-    grid-template-columns: 0.7fr 1.3fr; 
-    /* This creates the visible separation gap */
-    gap: 25px; 
-    margin-bottom: 25px;
+.grid-row {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 25px;
+    margin-bottom: 30px;
     width: 100%;
 }
+
 /* Specific styling for the Roll Number to make it smaller */
 #rollNo {
     max-width: 100%;
@@ -121,7 +120,7 @@
 
 .input-wrapper-full {
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 /* Mobile Fix: Stacks them only on very small screens */
@@ -130,19 +129,40 @@
         grid-template-columns: 1fr;
     }
 }
-        label { 
-            display: block; font-weight: 700; margin-bottom: 10px; 
-            color: var(--forest-green); font-size: 0.85rem; letter-spacing: 0.5px;
-        }
-        input, select {
-    padding: 14px 18px;
-    border-radius: 14px;
-    border: 2px solid #e5e7eb;
+        
+        label {
+    display: block;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--forest-green);
+    font-size: 0.75rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    opacity: 0.9;
 }
-        input:focus { 
-            border-color: var(--gold); background: var(--white); 
-            outline: none; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
-        }
+
+        input, select {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1.5px solid #eef2f7;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-main);
+    background-color: #fcfdfe;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    /* Subtle shadow for premium depth */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+        input:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.12);
+    transform: translateY(-1px);
+}
 
         /* --- BUTTONS --- */
         .btn-gold {
@@ -224,56 +244,48 @@
     <div class="main-wrapper">
         <div class="premium-card">
             
-            <!-- AUTHENTICATION -->
-           <!-- Replace your current #login-section HTML with this reorganized version -->
-<div id="login-section">
+    <div id="login-section">
     <h2 class="section-title">Student Login</h2>
     <p class="section-subtitle">Welcome to the Paramount Digital Excellence Portal.</p>
     
-    <!-- Full Width Name -->
     <div class="input-wrapper-full">
-        <label>FULL NAME</label>
-        <input type="text" id="studentName" placeholder="Enter Full Name">
+        <label>Full Name</label>
+        <input type="text" id="studentName" placeholder="e.g. John Doe">
     </div>
 
-   
     <div class="grid-row">
-    <!-- Separate Box 1: Roll Number -->
-    <div class="input-wrapper">
-        <label>ROLL NUMBER</label>
-        <input type="text" id="rollNo" placeholder="Roll No">
+        <div class="input-wrapper">
+            <label>Roll Number</label>
+            <input type="text" id="rollNo" placeholder="Roll No">
+        </div>
+        <div class="input-wrapper">
+            <label>Target Grade</label>
+            <select id="studentClass">
+                <option value="" disabled selected>Select Grade</option>
+                <option value="Pre-KG">Pre-KG</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Grade 1">Grade 1</option>
+                            <option value="Grade 2">Grade 2</option>
+                            <option value="Grade 3">Grade 3</option>
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+            </select>
+        </div>
     </div>
-    
-    <!-- Separate Box 2: Target Grade -->
-    <div class="input-wrapper">
-        <label>TARGET GRADE</label>
-        <select id="studentClass">
-            <option value="" disabled selected>Select Grade</option>
-            <option value="Pre-KG">Pre-KG</option>
-            <option value="LKG">LKG</option>
-            <option value="UKG">UKG</option>
-            <option value="Grade 1">Grade 1</option>
-            <option value="Grade 2">Grade 2</option>
-            <option value="Grade 3">Grade 3</option>
-            <option value="Grade 4">Grade 4</option>
-            <option value="Grade 5">Grade 5</option>
-            <option value="Grade 6">Grade 6</option>
-            <option value="Grade 7">Grade 7</option>
-            <option value="Grade 8">Grade 8</option>
-        </select>
-    </div>
-</div>
 
-    <!-- Full Width Mobile -->
-    <div class="input-wrapper-full">
-        <label>PARENT MOBILE CONTACT</label>
+    <div class="input-wrapper-full" style="margin-bottom: 40px;">
+        <label>Parent Mobile Contact</label>
         <input type="number" id="parentMobile" placeholder="WhatsApp Primary Contact">
     </div>
     
-    <button class="btn-gold" onclick="handleLogin()">START ASSESSMENT</button>
+    <button class="btn-gold" onclick="handleLogin()" style="height: 65px; border-radius: 20px;">
+        START ASSESSMENT
+    </button>
 </div>
-
-            <!-- WAITING STATE -->
        <!-- 2. WAITING / LOBBY STATE -->
 <div id="waiting-screen" style="text-align: center;">
     <div style="margin: 30px 0;">
