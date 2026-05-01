@@ -98,15 +98,15 @@
             text-align: center; color: var(--text-muted);
             margin-bottom: 40px; font-size: 0.95rem;
         }
-/* Replace these in your <style> section */
 .grid-row { 
     display: grid; 
-    grid-template-columns: 1fr 1.5fr; /* Roll Number gets 40%, Grade gets 60% */
-    gap: 20px; 
-    margin-bottom: 25px; 
-    align-items: flex-end;
+    /* This gives Roll Number 35% and Grade 65% of the space */
+    grid-template-columns: 0.7fr 1.3fr; 
+    /* This creates the visible separation gap */
+    gap: 25px; 
+    margin-bottom: 25px;
+    width: 100%;
 }
-
 /* Specific styling for the Roll Number to make it smaller */
 #rollNo {
     max-width: 100%;
@@ -115,6 +115,8 @@
 .input-wrapper { 
     display: flex;
     flex-direction: column;
+    /* This ensures the individual boxes don't expand to touch each other */
+    width: 100%; 
 }
 
 .input-wrapper-full {
@@ -133,10 +135,10 @@
             color: var(--forest-green); font-size: 0.85rem; letter-spacing: 0.5px;
         }
         input, select {
-            width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 16px;
-            font-size: 1rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #f9fafb; color: var(--text-main);
-        }
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 2px solid #e5e7eb;
+}
         input:focus { 
             border-color: var(--gold); background: var(--white); 
             outline: none; box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
@@ -234,30 +236,33 @@
         <input type="text" id="studentName" placeholder="Enter Full Name">
     </div>
 
-    <!-- Organized Grid for Roll & Grade -->
+   
     <div class="grid-row">
-        <div class="input-wrapper">
-            <label>ROLL NUMBER</label>
-            <input type="text" id="rollNo" placeholder="Roll No">
-        </div>
-        <div class="input-wrapper">
-            <label>TARGET GRADE</label>
-            <select id="studentClass">
-                <option value="" disabled selected>Select Grade</option>
-                <option value="Pre-KG">Pre-KG</option>
-                <option value="LKG">LKG</option>
-                <option value="UKG">UKG</option>
-                <option value="Grade 1">Grade 1</option>
-                <option value="Grade 2">Grade 2</option>
-                <option value="Grade 3">Grade 3</option>
-                <option value="Grade 4">Grade 4</option>
-                <option value="Grade 5">Grade 5</option>
-                <option value="Grade 6">Grade 6</option>
-                <option value="Grade 7">Grade 7</option>
-                <option value="Grade 8">Grade 8</option>
-            </select>
-        </div>
+    <!-- Separate Box 1: Roll Number -->
+    <div class="input-wrapper">
+        <label>ROLL NUMBER</label>
+        <input type="text" id="rollNo" placeholder="Roll No">
     </div>
+    
+    <!-- Separate Box 2: Target Grade -->
+    <div class="input-wrapper">
+        <label>TARGET GRADE</label>
+        <select id="studentClass">
+            <option value="" disabled selected>Select Grade</option>
+            <option value="Pre-KG">Pre-KG</option>
+            <option value="LKG">LKG</option>
+            <option value="UKG">UKG</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+            <option value="Grade 7">Grade 7</option>
+            <option value="Grade 8">Grade 8</option>
+        </select>
+    </div>
+</div>
 
     <!-- Full Width Mobile -->
     <div class="input-wrapper-full">
