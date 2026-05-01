@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramount Student Portal | Live Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #1a237e; --accent: #00c853; --bg: #f0f2f5; --white: #ffffff; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        
+        .container { background: var(--white); width: 90%; max-width: 450px; padding: 40px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; }
+        
+        /* Form Styling */
+        .input-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.85rem; color: var(--primary); }
+        input, select { width: 100%; padding: 12px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 1rem; box-sizing: border-box; }
+        
+        .btn-login { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        
+        /* Quiz Layout */
+        #quiz-section, #waiting-screen { display: none; }
+        .q-text { font-size: 1.3rem; font-weight: 600; margin: 20px 0; }
+        .options-grid { display: grid; gap: 10px; }
+        .opt-btn { padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; background: none; cursor: pointer; text-align: left; transition: 0.2s; }
+        .opt-btn.selected { background: var(--primary); color: white; border-color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. LOGIN SECTION -->
+        <div id="login-section">
+            <h2 style="color: var(--primary); margin-bottom: 5px;">Student Login</h2>
+            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 25px;">Enter details to join the live Quizz/p>
+            
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="studentName" placeholder="e.g. Rahul Sharma">
+            </div>
+            <div class="input-group">
+                <label>Roll Number</label>
+                <input type="text" id="rollNo" placeholder="e.g. 101">
+            </div>
+            <div class="input-group">
+                <label>Class</label>
+                <select id="studentClass">
+                    <option value="" disabled selected>Select your class</option>
+                    <option value="LKG">LKG</option><option value="UKG">UKG</option>
+                    <option value="Grade 1">Grade 1</option><option value="Grade 2">Grade 2</option>
+                    <option value="Grade 3">Grade 3</option><option value="Grade 4">Grade 4</option>
+                    <option value="Grade 5">Grade 5</option><option value="Grade 6">Grade 6</option>
+                    <option value="Grade 7">Grade 7</option><option value="Grade 8">Grade 8</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Parent Mobile Number</label>
+                <input type="number" id="parentMobile" placeholder="10-digit number">
+            </div>
+            
+            <button class="btn-login" onclick="handleLogin()">Join Quiz</button>
+        </div>
+
+        <!-- 2. WAITING SECTION -->
+        <div id="waiting-screen">
+            <div style="font-size: 3rem;">⏳</div>
+            <h3 id="welcomeMsg">Welcome!</h3>
+            <p>Waiting for the teacher to push the quiz for your class...</p>
+        </div>
+
+        <!-- 3. QUIZ SECTION -->
+        <div id="quiz-section">
+            <div id="qNumber" style="color: var(--accent); font-weight: bold;">Question 1</div>
+            <div class="q-text" id="questionTitle">Loading...</div>
+            <div class="options-grid" id="optionsContainer"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // CONFIG (Same as Teacher Page)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "your-id",
+            appId: "your-app-id"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        window.handleLogin = function() {
+            const name = document.getElementById('studentName').value;
+            const roll = document.getElementById('rollNo').value;
+            const sClass = document.getElementById('studentClass').value;
+            const mobile = document.getElementById('parentMobile').value;
+
+            if(!name || !roll || !sClass || !mobile) {
+                alert("Please fill all fields!"); return;
+            }
+
+            currentUser = { name, roll, sClass, mobile };
+            
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('waiting-screen').style.display = 'block';
+            document.getElementById('welcomeMsg').innerText = `Hello, ${name}!`;
+
+            startLiveListener(sClass);
+        };
+
+        function startLiveListener(targetClass) {
+            onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    if (data.isLive) {
+                        renderQuiz(data);
+                    } else {
+                        document.getElementById('quiz-section').style.display = 'none';
+                        document.getElementById('waiting-screen').style.display = 'block';
+                    }
+                }
+            });
+        }
+
+        function renderQuiz(data) {
+            const idx = data.activeQuestionIndex;
+            const q = data.questions[idx];
+
+            document.getElementById('waiting-screen').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            document.getElementById('qNumber').innerText = `Question ${idx + 1}`;
+            document.getElementById('questionTitle').innerText = q.text;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = "";
+
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = opt;
+                btn.onclick = async () => {
+                    document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    
+                    // RECORD ANSWER IN FIREBASE
+                    const responseRef = doc(db, `live_quizzes/${data.targetClass}/responses`, `${currentUser.roll}_${idx}`);
+                    await setDoc(responseRef, {
+                        studentName: currentUser.name,
+                        rollNo: currentUser.roll,
+                        parentMobile: currentUser.mobile,
+                        questionIndex: idx,
+                        answerIndex: i,
+                        isCorrect: i === q.correctIndex
+                    });
+                };
+                container.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
