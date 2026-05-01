@@ -179,9 +179,12 @@
         </div>
         <h1 id="displayTitle">Paramount</h1>
     </div>
-    <div class="header-tag" id="timerDisplay">TIME: --:--</div>
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <div class="header-tag" id="timerDisplay">TIME: --:--</div>
+        <!-- Add this Quit Button -->
+        <button id="quitHeaderBtn" onclick="quitAssessment()" style="display:none; background:rgba(255,0,0,0.2); color:white; border:1px solid red; padding:5px 15px; border-radius:20px; cursor:pointer; font-weight:700;">QUIT</button>
+    </div>
 </header>
-
     <div class="main-wrapper">
         <div class="premium-card">
             
@@ -226,8 +229,12 @@
             </div>
 
             <!-- QUIZ INTERFACE -->
-            <div id="quiz-section">
-                <div class="q-badge" id="qNumber">QUESTION 1</div>
+           <div id="quiz-section">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="q-badge" id="qNumber">QUESTION 1</div>
+        <!-- Add this Save & Exit Button -->
+        <button onclick="saveAndExit()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-weight:700; font-size:0.8rem; text-decoration:underline;">SAVE & EXIT</button>
+    </div>
                 <div class="q-text" id="questionTitle">Loading elite assessment content...</div>
                 
                 <div id="optionsContainer"></div>
@@ -305,18 +312,44 @@
         });
     }
 
-    function startQuizSession() {
-        document.getElementById('waiting-screen').style.display = 'none';
-        document.getElementById('quiz-section').style.display = 'block';
-        document.getElementById('displayTitle').innerText = quizData.title || "Assessment";
-        
-        // Timer Logic: Only starts once
-        if (!timerInterval && quizData.duration) {
-            timeLeft = parseInt(quizData.duration) * 60;
-            startCountdown();
-        }
-        renderQuiz();
+   async function startQuizSession() {
+    // Reference to this specific student's start time
+    const startTimeRef = doc(db, `live_quizzes/${quizData.targetClass}/start_times`, currentUser.roll);
+    const startTimeSnap = await getDoc(startTimeRef);
+    
+    let startTime;
+    if (!startTimeSnap.exists()) {
+        // First time entering: Save current timestamp
+        startTime = Date.now();
+        await setDoc(startTimeRef, { time: startTime });
+    } else {
+        // Returning student: Retrieve their original start timestamp
+        startTime = startTimeSnap.data().time;
     }
+
+    // Calculate how much time is left
+    const totalDurationMs = parseInt(quizData.duration) * 60 * 1000;
+    const elapsedTime = Date.now() - startTime;
+    timeLeft = Math.floor((totalDurationMs - elapsedTime) / 1000);
+
+    // If they returned after the timer expired
+    if (timeLeft <= 0) {
+        alert("Out of time! Your assessment was submitted automatically.");
+        finalSubmit(true); 
+        return;
+    }
+
+    // Show Quiz UI
+    document.getElementById('waiting-screen').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+    document.getElementById('quitHeaderBtn').style.display = 'block';
+    document.getElementById('displayTitle').innerText = quizData.title || "Assessment";
+    
+    if (!timerInterval) {
+        startCountdown();
+    }
+    renderQuiz();
+}
 
     function startCountdown() {
         timerInterval = setInterval(() => {
@@ -324,11 +357,11 @@
             const secs = timeLeft % 60;
             document.getElementById('timerDisplay').innerText = `TIME: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
             
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                alert("Assessment time has expired. Auto-submitting...");
-                finalSubmit();
-            }
+            // Inside your startCountdown interval:
+if (timeLeft <= 0) {
+    clearInterval(timerInterval);
+    finalSubmit(true); // Pass 'true' to signify an auto-submission
+}
             timeLeft--;
         }, 1000);
     }
@@ -380,6 +413,27 @@
             location.reload();
         }
     };
+        // Function for Save & Exit
+window.saveAndExit = function() {
+    if(confirm("Your progress is saved in real-time. You can return later, but the timer will NOT stop. Exit now?")) {
+        location.reload(); 
+    }
+};
+
+// Function for Quitting (Forfeit)
+window.quitAssessment = async function() {
+    if(confirm("Are you sure you want to quit? This will forfeit your attempt completely.")) {
+        const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+        await setDoc(quitRef, {
+            studentName: currentUser.name,
+            rollNo: currentUser.roll,
+            status: "QUIT/FORFEIT",
+            timestamp: new Date().toISOString()
+        });
+        alert("Assessment forfeited.");
+        location.reload();
+    }
+};
 </script>
 </body>
 </html>
