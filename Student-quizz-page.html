@@ -220,14 +220,19 @@
             </div>
 
             <!-- WAITING STATE -->
-            <div id="waiting-screen" style="text-align: center;">
-                <div style="margin: 60px 0;">
-                    <i class="fa-solid fa-crown fa-beat" style="font-size: 5rem; color: var(--gold);"></i>
-                </div>
-                <h2 class="section-title" id="welcomeMsg"></h2>
-                <p class="section-subtitle">Please remain on this screen. The assessment will begin as soon as the administrator launches the session.</p>
-            </div>
-
+       <!-- 2. WAITING / LOBBY STATE -->
+<div id="waiting-screen" style="text-align: center;">
+    <div style="margin: 30px 0;">
+        <i class="fa-solid fa-crown fa-beat" style="font-size: 4rem; color: var(--gold);"></i>
+    </div>
+    <h2 class="section-title" id="welcomeMsg">Welcome</h2>
+    <p class="section-subtitle">Select an available assessment below to begin.</p>
+    
+    <!-- NEW LOBBY LIST CONTAINER -->
+    <div id="lobby-list" style="margin-top: 30px;">
+        <div id="no-quiz-msg" style="color: var(--text-muted); font-style: italic;">Searching for live assessments for your grade...</div>
+    </div>
+</div>
             <!-- QUIZ INTERFACE -->
            <div id="quiz-section">
     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -305,62 +310,85 @@
     
     startLiveListener(sClass);
 };
-// Update your startLiveListener to handle quiz deletion
+// NEW: Listener that shows ALL available quizzes for the student's class
 function startLiveListener(targetClass) {
+    const lobbyList = document.getElementById('lobby-list');
+    const noQuizMsg = document.getElementById('no-quiz-msg');
+
     onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+        lobbyList.innerHTML = ""; // Clear the lobby list for refresh
+
         if (!snapshot.exists()) {
-            // Teacher deleted the quiz
-            alert("This quiz has been ended or deleted by the teacher.");
-            localStorage.removeItem('paramount_student');
-            location.reload();
+            noQuizMsg.style.display = "block";
+            lobbyList.appendChild(noQuizMsg);
+            // If they were already in a quiz and it was deleted by teacher, kick them out
+            if (document.getElementById('quiz-section').style.display === 'block') {
+                alert("This quiz has been ended by the teacher.");
+                localStorage.removeItem('paramount_student');
+                location.reload();
+            }
             return;
         }
-        
+
         quizData = snapshot.data();
-        if (quizData.isLive && quizData.questions && quizData.questions.length > 0) {
-            startQuizSession();
+        if (quizData.isLive) {
+            noQuizMsg.style.display = "none";
+            const card = document.createElement('div');
+            card.className = "premium-card";
+            card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
+            card.innerHTML = `
+                <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+                    Subject: ${quizData.subject} | Duration: ${quizData.duration} Mins
+                </p>
+                <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
+            `;
+            lobbyList.appendChild(card);
         }
     });
 }
+   // NEW: This is triggered ONLY when the student clicks the button in the lobby
+window.startActualQuiz = async function() {
+    if(!confirm("Are you ready? The timer will start immediately once you click OK.")) return;
 
-   async function startQuizSession() {
-    // Reference to this specific student's start time
+    // We check for an existing start time ONLY when the quiz actually starts
     const startTimeRef = doc(db, `live_quizzes/${quizData.targetClass}/start_times`, currentUser.roll);
     const startTimeSnap = await getDoc(startTimeRef);
     
     let startTime;
     if (!startTimeSnap.exists()) {
-        // First time entering: Save current timestamp
         startTime = Date.now();
-        await setDoc(startTimeRef, { time: startTime });
+        await setDoc(startTimeRef, { 
+            time: startTime,
+            studentName: currentUser.name,
+            rollNo: currentUser.roll 
+        });
     } else {
-        // Returning student: Retrieve their original start timestamp
         startTime = startTimeSnap.data().time;
     }
 
-    // Calculate how much time is left
+    // Timer calculation based on the saved start time
     const totalDurationMs = parseInt(quizData.duration) * 60 * 1000;
     const elapsedTime = Date.now() - startTime;
     timeLeft = Math.floor((totalDurationMs - elapsedTime) / 1000);
 
-    // If they returned after the timer expired
     if (timeLeft <= 0) {
-        alert("Out of time! Your assessment was submitted automatically.");
-        finalSubmit(true); 
+        alert("Sorry, your time for this assessment has already expired.");
+        finalSubmit(true);
         return;
     }
 
-    // Show Quiz UI
+    // Switch View to the Quiz
     document.getElementById('waiting-screen').style.display = 'none';
     document.getElementById('quiz-section').style.display = 'block';
     document.getElementById('quitHeaderBtn').style.display = 'block';
-    document.getElementById('displayTitle').innerText = quizData.title || "Assessment";
+    document.getElementById('displayTitle').innerText = quizData.title;
     
     if (!timerInterval) {
         startCountdown();
     }
     renderQuiz();
-}
+};
 
     function startCountdown() {
         timerInterval = setInterval(() => {
