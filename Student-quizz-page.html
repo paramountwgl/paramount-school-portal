@@ -99,18 +99,27 @@
             margin-bottom: 40px; font-size: 0.95rem;
         }
 
-        .input-wrapper { 
-            flex: 1; 
-            min-width: 200px; /* Ensures they stack instead of overlapping */
-            margin-bottom: 0px; 
-        }
-        
-        .grid-row { 
-            display: flex; 
-            gap: 20px; 
-            margin-bottom: 25px; 
-            flex-wrap: wrap; /* Prevents overlapping on small screens */
-        }
+       /* Find the .grid-row class in your <style> and replace it with this */
+.grid-row { 
+    display: flex; 
+    gap: 20px; 
+    margin-bottom: 25px; 
+    width: 100%;
+    flex-wrap: wrap; /* This is the key to preventing overlap */
+}
+
+/* Add or update the .input-wrapper class */
+.input-wrapper { 
+    flex: 1; 
+    min-width: 240px; /* Forces stacking if the space gets too tight */
+    margin-bottom: 0px; 
+}
+
+/* Ensures the full-width inputs look consistent */
+.input-wrapper-full {
+    width: 100%;
+    margin-bottom: 25px;
+}
 
         label { 
             display: block; font-weight: 700; margin-bottom: 10px; 
@@ -207,24 +216,26 @@
         <div class="premium-card">
             
             <!-- AUTHENTICATION -->
-            <div id="login-section">
-                <h2 class="section-title">Student Login</h2>
-                <p class="section-subtitle">Welcome to the Paramount Digital Excellence Portal.</p>
-                
-                <div class="input-wrapper">
-                    <label>FULL NAME</label>
-                    <input type="text" id="studentName" placeholder="Enter Full Name">
-                </div>
-                <div style="display: flex; gap: 20px;">
-                    <div class="input-wrapper" style="flex: 1;">
-                        <label>ROLL NUMBER</label>
-                        <input type="text" id="rollNo" placeholder="Roll No">
-                    </div>
-                    <div class="input-wrapper" style="flex: 1;">
-                        <label>TARGET GRADE</label>
-                        <select id="studentClass">
-                            <option value="" disabled selected>Select Grade</option>
-                            <option value="Pre-KG">Pre-KG</option>
+           <!-- Replace your current #login-section HTML with this reorganized version -->
+<div id="login-section">
+    <h2 class="section-title">Student Login</h2>
+    <p class="section-subtitle">Welcome to the Paramount Digital Excellence Portal.</p>
+    
+    <div class="input-wrapper-full">
+        <label>FULL NAME</label>
+        <input type="text" id="studentName" placeholder="Enter Full Name">
+    </div>
+
+    <div class="grid-row">
+        <div class="input-wrapper">
+            <label>ROLL NUMBER</label>
+            <input type="text" id="rollNo" placeholder="Roll No">
+        </div>
+        <div class="input-wrapper">
+            <label>TARGET GRADE</label>
+            <select id="studentClass">
+                <option value="" disabled selected>Select Grade</option>
+                <option value="Pre-KG">Pre-KG</option>
                             <option value="LKG">LKG</option>
                             <option value="UKG">UKG</option>
                             <option value="Grade 1">Grade 1</option>
@@ -235,16 +246,17 @@
                             <option value="Grade 6">Grade 6</option>
                             <option value="Grade 7">Grade 7</option>
                             <option value="Grade 8">Grade 8</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-wrapper">
-                    <label>PARENT MOBILE CONTACT</label>
-                    <input type="number" id="parentMobile" placeholder="WhatsApp Primary Contact">
-                </div>
-                
-                <button class="btn-gold" onclick="handleLogin()">START ASSESSMENT</button>
-            </div>
+            </select>
+        </div>
+    </div>
+
+    <div class="input-wrapper-full">
+        <label>PARENT MOBILE CONTACT</label>
+        <input type="number" id="parentMobile" placeholder="WhatsApp Primary Contact">
+    </div>
+    
+    <button class="btn-gold" onclick="handleLogin()">START ASSESSMENT</button>
+</div>
 
             <!-- WAITING STATE -->
        <!-- 2. WAITING / LOBBY STATE -->
