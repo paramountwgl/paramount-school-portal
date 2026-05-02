@@ -347,7 +347,7 @@
     const db = getFirestore(app);
 
     let currentUser = null;
-    let localAnswers = {};
+    let localAnswers = {}; // This will now be cleared on every new quiz start
     let quizData = null;
     let localIdx = 0;
 
@@ -370,61 +370,56 @@
     };
 
     function startLiveListener(targetClass) {
-    const lobbyList = document.getElementById('lobby-list');
-    const noQuizMsg = document.getElementById('no-quiz-msg');
+        const lobbyList = document.getElementById('lobby-list');
+        const noQuizMsg = document.getElementById('no-quiz-msg');
 
-    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-        lobbyList.innerHTML = ""; 
+        onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+            lobbyList.innerHTML = ""; 
 
-        if (!snapshot.exists()) {
-            noQuizMsg.style.display = "block";
-            lobbyList.appendChild(noQuizMsg);
-            
-            // Existing logic: If quiz is deleted entirely while student is inside
-            if (document.getElementById('quiz-section').style.display === 'block') {
-                alert("This assessment is no longer available.");
-                localStorage.removeItem('paramount_student');
-                location.reload();
+            if (!snapshot.exists()) {
+                noQuizMsg.style.display = "block";
+                if (document.getElementById('quiz-section').style.display === 'block') {
+                    alert("Assessment ended by teacher.");
+                    exitAndClearSession();
+                }
+                return;
             }
-            return;
-        }
 
-        quizData = snapshot.data();
+            quizData = snapshot.data();
 
-        // --- NEW MASTER STOP LOGIC ---
-        // If the teacher sets isLive to false while the student is currently taking the quiz
-        if (quizData.isLive === false && document.getElementById('quiz-section').style.display === 'block') {
-            alert("The teacher has ended this assessment. Your progress is being submitted automatically.");
-            window.finalSubmit(); // Triggers your existing submission logic
-            return; 
-        }
+            // --- IMPROVED MASTER STOP LOGIC ---
+            if (quizData.isLive === false) {
+                // If they are currently inside the quiz, force submit and kick out
+                if (document.getElementById('quiz-section').style.display === 'block') {
+                    alert("The teacher has ended this assessment. Your progress is being submitted now.");
+                    finalSubmit(true); // 'true' bypasses the confirm dialog
+                }
+                // Also clear lobby so they can't click start again
+                noQuizMsg.style.display = "block";
+                return;
+            }
 
-        // --- EXISTING LOBBY LOGIC ---
-        if (quizData.isLive) {
+            // --- LOBBY LOGIC ---
             noQuizMsg.style.display = "none";
             const card = document.createElement('div');
             card.className = "premium-card";
             card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
             card.innerHTML = `
                 <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
-                    Subject: ${quizData.subject}
-                </p>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Subject: ${quizData.subject}</p>
                 <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
             `;
             lobbyList.appendChild(card);
-        } else {
-            // If the quiz exists but is not live, show the "No Quiz" message
-            noQuizMsg.style.display = "block";
-            lobbyList.appendChild(noQuizMsg);
-        }
-    });
-}
+        });
+    }
 
-   window.startActualQuiz = async function() {
+    window.startActualQuiz = async function() {
         if(!confirm("Are you ready to begin?")) return;
         
-        // 1. Fetch previously saved answers from Firebase before showing the quiz
+        // CLEANUP: Reset local memory so old quiz data doesn't leak into the new one
+        localAnswers = {};
+        localIdx = 0;
+
         await loadExistingAnswers();
 
         document.getElementById('waiting-screen').style.display = 'none';
@@ -435,25 +430,15 @@
         renderQuiz();
     };
 
-    // --- NAVIGATION ---
-    window.changeQuestion = function(dir) {
-        localIdx += dir;
-        renderQuiz();
-    };
-
-    // --- DYNAMIC RENDERING FOR OPTIONS vs TEXT ---
     function renderQuiz() {
         const q = quizData.questions[localIdx];
         document.getElementById('qNumber').innerText = `QUESTION ${localIdx + 1} OF ${quizData.questions.length}`;
         document.getElementById('questionTitle').innerText = q.text;
-        
 
         const container = document.getElementById('optionsContainer');
         container.innerHTML = "";
 
-        // Check the type defined in the Admin Designer ('options' or 'text')
         if (q.type === 'options' || !q.type) {
-            // MULTIPLE CHOICE RENDER
             q.options.forEach((opt, i) => {
                 const isSelected = localAnswers[localIdx] === i;
                 const div = document.createElement('div');
@@ -463,54 +448,46 @@
                 container.appendChild(div);
             });
         } else {
-            // TEXT ENTRY RENDER
             const savedText = localAnswers[localIdx] || "";
             container.innerHTML = `
                 <div style="background: #f8fafc; padding: 25px; border-radius: 20px; border: 2px dashed var(--gold);">
-                    <label style="font-size: 0.75rem; color: var(--forest-green); font-weight: 700; margin-bottom: 10px; display: block;">TYPE YOUR ANSWER BELOW</label>
-                    <textarea id="manualInput" 
-                        placeholder="Start typing here..." 
-                        style="width: 100%; height: 150px; border: none; background: transparent; font-size: 1.1rem; font-family: inherit; outline: none; resize: none;"
+                    <textarea id="manualInput" placeholder="Type here..." 
+                        style="width: 100%; height: 150px; border: none; background: transparent; font-size: 1.1rem; outline: none; resize: none;"
                         oninput="saveAnswer(this.value, false)">${savedText}</textarea>
                 </div>
             `;
         }
 
         document.getElementById('prevBtn').disabled = (localIdx === 0);
-        document.getElementById('nextBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> SAVE & NEXT`;
+        document.getElementById('nextBtn').innerHTML = (localIdx === quizData.questions.length - 1) ? `FINISH` : `<i class="fa-solid fa-floppy-disk"></i> SAVE & NEXT`;
         document.getElementById('submitBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'block' : 'none';
     }
 
-    // --- UNIFIED SAVE FUNCTION ---
+    window.changeQuestion = function(dir) {
+        localIdx += dir;
+        renderQuiz();
+    };
+
     window.saveAnswer = async function(value, isOption) {
         localAnswers[localIdx] = value;
-        
-        // Only re-render for options to show the "selected" color immediately
         if (isOption) renderQuiz();
 
         const resRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_Q${localIdx}`);
-        
-        const payload = {
+        await setDoc(resRef, {
             studentName: currentUser.name,
             rollNo: currentUser.roll,
             parentMobile: currentUser.mobile,
             qIdx: localIdx,
             type: quizData.questions[localIdx].type || 'options',
+            choice: isOption ? value : null,
+            typedAnswer: isOption ? null : value,
+            correct: isOption ? (value === quizData.questions[localIdx].correctIndex) : null,
             timestamp: new Date().toISOString()
-        };
-
-        if (isOption) {
-            payload.choice = value;
-            payload.correct = (value === quizData.questions[localIdx].correctIndex);
-        } else {
-            payload.typedAnswer = value;
-        }
-
-        await setDoc(resRef, payload);
+        });
     };
 
-    window.finalSubmit = async function() {
-        if(!confirm("Confirm assessment completion?")) return;
+    window.finalSubmit = async function(force = false) {
+        if(!force && !confirm("Confirm submission?")) return;
         try {
             const statusRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
             await setDoc(statusRef, {
@@ -519,58 +496,27 @@
                 status: "SUBMITTED",
                 timestamp: new Date().toISOString()
             });
-            localStorage.removeItem('paramount_student'); 
             alert("Assessment Submitted Successfully!");
-            location.reload();
+            exitAndClearSession();
         } catch (e) { console.error(e); }
     };
 
-    window.saveAndExit = function() {
-        if(confirm("Exit to portal? Your progress is saved.")) location.reload();
-    };
-        window.stopAssessment = async function(quizId) {
-    if(confirm("Are you sure you want to stop this assessment? Students will be forced to submit immediately.")) {
-        try {
-            const quizRef = doc(db, "live_quizzes", quizId);
-            await setDoc(quizRef, { isLive: false }, { merge: true });
-            alert("Assessment stopped. All active student sessions are now closing.");
-        } catch (e) {
-            console.error("Error stopping quiz:", e);
-            alert("Failed to stop assessment.");
-        }
+    // Helper to completely clear the UI and local state
+    function exitAndClearSession() {
+        localStorage.removeItem('paramount_student');
+        localAnswers = {};
+        location.reload();
     }
-};
 
-    window.quitAssessment = async function() {
-        if(confirm("Forfeit and quit?")) {
-            const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
-            await setDoc(quitRef, {
-                studentName: currentUser.name,
-                rollNo: currentUser.roll,
-                status: "QUIT/FORFEIT",
-                timestamp: new Date().toISOString()
-            });
-            localStorage.removeItem('paramount_student');
-            location.reload();
-        }
-    };
-        async function loadExistingAnswers() {
-        // Loop through the quiz questions to check if responses exist in Firebase
+    window.saveAndExit = function() { location.reload(); };
+
+    async function loadExistingAnswers() {
         for (let i = 0; i < quizData.questions.length; i++) {
             const resRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_Q${i}`);
-            try {
-                const resSnap = await getDoc(resRef);
-                if (resSnap.exists()) {
-                    const data = resSnap.data();
-                    // Restore the answer based on question type
-                    if (data.type === 'text') {
-                        localAnswers[i] = data.typedAnswer;
-                    } else {
-                        localAnswers[i] = data.choice;
-                    }
-                }
-            } catch (e) {
-                console.error("Error loading saved answer for Q" + i, e);
+            const resSnap = await getDoc(resRef);
+            if (resSnap.exists()) {
+                const data = resSnap.data();
+                localAnswers[i] = (data.type === 'text') ? data.typedAnswer : data.choice;
             }
         }
     }
