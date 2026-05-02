@@ -68,27 +68,37 @@
        .main-wrapper {
     flex: 1;
     display: flex;
-    justify-content: center; /* Keeps it centered but we use margin for the 'left' feel */
-    align-items: flex-start; 
-    padding: 120px 40px 80px 20px; /* Increased top and right padding */
-    background-image: radial-gradient(circle at 30% 30%, #f1f5f1 0%, #fdfdfb 100%);
+    justify-content: center; /* Horizontally centers the card */
+    align-items: center;     /* Vertically centers the card */
+    padding: 40px 20px;      /* Safeguard padding for smaller screens */
+    background-image: radial-gradient(circle at 50% 50%, #f1f5f1 0%, #fdfdfb 100%);
     box-sizing: border-box;
-    overflow-y: auto;
+    min-height: calc(100vh - 100px); /* Adjusts for header/footer height */
 }
 
        .premium-card {
     background: var(--white);
     border-radius: 32px;
     width: 100%;
-    max-width: 700px; /* Slightly wider for a more 'Elite' look */
-    padding: 60px; /* More internal breathing room */
+    max-width: 700px;
+    padding: 60px;
     box-shadow: 
         0 25px 60px rgba(6, 78, 59, 0.12),
         0 10px 20px rgba(0, 0, 0, 0.03);
     position: relative;
-    border: 1px solid rgba(212, 175, 55, 0.2); /* Subtle gold border */
-    margin-right: 5%; /* Shifts the box slightly to the left for premium asymmetry */
-    animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    /* Entrance animation for a premium feel */
+    animation: premiumFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+        @keyframes premiumFadeIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.95) translateY(20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+    }
 }
         @keyframes slideInUp {
     from { opacity: 0; transform: translateY(30px); }
