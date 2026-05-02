@@ -69,24 +69,26 @@
 
         /* --- MAIN LAYOUT --- */
         .main-wrapper {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px 20px;
-            background-image: radial-gradient(circle at 50% 50%, #f1f5f1 0%, #fdfdfb 100%);
-        }
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed from center to prevent top overlap */
+    padding: 100px 20px 60px 20px; /* Added significant top padding for header clearance */
+    background-image: radial-gradient(circle at 50% 50%, #f1f5f1 0%, #fdfdfb 100%);
+    box-sizing: border-box;
+}
 
         .premium-card {
-            background: var(--white);
-            border-radius: 32px;
-            width: 100%;
-            max-width: 650px;
-            padding: 50px;
-            box-shadow: var(--shadow-premium);
-            position: relative;
-            border: 1px solid rgba(6, 78, 59, 0.05);
-        }
+    background: var(--white);
+    border-radius: 32px;
+    width: 100%;
+    max-width: 650px;
+    padding: 50px;
+    box-shadow: var(--shadow-premium);
+    position: relative;
+    border: 1px solid rgba(6, 78, 59, 0.05);
+    margin-top: 20px; /* Extra breathing room */
+}
 
         /* --- INPUTS & SECTIONS --- */
         .section-title {
@@ -513,6 +515,25 @@ function exitAndClearSession() {
             timestamp: new Date().toISOString()
         });
     };
+        window.quitAssessment = async function() {
+    if(confirm("Are you sure you want to quit? This will forfeit your attempt and clear progress.")) {
+        try {
+            const quitRef = doc(db, `live_quizzes/${quizData.targetClass}/responses`, `${currentUser.roll}_STATUS`);
+            await setDoc(quitRef, {
+                studentName: currentUser.name,
+                rollNo: currentUser.roll,
+                status: "QUIT/FORFEIT",
+                timestamp: new Date().toISOString()
+            });
+            
+            alert("Assessment forfeited.");
+            exitAndClearSession(); // Clears memory and returns to login
+        } catch (e) {
+            console.error("Quit Error:", e);
+            exitAndClearSession();
+        }
+    }
+};
 
     window.finalSubmit = async function(force = false) {
         if(!force && !confirm("Confirm submission?")) return;
