@@ -284,6 +284,7 @@
     </button>
 </div>
        <!-- 2. WAITING / LOBBY STATE -->
+<!-- 2. WAITING / LOBBY STATE -->
 <div id="waiting-screen" style="text-align: center;">
     <div style="margin: 30px 0;">
         <i class="fa-solid fa-crown fa-beat" style="font-size: 4rem; color: var(--gold);"></i>
@@ -291,10 +292,17 @@
     <h2 class="section-title" id="welcomeMsg">Welcome</h2>
     <p class="section-subtitle">Select an available assessment below to begin.</p>
     
-    <!-- NEW LOBBY LIST CONTAINER -->
-    <div id="lobby-list" style="margin-top: 30px;">
-        <div id="no-quiz-msg" style="color: var(--text-muted); font-style: italic;">Searching for live assessments for your grade...</div>
+    <!-- LOBBY LIST CONTAINER -->
+    <div id="lobby-list" style="margin-top: 30px; min-height: 100px;">
+        <div id="no-quiz-msg" style="display: none; color: var(--text-muted); font-style: italic; padding: 20px; border: 1.5px dashed #e2e8f0; border-radius: 20px;">
+            <i class="fa-solid fa-hourglass-start"></i> No live assessments found for your grade. Please wait for your teacher...
+        </div>
     </div>
+
+    <!-- LOGOUT / SWITCH STUDENT BUTTON -->
+    <button onclick="studentLogout()" style="margin-top: 40px; background: none; border: none; color: var(--forest-green); font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 0.9rem;">
+        <i class="fa-solid fa-user-slash"></i> Not you? Log out to switch student
+    </button>
 </div>
             <!-- QUIZ INTERFACE -->
            <div id="quiz-section">
@@ -369,50 +377,70 @@
         startLiveListener(sClass);
     };
 
-    function startLiveListener(targetClass) {
-        const lobbyList = document.getElementById('lobby-list');
-        const noQuizMsg = document.getElementById('no-quiz-msg');
+   function startLiveListener(targetClass) {
+    const lobbyList = document.getElementById('lobby-list');
+    const noQuizMsg = document.getElementById('no-quiz-msg');
 
-        onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-            lobbyList.innerHTML = ""; 
+    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+        // Reset the dynamic list
+        const existingCards = lobbyList.querySelectorAll('.premium-card');
+        existingCards.forEach(card => card.remove());
 
-            if (!snapshot.exists()) {
-                noQuizMsg.style.display = "block";
-                if (document.getElementById('quiz-section').style.display === 'block') {
-                    alert("Assessment ended by teacher.");
-                    exitAndClearSession();
-                }
-                return;
+        // CASE 1: No Quiz Document Exists or it's not Live
+        if (!snapshot.exists() || snapshot.data().isLive === false) {
+            noQuizMsg.style.display = "block";
+            
+            // Force-exit if they are inside a quiz that just got stopped/deleted
+            if (document.getElementById('quiz-section').style.display === 'block') {
+                alert("The assessment session has ended.");
+                exitAndClearSession();
             }
+            return;
+        }
 
-            quizData = snapshot.data();
-
-            // --- IMPROVED MASTER STOP LOGIC ---
-            if (quizData.isLive === false) {
-                // If they are currently inside the quiz, force submit and kick out
-                if (document.getElementById('quiz-section').style.display === 'block') {
-                    alert("The teacher has ended this assessment. Your progress is being submitted now.");
-                    finalSubmit(true); // 'true' bypasses the confirm dialog
-                }
-                // Also clear lobby so they can't click start again
-                noQuizMsg.style.display = "block";
-                return;
-            }
-
-            // --- LOBBY LOGIC ---
-            noQuizMsg.style.display = "none";
-            const card = document.createElement('div');
-            card.className = "premium-card";
-            card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
-            card.innerHTML = `
-                <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Subject: ${quizData.subject}</p>
-                <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
-            `;
-            lobbyList.appendChild(card);
-        });
+        // CASE 2: Quiz is Live
+        quizData = snapshot.data();
+        noQuizMsg.style.display = "none";
+        
+        const card = document.createElement('div');
+        card.className = "premium-card";
+        card.style = "padding: 25px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5; box-shadow: 0 10px 20px rgba(212,175,55,0.1);";
+        card.innerHTML = `
+            <div style="text-align:left;">
+                <h3 style="color: var(--forest-green); margin-bottom: 5px; font-family:'Playfair Display';">${quizData.title}</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+                    <i class="fa-solid fa-book-open"></i> Subject: ${quizData.subject}
+                </p>
+                <button class="btn-gold" onclick="startActualQuiz()" style="padding: 12px 25px; font-size: 0.9rem; width: auto;">
+                    START ASSESSMENT <i class="fa-solid fa-arrow-right" style="margin-left:10px;"></i>
+                </button>
+            </div>
+        `;
+        lobbyList.appendChild(card);
+    });
+}
+         
+        window.studentLogout = function() {
+    if(confirm("Log out of your student profile?")) {
+        // 1. Wipe local identity
+        localStorage.removeItem('paramount_student');
+        
+        // 2. Clear current session variables
+        currentUser = null;
+        localAnswers = {};
+        
+        // 3. Reset UI and reload to Login Screen
+        location.reload();
     }
+};
 
+// Update exitAndClearSession to be cleaner
+function exitAndClearSession() {
+    localStorage.removeItem('paramount_student');
+    localAnswers = {};
+    location.reload();
+}
+        
     window.startActualQuiz = async function() {
         if(!confirm("Are you ready to begin?")) return;
         
