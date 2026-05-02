@@ -370,40 +370,56 @@
     };
 
     function startLiveListener(targetClass) {
-        const lobbyList = document.getElementById('lobby-list');
-        const noQuizMsg = document.getElementById('no-quiz-msg');
+    const lobbyList = document.getElementById('lobby-list');
+    const noQuizMsg = document.getElementById('no-quiz-msg');
 
-        onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-            lobbyList.innerHTML = ""; 
+    onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
+        lobbyList.innerHTML = ""; 
 
-            if (!snapshot.exists()) {
-                noQuizMsg.style.display = "block";
-                lobbyList.appendChild(noQuizMsg);
-                if (document.getElementById('quiz-section').style.display === 'block') {
-                    alert("This quiz has been ended by the teacher.");
-                    localStorage.removeItem('paramount_student');
-                    location.reload();
-                }
-                return;
+        if (!snapshot.exists()) {
+            noQuizMsg.style.display = "block";
+            lobbyList.appendChild(noQuizMsg);
+            
+            // Existing logic: If quiz is deleted entirely while student is inside
+            if (document.getElementById('quiz-section').style.display === 'block') {
+                alert("This assessment is no longer available.");
+                localStorage.removeItem('paramount_student');
+                location.reload();
             }
+            return;
+        }
 
-            quizData = snapshot.data();
-            if (quizData.isLive) {
-                noQuizMsg.style.display = "none";
-                const card = document.createElement('div');
-                card.className = "premium-card";
-                card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
-                card.innerHTML = `
-                    <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
-                        Subject: ${quizData.subject}
-                    </p>
-                    <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
-                `;
-                lobbyList.appendChild(card);
-            }
-        });
-    }
+        quizData = snapshot.data();
+
+        // --- NEW MASTER STOP LOGIC ---
+        // If the teacher sets isLive to false while the student is currently taking the quiz
+        if (quizData.isLive === false && document.getElementById('quiz-section').style.display === 'block') {
+            alert("The teacher has ended this assessment. Your progress is being submitted automatically.");
+            window.finalSubmit(); // Triggers your existing submission logic
+            return; 
+        }
+
+        // --- EXISTING LOBBY LOGIC ---
+        if (quizData.isLive) {
+            noQuizMsg.style.display = "none";
+            const card = document.createElement('div');
+            card.className = "premium-card";
+            card.style = "padding: 20px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5;";
+            card.innerHTML = `
+                <h3 style="color: var(--forest-green); margin-bottom: 5px;">${quizData.title}</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+                    Subject: ${quizData.subject}
+                </p>
+                <button class="btn-gold" onclick="startActualQuiz()" style="padding: 10px 30px; font-size: 0.9rem;">START ASSESSMENT</button>
+            `;
+            lobbyList.appendChild(card);
+        } else {
+            // If the quiz exists but is not live, show the "No Quiz" message
+            noQuizMsg.style.display = "block";
+            lobbyList.appendChild(noQuizMsg);
+        }
+    });
+}
 
    window.startActualQuiz = async function() {
         if(!confirm("Are you ready to begin?")) return;
@@ -430,6 +446,7 @@
         const q = quizData.questions[localIdx];
         document.getElementById('qNumber').innerText = `QUESTION ${localIdx + 1} OF ${quizData.questions.length}`;
         document.getElementById('questionTitle').innerText = q.text;
+        
 
         const container = document.getElementById('optionsContainer');
         container.innerHTML = "";
@@ -460,7 +477,7 @@
         }
 
         document.getElementById('prevBtn').disabled = (localIdx === 0);
-        document.getElementById('nextBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'none' : 'block';
+        document.getElementById('nextBtn').innerHTML = `<i class="fa-solid fa-floppy-disk"></i> SAVE & NEXT`;
         document.getElementById('submitBtn').style.display = (localIdx === quizData.questions.length - 1) ? 'block' : 'none';
     }
 
@@ -511,6 +528,18 @@
     window.saveAndExit = function() {
         if(confirm("Exit to portal? Your progress is saved.")) location.reload();
     };
+        window.stopAssessment = async function(quizId) {
+    if(confirm("Are you sure you want to stop this assessment? Students will be forced to submit immediately.")) {
+        try {
+            const quizRef = doc(db, "live_quizzes", quizId);
+            await setDoc(quizRef, { isLive: false }, { merge: true });
+            alert("Assessment stopped. All active student sessions are now closing.");
+        } catch (e) {
+            console.error("Error stopping quiz:", e);
+            alert("Failed to stop assessment.");
+        }
+    }
+};
 
     window.quitAssessment = async function() {
         if(confirm("Forfeit and quit?")) {
