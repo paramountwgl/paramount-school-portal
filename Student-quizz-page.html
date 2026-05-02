@@ -104,7 +104,28 @@
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* --- LOBBY LIST CENTERING --- */
+#lobby-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the assessment card horizontally */
+    justify-content: center; /* Ensures vertical balance */
+    width: 100%;
+    margin-top: 30px;
+    min-height: 150px;
+}
 
+/* Update the dynamic card style to fit the center better */
+#lobby-list .premium-card {
+    border: 2px solid var(--gold);
+    background: #fffdf5;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px; /* Constrains the width for a more elegant, centered look */
+    text-align: center; /* Centers the text inside the yellow box */
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1);
+    margin: 0 auto; /* Extra insurance for centering */
+}
         /* --- INPUTS & SECTIONS --- */
         .section-title {
             font-family: 'Playfair Display', serif;
@@ -399,15 +420,12 @@
     const noQuizMsg = document.getElementById('no-quiz-msg');
 
     onSnapshot(doc(db, "live_quizzes", targetClass), (snapshot) => {
-        // Reset the dynamic list
+        // Clear existing dynamic cards
         const existingCards = lobbyList.querySelectorAll('.premium-card');
         existingCards.forEach(card => card.remove());
 
-        // CASE 1: No Quiz Document Exists or it's not Live
         if (!snapshot.exists() || snapshot.data().isLive === false) {
             noQuizMsg.style.display = "block";
-            
-            // Force-exit if they are inside a quiz that just got stopped/deleted
             if (document.getElementById('quiz-section').style.display === 'block') {
                 alert("The assessment session has ended.");
                 exitAndClearSession();
@@ -415,23 +433,20 @@
             return;
         }
 
-        // CASE 2: Quiz is Live
         quizData = snapshot.data();
         noQuizMsg.style.display = "none";
         
+        // Create the centered assessment card
         const card = document.createElement('div');
         card.className = "premium-card";
-        card.style = "padding: 25px; border: 2px solid var(--gold); margin-bottom: 15px; background: #fffdf5; box-shadow: 0 10px 20px rgba(212,175,55,0.1);";
         card.innerHTML = `
-            <div style="text-align:left;">
-                <h3 style="color: var(--forest-green); margin-bottom: 5px; font-family:'Playfair Display';">${quizData.title}</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
-                    <i class="fa-solid fa-book-open"></i> Subject: ${quizData.subject}
-                </p>
-                <button class="btn-gold" onclick="startActualQuiz()" style="padding: 12px 25px; font-size: 0.9rem; width: auto;">
-                    START ASSESSMENT <i class="fa-solid fa-arrow-right" style="margin-left:10px;"></i>
-                </button>
-            </div>
+            <h3 style="color: var(--forest-green); margin-bottom: 10px; font-family:'Playfair Display';">${quizData.title}</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px;">
+                <i class="fa-solid fa-book-open"></i> Subject: ${quizData.subject}
+            </p>
+            <button class="btn-gold" onclick="startActualQuiz()" style="width: 100%; padding: 15px;">
+                START ASSESSMENT <i class="fa-solid fa-arrow-right" style="margin-left:10px;"></i>
+            </button>
         `;
         lobbyList.appendChild(card);
     });
