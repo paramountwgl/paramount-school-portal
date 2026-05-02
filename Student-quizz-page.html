@@ -529,13 +529,7 @@ function exitAndClearSession() {
         } catch (e) { console.error(e); }
     };
 
-    // Helper to completely clear the UI and local state
-    function exitAndClearSession() {
-        localStorage.removeItem('paramount_student');
-        localAnswers = {};
-        location.reload();
-    }
-
+ 
     window.saveAndExit = function() { location.reload(); };
 
     async function loadExistingAnswers() {
