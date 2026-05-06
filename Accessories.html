@@ -609,20 +609,21 @@ historyHTML += `
                         </div>
                     </div>
 
-                    <!-- Action Icons -->
-                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                        <button class="action-icon-btn" onclick="copyId('${order.order_id}')" title="Copy Order ID">
-                            <i class="bi bi-clipboard"></i>
-                        </button>
-                        <button class="action-icon-btn" onclick="window.location.href='mailto:paramount0707@gmail.com?subject=Query Regarding Order ${order.order_id}'" title="Contact Support">
-    <i class="bi bi-envelope-at"></i>
-</button>
-                        ${canCancel ? `
-                            <button class="action-icon-btn text-danger" onclick="cancelOrder('${docId}', '${order.order_id}')" title="Cancel">
-                                <i class="bi bi-x-circle"></i>
-                            </button>
-                        ` : ''}
-                    </div>
+                    <!-- Premium Clickable Action Icons -->
+<div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+    <button class="action-icon-btn" onclick="copyId('${order.order_id}')" title="Copy Order ID">
+        <i class="bi bi-clipboard"></i>
+    </button>
+    <!-- Fixed Email Button -->
+    <button class="action-icon-btn" onclick="window.location.href='mailto:paramount0707@gmail.com?subject=Query Regarding Order ${order.order_id}'" title="Contact Support">
+        <i class="bi bi-envelope-at"></i>
+    </button>
+    ${canCancel ? `
+        <button class="action-icon-btn text-danger" onclick="cancelOrder('${docId}', '${order.order_id}')" title="Request Cancellation">
+            <i class="bi bi-x-circle"></i>
+        </button>
+    ` : ''}
+</div>
                 </div>
             </div>
         </div>
