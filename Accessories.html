@@ -42,6 +42,86 @@
 .order-history-card:hover {
     box-shadow: 0 10px 15px rgba(0,0,0,0.05);
 }
+        /* Premium Footer Styling */
+.premium-footer {
+    background-color: var(--primary);
+    color: white;
+    border-top: 4px solid var(--accent);
+    padding: 60px 0 30px;
+    margin-top: 80px;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.footer-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+    color: var(--accent);
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: 0.3s;
+    display: block;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+.footer-link:hover {
+    color: var(--accent);
+    padding-left: 5px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.contact-item i {
+    color: var(--accent);
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 30px;
+    margin-top: 40px;
+}
+
+/* Social Icon Circles */
+.social-circle {
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.social-circle:hover {
+    background: var(--accent);
+    color: var(--primary);
+    transform: translateY(-3px);
+}
 
 .order-header-premium {
     background-color: #f8f9fa;
@@ -807,5 +887,50 @@ renderCart();
         </div>
     </div>
 </div>
+    <footer class="premium-footer">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Institutional Info -->
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-logo">
+                    <i class="bi bi-mortarboard-fill me-2"></i>STUDENT ACCESSORY STORE
+                </div>
+                <p class="text-white-50 mb-4" style="font-size: 0.9rem; line-height: 1.6;">
+                    Providing high-quality academic essentials for the students of Paramount Group of Institutions. Established with a commitment to excellence.
+                </p>
+                
+
+            <!-- Customer Care Support -->
+            <div class="col-lg-4 col-md-12">
+                <h5 class="footer-heading">Customer Care Support</h5>
+                <div class="contact-item">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <span>Warangal, Telangana - 506005</span>
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-telephone-fill"></i>
+                    <span>+91 9652188807</span>
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-envelope-fill"></i>
+                    <span>paramount0707@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-clock-fill"></i>
+                    <span>Mon - Sat: 9:00 AM - 5:00 PM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom text-center">
+            <p class="mb-0 text-white-50" style="font-size: 0.8rem;">
+                &copy; 2026 Paramount Group of Institutions. All Rights Reserved.
+                <br class="d-md-none">
+                <span class="ms-md-3">Warangal | EST 2019</span>
+            </p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
