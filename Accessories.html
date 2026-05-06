@@ -630,7 +630,7 @@ historyHTML += `
 `;        
         historyList.innerHTML = historyHTML;
 
-     catch (error) {
+        } catch (error) {
         console.error("History Error:", error);
         historyList.innerHTML = '<div class="alert alert-danger mt-3">Failed to load order history.</div>';
     }
