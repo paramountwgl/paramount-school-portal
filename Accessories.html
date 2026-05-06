@@ -106,12 +106,20 @@
     </div>
 </nav>
     <!-- Track Order Section -->
-<div class="container mt-4 text-end">
+<!-- Track & History Section -->
+<div class="container mt-4 d-flex justify-content-end gap-2">
+    <!-- History Button -->
+    <button class="btn btn-outline-dark fw-bold shadow-sm" data-bs-toggle="offcanvas" data-bs-target="#myOrdersPanel">
+        <i class="bi bi-person-badge me-2"></i> My Order History
+    </button>
+    
+    <!-- Track Button -->
     <button class="btn btn-outline-primary fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#trackModal">
         <i class="bi bi-truck me-2"></i> Track My Order
     </button>
 </div>
 
+<!-- Track Order Modal -->
 <!-- Track Order Modal -->
 <div class="modal fade" id="trackModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -120,14 +128,13 @@
                 <h5 class="modal-title fw-bold">Order Tracking Portal</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <button class="btn btn-primary fw-bold shadow-sm" data-bs-toggle="offcanvas" data-bs-target="#myOrdersPanel">
-    <i class="bi bi-person-badge me-2"></i> My Order History
-</button>
+            <!-- REMOVED THE HISTORY BUTTON FROM HERE -->
             <div class="modal-body p-4">
                 <div class="input-group mb-4">
                     <input type="text" id="trackInput" class="form-control premium-input m-0" placeholder="Enter Order ID (e.g., PRM-123456)">
                     <button class="btn btn-primary px-4" onclick="fetchOrderDetails()">Search</button>
                 </div>
+                ...
                 
                 
                 <!-- This area will be populated with Order Details -->
@@ -185,22 +192,6 @@
         <div id="cart-items" class="mb-4">
             <!-- Items go here -->
         </div>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="myOrdersPanel" style="width: 450px;">
-    <div class="offcanvas-header bg-primary text-white">
-        <h5 class="offcanvas-title fw-bold">My Past Orders</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p class="text-muted small">Enter your phone number to see your full order history.</p>
-        <div class="input-group mb-4">
-            <input type="tel" id="historyPhone" class="form-control premium-input m-0" placeholder="Registered Phone Number">
-            <button class="btn btn-primary" onclick="loadOrderHistory()">View</button>
-        </div>
-        
-        <div id="historyList">
-            <!-- Order cards will appear here -->
-        </div>
-    </div>
 </div>
         
         <div id="checkout-section" style="display:none;">
@@ -489,5 +480,21 @@ window.copyId = (id) => {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="myOrdersPanel" style="width: 450px;">
+    <div class="offcanvas-header bg-primary text-white">
+        <h5 class="offcanvas-title fw-bold">My Past Orders</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <p class="text-muted small">Enter your phone number to see your full order history.</p>
+        <div class="input-group mb-4">
+            <input type="tel" id="historyPhone" class="form-control premium-input m-0" placeholder="Registered Phone Number">
+            <button class="btn btn-primary" onclick="loadOrderHistory()">View</button>
+        </div>
+        
+        <div id="historyList">
+            <!-- Order cards will appear here -->
+        </div>
+    </div>
 </body>
 </html>
