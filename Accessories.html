@@ -105,6 +105,58 @@
         </div>
     </div>
 </nav>
+    <!-- Track Order Section -->
+<div class="container mt-4 text-end">
+    <button class="btn btn-outline-primary fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#trackModal">
+        <i class="bi bi-truck me-2"></i> Track My Order
+    </button>
+</div>
+
+<!-- Track Order Modal -->
+<div class="modal fade" id="trackModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold">Order Tracking Portal</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="input-group mb-4">
+                    <input type="text" id="trackInput" class="form-control premium-input m-0" placeholder="Enter Order ID (e.g., PRM-123456)">
+                    <button class="btn btn-primary px-4" onclick="fetchOrderDetails()">Search</button>
+                </div>
+                
+                <!-- This area will be populated with Order Details -->
+                <div id="orderDetailsDisplay" style="display:none;">
+                    <div class="card border-0 bg-light p-3 mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-muted small fw-bold">CUSTOMER DETAILS</h6>
+                                <p class="mb-1"><strong id="resName"></strong></p>
+                                <p class="mb-1 text-muted small" id="resContact"></p>
+                                <p class="mb-0 text-muted small" id="resPin"></p>
+                            </div>
+                            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                                <h6 class="text-muted small fw-bold">ORDER STATUS</h6>
+                                <span class="badge bg-success py-2 px-3 fs-6" id="resStatus">Pending</span>
+                                <p class="mt-2 mb-0 fw-bold fs-5 text-primary" id="resTotal"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-3">Items Purchased</h6>
+                    <div id="resItems" class="list-group">
+                        <!-- Items with images will appear here -->
+                    </div>
+                </div>
+                
+                <div id="trackError" class="text-center text-danger mt-3" style="display:none;">
+                    Order not found. Please check the ID and try again.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container my-5">
     <div class="row mb-5">
@@ -159,6 +211,7 @@
     // (Replace with your actual Firebase project config)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8",
@@ -297,6 +350,53 @@ shopGrid.innerHTML = products.map(item => `
             alert("Something went wrong. Please try again.");
         }
     };
+    
+    window.fetchOrderDetails = async () => {
+    const trackId = document.getElementById('trackInput').value.trim();
+    const display = document.getElementById('orderDetailsDisplay');
+    const errorMsg = document.getElementById('trackError');
+    
+    if(!trackId) return;
+
+    try {
+        const q = query(collection(db, "orders"), where("order_id", "==", trackId));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            display.style.display = 'none';
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        const data = querySnapshot.docs[0].data();
+        errorMsg.style.display = 'none';
+        display.style.display = 'block';
+
+        // Set Customer Info
+        document.getElementById('resName').innerText = data.customer_name;
+        document.getElementById('resContact').innerText = `${data.customer_email} | ${data.customer_phone}`;
+        document.getElementById('resPin').innerText = `Pincode: ${data.pincode}`;
+        document.getElementById('resStatus').innerText = data.order_status;
+        document.getElementById('resTotal').innerText = `Total Paid: ₹${data.grand_total}`;
+
+        // Render Items with Images
+        const itemsList = document.getElementById('resItems');
+        itemsList.innerHTML = data.items.map(item => `
+            <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded shadow-sm">
+                <img src="${item.image}" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                <div class="flex-grow-1">
+                    <h6 class="mb-0 fw-bold">${item.name}</h6>
+                    <small class="text-muted">₹${item.price}</small>
+                </div>
+                <i class="bi bi-check-circle-fill text-success"></i>
+            </div>
+        `).join('');
+
+    } catch (error) {
+        console.error("Tracking Error:", error);
+        alert("Error fetching order details.");
+    }
+};
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
