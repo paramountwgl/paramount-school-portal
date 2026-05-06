@@ -557,6 +557,20 @@ document.getElementById('orderForm').onsubmit = async (e) => {
         }
     };
 
+    window.removeFromCart = (index) => {
+    // Remove the item from the 'cart' array using its index
+    cart.splice(index, 1);
+    
+    // Refresh the cart UI to show updated items and total
+    renderCart();
+    
+    // Optional: If the cart becomes empty, you can add extra logic here
+    if (cart.length === 0) {
+        const count = document.getElementById('cart-count');
+        count.innerText = "0";
+    }
+};
+
   window.loadOrderHistory = async () => {
     const phone = document.getElementById('historyPhone').value.trim();
     const historyList = document.getElementById('historyList');
@@ -701,15 +715,17 @@ document.getElementById('orderForm').onsubmit = async (e) => {
         navigator.clipboard.writeText(id);
         alert("Order ID copied to clipboard!");
     };
-   window.addToCart = addToCart;
-window.removeFromCart = removeFromCart; 
+  window.addToCart = addToCart;
 window.loadOrderHistory = loadOrderHistory;
 window.fetchOrderDetails = fetchOrderDetails;
 window.cancelOrder = cancelOrder;
-window.copyId = copyId; // This points to your existing copyId function
-window.changeQty = changeQty; 
+window.copyId = (id) => {
+    navigator.clipboard.writeText(id);
+    alert("Order ID copied to clipboard!");
+};
+window.changeQty = changeQty;
 
-// Initial render call
+// Initial render call to set up the UI on page load
 renderCart();
 </script>
 
