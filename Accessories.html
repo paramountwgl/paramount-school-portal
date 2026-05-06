@@ -182,12 +182,14 @@
 <body>
 
 <!-- Navigation -->
+<!-- Navigation -->
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#"><i class="bi bi-mortarboard-fill me-2"></i>STUDENT ACCESSORY STORE</a>
         <div class="d-flex align-items-center">
-            <button class="btn btn-outline-light position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar">
-                <i class="bi bi-bag-check-fill"></i>
+            <!-- Open the Centered Review Modal instead of an offcanvas sidebar -->
+            <button class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
+                <i class="bi bi-bag-fill"></i>
                 <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">0</span>
             </button>
         </div>
@@ -209,116 +211,65 @@
 
 <!-- Track Order Modal -->
 <!-- Track Order Modal -->
-<div class="modal fade" id="trackModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content border-0 shadow">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fw-bold">Order Tracking Portal</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+<div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <!-- Modal Header with Close (X) Button -->
+            <div class="modal-header border-bottom bg-white p-4">
+                <h4 class="modal-title fw-bold text-primary">Review Your Order</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- REMOVED THE HISTORY BUTTON FROM HERE -->
-            <div class="modal-body p-4">
-                <div class="input-group mb-4">
-                    <input type="text" id="trackInput" class="form-control premium-input m-0" placeholder="Enter Order ID (e.g., PRM-123456)">
-                    <button class="btn btn-primary px-4" onclick="fetchOrderDetails()">Search</button>
+            
+            <div class="modal-body p-4 bg-light">
+                <!-- Empty Cart State -->
+                <div id="empty-msg" class="text-center py-5">
+                    <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
+                    <p class="mt-3 fs-5">Your cart is empty. Add some essentials to get started!</p>
+                    <button class="btn btn-primary rounded-pill px-4" data-bs-dismiss="modal">Continue Shopping</button>
                 </div>
-                ...
-                
-                
-                <!-- This area will be populated with Order Details -->
-                <div id="orderDetailsDisplay" style="display:none;">
-                    <div class="card border-0 bg-light p-3 mb-3">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6 class="text-muted small fw-bold">CUSTOMER DETAILS</h6>
-                                <p class="mb-1"><strong id="resName"></strong></p>
-                                <p class="mb-1 text-muted small" id="resContact"></p>
-                                <p class="mb-0 text-muted small" id="resPin"></p>
+
+                <!-- Active Checkout Suite (Visible when items exist) -->
+                <div id="checkout-section" style="display:none;">
+                    <div class="row g-4">
+                        <!-- Left Column: Items Summary -->
+                        <div class="col-md-6 border-end">
+                            <h6 class="fw-bold text-muted small mb-3 text-uppercase">My Items</h6>
+                            <div id="cart-items" style="max-height: 350px; overflow-y: auto; padding-right: 10px;">
+                                <!-- Items rendered via JavaScript -->
                             </div>
-                            <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                                <h6 class="text-muted small fw-bold">ORDER STATUS</h6>
-                                <span class="badge bg-success py-2 px-3 fs-6" id="resStatus">Pending</span>
-                                <p class="mt-2 mb-0 fw-bold fs-5 text-primary" id="resTotal"></p>
+                            <!-- Total Amount Box -->
+                            <div class="mt-3 p-3 bg-primary text-white rounded-3 d-flex justify-content-between align-items-center shadow-sm">
+                                <span class="fw-bold">Total Amount:</span>
+                                <span id="cart-total" class="fs-4 fw-bold">₹0</span>
                             </div>
                         </div>
-                    </div>
 
-                    <h6 class="fw-bold mb-3">Items Purchased</h6>
-                    <div id="resItems" class="list-group">
-                        <!-- Items with images will appear here -->
-                    </div>
-                </div>
-                
-                <div id="trackError" class="text-center text-danger mt-3" style="display:none;">
-                    Order not found. Please check the ID and try again.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container my-5">
-    <div class="row mb-5">
-        <div class="col-12 text-center">
-            <h1 class="fw-bold">Student Essentials</h1>
-            <p class="text-muted">High-quality accessories for your academic journey.</p>
-        </div>
-    </div>
-
-    <div class="row g-4" id="shop-grid">
-        <!-- JS will inject products here -->
-    </div>
-</div>
-
-<!-- Premium Shopping Cart Overlay -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar">
-    <div class="offcanvas-header border-bottom">
-        <h4 class="offcanvas-title fw-bold text-primary">Review Your Order</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    
-    <div class="offcanvas-body">
-        <div id="empty-msg" class="text-center py-5">
-            <i class="bi bi-bag-x text-muted" style="font-size: 3rem;"></i>
-            <p class="mt-3">Your cart is currently empty.</p>
-        </div>
-
-        <div id="checkout-section" style="display:none;">
-            <div class="row g-4">
-                <!-- Left Column: Items -->
-                <div class="col-md-6 border-end">
-                    <h6 class="fw-bold mb-3 text-muted uppercase" style="font-size: 12px; letter-spacing: 1px;">MY ITEMS</h6>
-                    <div id="cart-items" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
-                        <!-- JS renders items here -->
-                    </div>
-                    <div class="mt-4 p-3 bg-primary text-white rounded-3 d-flex justify-content-between">
-                        <span class="fw-bold">Total:</span>
-                        <span id="cart-total" class="fs-5 fw-bold">₹0</span>
-                    </div>
-                </div>
-
-                <!-- Right Column: Details -->
-                <div class="col-md-6">
-                    <h6 class="fw-bold mb-3 text-muted uppercase" style="font-size: 12px; letter-spacing: 1px;">STUDENT DETAILS</h6>
-                    <form id="orderForm">
-                        <div class="mb-2">
-                            <label class="small fw-bold">Full Name</label>
-                            <input type="text" id="name" class="form-control premium-input" placeholder="e.g. John Doe" required>
+                        <!-- Right Column: Student Details Form -->
+                        <div class="col-md-6 ps-md-4">
+                            <h6 class="fw-bold text-muted small mb-3 text-uppercase">Student Details</h6>
+                            <form id="orderForm">
+                                <div class="mb-3">
+                                    <label class="small fw-bold text-muted">Full Name</label>
+                                    <input type="text" id="name" class="form-control premium-input shadow-sm" placeholder="e.g. John Doe" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small fw-bold text-muted">Parent Email</label>
+                                    <input type="email" id="email" class="form-control premium-input shadow-sm" placeholder="email@example.com" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small fw-bold text-muted">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-control premium-input shadow-sm" placeholder="Registered mobile number" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="small fw-bold text-muted">School Pincode</label>
+                                    <input type="text" id="pincode" class="form-control premium-input shadow-sm" placeholder="506xxx" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow text-uppercase">
+                                    Confirm Order
+                                </button>
+                            </form>
                         </div>
-                        <div class="mb-2">
-                            <label class="small fw-bold">Parent Email</label>
-                            <input type="email" id="email" class="form-control premium-input" placeholder="email@example.com" required>
-                        </div>
-                        <div class="mb-2">
-                            <label class="small fw-bold">Phone Number</label>
-                            <input type="tel" id="phone" class="form-control premium-input" placeholder="10-digit number" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small fw-bold">School Pincode</label>
-                            <input type="text" id="pincode" class="form-control premium-input" placeholder="506xxx" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow">CONFIRM ORDER</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
