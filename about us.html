@@ -93,6 +93,98 @@
             margin-top: 15px;
             text-transform: uppercase;
         }
+        /* Premium Elite Footer */
+.premium-footer {
+    background: linear-gradient(180deg, #001a35 0%, var(--primary) 100%);
+    color: white;
+    padding: 80px 0 40px;
+    border-top: 4px solid var(--accent);
+    margin-top: 100px;
+}
+
+.footer-brand-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.footer-section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    color: var(--accent);
+    position: relative;
+}
+
+.footer-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+}
+
+/* Premium Social Buttons */
+.connect-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.social-tool-premium {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-tool-premium:hover {
+    background: var(--accent);
+    color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);
+    border-color: var(--accent);
+}
+
+/* Info Items */
+.footer-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.footer-info-item i {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+
+.footer-bottom-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 50px;
+    padding-top: 30px;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+}
 
         .hero-gold-line {
             width: clamp(100px, 30%, 200px);
@@ -297,34 +389,69 @@
         </div>
     </section>
 
-    <footer class="elite-footer">
-        <div class="footer-grid">
-            <div class="footer-links">
-                <h5>Connect With Us</h5>
-                <p>Stay updated with the latest campus news and academic achievements through our official channels.</p>
-                <div class="connect-us">
-                    <a href="#" class="social-tool" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/paramount.07" target="_blank" class="social-tool" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/919652188807" target="_blank" class="social-tool" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="tel:+919652188807" class="social-tool" title="Call Us"><i class="fas fa-phone-alt"></i></a>
-                    <a href="mailto:paramount0707@gmail.com" class="social-tool" title="Email Us"><i class="fas fa-envelope"></i></a>
+    <footer class="premium-footer">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Column 1: Brand & Connect -->
+            <div class="col-lg-5 col-md-12">
+                <div class="footer-brand-title">
+                    <i class="bi bi-mortarboard-fill me-2"></i>STUDENT ALL ACADEMY ESSENTIALS. 
+                </div>
+                <p class="text-white-50 mb-4 pe-lg-5" style="line-height: 1.8;">
+                    Providing high-quality academic essentials for the students of Paramount Group of Institutions. Established in 2019 with a commitment to excellence in Warangal.
+                </p>
+                <h6 class="footer-section-title">Connect With Us</h6>
+                <div class="connect-container">
+                    <a href="#" class="social-tool-premium" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://instagram.com/paramount.07" target="_blank" class="social-tool-premium" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://wa.me/919652188807" target="_blank" class="social-tool-premium" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    <a href="tel:+919652188807" class="social-tool-premium" title="Call Us"><i class="bi bi-telephone-fill"></i></a>
+                    <a href="mailto:paramount0707@gmail.com" class="social-tool-premium" title="Email Us"><i class="bi bi-envelope-paper-fill"></i></a>
                 </div>
             </div>
-            <div class="footer-links">
-                <h5>The Campus</h5>
-                <p>Pensionpur, Thimmapur (H),<br>Khila Warangal, Warangal,<br>Telangana - 506005</p>
+
+            <!-- Column 2: The Campus -->
+            <div class="col-lg-3 col-md-6">
+                <h6 class="footer-section-title">The Campus</h6>
+                <div class="footer-info-item">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <span>Pensionpur, Thimmapur (H),<br>Khila Warangal, Warangal,<br>Telangana - 506005</span>
+                </div>
+                <div class="footer-info-item">
+                    <i class="bi bi-clock-fill"></i>
+                    <span>Mon - Sat: 9:00 AM - 5:00 PM<br><small class="text-white-50">Sunday: Closed</small></span>
+                </div>
             </div>
-            <div class="footer-links">
-                <h5>Quick Access</h5>
-                <p><a href="Student Portal.html" style="color: var(--p-gold); text-decoration: none;">Student Portal Login</a></p>
-                <p><a href="admissions.html" style="color: var(--p-gold); text-decoration: none;">2026-27 Admissions</a></p>
-                <p><a href="index.html" style="color: var(--p-gold); text-decoration: none;">Return to Home</a></p>
+
+            <!-- Column 3: Self Service -->
+            <div class="col-lg-4 col-md-6">
+                <h6 class="footer-section-title">Student Services</h6>
+                <div class="footer-info-item">
+                    <i class="bi bi-person-badge-fill"></i>
+                    <a href="Student Portal.html" class="text-decoration-none text-white">Student Portal Access</a>
+                </div>
+                <div class="footer-info-item">
+                    <i class="bi bi-calendar-check-fill"></i>
+                    <a href="admissions.html" class="text-decoration-none text-white">2026-27 Admissions Open</a>
+                </div>
+                <div class="footer-info-item">
+                    <i class="bi bi-house-door-fill"></i>
+                    <a href="index.html" class="text-decoration-none text-white">Return to Main Site</a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            © 2026 PARAMOUNT ENGLISH MEDIUM SCHOOL. ALL RIGHTS RESERVED.
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom-bar">
+            <p class="mb-0 text-uppercase">
+                © 2026 Paramount English Medium School. All Rights Reserved.
+                <span class="d-none d-md-inline mx-3">|</span>
+                <br class="d-md-none">
+                Warangal | EST 2019
+            </p>
         </div>
-    </footer>
+    </div>
+</footer>
 
 </body>
 </html>
