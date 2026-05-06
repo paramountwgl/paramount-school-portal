@@ -220,21 +220,29 @@
 
 <script type="module">
     // --- FIREBASE CONFIGURATION ---
-    // (Replace with your actual Firebase project config)
+    // Added 'query' to the import list below to fix the ReferenceError
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp, where, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-   
-    
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        serverTimestamp, 
+        query, 
+        where, 
+        getDocs, 
+        updateDoc, 
+        doc 
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDRYk9KOK-ga0c88dnYMsAoifW2NJTd_Y8",
-  authDomain: "paramount-school-d55bc.firebaseapp.com",
-  databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com",
-  projectId: "paramount-school-d55bc",
-  storageBucket: "paramount-school-d55bc.firebasestorage.app",
-  messagingSenderId: "130979432562",
-  appId: "1:130979432562:web:4cd94787b23f9daba51aeb",
-  measurementId: "G-ZMZHXB5GFM"
+        authDomain: "paramount-school-d55bc.firebaseapp.com",
+        databaseURL: "https://paramount-school-d55bc-default-rtdb.firebaseio.com",
+        projectId: "paramount-school-d55bc",
+        storageBucket: "paramount-school-d55bc.firebasestorage.app",
+        messagingSenderId: "130979432562",
+        appId: "1:130979432562:web:4cd94787b23f9daba51aeb",
+        measurementId: "G-ZMZHXB5GFM"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -242,151 +250,51 @@
 
     // --- PRODUCT DATA ---
     const products = [
-    { id: 'p1', name: 'Premium School Tie', price: 180, category: 'Uniform', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrc6MOyZIy3PAyEkQerUyESsUiAFUBV36Gfg&s' },
-    { id: 'p2', name: 'Nylon Socks (Pair)', price: 90, category: 'Uniform', image: 'https://img.icons8.com/color/144/socks.png' },
-    { id: 'p3', name: 'Leather Belt', price: 220, category: 'Uniform', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaOqICCLeo82SXlF0ZWHPQOX-ZqJ6FxQfo6g&s' },
-    { id: 'p4', name: 'School ID Card Case', price: 45, category: 'Accessories', image: 'https://static.vecteezy.com/system/resources/thumbnails/013/744/285/small/3d-rendering-id-card-isolated-useful-for-education-learning-knowledge-school-and-class-design-png.png' },
-    { id: 'p5', name: 'Acrylic Exam Pad', price: 120, category: 'Stationery', image: 'https://img.icons8.com/color/144/clipboard.png' },
-    { id: 'p6', name: 'Graphite Pencil Set', price: 60, category: 'Stationery', image: 'https://img.icons8.com/color/144/pencil--v1.png' },
-    { id: 'p7', name: 'Eraser & Sharpener Kit', price: 30, category: 'Stationery', image: 'https://img.icons8.com/color/144/eraser.png' },
-    { id: 'p8', name: 'Premium Storage Box', price: 250, category: 'Stationery', image: 'https://img.icons8.com/color/144/box--v1.png' },
-    { id: 'p9', name: 'Sketch Pens (12 Colors)', price: 95, category: 'Art', image: 'https://img.icons8.com/color/144/marker-pen.png' },
-    { id: 'p10', name: 'Wax Crayons Set', price: 75, category: 'Art', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAGsTURhiZYZF_ru-ux_OPSQ_SXZ0iRNXmA&s' }
+        { id: 'p1', name: 'Premium School Tie', price: 180, category: 'Uniform', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrc6MOyZIy3PAyEkQerUyESsUiAFUBV36Gfg&s' },
+        { id: 'p2', name: 'Nylon Socks (Pair)', price: 90, category: 'Uniform', image: 'https://img.icons8.com/color/144/socks.png' },
+        { id: 'p3', name: 'Leather Belt', price: 220, category: 'Uniform', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaOqICCLeo82SXlF0ZWHPQOX-ZqJ6FxQfo6g&s' },
+        { id: 'p4', name: 'School ID Card Case', price: 45, category: 'Accessories', image: 'https://static.vecteezy.com/system/resources/thumbnails/013/744/285/small/3d-rendering-id-card-isolated-useful-for-education-learning-knowledge-school-and-class-design-png.png' },
+        { id: 'p5', name: 'Acrylic Exam Pad', price: 120, category: 'Stationery', image: 'https://img.icons8.com/color/144/clipboard.png' },
+        { id: 'p6', name: 'Graphite Pencil Set', price: 60, category: 'Stationery', image: 'https://img.icons8.com/color/144/pencil--v1.png' },
+        { id: 'p7', name: 'Eraser & Sharpener Kit', price: 30, category: 'Stationery', image: 'https://img.icons8.com/color/144/eraser.png' },
+        { id: 'p8', name: 'Premium Storage Box', price: 250, category: 'Stationery', image: 'https://img.icons8.com/color/144/box--v1.png' },
+        { id: 'p9', name: 'Sketch Pens (12 Colors)', price: 95, category: 'Art', image: 'https://img.icons8.com/color/144/marker-pen.png' },
+        { id: 'p10', name: 'Wax Crayons Set', price: 75, category: 'Art', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxAGsTURhiZYZF_ru-ux_OPSQ_SXZ0iRNXmA&s' }
     ];
 
     let cart = [];
 
-   // --- RENDER PRODUCTS ---
-const shopGrid = document.getElementById('shop-grid');
-shopGrid.innerHTML = products.map(item => `
-    <div class="col-6 col-md-4 col-lg-3">
-        <div class="card product-card h-100">
-            <div class="img-container d-flex align-items-center justify-content-center" style="height: 180px;">
-                <img src="${item.image}" alt="${item.name}" class="product-img img-fluid" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+    // --- RENDER PRODUCTS ---
+    const shopGrid = document.getElementById('shop-grid');
+    if (shopGrid) {
+        shopGrid.innerHTML = products.map(item => `
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card product-card h-100">
+                    <div class="img-container d-flex align-items-center justify-content-center" style="height: 180px;">
+                        <img src="${item.image}" alt="${item.name}" class="product-img img-fluid" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                    </div>
+                    <div class="card-body">
+                        <small class="text-uppercase text-muted fw-bold" style="font-size: 10px;">${item.category}</small>
+                        <h6 class="card-title fw-bold mb-1">${item.name}</h6>
+                        <p class="text-primary fw-bold mb-3">₹${item.price}</p>
+                        <button class="btn btn-add btn-sm w-100" onclick="addToCart('${item.id}')">
+                            <i class="bi bi-plus-lg me-1"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <small class="text-uppercase text-muted fw-bold" style="font-size: 10px;">${item.category}</small>
-                <h6 class="card-title fw-bold mb-1">${item.name}</h6>
-                <p class="text-primary fw-bold mb-3">₹${item.price}</p>
-                <button class="btn btn-add btn-sm w-100" onclick="addToCart('${item.id}')">
-                    <i class="bi bi-plus-lg me-1"></i> Add to Cart
-                </button>
-            </div>
-        </div>
-    </div>
-`).join('');
+        `).join('');
+    }
 
     // --- CART FUNCTIONS ---
     window.addToCart = (productId) => {
         const item = products.find(p => p.id === productId);
         cart.push(item);
         renderCart();
-        // Visual feedback
         const count = document.getElementById('cart-count');
         count.classList.add('animate__animated', 'animate__bounce');
         setTimeout(() => count.classList.remove('animate__bounce'), 1000);
     };
-
-    window.cancelOrder = async (docId, orderId) => {
-    if (!confirm(`Are you sure you want to cancel Order ${orderId}?`)) return;
-
-    try {
-        const orderRef = doc(db, "orders", docId);
-        await updateDoc(orderRef, {
-            order_status: "Cancelled",
-            cancelled_at: serverTimestamp()
-        });
-
-        alert("Order Cancelled Successfully.");
-        
-        // Refresh the views
-        if (document.getElementById('trackInput').value === orderId) {
-            fetchOrderDetails(); // Refresh Tracking Modal
-        }
-        loadOrderHistory(); // Refresh History Panel
-        
-    } catch (error) {
-        console.error("Error cancelling order:", error);
-        alert("Could not cancel order. Please try again.");
-    }
-};
-
-    window.loadOrderHistory = async () => {
-    const phone = document.getElementById('historyPhone').value.trim();
-    const historyList = document.getElementById('historyList');
-    
-    if(!phone) {
-        alert("Please enter your phone number.");
-        return;
-    }
-
-    historyList.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"></div></div>';
-
-    try {
-        const q = query(
-            collection(db, "orders"), 
-            where("customer_phone", "==", phone)
-        );
-        
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-            historyList.innerHTML = '<div class="alert alert-warning">No orders found for this number.</div>';
-            return;
-        }
-
-        let historyHTML = '';
-        
-        // --- UPDATED LOOP START ---
-        querySnapshot.forEach((doc) => {
-            const order = doc.data();
-            const docId = doc.id; // Unique Firebase ID needed for cancellation
-            const date = order.created_at ? new Date(order.created_at.seconds * 1000).toLocaleDateString() : 'Recent';
-            
-            // Logic to check if cancellation is allowed
-            const canCancel = (order.order_status === "Pending" || order.order_status === "Processing");
-
-            historyHTML += `
-                <div class="card shadow-sm border-0 mb-3 overflow-hidden ${order.order_status === 'Cancelled' ? 'opacity-75' : ''}">
-                    <div class="card-header d-flex justify-content-between align-items-center ${order.order_status === 'Cancelled' ? 'bg-secondary text-white' : 'bg-light'}">
-                        <span class="fw-bold ${order.order_status === 'Cancelled' ? '' : 'text-primary'}">${order.order_id}</span>
-                        <span class="badge ${order.order_status === 'Cancelled' ? 'bg-danger' : 'bg-info text-dark'}">${order.order_status}</span>
-                    </div>
-                    <div class="card-body p-3">
-                        <div class="d-flex mb-2">
-                            ${order.items.map(item => `
-                                <img src="${item.image}" class="rounded border me-1" style="width:40px; height:40px; object-fit:contain;" title="${item.name}">
-                            `).join('')}
-                        </div>
-                        <div class="d-flex justify-content-between align-items-end">
-                            <div>
-                                <small class="text-muted d-block">Ordered on: ${date}</small>
-                                <p class="mb-0 fw-bold">Total: ₹${order.grand_total}</p>
-                                ${order.order_status === 'Cancelled' ? '<small class="text-danger fw-bold text-uppercase" style="font-size: 10px;">Order Cancelled</small>' : ''}
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-sm btn-outline-primary" onclick="copyId('${order.order_id}')">ID</button>
-                                ${canCancel ? `<button class="btn btn-sm btn-danger" onclick="cancelOrder('${docId}', '${order.order_id}')">Cancel</button>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        // --- UPDATED LOOP END ---
-        
-        historyList.innerHTML = historyHTML;
-
-    } catch (error) {
-        console.error("History Error:", error);
-        historyList.innerHTML = '<div class="alert alert-danger">Error loading history.</div>';
-    }
-};
-
-window.copyId = (id) => {
-    navigator.clipboard.writeText(id);
-    alert("Order ID copied to clipboard! Use it in the Track Order tool.");
-};
 
     window.removeFromCart = (index) => {
         cart.splice(index, 1);
@@ -433,7 +341,6 @@ window.copyId = (id) => {
     // --- ORDER SUBMISSION ---
     document.getElementById('orderForm').onsubmit = async (e) => {
         e.preventDefault();
-        
         const orderId = "PRM-" + Date.now().toString().slice(-6);
         const total = cart.reduce((acc, curr) => acc + curr.price, 0);
 
@@ -451,85 +358,150 @@ window.copyId = (id) => {
 
         try {
             await addDoc(collection(db, "orders"), orderDetails);
-            alert(`Order Successful! \nYour Order ID: ${orderId} \nOur team will contact you soon.`);
+            alert(`Order Successful! \nYour Order ID: ${orderId}`);
             cart = [];
             renderCart();
             document.getElementById('orderForm').reset();
-            // Close sidebar
-            var offcanvasElement = document.getElementById('cartSidebar');
-            var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-            offcanvas.hide();
+            var offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('cartSidebar'));
+            if (offcanvas) offcanvas.hide();
         } catch (error) {
             console.error("Order Error: ", error);
-            alert("Something went wrong. Please try again.");
         }
     };
-    
-   window.fetchOrderDetails = async () => {
-    const trackId = document.getElementById('trackInput').value.trim();
-    const display = document.getElementById('orderDetailsDisplay');
-    const errorMsg = document.getElementById('trackError');
-    
-    if(!trackId) return;
 
-    try {
-        const q = query(collection(db, "orders"), where("order_id", "==", trackId));
-        const querySnapshot = await getDocs(q);
+    // --- TRACKING AND HISTORY FUNCTIONS ---
+    window.fetchOrderDetails = async () => {
+        const trackId = document.getElementById('trackInput').value.trim();
+        const display = document.getElementById('orderDetailsDisplay');
+        const errorMsg = document.getElementById('trackError');
+        if(!trackId) return;
 
-        if (querySnapshot.empty) {
-            display.style.display = 'none';
-            errorMsg.style.display = 'block';
+        try {
+            const q = query(collection(db, "orders"), where("order_id", "==", trackId));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                display.style.display = 'none';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            const data = querySnapshot.docs[0].data();
+            const docId = querySnapshot.docs[0].id;
+            errorMsg.style.display = 'none';
+            display.style.display = 'block';
+
+            document.getElementById('resName').innerText = data.customer_name;
+            document.getElementById('resContact').innerText = `${data.customer_email} | ${data.customer_phone}`;
+            document.getElementById('resPin').innerText = `Pincode: ${data.pincode}`;
+            document.getElementById('resStatus').innerText = data.order_status;
+            document.getElementById('resTotal').innerText = `Total Paid: ₹${data.grand_total}`;
+
+            const statusArea = document.getElementById('resStatus').parentElement;
+            const oldBtn = document.getElementById('cancelBtnTrack');
+            if (oldBtn) oldBtn.remove();
+
+            if (data.order_status === "Pending" || data.order_status === "Processing") {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.id = "cancelBtnTrack";
+                cancelBtn.className = "btn btn-sm btn-danger mt-2 d-block ms-auto";
+                cancelBtn.innerText = "Cancel This Order";
+                cancelBtn.onclick = () => window.cancelOrder(docId, data.order_id);
+                statusArea.appendChild(cancelBtn);
+            }
+
+            document.getElementById('resItems').innerHTML = data.items.map(item => `
+                <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded shadow-sm">
+                    <img src="${item.image}" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">${item.name}</h6>
+                        <small class="text-muted">₹${item.price}</small>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error("Tracking Error:", error);
+        }
+    };
+
+    window.loadOrderHistory = async () => {
+        const phone = document.getElementById('historyPhone').value.trim();
+        const historyList = document.getElementById('historyList');
+        if(!phone) {
+            alert("Please enter your phone number.");
             return;
         }
 
-        const data = querySnapshot.docs[0].data();
-        const docId = querySnapshot.docs[0].id; // Get the Firebase Document ID for cancellation
-        errorMsg.style.display = 'none';
-        display.style.display = 'block';
+        historyList.innerHTML = '<div class="text-center mt-3"><div class="spinner-border text-primary" role="status"></div></div>';
 
-        // Set Customer Info
-        document.getElementById('resName').innerText = data.customer_name;
-        document.getElementById('resContact').innerText = `${data.customer_email} | ${data.customer_phone}`;
-        document.getElementById('resPin').innerText = `Pincode: ${data.pincode}`;
-        document.getElementById('resStatus').innerText = data.order_status;
-        document.getElementById('resTotal').innerText = `Total Paid: ₹${data.grand_total}`;
+        try {
+            const q = query(collection(db, "orders"), where("customer_phone", "==", phone));
+            const querySnapshot = await getDocs(q);
 
-        // --- CANCEL BUTTON LOGIC START ---
-        const statusArea = document.getElementById('resStatus').parentElement;
-        
-        // Remove any old cancel button first to prevent duplicates
-        const oldBtn = document.getElementById('cancelBtnTrack');
-        if (oldBtn) oldBtn.remove();
+            if (querySnapshot.empty) {
+                historyList.innerHTML = '<div class="alert alert-warning mt-3">No orders found for this number.</div>';
+                return;
+            }
 
-        // Only show button if status is Pending or Processing
-        if (data.order_status === "Pending" || data.order_status === "Processing") {
-            const cancelBtn = document.createElement('button');
-            cancelBtn.id = "cancelBtnTrack";
-            cancelBtn.className = "btn btn-sm btn-danger mt-2 d-block ms-auto";
-            cancelBtn.innerText = "Cancel This Order";
-            cancelBtn.onclick = () => window.cancelOrder(docId, data.order_id);
-            statusArea.appendChild(cancelBtn);
+            let historyHTML = '';
+            querySnapshot.forEach((docSnap) => {
+                const order = docSnap.data();
+                const docId = docSnap.id;
+                const date = order.created_at ? new Date(order.created_at.seconds * 1000).toLocaleDateString() : 'Recent';
+                const canCancel = (order.order_status === "Pending" || order.order_status === "Processing");
+
+                historyHTML += `
+                    <div class="card shadow-sm border-0 mb-3 overflow-hidden ${order.order_status === 'Cancelled' ? 'opacity-75' : ''}">
+                        <div class="card-header d-flex justify-content-between align-items-center ${order.order_status === 'Cancelled' ? 'bg-secondary text-white' : 'bg-light'}">
+                            <span class="fw-bold">${order.order_id}</span>
+                            <span class="badge ${order.order_status === 'Cancelled' ? 'bg-danger' : 'bg-info text-dark'}">${order.order_status}</span>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="d-flex mb-2">
+                                ${order.items.map(item => `
+                                    <img src="${item.image}" class="rounded border me-1" style="width:40px; height:40px; object-fit:contain;">
+                                `).join('')}
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div>
+                                    <small class="text-muted d-block">Ordered on: ${date}</small>
+                                    <p class="mb-0 fw-bold">Total: ₹${order.grand_total}</p>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="copyId('${order.order_id}')">ID</button>
+                                    ${canCancel ? `<button class="btn btn-sm btn-danger" onclick="cancelOrder('${docId}', '${order.order_id}')">Cancel</button>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            historyList.innerHTML = historyHTML;
+        } catch (error) {
+            console.error("History Error:", error);
         }
-        // --- CANCEL BUTTON LOGIC END ---
+    };
 
-        // Render Items with Images
-        const itemsList = document.getElementById('resItems');
-        itemsList.innerHTML = data.items.map(item => `
-            <div class="list-group-item d-flex align-items-center border-0 mb-2 rounded shadow-sm">
-                <img src="${item.image}" class="me-3" style="width: 50px; height: 50px; object-fit: contain;">
-                <div class="flex-grow-1">
-                    <h6 class="mb-0 fw-bold">${item.name}</h6>
-                    <small class="text-muted">₹${item.price}</small>
-                </div>
-                <i class="bi bi-check-circle-fill text-success"></i>
-            </div>
-        `).join('');
+    window.cancelOrder = async (docId, orderId) => {
+        if (!confirm(`Are you sure you want to cancel Order ${orderId}?`)) return;
+        try {
+            const orderRef = doc(db, "orders", docId);
+            await updateDoc(orderRef, {
+                order_status: "Cancelled",
+                cancelled_at: serverTimestamp()
+            });
+            alert("Order Cancelled Successfully.");
+            loadOrderHistory();
+            if (document.getElementById('trackInput').value === orderId) fetchOrderDetails();
+        } catch (error) {
+            console.error("Error cancelling order:", error);
+        }
+    };
 
-    } catch (error) {
-        console.error("Tracking Error:", error);
-        alert("Error fetching order details.");
-    }
-};
+    window.copyId = (id) => {
+        navigator.clipboard.writeText(id);
+        alert("Order ID copied to clipboard!");
+    };
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
