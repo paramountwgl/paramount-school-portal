@@ -499,7 +499,7 @@ document.getElementById('orderForm').onsubmit = async (e) => {
             document.getElementById('resContact').innerText = `${data.customer_email} | ${data.customer_phone}`;
             document.getElementById('resPin').innerText = `Pincode: ${data.pincode}`;
             document.getElementById('resStatus').innerText = data.order_status;
-            document.getElementById('resTotal').innerText = `Total Paid: ₹${data.grand_total}`;
+            document.getElementById('resTotal').innerText = `Total Amount: ₹${data.grand_total}`;
 
             const statusArea = document.getElementById('resStatus').parentElement;
             const oldBtn = document.getElementById('cancelBtnTrack');
