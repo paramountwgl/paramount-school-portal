@@ -44,12 +44,13 @@
 }
         /* Premium Footer Styling */
 .premium-footer {
-    background-color: var(--primary);
+    background-color: #002347; /* Paramount Navy */
     color: white;
-    border-top: 4px solid var(--accent);
     padding: 60px 0 30px;
+    border-top: 4px solid #C5A059; /* Institutional Gold */
     margin-top: 80px;
 }
+        
 
 .footer-logo {
     font-size: 1.5rem;
@@ -58,6 +59,14 @@
     color: var(--accent);
     margin-bottom: 20px;
     display: inline-block;
+}
+        .footer-column h5 {
+    color: #C5A059;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
 }
 
 .footer-heading {
@@ -95,6 +104,46 @@
     color: var(--accent);
     margin-right: 12px;
     font-size: 1.1rem;
+}
+        .footer-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* Premium Social Buttons */
+.social-flex {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-btn:hover {
+    background: #C5A059;
+    color: #002347;
+    transform: translateY(-3px);
+}
+
+.footer-bottom-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
 }
 
 .footer-bottom {
@@ -887,34 +936,53 @@ renderCart();
         </div>
     </div>
 </div>
-<footer class="elite-footer">
-        <div class="footer-grid">
-            <div class="footer-links">
+<footer class="premium-footer">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Institutional Info -->
+            <div class="col-lg-4 col-md-6 footer-column">
                 <h5>Connect With Us</h5>
-                <p>Stay updated with the latest campus news and academic achievements through our official channels.</p>
-                <div class="connect-us">
-                    <a href="#" class="social-tool" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/paramount.07" target="_blank" class="social-tool" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/919652188807" target="_blank" class="social-tool" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="tel:+919652188807" class="social-tool" title="Call Us"><i class="fas fa-phone-alt"></i></a>
-                    <a href="mailto:paramount0707@gmail.com" class="social-tool" title="Email Us"><i class="fas fa-envelope"></i></a>
+                <p class="footer-text">With our official channels.</p>
+                <div class="social-flex">
+                    <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+                    <a href="https://instagram.com/paramount.07" target="_blank" class="social-btn"><i class="bi bi-instagram"></i></a>
+                    <a href="https://wa.me/919652188807" target="_blank" class="social-btn"><i class="bi bi-whatsapp"></i></a>
+                    <a href="tel:+919652188807" class="social-btn"><i class="bi bi-telephone-fill"></i></a>
+                    <a href="mailto:paramount0707@gmail.com" class="social-btn"><i class="bi bi-envelope-fill"></i></a>
                 </div>
             </div>
-            <div class="footer-links">
+
+            <!-- Campus Location -->
+            <div class="col-lg-4 col-md-6 footer-column">
                 <h5>The Campus</h5>
-                <p>Pensionpur, Thimmapur (H),<br>Khila Warangal, Warangal,<br>Telangana - 506005</p>
+                <p class="footer-text">
+                    <i class="bi bi-geo-alt-fill text-accent me-2"></i>
+                    Pensionpur, Thimmapur (H),<br>
+                    Khila Warangal, Warangal,<br>
+                    Telangana - 506005
+                </p>
+                <p class="footer-text">
+                    <i class="bi bi-clock-fill text-accent me-2"></i>
+                    Mon - Sat: 9:00 AM - 5:00 PM
+                </p>
             </div>
-            <div class="footer-links">
+
+            <!-- Quick Access -->
+            <div class="col-lg-4 col-md-12 footer-column">
                 <h5>Quick Access</h5>
-                <p><a href="Student Portal.html" style="color: var(--p-gold); text-decoration: none;">Student Portal Login</a></p>
-                <p><a href="admissions.html" style="color: var(--p-gold); text-decoration: none;">2026-27 Admissions</a></p>
-                <p><a href="index.html" style="color: var(--p-gold); text-decoration: none;">Return to Home</a></p>
+                <div class="d-flex flex-column gap-2">
+                    <a href="Student Portal.html" class="footer-text text-decoration-none"><i class="bi bi-person-circle me-2"></i>Student Portal Login</a>
+                    <a href="admissions.html" class="footer-text text-decoration-none"><i class="bi bi-card-checklist me-2"></i>2026-27 Admissions</a>
+                    <a href="index.html" class="footer-text text-decoration-none"><i class="bi bi-house-door-fill me-2"></i>Return to Home</a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            © 2026 PARAMOUNT ENGLISH MEDIUM SCHOOL. ALL RIGHTS RESERVED.
+
+        <div class="footer-bottom-bar">
+            © 2026 PARAMOUNT ENGLISH MEDIUM SCHOOL. ALL RIGHTS RESERVED. | Warangal | EST 2019
         </div>
-    </footer>
+    </div>
+</footer>
 
 </body>
 </html>
