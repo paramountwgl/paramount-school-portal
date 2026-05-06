@@ -614,9 +614,9 @@ historyHTML += `
                         <button class="action-icon-btn" onclick="copyId('${order.order_id}')" title="Copy Order ID">
                             <i class="bi bi-clipboard"></i>
                         </button>
-                        <button class="action-icon-btn" onclick="window.location.href='mailto:${order.customer_email}'" title="Email Support">
-                            <i class="bi bi-envelope-at"></i>
-                        </button>
+                        <button class="action-icon-btn" onclick="window.location.href='mailto:paramount0707@gmail.com?subject=Query Regarding Order ${order.order_id}'" title="Contact Support">
+    <i class="bi bi-envelope-at"></i>
+</button>
                         ${canCancel ? `
                             <button class="action-icon-btn text-danger" onclick="cancelOrder('${docId}', '${order.order_id}')" title="Cancel">
                                 <i class="bi bi-x-circle"></i>
