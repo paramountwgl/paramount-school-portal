@@ -183,11 +183,14 @@
 
 <!-- Navigation -->
 <!-- Navigation -->
+<body>
+
+<!-- Navigation -->
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#"><i class="bi bi-mortarboard-fill me-2"></i>STUDENT ACCESSORY STORE</a>
         <div class="d-flex align-items-center">
-            <!-- Open the Centered Review Modal instead of an offcanvas sidebar -->
+            <!-- Basket Trigger -->
             <button class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#cartModal">
                 <i class="bi bi-bag-fill"></i>
                 <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">0</span>
@@ -195,78 +198,62 @@
         </div>
     </div>
 </nav>
-    <!-- Track Order Section -->
+
 <!-- Track & History Section -->
 <div class="container mt-4 d-flex justify-content-end gap-2">
-    <!-- History Button -->
-    <button class="btn btn-outline-dark fw-bold shadow-sm" data-bs-toggle="offcanvas" data-bs-target="#myOrdersPanel">
+    <!-- History Trigger -->
+    <button class="btn btn-outline-dark fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#myOrdersModal">
         <i class="bi bi-person-badge me-2"></i> My Order History
     </button>
-    
-    <!-- Track Button -->
+    <!-- Track Trigger -->
     <button class="btn btn-outline-primary fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#trackModal">
         <i class="bi bi-truck me-2"></i> Track My Order
     </button>
 </div>
 
-<!-- Track Order Modal -->
-<!-- Track Order Modal -->
+<!-- Main Shop Container -->
+<div class="container my-5">
+    <div class="row mb-5 text-center">
+        <h1 class="fw-bold">Student Essentials</h1>
+        <p class="text-muted">High-quality accessories for your academic journey.</p>
+    </div>
+    <!-- Products inject here -->
+    <div class="row g-4" id="shop-grid"></div>
+</div>
+
+<!-- MODAL: Review Your Order -->
 <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-            <!-- Modal Header with Close (X) Button -->
             <div class="modal-header border-bottom bg-white p-4">
                 <h4 class="modal-title fw-bold text-primary">Review Your Order</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
             <div class="modal-body p-4 bg-light">
-                <!-- Empty Cart State -->
+                <!-- Empty Message (MOVED INSIDE MODAL) -->
                 <div id="empty-msg" class="text-center py-5">
                     <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
                     <p class="mt-3 fs-5">Your cart is empty. Add some essentials to get started!</p>
-                    <button class="btn btn-primary rounded-pill px-4" data-bs-dismiss="modal">Continue Shopping</button>
                 </div>
-
-                <!-- Active Checkout Suite (Visible when items exist) -->
+                <!-- Checkout Suite -->
                 <div id="checkout-section" style="display:none;">
                     <div class="row g-4">
-                        <!-- Left Column: Items Summary -->
                         <div class="col-md-6 border-end">
                             <h6 class="fw-bold text-muted small mb-3 text-uppercase">My Items</h6>
-                            <div id="cart-items" style="max-height: 350px; overflow-y: auto; padding-right: 10px;">
-                                <!-- Items rendered via JavaScript -->
-                            </div>
-                            <!-- Total Amount Box -->
-                            <div class="mt-3 p-3 bg-primary text-white rounded-3 d-flex justify-content-between align-items-center shadow-sm">
+                            <div id="cart-items" style="max-height: 350px; overflow-y: auto; padding-right: 10px;"></div>
+                            <div class="mt-3 p-3 bg-primary text-white rounded-3 d-flex justify-content-between align-items-center">
                                 <span class="fw-bold">Total Amount:</span>
                                 <span id="cart-total" class="fs-4 fw-bold">₹0</span>
                             </div>
                         </div>
-
-                        <!-- Right Column: Student Details Form -->
                         <div class="col-md-6 ps-md-4">
                             <h6 class="fw-bold text-muted small mb-3 text-uppercase">Student Details</h6>
                             <form id="orderForm">
-                                <div class="mb-3">
-                                    <label class="small fw-bold text-muted">Full Name</label>
-                                    <input type="text" id="name" class="form-control premium-input shadow-sm" placeholder="e.g. John Doe" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="small fw-bold text-muted">Parent Email</label>
-                                    <input type="email" id="email" class="form-control premium-input shadow-sm" placeholder="email@example.com" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="small fw-bold text-muted">Phone Number</label>
-                                    <input type="tel" id="phone" class="form-control premium-input shadow-sm" placeholder="Registered mobile number" required>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="small fw-bold text-muted">School Pincode</label>
-                                    <input type="text" id="pincode" class="form-control premium-input shadow-sm" placeholder="506xxx" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow text-uppercase">
-                                    Confirm Order
-                                </button>
+                                <input type="text" id="name" class="form-control premium-input shadow-sm" placeholder="Full Name" required>
+                                <input type="email" id="email" class="form-control premium-input shadow-sm" placeholder="Parent Email" required>
+                                <input type="tel" id="phone" class="form-control premium-input shadow-sm" placeholder="Phone Number" required>
+                                <input type="text" id="pincode" class="form-control premium-input shadow-sm" placeholder="Pincode" required>
+                                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow">Confirm Order</button>
                             </form>
                         </div>
                     </div>
@@ -275,12 +262,35 @@
         </div>
     </div>
 </div>
-        <div id="empty-msg" class="text-center py-5 text-muted">
-            <i class="bi bi-cart-x fs-1"></i>
-            <p>Your cart is empty.</p>
+
+<!-- MODAL: Tracking Portal -->
+<div class="modal fade" id="trackModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold">Order Tracking Portal</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="input-group mb-4">
+                    <input type="text" id="trackInput" class="form-control premium-input m-0" placeholder="Enter Order ID">
+                    <button class="btn btn-primary px-4" onclick="fetchOrderDetails()">Search</button>
+                </div>
+                <div id="orderDetailsDisplay" style="display:none;">
+                    <!-- Display fields same as before -->
+                    <div id="resStatusArea" class="mb-3">
+                         <span class="badge bg-success" id="resStatus"></span>
+                         <h4 id="resTotal" class="mt-2 fw-bold text-primary"></h4>
+                    </div>
+                    <div id="resItems" class="list-group"></div>
+                </div>
+                <div id="trackError" class="text-center text-danger mt-3" style="display:none;">Order not found.</div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- MODAL: History Portal (Already good in your code, keep as is) -->
 
 <script type="module">
     // --- FIREBASE CONFIGURATION ---
@@ -365,7 +375,7 @@
         renderCart();
     };
 
-  function renderCart() {
+ function renderCart() {
     const cartItems = document.getElementById('cart-items');
     const cartCount = document.getElementById('cart-count');
     const cartTotal = document.getElementById('cart-total');
@@ -375,21 +385,21 @@
     // Update the floating badge count
     cartCount.innerText = cart.length;
     
-    // Toggle between Empty State and Checkout Suite
+    // Toggle state: If cart is empty, show empty-msg INSIDE the modal
     if(cart.length === 0) {
         cartItems.innerHTML = '';
-        checkoutSec.style.display = 'none';
-        emptyMsg.style.display = 'block';
+        if (checkoutSec) checkoutSec.style.display = 'none';
+        if (emptyMsg) emptyMsg.style.display = 'block';
         return;
     }
 
-    // Show the premium checkout suite
-    emptyMsg.style.display = 'none';
-    checkoutSec.style.display = 'block';
+    // Show the premium checkout suite if items exist
+    if (emptyMsg) emptyMsg.style.display = 'none';
+    if (checkoutSec) checkoutSec.style.display = 'block';
 
     let total = 0;
     
-    // Render items with thumbnails for the Left Column
+    // Render items with thumbnails
     cartItems.innerHTML = cart.map((item, index) => {
         total += item.price;
         return `
@@ -406,41 +416,44 @@
         `;
     }).join('');
 
-    // Update the total price in the Blue Total Box
+    // Update total price in the total box
     cartTotal.innerText = `₹${total}`;
 }
 
-    // --- ORDER SUBMISSION ---
-    document.getElementById('orderForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const orderId = "PRM-" + Date.now().toString().slice(-6);
-        const total = cart.reduce((acc, curr) => acc + curr.price, 0);
+// Fixed ORDER SUBMISSION
+document.getElementById('orderForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const orderId = "PRM-" + Date.now().toString().slice(-6);
+    const totalAmount = cart.reduce((acc, curr) => acc + curr.price, 0);
 
-        const orderDetails = {
-            order_id: orderId,
-            customer_name: document.getElementById('name').value,
-            customer_email: document.getElementById('email').value,
-            customer_phone: document.getElementById('phone').value,
-            pincode: document.getElementById('pincode').value,
-            items: cart,
-            grand_total: total,
-            order_status: "Pending",
-            created_at: serverTimestamp()
-        };
-
-        try {
-            await addDoc(collection(db, "orders"), orderDetails);
-            alert(`Order Successful! \nYour Order ID: ${orderId}`);
-            cart = [];
-            renderCart();
-            document.getElementById('orderForm').reset();
-            var offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('cartSidebar'));
-            if (offcanvas) offcanvas.hide();
-        } catch (error) {
-            console.error("Order Error: ", error);
-        }
+    const orderDetails = {
+        order_id: orderId,
+        customer_name: document.getElementById('name').value,
+        customer_email: document.getElementById('email').value,
+        customer_phone: document.getElementById('phone').value,
+        pincode: document.getElementById('pincode').value,
+        items: cart,
+        grand_total: totalAmount,
+        order_status: "Pending",
+        created_at: serverTimestamp()
     };
 
+    try {
+        await addDoc(collection(db, "orders"), orderDetails);
+        alert(`Order Successful! \nYour Order ID: ${orderId}`);
+        cart = [];
+        renderCart();
+        document.getElementById('orderForm').reset();
+        
+        // Correctly hide the centered MODAL, not the offcanvas
+        const modalElement = document.getElementById('cartModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) modalInstance.hide();
+        
+    } catch (error) {
+        console.error("Order Error: ", error);
+    }
+};
     // --- TRACKING AND HISTORY FUNCTIONS ---
     window.fetchOrderDetails = async () => {
         const trackId = document.getElementById('trackInput').value.trim();
